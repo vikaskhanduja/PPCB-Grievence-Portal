@@ -345,7 +345,7 @@
               <p class="f-hint">OTP will be sent to verify your mobile</p>
             </div>
             <div class="col-md-6">
-              <label class="f-label">Email Address <span class="req">*</span></label>
+              <label class="f-label">Email Address</label>
               <input type="email" class="f-control" placeholder="your@email.com">
               <p class="f-hint">Acknowledgement will be sent to this address</p>
             </div>
@@ -474,14 +474,14 @@
               <div id="fileList" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;"></div>
             </div>
 
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
               <label class="f-label">Pollution Impact on Health?</label>
               <div class="chips mt-1" id="impactChips">
                 <div class="chip" onclick="pickChip(this,'impactChips')">Yes</div>
                 <div class="chip sel" onclick="pickChip(this,'impactChips')">No</div>
                 <div class="chip" onclick="pickChip(this,'impactChips')">Unsure</div>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-md-6 ">
               <label class="f-label">Have you complained before?</label>
@@ -509,7 +509,7 @@
               🔐</div>
             <h6 class="fw-800 mb-2">Verify Your Identity</h6>
             <p style="font-size:.84rem;color:var(--text-muted);max-width:380px;margin:0 auto 28px;">A 6-digit OTP has
-              been sent to your registered mobile number and email address.</p>
+              been sent to your registered mobile number or email address.</p>
             <div class="otp-row mb-4">
               <input type="text" maxlength="1" class="otp-box" oninput="otpNext(this,0)">
               <input type="text" maxlength="1" class="otp-box" oninput="otpNext(this,1)">
