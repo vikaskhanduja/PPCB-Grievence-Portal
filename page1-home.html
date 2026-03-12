@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPCB GRM Portal – Home</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
+  <link rel="stylesheet" href="css/shared.css">
+  <style>
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, #1a5ba0 100%);
+      padding: 64px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(232, 130, 12, .18);
+      border: 1px solid rgba(232, 130, 12, .4);
+      color: var(--accent-light);
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: .72rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: clamp(1.8rem, 5vw, 2.4rem);
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero-title em {
+      color: var(--accent-light);
+      font-style: italic;
+    }
+
+    .hero-sub {
+      font-size: .92rem;
+      color: rgba(255, 255, 255, .7);
+      line-height: 1.8;
+      margin-bottom: 36px;
+      max-width: 540px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-hp {
+      background: var(--accent);
+      color: white;
+      padding: 13px 28px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: .88rem;
+      border: none;
+      cursor: pointer;
+      transition: all .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(232, 130, 12, .4);
+      text-decoration: none;
+    }
+
+    .btn-hp:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      color: white;
+    }
+
+    .btn-hs {
+      background: rgba(255, 255, 255, .1);
+      color: white;
+      padding: 13px 28px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: .88rem;
+      border: 1px solid rgba(255, 255, 255, .25);
+      cursor: pointer;
+      transition: all .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-hs:hover {
+      background: rgba(255, 255, 255, .18);
+      color: white;
+    }
+
+    /* Hero image panel */
+    .hero-panel {
+      background: rgba(255, 255, 255, .07);
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: var(--radius);
+      padding: 24px;
+      backdrop-filter: blur(8px);
+    }
+
+    .hp-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, .08);
+      border-radius: var(--radius-sm);
+      margin-bottom: 8px;
+      border-left: 3px solid var(--accent);
+      width: 200px;
+    }
+
+    .hp-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .hp-id {
+      font-family: 'Instrument Serif', serif;
+      font-size: .88rem;
+      color: white;
+      font-weight: 700;
+    }
+
+    .hp-cat {
+      font-size: .7rem;
+      color: rgba(255, 255, 255, .6);
+      margin-top: 1px;
+    }
+
+    .hp-bs {
+      padding: 3px 8px;
+      border-radius: 100px;
+      font-size: .65rem;
+      font-weight: 700;
+    }
+
+    .hp-progress {
+      background: rgba(26, 111, 196, .3);
+      color: #90c8f8;
+    }
+
+    .hp-new {
+      background: rgba(10, 79, 143, .3);
+      color: #90b8f0;
+    }
+
+    .hp-disposed {
+      background: rgba(13, 122, 85, .3);
+      color: #7ae0b8;
+    }
+
+    /* Stats */
+
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .stat-lbl {
+      font-size: .8rem;
+      color: #fff;
+      letter-spacing: .04em;
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    /* Section */
+    .section {
+      padding: 40px 24px;
+    }
+
+    .sec-label {
+      font-size: 1rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .sec-title {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      color: var(--primary-dark);
+      line-height: 1.2;
+    }
+
+    .sec-sub {
+      color: var(--text-muted);
+      font-size: .88rem;
+      margin-top: 8px;
+    }
+
+    /* Feature card */
+    .feat-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      height: 100%;
+      transition: all .3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s;
+    }
+
+    .feat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: transparent;
+    }
+
+    .feat-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .feat-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #e8f0fb, #d0e4f7);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: var(--primary);
+      margin-bottom: 14px;
+    }
+
+    .feat-card h5 {
+      font-weight: 700;
+      font-size: .9rem;
+      margin-bottom: 6px;
+    }
+
+    .feat-card p {
+      font-size: .8rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* Process steps */
+    .step-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      height: 100%;
+      transition: all .25s;
+    }
+
+    .step-card:hover {
+      background: white;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: .8rem;
+      margin-bottom: 12px;
+    }
+
+    .step-card h6 {
+      font-weight: 700;
+      font-size: .82rem;
+      color: var(--primary-dark);
+      margin-bottom: 5px;
+    }
+
+    .step-card p {
+      font-size: .76rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* Track section */
+    .track-section {
+      padding: 60px 24px;
+      background: linear-gradient(135deg, #e8f0fb 0%, #f0f4f9 100%);
+    }
+
+    .track-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    /* Track result */
+    .track-result {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-top: 18px;
+    }
+
+    .trk-progress {
+      display: flex;
+      gap: 0;
+      margin: 20px 0;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .trk-step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      min-width: 70px;
+    }
+
+    .trk-step::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      right: -50%;
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+
+    .trk-step:last-child::before {
+      display: none;
+    }
+
+    .trk-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .65rem;
+      font-weight: 700;
+      margin: 0 auto 6px;
+      position: relative;
+      z-index: 1;
+      border: 2px solid white;
+    }
+
+    .trk-step.done .trk-dot {
+      background: var(--success);
+      color: white;
+    }
+
+    .trk-step.done::before {
+      background: var(--success);
+    }
+
+    .trk-step.curr .trk-dot {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 0 0 3px rgba(10, 79, 143, .2);
+    }
+
+    .trk-lbl {
+      font-size: .62rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .trk-step.done .trk-lbl,
+    .trk-step.curr .trk-lbl {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--primary);
+      color: rgba(255, 255, 255, .65);
+      padding: 28px 24px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="pub-header">
+    <div class="topbar d-none d-md-flex">
+      <span><i class="bi bi-telephone-fill me-1"></i>Helpline: 1800-XXX-XXXX &nbsp;|&nbsp; <i
+          class="bi bi-envelope-fill me-1"></i>grm@ppcb.gov.in</span>
+      <span>Government of Punjab &nbsp;|&nbsp; Last Updated: 05 Jun 2025</span>
+    </div>
+    <div class="mainbar">
+      <div class="brand-logo">
+        <div class="logo-emblem"><img src="images/logo.png" width="60" /></div>
+        <div class="brand-text">
+          <h1>PPCB – Grievance Redressal Mechanism</h1>
+          <p>Punjab Pollution Control Board &nbsp;|&nbsp; Government of Punjab</p>
+        </div>
+      </div>
+      <div class="header-nav">
+        <a href="page2-submit.html" class="hn-btn hn-outline"><i class="bi bi-search"></i><span
+            class="hide-xs">Track</span></a>
+        <a href="page2-submit.html" class="hn-btn hn-outline"><i class="bi bi-pencil-square"></i><span
+            class="hide-xs">File Complaint</span></a>
+        <a href="page4-login.html" class="hn-btn hn-solid"><i class="bi bi-person-fill"></i><span
+            class="hide-xs">Officer Login</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container-fluid">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6">
+          <div class="hero-content">
+            <div class="hero-badge"><i class="bi bi-shield-check-fill"></i> Official Government Portal</div>
+            <h1 class="hero-title">Punjab's <em>Grievance</em><br>Redressal System</h1>
+            <p class="hero-sub">Submit complaints about environmental pollution, track real-time status, and ensure
+              SOP-compliant timely resolution through our integrated digital platform.</p>
+            <div class="hero-actions">
+              <a href="page2-submit.html" class="btn-hp"><i class="bi bi-pencil-square"></i> File a Grievance</a>
+              <a href="page3-track.html" class="btn-hs"><i class="bi bi-search"></i> Track Complaint</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 offset-lg-1 d-none d-lg-block">
+          <div class="hero-panel">
+            <div
+              style="font-size:.9rem;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px;">
+              Live Complaint Stats</div>
+            <div class="d-flex flex-wrap gap-4 stats-strip">
+              <div class="hp-row">
+                <div class="stat-item">
+                  <div class="stat-num" id="cnt1">0</div>
+                  <div class="stat-lbl">Complaints Registered</div>
+                </div>
+              </div>
+              <div class="hp-row">
+                <div class="stat-item">
+                  <div class="stat-num" id="cnt2">0</div>
+                  <div class="stat-lbl">Disposed</div>
+                </div>
+              </div>
+              <div class="hp-row">
+                <div class="stat-item">
+                  <div class="stat-num" id="cnt3">0</div>
+                  <div class="stat-lbl">Under Process</div>
+                </div>
+              </div>
+              <div class="hp-row">
+                <div class="stat-item">
+                  <div class="stat-num" id="cnt4">0</div>
+                  <div class="stat-lbl">Avg. Days to Resolve</div>
+                </div>
+              </div>
+              <div class="hp-row">
+                <div class="stat-item">
+                  <div class="stat-num" id="cnt5">0</div>
+                  <div class="stat-lbl">Citizen Satisfaction</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div
+              style="margin-top:18px;border-top:1px solid rgba(255,255,255,.12);padding-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div style="text-align:center;">
+                <div style="font-size:1.4rem;font-weight:800;color:white;font-family:'Instrument Serif',serif;">4,827
+                </div>
+                <div style="font-size:.65rem;color:rgba(255,255,255,.5);">Total Filed</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-size:1.4rem;font-weight:800;color:#7ae0b8;font-family:'Instrument Serif',serif;">81%
+                </div>
+                <div style="font-size:.65rem;color:rgba(255,255,255,.5);">Resolved</div>
+              </div>
+            </div> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <!-- <div class="stats-strip">
+    <div class="container-fluid">
+      <div class="row g-3 justify-content-center">
+        <div class="col-6 col-md-2">
+          <div class="stat-item">
+            <div class="stat-num" id="cnt1">0</div>
+            <div class="stat-lbl">Complaints Registered</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-2">
+          <div class="stat-item">
+            <div class="stat-num" id="cnt2">0</div>
+            <div class="stat-lbl">Disposed</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-2">
+          <div class="stat-item">
+            <div class="stat-num" id="cnt3">0</div>
+            <div class="stat-lbl">Under Process</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-2">
+          <div class="stat-item">
+            <div class="stat-num" id="cnt4">0</div>
+            <div class="stat-lbl">Avg. Days to Resolve</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-2">
+          <div class="stat-item">
+            <div class="stat-num" id="cnt5">0</div>
+            <div class="stat-lbl">Citizen Satisfaction</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- FEATURES -->
+  <section class="section" style="background:var(--bg);">
+    <div class="container-fluid">
+      <div class="text-center mb-5">
+        <div class="sec-label">Why Use This Portal</div>
+        <!--   -->
+        <p class="sec-sub mt-2">A fully SOP-compliant grievance management platform for Punjab's citizens</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-sm-6 col-lg-4 col-xl-4">
+          <div class="feat-card">
+            <div class="feat-icon"><i class="bi bi-broadcast"></i></div>
+            <h5>Multi-Channel Intake</h5>
+            <p>Portal, Email, WhatsApp, Letter, Social Media — all routed into one unified system.</p>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 col-xl-4">
+          <div class="feat-card">
+            <div class="feat-icon"><i class="bi bi-clock-history"></i></div>
+            <h5>SOP-Compliant TAT</h5>
+            <p>Every complaint tracked against defined timelines. Auto-escalation on overdue cases.</p>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 col-xl-4">
+          <div class="feat-card">
+            <div class="feat-icon"><i class="bi bi-person-badge"></i></div>
+            <h5>Role-Based Workflow</h5>
+            <p>GRM Cell → Ex-EN → RO → SDO/ADO. Clear responsibilities, no manual paperwork.</p>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 col-xl-4">
+          <div class="feat-card">
+            <div class="feat-icon"><i class="bi bi-bell-fill"></i></div>
+            <h5>Real-Time Alerts</h5>
+            <p>Automatic SMS and email alerts to complainants and officers at every stage.</p>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 col-xl-4">
+          <div class="feat-card">
+            <div class="feat-icon"><i class="bi bi-arrow-up-circle"></i></div>
+            <h5>Appeal Mechanism</h5>
+            <p>Two-level appeal: First to CEE, Second to Member Secretary. Full history available.</p>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 col-xl-4">
+          <div class="feat-card">
+            <div class="feat-icon"><i class="bi bi-shield-lock"></i></div>
+            <h5>Audit Trail</h5>
+            <p>Complete digital record of every action. Transparent, accountable, tamper-proof.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS STEPS -->
+  <section class="section"
+    style="background:white;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+    <div class="container-fluid">
+      <div class="text-center mb-5">
+        <div class="sec-label">10-Step Workflow</div>
+        <h2 class="sec-title">Complaint Resolution Journey</h2>
+        <p class="sec-sub mt-2">From submission to final closure — SOP-compliant at every step</p>
+      </div>
+      <div class="row g-3">
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <h6>Multi-Channel Intake</h6>
+            <p>Portal, Email, Letter, WhatsApp, Social Media into one system.</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <h6>Registration & OTP</h6>
+            <p>Unique complaint number generated; auto-acknowledgement via SMS & Email.</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <h6>Scrutiny by Ex-EN</h6>
+            <p>Review jurisdiction, completeness, and allocate to appropriate level.</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <h6>RO Allocation</h6>
+            <p>Regional Officer receives case digitally with SOP timelines.</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="step-card">
+            <div class="step-num">5</div>
+            <h6>Field Inspection</h6>
+            <p>SDO/ADO visits site, collects evidence, uploads inspection report.</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="step-card">
+            <div class="step-num">6</div>
+            <h6>Regulatory Action</h6>
+            <p>Advisory, Notice, or Order issued. Compliance monitored via follow-up.</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="step-card">
+            <div class="step-num">7</div>
+            <h6>TAT Monitoring</h6>
+            <p>Auto-escalation if SOP timelines are breached.</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="step-card">
+            <div class="step-num">8</div>
+            <h6>ATR & Disposal</h6>
+            <p>Action Taken Report uploaded; complaint marked disposed.</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="step-card">
+            <div class="step-num">9</div>
+            <h6>Feedback & Appeal</h6>
+            <p>Two-level appeal mechanism available if unsatisfied.</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="step-card">
+            <div class="step-num" style="background:var(--success);">10</div>
+            <h6>Final Closure</h6>
+            <p>Closed with complete audit trail retained.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRACK SECTION -->
+  <section class="track-section">
+    <div class="container-fluid">
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-4">
+          <div class="sec-label">Track Instantly</div>
+          <h2 class="sec-title">Check Your Complaint Status</h2>
+          <p class="sec-sub mt-2">Enter your complaint number to view real-time status, assigned officer, and complete
+            action history.</p>
+        </div>
+        <div class="col-lg-8">
+          <div class="track-card">
+            <div class="row g-3 align-items-end">
+              <div class="col-md-5">
+                <label class="f-label">Complaint Number <span class="req">*</span></label>
+                <input type="text" class="f-control" placeholder="e.g. PPCB/GRM/2025/00123" id="trackInput">
+              </div>
+              <div class="col-md-4">
+                <label class="f-label">Mobile / Email</label>
+                <input type="text" class="f-control" placeholder="Verify identity">
+              </div>
+              <div class="col-md-3">
+                <button class="btn-full" onclick="doTrack()"><i class="bi bi-search"></i> Track Status</button>
+              </div>
+            </div>
+            <div id="trackResult" style="display:none;">
+              <hr class="divider">
+              <div class="track-result">
+                <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
+                  <div>
+                    <div style="font-size:.68rem;color:var(--text-muted);font-weight:700;letter-spacing:.04em;">
+                      COMPLAINT NO.</div>
+                    <div class="cid" style="font-size:1.05rem;">PPCB/GRM/2025/00247</div>
+                  </div>
+                  <span class="bs bs-progress">In Progress</span>
+                </div>
+                <div class="row g-3 mb-3">
+                  <div class="col-6 col-md-3">
+                    <div
+                      style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);">
+                      Filed On</div>
+                    <div style="font-size:.82rem;font-weight:700;margin-top:3px;">12 May 2025</div>
+                  </div>
+                  <div class="col-6 col-md-3">
+                    <div
+                      style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);">
+                      Category</div>
+                    <div style="font-size:.82rem;font-weight:700;margin-top:3px;">Air Pollution</div>
+                  </div>
+                  <div class="col-6 col-md-3">
+                    <div
+                      style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);">
+                      Assigned To</div>
+                    <div style="font-size:.82rem;font-weight:700;margin-top:3px;">RO – Ludhiana</div>
+                  </div>
+                  <div class="col-6 col-md-3">
+                    <div
+                      style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);">
+                      Days Elapsed</div>
+                    <div style="font-size:.82rem;font-weight:700;margin-top:3px;color:var(--warning);">24 days</div>
+                  </div>
+                </div>
+                <div class="trk-progress">
+                  <div class="trk-step done">
+                    <div class="trk-dot"><i class="bi bi-check" style="font-size:.7rem;"></i></div>
+                    <div class="trk-lbl">Registered</div>
+                  </div>
+                  <div class="trk-step done">
+                    <div class="trk-dot"><i class="bi bi-check" style="font-size:.7rem;"></i></div>
+                    <div class="trk-lbl">Scrutinised</div>
+                  </div>
+                  <div class="trk-step done">
+                    <div class="trk-dot"><i class="bi bi-check" style="font-size:.7rem;"></i></div>
+                    <div class="trk-lbl">Allocated</div>
+                  </div>
+                  <div class="trk-step curr">
+                    <div class="trk-dot">4</div>
+                    <div class="trk-lbl">Inspection</div>
+                  </div>
+                  <div class="trk-step">
+                    <div class="trk-dot">5</div>
+                    <div class="trk-lbl">Action</div>
+                  </div>
+                  <div class="trk-step">
+                    <div class="trk-dot">6</div>
+                    <div class="trk-lbl">ATR</div>
+                  </div>
+                  <div class="trk-step">
+                    <div class="trk-dot">7</div>
+                    <div class="trk-lbl">Closed</div>
+                  </div>
+                </div>
+                <div class="mt-3 text-center">
+                  <a href="page3-track.html" class="btn-p"><i class="bi bi-arrow-right me-1"></i> Full Tracking
+                    Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container-fluid">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div style="font-size:1.5rem;font-weight:800;color:white;margin-bottom:8px;">PPCB GRM Portal</div>
+          <div
+            style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent-light);margin-bottom:12px;">
+            Transparent. Accountable. Timely.</div>
+          <div style="font-size:.78rem;line-height:1.8;">Punjab Pollution Control Board<br>Government of Punjab</div>
+        </div>
+        <div class="col-6 col-md-2">
+          <div
+            style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
+            Quick Links</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <a href="page2-submit.html" style="font-size:.8rem;color:rgba(255,255,255,.55);text-decoration:none;">File
+              Complaint</a>
+            <a href="page3-track.html" style="font-size:.8rem;color:rgba(255,255,255,.55);text-decoration:none;">Track
+              Status</a>
+            <a href="page4-login.html" style="font-size:.8rem;color:rgba(255,255,255,.55);text-decoration:none;">Officer
+              Login</a>
+          </div>
+        </div>
+        <div class="col-6 col-md-2">
+          <div
+            style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
+            Help</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <a href="#" style="font-size:.8rem;color:rgba(255,255,255,.55);text-decoration:none;">FAQ</a>
+            <a href="#" style="font-size:.8rem;color:rgba(255,255,255,.55);text-decoration:none;">User Guide</a>
+            <a href="#" style="font-size:.8rem;color:rgba(255,255,255,.55);text-decoration:none;">RTI</a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div
+            style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
+            Contact</div>
+          <div style="font-size:.8rem;line-height:2;color:rgba(255,255,255,.55);">
+            <div><i class="bi bi-telephone-fill me-2" style="color:var(--accent-light);"></i>1800-XXX-XXXX (Toll Free)
+            </div>
+            <div><i class="bi bi-envelope-fill me-2" style="color:var(--accent-light);"></i>grm@ppcb.gov.in</div>
+            <div><i class="bi bi-clock-fill me-2" style="color:var(--accent-light);"></i>Mon–Fri, 10:00 AM – 5:00 PM
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr style="border-color:rgba(255,255,255,.1);margin:24px 0;">
+      <div
+        style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.72rem;color:rgba(255,255,255,.35);">
+        <span>© 2025 Punjab Pollution Control Board. All rights reserved.</span>
+        <span>Privacy Policy &nbsp;|&nbsp; Terms &nbsp;|&nbsp; Accessibility</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Counter animation
+    function animCount(id, target, suffix, delay) {
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        let cur = 0;
+        const step = Math.ceil(target / 60);
+        const t = setInterval(() => {
+          cur += step;
+          if (cur >= target) { cur = target; clearInterval(t); }
+          el.textContent = cur + suffix;
+        }, 25);
+      }, delay);
+    }
+    const targets = [
+      ['cnt1', 4827, '', 0],
+      ['cnt2', 3912, '', 200],
+      ['cnt3', 915, '', 400],
+      ['cnt4', 18.4, '', 600],
+      ['cnt5', 94, '%', 800],
+    ];
+    const statsObs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        targets.forEach(([id, val, sfx, delay]) => animCount(id, val, sfx, delay));
+        statsObs.disconnect();
+      }
+    }, { threshold: 0.3 });
+    statsObs.observe(document.querySelector('.stats-strip'));
+
+    // Track
+    function doTrack() {
+      const v = document.getElementById('trackInput').value.trim();
+      if (v) document.getElementById('trackResult').style.display = 'block';
+      else alert('Please enter a complaint number.');
+    }
+  </script>
+
+</body>
+
+</html>

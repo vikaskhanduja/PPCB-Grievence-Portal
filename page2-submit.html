@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPCB GRM – File a Complaint</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
+  <link rel="stylesheet" href="css/shared.css">
+  <style>
+    .form-page {
+      min-height: 100vh;
+      background: var(--bg);
+      padding-bottom: 60px;
+    }
+
+    .form-head {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      padding: 36px 24px;
+      color: white;
+    }
+
+    .form-head h2 {
+
+      font-size: clamp(1.4rem, 4vw, 1.2rem);
+      margin-bottom: 5px;
+    }
+
+    .form-head p {
+      color: rgba(255, 255, 255, .7);
+      font-size: .9rem;
+      margin: 0;
+    }
+
+    .form-wrap {
+      max-width: 900px;
+      margin: -32px auto 0;
+      padding: 0 16px;
+    }
+
+    /* Step nav */
+    .step-nav {
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .step-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .step-tab {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 44px;
+      font-size: .76rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 3px solid transparent;
+      cursor: default;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .step-tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .step-tab.done {
+      color: var(--success);
+      border-bottom-color: var(--success);
+    }
+
+    .step-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .62rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .step-tab.active .step-dot {
+      background: var(--primary);
+      color: white;
+    }
+
+    .step-tab.done .step-dot {
+      background: var(--success);
+      color: white;
+    }
+
+    /* Form sections */
+    .form-body {
+      padding: 28px 24px;
+    }
+
+    .form-section {
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+    }
+
+    /* Source chips */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 8px 20px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      font-size: .76rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: white;
+    }
+
+    .chip:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .chip.sel {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    /* Upload zone */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 36px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      background: var(--surface2);
+    }
+
+    .upload-zone:hover {
+      border-color: var(--primary);
+      background: #e8f0fb;
+    }
+
+    /* OTP inputs */
+    .otp-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .otp-box {
+      width: 46px;
+      height: 50px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text);
+    }
+
+    .otp-box:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(10, 79, 143, .1);
+      outline: none;
+    }
+
+    /* Review block */
+    .review-block {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+    }
+
+    /* Success */
+    .success-wrap {
+      padding: 20px 16px;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #d4f5e2, #a8e8c2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      margin: 0 auto 20px;
+    }
+
+    .comp-num {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      padding: 12px 30px;
+      border-radius: var(--radius-sm);
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      display: inline-block;
+      margin: 14px 0;
+      font-family: 'Instrument Serif', serif;
+    }
+
+    .next-step-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    .ns-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: .85rem;
+    }
+  </style>
+</head>
+
+<body class="form-page">
+
+  <!-- HEADER -->
+  <header class="pub-header">
+    <div class="mainbar">
+      <div class="brand-logo">
+        <div class="logo-emblem"><img src="images/logo.png" width="60" /></div>
+        <div class="brand-text">
+          <h1>PPCB – File a Complaint</h1>
+          <p>Grievance Redressal Mechanism &nbsp;|&nbsp; Punjab</p>
+        </div>
+      </div>
+      <div class="header-nav">
+        <a href="page1-home.html" class="hn-btn hn-outline"><i class="bi bi-house-fill"></i><span class="hide-xs">
+            Home</span></a>
+        <a href="page3-track.html" class="hn-btn hn-outline"><i class="bi bi-search"></i><span class="hide-xs">
+            Track</span></a>
+        <a href="tel:1800XXXXXXX" class="hn-btn hn-solid"><i class="bi bi-telephone-fill"></i><span class="hide-xs">
+            Helpline</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- FORM HEADER -->
+  <div class="form-head">
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
+      <div>
+        <h2><i class="bi bi-pencil-square me-2"></i>Citizen Grievance Portal</h2>
+        <p>All complaints are registered, acknowledged, and tracked. You'll receive SMS & Email confirmation.</p>
+      </div>
+      <div style="text-align:right;" class="d-none d-md-block">
+        <div style="font-size:.68rem;color:rgba(255,255,255,.5);margin-bottom:3px;">Helpline (Mon–Fri)</div>
+        <div style="font-size:1.1rem;font-weight:700;">1800-XXX-XXXX</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="form-wrap">
+    <div id="formCard" class="data-card" style="box-shadow:var(--shadow-lg);">
+      <!-- Step nav -->
+      <nav class="step-nav">
+        <div class="step-tab active" id="tab1"><span class="step-dot">1</span><span>Complainant Info</span></div>
+        <div class="step-tab" id="tab2"><span class="step-dot">2</span><span>Complaint Details</span></div>
+        <div class="step-tab" id="tab3"><span class="step-dot">3</span><span>Verify OTP</span></div>
+        <div class="step-tab" id="tab4"><span class="step-dot">4</span><span>Review & Submit</span></div>
+      </nav>
+
+      <!-- Progress bar -->
+      <div style="height:4px;background:var(--border);">
+        <div id="progressBar" style="height:100%;width:25%;transition:width .4s;">
+        </div>
+      </div>
+
+      <div class="form-body">
+
+        <!-- STEP 1: Complainant Info -->
+        <div class="form-section active" id="fs1">
+          <h6 class="fw-800 mb-1">Complainant Information</h6>
+          <p style="font-size:.8rem;color:var(--text-muted);margin-bottom:22px;">Provide your contact details.
+            Information is confidential and used only for communication.</p>
+          <div class="row g-3">
+
+            <!-- <div class="col-md-12">
+              <label class="f-label">Complaint Source <span class="req">*</span></label>
+              <div class="chips mt-1" id="sourceChips">
+                <div class="chip sel" onclick="pickChip(this,'sourceChips')"><i class="bi bi-globe"></i> Online Portal
+                </div>
+                <div class="chip" onclick="pickChip(this,'sourceChips')"><i class="bi bi-envelope"></i> Email</div>
+                <div class="chip" onclick="pickChip(this,'sourceChips')"><i class="bi bi-whatsapp"></i> WhatsApp</div>
+                <div class="chip" onclick="pickChip(this,'sourceChips')"><i class="bi bi-file-text"></i> Letter</div>
+                <div class="chip" onclick="pickChip(this,'sourceChips')"><i class="bi bi-google"></i> Social Media
+                </div>
+                <div class="chip" onclick="pickChip(this,'sourceChips')"><i class="bi bi-google"></i> Other's Medium
+                </div>
+              </div>
+            </div> -->
+
+            <div class="col-md-6">
+              <label class="f-label">Full Name <span class="req">*</span></label>
+              <input type="text" class="f-control" placeholder="As per official records" id="cName">
+            </div>
+            <div class="col-md-6">
+              <label class="f-label">Mobile Number <span class="req">*</span></label>
+              <div class="d-flex gap-2">
+                <input type="tel" class="f-control" placeholder="+91 XXXXX XXXXX" id="cMobile">
+                <!-- <button class="btn-p flex-shrink-0" onclick="sendOTP(this)"><i class="bi bi-send-fill"></i> OTP</button> -->
+              </div>
+              <p class="f-hint">OTP will be sent to verify your mobile</p>
+            </div>
+            <div class="col-md-6">
+              <label class="f-label">Email Address <span class="req">*</span></label>
+              <input type="email" class="f-control" placeholder="your@email.com">
+              <p class="f-hint">Acknowledgement will be sent to this address</p>
+            </div>
+            <!-- <div class="col-md-6">
+              <label class="f-label">State</label>
+              <select class="f-select">
+                <option>Punjab</option>
+              </select>
+            </div> -->
+            <div class="col-md-6">
+              <label class="f-label">Add Complainant’s Occupation <span class="req">*</span></label>
+              <input type="text" class="f-control" placeholder="Complainant’s Occupation" id="cOccupation">
+            </div>
+            <div class="col-md-6">
+              <label class="f-label">District <span class="req">*</span></label>
+              <select class="f-select" id="cDistrict">
+                <option value="">-- Select District --</option>
+                <option>Amritsar</option>
+                <option>Ludhiana</option>
+                <option>Jalandhar</option>
+                <option>Patiala</option>
+                <option>Bathinda</option>
+                <option>Mohali (SAS Nagar)</option>
+                <option>Gurdaspur</option>
+                <option>Hoshiarpur</option>
+                <option>Moga</option>
+                <option>Firozpur</option>
+                <option>Faridkot</option>
+                <option>Sangrur</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="f-label">Gender</label>
+              <select class="f-select">
+                <option>-- Select --</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+                <option>Prefer not to say</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="f-label">Full Address (Complainant)</label>
+              <textarea class="f-control" rows="2" placeholder="House No., Street, Village/City, PIN Code"></textarea>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-4">
+            <button class="btn-p" style="padding:10px 26px;font-size:.85rem;" onclick="goStep(2)">Next &nbsp;<i
+                class="bi bi-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Complaint Details -->
+        <div class="form-section" id="fs2">
+          <h6 class="fw-800 mb-1">Complaint Details</h6>
+          <p style="font-size:.8rem;color:var(--text-muted);margin-bottom:22px;">Provide specific details about the
+            environmental issue. More detail helps faster resolution.</p>
+          <div class="row g-3">
+
+            <div class="col-md-6">
+              <label class="f-label">Category of Pollution <span class="req">*</span></label>
+              <select class="f-select" id="cCategory">
+                <option value="">-- Select Category --</option>
+                <option>Air Pollution (Industrial)</option>
+                <option>Air Pollution (Vehicle/Dust)</option>
+                <option>Water Pollution (Industrial Effluent)</option>
+                <option>Water Pollution (Sewage)</option>
+                <option>Land / Soil Pollution</option>
+                <option>Noise Pollution</option>
+                <option>Solid Waste Dumping</option>
+                <option>Hazardous Waste</option>
+                <option>Other Environmental Issue</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="f-label">Industry / Source Name (if known)</label>
+              <input type="text" class="f-control" placeholder="Name of factory, plant or establishment">
+            </div>
+
+            <div class="col-12">
+              <label class="f-label">Exact Location / Address of Pollution Source <span class="req">*</span></label>
+              <input type="text" class="f-control" placeholder="Village, Ward, Street, Landmark, District, PIN Code">
+            </div>
+
+            <div class="col-md-6">
+              <label class="f-label">Nature of Complaint <span class="req">*</span></label>
+              <select class="f-select">
+                <option value="">-- Select Nature --</option>
+                <option>Continuous / Ongoing Pollution</option>
+                <option>Occasional / Intermittent Discharge</option>
+                <option>One-Time Incident</option>
+                <option>Non-Compliance of Earlier Order</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="f-label">Pollution Occurring Since (approx.)</label>
+              <input type="date" class="f-control">
+            </div>
+
+            <div class="col-12">
+              <label class="f-label">Detailed Description <span class="req">*</span></label>
+              <textarea class="f-control" rows="5" id="cDesc"
+                placeholder="Describe: nature of pollution, its impact on environment and health, affected population, any previous complaints made and action taken (minimum 50 words)…"></textarea>
+              <div class="d-flex justify-content-between mt-1">
+                <p class="f-hint">Be specific about harm caused, affected areas, and any earlier actions.</p>
+                <span style="font-size:.7rem;color:var(--text-muted);" id="wordCnt">0 words</span>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label class="f-label">Upload Supporting Evidence</label>
+              <div class="upload-zone" onclick="document.getElementById('fileInp').click()">
+                <div style="font-size:2rem;color:var(--text-light);margin-bottom:8px;"><i
+                    class="bi bi-cloud-arrow-up-fill"></i></div>
+                <div style="font-weight:700;font-size:.88rem;margin-bottom:4px;">Click to upload or drag & drop</div>
+                <div style="font-size:.8rem;color:var(--text-muted);">Photos, videos, documents (Max 10 MB each, up to 5
+                  files)</div>
+                <div style="font-size:.7rem;color:var(--text-light);margin-top:6px;">Supported: JPG, PNG, PDF, DOC ,
+                  Video
+                </div>
+              </div>
+              <input type="file" id="fileInp" style="display:none;" multiple accept="image/*,video/*,.pdf,.doc,.docx"
+                onchange="showFiles(this)">
+              <div id="fileList" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;"></div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="f-label">Pollution Impact on Health?</label>
+              <div class="chips mt-1" id="impactChips">
+                <div class="chip" onclick="pickChip(this,'impactChips')">Yes</div>
+                <div class="chip sel" onclick="pickChip(this,'impactChips')">No</div>
+                <div class="chip" onclick="pickChip(this,'impactChips')">Unsure</div>
+              </div>
+            </div>
+
+            <div class="col-md-6 ">
+              <label class="f-label">Have you complained before?</label>
+              <div class="chips mt-1" id="prevChips">
+                <div class="chip" onclick="pickChip(this,'prevChips')">Yes</div>
+                <div class="chip sel" onclick="pickChip(this,'prevChips')">No</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="d-flex justify-content-between mt-5">
+            <button class="btn-o" onclick="goStep(1)"><i class="bi bi-arrow-left"></i> Back</button>
+            <button class="btn-p" style="padding:10px 26px;font-size:.85rem;" onclick="goStep(3)">Next &nbsp;<i
+                class="bi bi-arrow-right"></i></button>
+          </div>
+
+        </div>
+
+        <!-- STEP 3: OTP -->
+        <div class="form-section" id="fs3">
+          <div class="text-center py-3">
+            <div
+              style="width:64px;height:64px;background:linear-gradient(135deg,#deeafb,#b8d4f4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 18px;">
+              🔐</div>
+            <h6 class="fw-800 mb-2">Verify Your Identity</h6>
+            <p style="font-size:.84rem;color:var(--text-muted);max-width:380px;margin:0 auto 28px;">A 6-digit OTP has
+              been sent to your registered mobile number and email address.</p>
+            <div class="otp-row mb-4">
+              <input type="text" maxlength="1" class="otp-box" oninput="otpNext(this,0)">
+              <input type="text" maxlength="1" class="otp-box" oninput="otpNext(this,1)">
+              <input type="text" maxlength="1" class="otp-box" oninput="otpNext(this,2)">
+              <input type="text" maxlength="1" class="otp-box" oninput="otpNext(this,3)">
+              <input type="text" maxlength="1" class="otp-box" oninput="otpNext(this,4)">
+              <input type="text" maxlength="1" class="otp-box" oninput="otpNext(this,5)">
+            </div>
+            <p style="font-size:.8rem;color:var(--text-muted);">Didn't receive?
+              <a href="#" id="resendLink" onclick="startResend(event)"
+                style="color:var(--primary);font-weight:600;">Resend OTP</a>
+              <span id="resendTimer" style="color:var(--text-muted);font-size:.78rem;"></span>
+            </p>
+          </div>
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn-o" onclick="goStep(2)"><i class="bi bi-arrow-left"></i> Back</button>
+            <button class="btn-p" style="padding:10px 26px;font-size:.85rem;" onclick="goStep(4)">Verify &nbsp;<i
+                class="bi bi-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 4: Review & Submit -->
+        <div class="form-section" id="fs4">
+          <h6 class="fw-800 mb-1">Review & Submit</h6>
+          <p style="font-size:.8rem;color:var(--text-muted);margin-bottom:22px;">Please review all details before final
+            submission.</p>
+          <div class="review-block mb-3">
+            <div
+              style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:14px;">
+              Complaint Summary</div>
+            <div class="row g-3">
+              <div class="col-6 col-md-4">
+                <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);">
+                  Complainant</div>
+                <div id="rv-name" style="font-size:.85rem;font-weight:700;margin-top:3px;">—</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);">District
+                </div>
+                <div id="rv-dist" style="font-size:.85rem;font-weight:700;margin-top:3px;">—</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);">Category
+                </div>
+                <div id="rv-cat" style="font-size:.85rem;font-weight:700;margin-top:3px;">—</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);">Source
+                </div>
+                <div style="font-size:.85rem;font-weight:700;margin-top:3px;" id="rv-src">Online Portal</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);">Mobile
+                  Verified</div>
+                <div style="font-size:.85rem;font-weight:700;color:var(--success);margin-top:3px;">✓ Verified</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);">Evidence
+                </div>
+                <div id="rv-files" style="font-size:.85rem;font-weight:700;margin-top:3px;">0 files</div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="background:#fff8e8;border:1px solid #f0d080;border-radius:var(--radius-sm);padding:13px 16px;font-size:.8rem;color:#a07000;margin-bottom:18px;">
+            <i class="bi bi-info-circle-fill me-2"></i>
+            By submitting, you declare that the information provided is true to the best of your knowledge. False
+            complaints may attract action under applicable laws.
+          </div>
+          <div class="d-flex align-items-start gap-2 mb-4">
+            <input type="checkbox" id="declareCb"
+              style="width:16px;height:16px;accent-color:var(--primary);margin-top:2px;flex-shrink:0;">
+            <label for="declareCb" style="font-size:.82rem;cursor:pointer;">I agree to the declaration above and confirm
+              all details are accurate and correct.</label>
+          </div>
+          <div class="d-flex justify-content-between flex-wrap gap-2">
+            <button class="btn-o" onclick="goStep(3)"><i class="bi bi-arrow-left"></i> Back</button>
+            <button class="btn-full" style="width:auto;padding:11px 30px;" onclick="submitComplaint()"><i
+                class="bi bi-send-fill me-1"></i> Submit Complaint</button>
+          </div>
+        </div>
+
+      </div><!-- /form-body -->
+    </div><!-- /data-card -->
+
+    <!-- SUCCESS STATE -->
+    <div id="successState" style="display:none;padding-top:20px;">
+      <div class="data-card">
+        <div class="success-wrap py-5">
+          <div class="success-icon">✅</div>
+          <h4 class="fw-800 mb-2">Complaint Registered Successfully!</h4>
+          <p style="color:var(--text-muted);font-size:.88rem;max-width:460px;margin:0 auto 6px;">Your grievance has been
+            received. An acknowledgement has been sent to your mobile and email.</p>
+          <div class="comp-num" id="generatedNum">PPCB/GRM/2025/04828</div>
+          <p style="font-size:.78rem;color:var(--text-muted);margin-bottom:28px;">Save this number to track your
+            complaint status at any time</p>
+
+          <div style="max-width:460px;margin:0 auto 28px;text-align:left;display:flex;flex-direction:column;gap:10px;">
+            <div class="next-step-item">
+              <div class="ns-icon" style="background:#d4f5e2;color:var(--success);"><i class="bi bi-check2"></i></div>
+              <div>
+                <div style="font-weight:700;font-size:.82rem;">SMS & Email Acknowledgement Sent</div>
+                <div style="font-size:.74rem;color:var(--text-muted);margin-top:2px;">Delivered to your registered
+                  contact details</div>
+              </div>
+            </div>
+            <div class="next-step-item">
+              <div class="ns-icon" style="background:#deeafb;color:var(--primary);"><i class="bi bi-person-check"></i>
+              </div>
+              <div>
+                <div style="font-weight:700;font-size:.82rem;">Under Scrutiny by Ex-EN (Grievance Cell)</div>
+                <div style="font-size:.74rem;color:var(--text-muted);margin-top:2px;">Review within 2 working days</div>
+              </div>
+            </div>
+            <div class="next-step-item">
+              <div class="ns-icon" style="background:#fdf3d4;color:var(--warning);"><i class="bi bi-clock"></i></div>
+              <div>
+                <div style="font-weight:700;font-size:.82rem;">Expected Resolution: 30 Working Days</div>
+                <div style="font-size:.74rem;color:var(--text-muted);margin-top:2px;">As per SOP. You'll receive status
+                  updates via SMS/Email.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="page3-track.html" class="btn-p" style="padding:11px 24px;"><i class="bi bi-search me-1"></i> Track
+              Complaint</a>
+            <a href="page1-home.html" class="btn-o" style="padding:11px 24px;"><i class="bi bi-house me-1"></i> Back to
+              Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /form-wrap -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let curStep = 1;
+    const pcts = { 1: '25%', 2: '50%', 3: '75%', 4: '100%' };
+
+    function goStep(n) {
+      document.getElementById('fs' + curStep).classList.remove('active');
+      const prev = document.getElementById('tab' + curStep);
+      prev.classList.remove('active');
+      prev.classList.add('done');
+      prev.querySelector('.step-dot').innerHTML = '<i class="bi bi-check2" style="font-size:.65rem;"></i>';
+
+      curStep = n;
+      document.getElementById('fs' + n).classList.add('active');
+      const cur = document.getElementById('tab' + n);
+      cur.classList.add('active');
+      cur.classList.remove('done');
+      cur.querySelector('.step-dot').textContent = n;
+      document.getElementById('progressBar').style.width = pcts[n];
+
+      // Populate review on step 4
+      if (n === 4) {
+        document.getElementById('rv-name').textContent = document.getElementById('cName').value || '—';
+        document.getElementById('rv-dist').textContent = document.getElementById('cDistrict').value || '—';
+        document.getElementById('rv-cat').textContent = document.getElementById('cCategory').value || '—';
+        document.getElementById('rv-src').textContent = document.querySelector('#sourceChips .chip.sel')?.innerText.trim() || '—';
+        document.getElementById('rv-files').textContent = document.getElementById('fileInp').files.length + ' file(s)';
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function pickChip(el, groupId) {
+      document.querySelectorAll('#' + groupId + ' .chip').forEach(c => c.classList.remove('sel'));
+      el.classList.add('sel');
+    }
+
+    function sendOTP(btn) {
+      btn.innerHTML = '<i class="bi bi-check2"></i> Sent ✓';
+      btn.style.background = 'var(--success)';
+      setTimeout(() => { btn.innerHTML = '<i class="bi bi-send-fill"></i> Resend'; btn.style.background = ''; }, 30000);
+    }
+
+    function otpNext(inp, idx) {
+      const boxes = document.querySelectorAll('.otp-box');
+      if (inp.value && idx < 5) boxes[idx + 1].focus();
+    }
+
+    let resendTimeout;
+    function startResend(e) {
+      e.preventDefault();
+      document.getElementById('resendLink').style.pointerEvents = 'none';
+      let sec = 30;
+      document.getElementById('resendTimer').textContent = ' (' + sec + 's)';
+      resendTimeout = setInterval(() => {
+        sec--;
+        document.getElementById('resendTimer').textContent = ' (' + sec + 's)';
+        if (sec <= 0) {
+          clearInterval(resendTimeout);
+          document.getElementById('resendTimer').textContent = '';
+          document.getElementById('resendLink').style.pointerEvents = 'auto';
+        }
+      }, 1000);
+    }
+
+    function showFiles(inp) {
+      const list = document.getElementById('fileList');
+      list.innerHTML = '';
+      Array.from(inp.files).forEach(f => {
+        const chip = document.createElement('div');
+        chip.style.cssText = 'display:flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:.75rem;';
+        chip.innerHTML = '<i class="bi bi-file-earmark-fill" style="color:var(--primary);"></i>' + f.name + '<span style="color:var(--text-muted);">(' + Math.round(f.size / 1024) + 'KB)</span>';
+        list.appendChild(chip);
+      });
+    }
+
+    // Word counter
+    document.getElementById('cDesc').addEventListener('input', function () {
+      const words = this.value.trim().split(/\s+/).filter(w => w).length;
+      document.getElementById('wordCnt').textContent = words + ' words';
+      document.getElementById('wordCnt').style.color = words < 50 ? 'var(--danger)' : 'var(--success)';
+    });
+
+    function submitComplaint() {
+      if (!document.getElementById('declareCb').checked) { alert('Please check the declaration checkbox to proceed.'); return; }
+      document.getElementById('formCard').style.display = 'none';
+      document.getElementById('successState').style.display = 'block';
+      // Generate random complaint number
+      const num = 'PPCB/GRM/2025/0' + (4828 + Math.floor(Math.random() * 10));
+      document.getElementById('generatedNum').textContent = num;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+
+</html>
