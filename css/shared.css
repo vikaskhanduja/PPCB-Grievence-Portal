@@ -27,13 +27,34 @@
   --shadow-sm:     0 1px 4px rgba(10,79,143,.08);
   --shadow:        0 4px 20px rgba(10,79,143,.12);
   --shadow-lg:     0 8px 40px rgba(10,79,143,.18);
+
+  --navy: #073763;
+  --blue: #0a4f8f;
+  --bl: #1a6fc4;
+  --bg: #f0f4f9;
+  --wh: #ffffff;
+  --bdr: #d0dbe8;
+  --txt: #1a2332;
+  --mut: #5a6a7e;
+  /* step colours */
+  --c1: #0d7a55;
+  --c1l: #e0f5ed;
+  --c2: #1a5fa5;
+  --c2l: #e0edf9;
+  --c3: #7b3fa0;
+  --c3l: #f0e6fb;
+  --c4: #c0392b;
+  --c4l: #fde6e4;
+  --c5: #b07010;
+  --c5l: #fef3d4;
+  --c6: #0a88a8;
+  --c6l: #e0f4fa;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
   font-family: sans-serif;
-  background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
   font-size: 14px;
@@ -469,3 +490,4 @@ body {
 @media (min-width: 1400px) {
   :root { --sidebar-w: 270px; }
 }
+

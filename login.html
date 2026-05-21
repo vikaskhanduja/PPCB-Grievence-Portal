@@ -59,7 +59,6 @@
     }
 
     .login-deco__title {
-      font-family: serif;
       font-size: 2rem;
       line-height: 1.2;
       margin-bottom: 12px;
@@ -98,7 +97,6 @@
     .kpi-card__value {
       font-size: 1.6rem;
       font-weight: 800;
-      font-family: serif;
     }
 
     .kpi-card__hint {
@@ -384,14 +382,15 @@
 
 <body>
   <div class="login-page">
-    <div class="container position-relative">
+    <div class="container-fluid position-relative">
       <div class="row align-items-stretch py-4">
 
         <!-- LEFT: Decorative panel -->
         <div class="col-lg-6 mb-4 mb-lg-0">
           <aside class="login-deco h-100" aria-label="Portal Overview">
             <div class="login-deco__icon" aria-hidden="true"><img src="images/logo.png" width="80" /></div>
-            <h1 class="login-deco__title">PPCB Grievance<br />Redressal Portal</h1>
+            <h1 class="login-deco__title">PPCB <em style="color: var(--warning);">Grievance</em><br />Redressal Portal
+            </h1>
             <p class="login-deco__desc">
               Secure access for PPCB officers, GRM Cell, and management to process and resolve environmental grievances.
             </p>
@@ -484,10 +483,10 @@
                 <a href="#" id="fpOpen" class="link-primary fw-semibold text-decoration-none small">Forgot Password?</a>
               </div>
 
-              <button type="submit" class="login-btn">
+              <a href="dashboard.html" style="text-decoration: none;" type="submit" class="login-btn">
                 <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
                 <span>Login to Dashboard</span>
-              </button>
+              </a>
 
               <div id="loginError" class="alert-inline error hidden mt-3" role="alert">
                 <i class="bi bi-exclamation-circle-fill me-1" aria-hidden="true"></i>
@@ -501,7 +500,6 @@
                 </a>
               </div>
             </form>
-
           </main>
         </div>
 
@@ -585,7 +583,7 @@
         }
         loginError.classList.add('hidden');
         // Navigate to dashboard (demo)
-        window.location.href = 'central-grievance-form.html';
+        window.location.href = 'page-not-found.html';
       });
 
       // Forgot password

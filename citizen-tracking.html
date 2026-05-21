@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPCB GRM – Track Complaint</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
+  <link rel="stylesheet" href="css/shared.css">
+  <style>
+    .track-head {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      padding: 40px 24px;
+      color: white;
+    }
+
+    .track-head h2 {
+      margin-bottom: 5px;
+    }
+
+    .track-head p {
+      color: rgba(255, 255, 255, .7);
+      font-size: .84rem;
+      margin: 0;
+    }
+
+    .track-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 28px 16px 60px;
+    }
+
+    .search-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    /* Progress tracker */
+    .prog-wrap {
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+
+    .prog-track {
+      display: flex;
+      min-width: 500px;
+    }
+
+    .prog-step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+    }
+
+    .prog-step::before {
+      content: '';
+      position: absolute;
+      top: 17px;
+      left: 50%;
+      right: -50%;
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+
+    .prog-step:last-child::before {
+      display: none;
+    }
+
+    .prog-dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .68rem;
+      font-weight: 700;
+      margin: 5px auto 7px;
+      position: relative;
+      z-index: 1;
+      border: 2px solid white;
+    }
+
+    .prog-step.done .prog-dot {
+      background: var(--success);
+      color: white;
+    }
+
+    .prog-step.done::before {
+      background: var(--success);
+    }
+
+    .prog-step.curr .prog-dot {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 0 0 4px rgba(10, 79, 143, .18);
+    }
+
+    .prog-lbl {
+      font-size: .64rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .prog-step.done .prog-lbl,
+    .prog-step.curr .prog-lbl {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Detail sections */
+    .detail-section {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .ds-head {
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .ds-title {
+      font-weight: 700;
+      font-size: .9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ds-body {
+      padding: 20px;
+    }
+
+    /* Officer card */
+    .officer-card {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    .oc-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: .88rem;
+      flex-shrink: 0;
+    }
+
+    .oc-name {
+      font-weight: 700;
+      font-size: .84rem;
+    }
+
+    .oc-role {
+      font-size: .72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Appeal box */
+    .appeal-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .appeal-level {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: white;
+      margin-bottom: 10px;
+    }
+
+    .appeal-level:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Feedback stars */
+    .stars {
+      display: flex;
+      gap: 6px;
+    }
+
+    .star {
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--border);
+      transition: color .15s;
+    }
+
+    .star.active,
+    .star:hover {
+      color: #f0c040;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      color: var(--border);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    /* Y/N buttons */
+    .yn {
+      display: flex;
+      gap: 6px;
+    }
+
+    .yb {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: .78rem;
+      font-weight: 700;
+      border: 2px solid #d0dbe8;
+      cursor: pointer;
+      text-align: center;
+      transition: all .18s;
+      background: white;
+    }
+
+    .yb:hover {
+      border-color: var(--P);
+    }
+
+    .yy.on {
+      background: #d4f5e2;
+      border-color: var(--SUC);
+      color: var(--SUC);
+    }
+
+    .yn_.on {
+      background: #fde8e8;
+      border-color: var(--DAN);
+      color: var(--DAN);
+    }
+
+    textarea.fc {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .fc {
+      border: 1.5px solid #d0dbe8;
+      border-radius: 12px;
+      padding: 9px 13px;
+      font-size: .82rem;
+      color: var(--txt);
+      background: white;
+      transition: all .2s;
+      width: 100%;
+    }
+
+    .upz {
+      border: 2px dashed #d0dbe8;
+      border-radius: 12px;
+      padding: 22px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      background: #f7f9fc;
+    }
+
+    .bp {
+      background: linear-gradient(135deg, #073763, #0a4f8f);
+      color: white;
+      padding: 9px 22px;
+      border-radius: 12px;
+      font-size: .81rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all .2s;
+      text-align: right;
+    }
+
+    .bp:hover {
+      box-shadow: 0 4px 14px rgba(10, 79, 143, .35);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+
+<body style="background:var(--bg);min-height:100vh;">
+
+  <!-- HEADER -->
+  <header class="pub-header">
+    <div class="mainbar">
+      <div class="brand-logo">
+        <div class="logo-emblem"><img src="images/logo.png" width="60" /></div>
+        <div class="brand-text">
+          <h1>PPCB – Track Complaint</h1>
+          <p>Grievance Redressal Mechanism &nbsp;|&nbsp; Punjab</p>
+        </div>
+      </div>
+      <div class="header-nav">
+        <a href="index.html" class="hn-btn hn-outline"><i class="bi bi-house-fill"></i><span class="hide-xs">
+            Home</span></a>
+        <a href="citizen-grievance-form.html" class="hn-btn hn-outline"><i class="bi bi-pencil-square"></i><span
+            class="hide-xs">
+            File Complaint</span></a>
+        <a href="login.html" class="hn-btn hn-solid"><i class="bi bi-person-fill"></i><span class="hide-xs">
+            Officer Login</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="track-head">
+    <h2><i class="bi bi-search me-2"></i>Citizen Complaint Tracking</h2>
+    <p>Real-time status</p>
+  </div>
+
+  <div class="track-wrap">
+    <!-- SEARCH CARD -->
+    <div class="search-card">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-5">
+          <label class="f-label">Complaint Number <span class="req">*</span></label>
+          <input type="text" class="f-control" id="trackNo" placeholder="PPCB/GRM/YYYY/XXXXX"
+            value="PPCB/GRM/2025/00247">
+        </div>
+        <div class="col-md-4">
+          <label class="f-label">Registered Mobile / Email</label>
+          <input type="text" class="f-control" placeholder="For identity verification">
+        </div>
+        <div class="col-md-3">
+          <button class="btn-full" onclick="doSearch()"><i class="bi bi-search"></i> Track Now</button>
+        </div>
+      </div>
+      <div
+        style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);font-size:.78rem;color:var(--text-muted);">
+        <i class="bi bi-info-circle me-1"></i> Your complaint number was sent via SMS and Email at the time of
+        registration.
+      </div>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div id="emptyState" class="detail-section" style="display:none;">
+      <div class="empty-state">
+        <i class="bi bi-folder2 empty-icon"></i>
+        <h5 class="fw-800 mb-2">No Complaint Found</h5>
+        <p style="color:var(--text-muted);font-size:.88rem;">No record found for the entered complaint number. Please
+          verify the number and try again, or contact the helpline.</p>
+        <a href="page2-submit.html" class="btn-p" style="margin-top:16px;display:inline-flex;"><i
+            class="bi bi-pencil-square me-1"></i> File a New Complaint</a>
+      </div>
+    </div>
+
+    <!-- RESULT (shown after search) -->
+    <div id="trackResult" style="display:none;">
+
+      <!-- Summary card -->
+      <div class="detail-section">
+        <div class="ds-head">
+          <div class="ds-title"><i class="bi bi-clipboard2-data-fill" style="color:var(--primary);"></i> Complaint
+            Overview</div>
+          <span class="bs bs-progress" id="statusBadge">In Progress</span>
+        </div>
+        <div class="ds-body">
+          <div class="row g-3 mb-4">
+            <div class="col-6 col-md-3">
+              <div
+                style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);">
+                Complaint No.</div>
+              <div class="cid" style="font-size:1rem;margin-top:3px;" id="dispNo">PPCB/GRM/2025/00247</div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div
+                style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);">
+                Filed On</div>
+              <div style="font-size:.88rem;font-weight:700;margin-top:3px;">12 May 2025</div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div
+                style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);">
+                Category</div>
+              <div style="font-size:.88rem;font-weight:700;margin-top:3px;">Air Pollution</div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div
+                style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);">
+                District</div>
+              <div style="font-size:.88rem;font-weight:700;margin-top:3px;">Ludhiana</div>
+            </div>
+
+          </div>
+
+          <!-- TAT bar -->
+          <div style="margin-bottom:20px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <span style="font-size:.8rem;font-weight:600;">TAT Progress</span>
+              <span style="font-size:.78rem;color:var(--warning);font-weight:700;">Day 24 of 30</span>
+            </div>
+            <div class="tat-wrap">
+              <div class="tat-bar tat-warn" style="width:80%;"></div>
+            </div>
+            <div class="tat-lbl"><span>Day 0 – Filed</span><span style="color:var(--warning);font-weight:600;">Today
+                (Day 24)</span><span>Day 30 – Deadline</span></div>
+          </div>
+
+          <!-- Progress steps -->
+          <div class="prog-wrap">
+            <div class="prog-track">
+              <div class="prog-step done">
+                <div class="prog-dot"><i class="bi bi-check2" style="font-size:.7rem;"></i></div>
+                <div class="prog-lbl">Complaint Assigned</div>
+              </div>
+              <div class="prog-step done">
+                <div class="prog-dot"><i class="bi bi-check2" style="font-size:.7rem;"></i></div>
+                <div class="prog-lbl">Under Process</div>
+              </div>
+              <div class="prog-step done">
+                <div class="prog-dot"><i class="bi bi-check2" style="font-size:.7rem;"></i></div>
+                <div class="prog-lbl">Closed</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <!-- Right column -->
+        <div class="col-lg-12">
+
+
+          <!-- complaint feedback -->
+          <div class="detail-section mb-3">
+            <div class="ds-head">
+              <div class="ds-title"><i class="bi bi-people-fill" style="color:var(--primary);"></i> Complaint
+                Feedback
+              </div>
+            </div>
+            <div class="ds-body" style="display:flex;flex-direction:column;gap:10px;">
+              <h6 class="">Are you Satified</h6>
+              <div class="yn mb-3" style="max-width:300px;">
+                <div class="yb yy" onclick="setOrigSatisfied(true)" id="origSatY">YES – Satisfied</div>
+                <div class="yb yn_" onclick="setOrigSatisfied(false)" id="origSatN">NO – Not Satisfied</div>
+              </div>
+
+              <!-- If NO – reason + activate appeal -->
+              <div id="origNoBlock" style="display:none;">
+                <h6>Do you want to Apply For the Appeal</h6>
+                <div class="row g-3">
+                  <div class="col-8">
+                    <label class="fl">Please enter reason <span class="req">*</span></label>
+                    <div class="wcw">
+                      <textarea class="fc" id="origReason" rows="4" placeholder="please enter description"
+                        oninput="wc(this,'origReasonWC',500)"></textarea>
+                      <span class="wcb" id="origReasonWC">0 / 500</span>
+                    </div>
+                  </div>
+                  <!-- Original ATR reference -->
+                  <div class="col-4">
+                    <label class="fl">Upload Document</label>
+                    <div class="upz" onclick="document.getElementById('origATR').click()">
+                      <i class="bi bi-file-earmark-check-fill" style="color:var(--SUC);"></i>
+                      <p class="fw-semibold mb-1" style="font-size:.8rem;">Upload Document</p>
+                    </div>
+                    <input type="file" id="origATR" accept=".pdf" style="display:none;"
+                      onchange="showFiles(this,'origATRL')">
+                    <div id="origATRL" class="mt-2"></div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-12">
+                  <div class="d-flex gap-2 flex-wrap justify-content-end">
+                    <button class="bp" onclick="saveAll()"><i class="bi bi-check-circle-fill me-1"></i>Submit
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Feedback (only shown if disposed) -->
+          <div class="detail-section" id="feedbackSection" style="display:none;">
+            <div class="ds-head">
+              <div class="ds-title"><i class="bi bi-star-fill" style="color:#f0c040;"></i> Your Feedback</div>
+            </div>
+            <div class="ds-body">
+              <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:14px;">Are you satisfied with the
+                resolution of your complaint?</p>
+              <div class="stars mb-3" id="starRow">
+                <span class="star" onclick="rateStar(1)">★</span>
+                <span class="star" onclick="rateStar(2)">★</span>
+                <span class="star" onclick="rateStar(3)">★</span>
+                <span class="star" onclick="rateStar(4)">★</span>
+                <span class="star" onclick="rateStar(5)">★</span>
+              </div>
+              <textarea class="f-control" rows="3" placeholder="Share your feedback (optional)…"
+                style="margin-bottom:10px;"></textarea>
+              <button class="btn-p w-100"><i class="bi bi-send-fill me-1"></i> Submit Feedback</button>
+            </div>
+          </div>
+
+        </div><!-- /col -->
+      </div><!-- /row -->
+
+      <!-- Help row -->
+      <div
+        style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-top:16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <div style="font-weight:700;font-size:.88rem;margin-bottom:3px;">Need Help?</div>
+          <div style="font-size:.78rem;color:var(--text-muted);">Contact GRM Cell for assistance regarding your
+            complaint.</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <a href="mailto:grm@ppcb.gov.in" class="btn-o"><i class="bi bi-envelope-fill me-1"></i> Send Email</a>
+        </div>
+      </div>
+
+    </div><!-- /trackResult -->
+
+  </div><!-- /track-wrap -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function doSearch() {
+      const v = document.getElementById('trackNo').value.trim();
+      if (!v) { alert('Please enter a complaint number.'); return; }
+      document.getElementById('emptyState').style.display = 'none';
+      document.getElementById('trackResult').style.display = 'none';
+
+      // Simulate: show result for valid, empty for invalid
+      if (v.startsWith('PPCB') || v.length > 5) {
+        document.getElementById('dispNo').textContent = v;
+        document.getElementById('trackResult').style.display = 'block';
+        document.getElementById('trackResult').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        document.getElementById('emptyState').style.display = 'block';
+      }
+    }
+
+    function toggleBody(header) {
+      const body = header.nextElementSibling;
+      const icon = header.querySelector('i.bi-chevron-down, i.bi-chevron-up');
+      const open = body.style.display !== 'none';
+      body.style.display = open ? 'none' : 'block';
+      if (icon) icon.className = open ? 'bi bi-chevron-down' : 'bi bi-chevron-up';
+    }
+
+    function rateStar(n) {
+      document.querySelectorAll('.star').forEach((s, i) => {
+        s.classList.toggle('active', i < n);
+      });
+    }
+
+    // Auto-show result if complaint number pre-filled
+    window.addEventListener('load', () => {
+      const v = document.getElementById('trackNo').value.trim();
+      if (v) doSearch();
+    });
+
+    /* ── ORIGINAL SATISFACTION ── */
+    function setOrigSatisfied(yes) {
+      document.getElementById('origSatY').classList.toggle('on', yes);
+      document.getElementById('origSatN').classList.toggle('on', !yes);
+      document.getElementById('origNoBlock').style.display = yes ? 'none' : 'block';
+      document.getElementById('origYesBlock').style.display = yes ? 'block' : 'none';
+      updatePluginSat('orig', yes);
+      if (!yes) {
+        document.getElementById('appealSubmissionBlock').style.display = 'block';
+      }
+    }
+  </script>
+</body>
+
+</html>

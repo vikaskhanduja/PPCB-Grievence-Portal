@@ -59,7 +59,7 @@
     }
 
     .hero-sub {
-      font-size: .92rem;
+      font-size: 1rem;
       color: rgba(255, 255, 255, .7);
       line-height: 1.8;
       margin-bottom: 36px;
@@ -134,7 +134,7 @@
       border-radius: var(--radius-sm);
       margin-bottom: 8px;
       border-left: 3px solid var(--accent);
-      width: 200px;
+      width: 100%;
     }
 
     .hp-row:last-child {
@@ -203,7 +203,7 @@
     }
 
     .sec-label {
-      font-size: 1rem;
+      font-size: 1.4rem;
       letter-spacing: .15em;
       text-transform: uppercase;
       color: var(--accent);
@@ -273,59 +273,576 @@
 
     .feat-card h5 {
       font-weight: 700;
-      font-size: .9rem;
+      font-size: 1rem;
       margin-bottom: 6px;
     }
 
     .feat-card p {
-      font-size: .8rem;
+      font-size: .9rem;
       color: var(--text-muted);
       line-height: 1.7;
       margin: 0;
     }
 
-    /* Process steps */
-    .step-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px 16px;
-      height: 100%;
-      transition: all .25s;
+    /************** Process steps ****************/
+
+    .sec {
+      padding: 52px 32px 40px;
+      margin: 0 auto;
     }
 
-    .step-card:hover {
-      background: white;
-      box-shadow: var(--shadow-sm);
+    .sec-eye {
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 1.4rem;
+      font-weight: 700;
     }
 
-    .step-num {
-      width: 32px;
-      height: 32px;
-      background: var(--primary);
-      color: white;
+    .sec-title {
+      color: var(--navy);
+      margin-bottom: 6px;
+      font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+    }
+
+    .sec-sub {
+      color: var(--mut);
+      font-size: .8rem;
+    }
+
+    .tl-outer {
+      margin-top: 48px;
+      position: relative;
+    }
+
+    /* ── ROWS ── */
+    .tl-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      position: relative;
+      gap: 0;
+    }
+
+    /* ── DOTTED SPINE behind each row ── */
+    .tl-row::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 8%;
+      right: 8%;
+      height: 0;
+      border-top: 2.5px dashed var(--bdr);
+      z-index: 0;
+    }
+
+    /* Row 1 spine grows from left; filled by JS */
+    .spine {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 8%;
+      height: 0;
+      width: 0;
+      border-top: 2.5px dashed;
+      z-index: 1;
+      border-radius: 0;
+      transition: width 1.2s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .spine-1 {
+      border-color: var(--c2);
+    }
+
+    .spine-2 {
+      border-color: var(--c5);
+    }
+
+    /* ── U-TURN CONNECTOR ── */
+    .uturn {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 8%;
+      height: 72px;
+      position: relative;
+    }
+
+    .uturn-svg {
+      position: absolute;
+      right: 8%;
+      width: 56px;
+      height: 72px;
+      overflow: visible;
+    }
+
+    .uturn-path {
+      fill: none;
+      stroke: var(--bdr);
+      stroke-width: 2.5;
+      stroke-dasharray: 5 4;
+      stroke-dashoffset: 200;
+      transition: stroke-dashoffset 0.8s ease 1.2s;
+    }
+
+    .uturn-path.drawn {
+      stroke-dashoffset: 0;
+    }
+
+    /* ── STEP CELL ── */
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ── CONNECTOR DOT on spine ── */
+    .step-dot {
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      background: var(--wh);
+      border: 2.5px solid var(--bdr);
+      transition: all .4s ease;
+      opacity: 0;
+    }
+
+    /* row 1 dots above centre line */
+    .row1 .step-dot {
+      top: calc(50%);
+      margin-top: 0;
+    }
+
+    /* row 2 dots below centre line */
+    .row2 .step-dot {
+      top: calc(50%);
+    }
+
+    .step-dot.lit {
+      opacity: 1;
+      border-color: currentColor;
+      background: currentColor;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, .8), 0 0 0 6px currentColor;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    /* ── BOX ── */
+    .box {
+      background: var(--wh);
+      border: 2px dashed var(--bdr);
+      border-radius: 18px;
+      padding: 20px 18px 16px;
+      width: 100%;
+      position: relative;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+      cursor: default;
+
+      /* entrance animation */
+      opacity: 0;
+      transform: translateY(22px) scale(.96);
+    }
+
+    .box.in {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition: opacity .55s ease, transform .55s cubic-bezier(.34, 1.2, .64, 1),
+        box-shadow .28s, border-color .28s;
+    }
+
+    .box:hover {
+      transform: translateY(-5px) !important;
+      box-shadow: 0 12px 36px rgba(10, 79, 143, .13);
+    }
+
+    /* hover changes dashed border to solid accent */
+    .box:hover {
+      border-style: solid;
+    }
+
+    /* box top accent bar */
+    .box-bar {
+      position: absolute;
+      top: 0;
+      left: 16px;
+      right: 16px;
+      height: 3px;
+      border-radius: 0 0 4px 4px;
+    }
+
+    /* icon */
+    .box-icon-wrap {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: .8rem;
+      font-size: 19px;
       margin-bottom: 12px;
+      position: relative;
     }
 
-    .step-card h6 {
+    /* number badge */
+    .box-num {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: white;
+      font-size: .56rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--wh);
+    }
+
+    .box-title {
+      color: var(--navy);
+      margin-bottom: 7px;
+      font-size: .9rem;
       font-weight: 700;
-      font-size: .82rem;
-      color: var(--primary-dark);
-      margin-bottom: 5px;
+      line-height: 1.3;
+
     }
 
-    .step-card p {
-      font-size: .76rem;
-      color: var(--text-muted);
+    .box-text {
+      color: var(--muted);
+      font-size: 1rem;
       line-height: 1.65;
-      margin: 0;
     }
+
+    /* tat tag */
+    .box-tat {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 12px;
+      padding: 3px 9px;
+      border-radius: 100px;
+      font-size: .6rem;
+      font-weight: 700;
+    }
+
+    /* row1 box: label below */
+    .row1 .step {
+      flex-direction: column;
+    }
+
+    .row1 .step .step-dot {
+      order: 2;
+      margin: 0;
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+      margin-top: -7px;
+      margin-bottom: -7px;
+      z-index: 5;
+    }
+
+    .row1 .step .box {
+      order: 1;
+    }
+
+    /* row2 box: dot top, box below */
+    .row2 .step {
+      flex-direction: column;
+    }
+
+    .row2 .step .step-dot {
+      order: 1;
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+      margin-bottom: -7px;
+      z-index: 5;
+    }
+
+    .row2 .step .box {
+      order: 2;
+    }
+
+    /* row1 dots sit between box and spine  */
+    /* row2 dots sit between spine and box  */
+
+    /* ── STEP-SPECIFIC COLOURS ── */
+    .s1 .box {
+      border-color: #b8e6d4;
+    }
+
+    .s1 .box:hover {
+      border-color: var(--c1);
+    }
+
+    .s1 .box-bar {
+      background: var(--c1);
+    }
+
+    .s1 .box-icon-wrap {
+      background: var(--c1l);
+      color: var(--c1);
+    }
+
+    .s1 .box-tat {
+      background: var(--c1l);
+      color: var(--c1);
+    }
+
+    .s1 .step-dot {
+      color: var(--c1);
+    }
+
+    .s2 .box {
+      border-color: #b8d4f0;
+    }
+
+    .s2 .box:hover {
+      border-color: var(--c2);
+    }
+
+    .s2 .box-bar {
+      background: var(--c2);
+    }
+
+    .s2 .box-icon-wrap {
+      background: var(--c2l);
+      color: var(--c2);
+    }
+
+    .s2 .box-tat {
+      background: var(--c2l);
+      color: var(--c2);
+    }
+
+    .s2 .step-dot {
+      color: var(--c2);
+    }
+
+    .s3 .box {
+      border-color: #d8b8f5;
+    }
+
+    .s3 .box:hover {
+      border-color: var(--c3);
+    }
+
+    .s3 .box-bar {
+      background: var(--c3);
+    }
+
+    .s3 .box-icon-wrap {
+      background: var(--c3l);
+      color: var(--c3);
+    }
+
+    .s3 .box-tat {
+      background: var(--c3l);
+      color: var(--c3);
+    }
+
+    .s3 .step-dot {
+      color: var(--c3);
+    }
+
+    .s4 .box {
+      border-color: #f5b8b5;
+    }
+
+    .s4 .box:hover {
+      border-color: var(--c4);
+    }
+
+    .s4 .box-bar {
+      background: var(--c4);
+    }
+
+    .s4 .box-icon-wrap {
+      background: var(--c4l);
+      color: var(--c4);
+    }
+
+    .s4 .box-tat {
+      background: var(--c4l);
+      color: var(--c4);
+    }
+
+    .s4 .step-dot {
+      color: var(--c4);
+    }
+
+    .s5 .box {
+      border-color: #f5dfb0;
+    }
+
+    .s5 .box:hover {
+      border-color: var(--c5);
+    }
+
+    .s5 .box-bar {
+      background: var(--c5);
+    }
+
+    .s5 .box-icon-wrap {
+      background: var(--c5l);
+      color: var(--c5);
+    }
+
+    .s5 .box-tat {
+      background: var(--c5l);
+      color: var(--c5);
+    }
+
+    .s5 .step-dot {
+      color: var(--c5);
+    }
+
+    .s6 .box {
+      border-color: #b0def0;
+    }
+
+    .s6 .box:hover {
+      border-color: var(--c6);
+    }
+
+    .s6 .box-bar {
+      background: var(--c6);
+    }
+
+    .s6 .box-icon-wrap {
+      background: var(--c6l);
+      color: var(--c6);
+    }
+
+    .s6 .box-tat {
+      background: var(--c6l);
+      color: var(--c6);
+    }
+
+    .s6 .step-dot {
+      color: var(--c6);
+    }
+
+    /* ── PROGRESS BAR ── */
+    .prog-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 44px;
+    }
+
+    .prog-track {
+      width: min(420px, 100%);
+      height: 5px;
+      background: var(--bdr);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .prog-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c5), var(--c6));
+      transition: width 1.6s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .prog-pct {
+      font-size: .7rem;
+      font-weight: 800;
+      color: var(--c2);
+      min-width: 36px;
+    }
+
+    /* ── LEGEND ── */
+    .legend {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .leg {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .7rem;
+      font-weight: 600;
+      color: var(--mut);
+    }
+
+    .leg-d {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+
+    /* ─── MOBILE ─── */
+    @media(max-width:767px) {
+      .tl-row {
+        grid-template-columns: 1fr;
+      }
+
+      .tl-row::before,
+      .spine {
+        display: none;
+      }
+
+      .uturn {
+        display: none;
+      }
+
+      .step {
+        flex-direction: row !important;
+        gap: 14px;
+        padding: 0 0 16px;
+      }
+
+      .row1 .step .step-dot,
+      .row2 .step .step-dot {
+        display: none;
+      }
+
+      .row1 .step .box,
+      .row2 .step .box {
+        flex: 1;
+      }
+
+      .sec {
+        padding: 36px 16px 48px;
+      }
+    }
+
+    @media(max-width:540px) {
+      .box {
+        padding: 16px 14px 13px;
+      }
+
+      .box-title {
+        font-size: .8rem;
+      }
+
+      .box-text {
+        font-size: .68rem;
+      }
+    }
+
 
     /* Track section */
     .track-section {
@@ -427,21 +944,33 @@
 
     /* Footer */
     footer {
-      background: var(--primary);
+      background: var(--primary-dark);
       color: rgba(255, 255, 255, .65);
       padding: 28px 24px;
+    }
+
+    /* bhashini plugin overrides */
+    .bhashini-dropdown {
+      position: fixed;
+      z-index: 1000;
+      bottom: 0 !important;
+    }
+
+    .bhashini-dropdown-btn {
+      display: flex;
+      background-color: #1a6fc4 !important;
     }
   </style>
 </head>
 
 <body>
-
+  <div class="bhashini-plugin-container"></div>
   <!-- HEADER -->
   <header class="pub-header">
     <div class="topbar d-none d-md-flex">
       <span><i class="bi bi-telephone-fill me-1"></i>Helpline: 1800-XXX-XXXX &nbsp;|&nbsp; <i
           class="bi bi-envelope-fill me-1"></i>grm@ppcb.gov.in</span>
-      <span>Government of Punjab &nbsp;|&nbsp; Last Updated: 12 March 2026</span>
+      <span>Government of Punjab &nbsp;|&nbsp; Last Updated: 05 Jun 2025</span>
     </div>
     <div class="mainbar">
       <div class="brand-logo">
@@ -452,7 +981,7 @@
         </div>
       </div>
       <div class="header-nav">
-        <a href="page-not-found.html" class="hn-btn hn-outline"><i class="bi bi-search"></i><span
+        <a href="citizen-tracking.html" class="hn-btn hn-outline"><i class="bi bi-search"></i><span
             class="hide-xs">Track</span></a>
         <a href="citizen-grievance-form.html" class="hn-btn hn-outline"><i class="bi bi-pencil-square"></i><span
             class="hide-xs">File Complaint</span></a>
@@ -469,13 +998,13 @@
         <div class="col-lg-6">
           <div class="hero-content">
             <div class="hero-badge"><i class="bi bi-shield-check-fill"></i> Official Government Portal</div>
-            <h1 class="hero-title">Punjab's <em>Grievance</em><br>Redressal System</h1>
+            <h1 class="hero-title">PPCB <em>Grievance</em><br>Redressal System</h1>
             <p class="hero-sub">Submit complaints about environmental pollution, track real-time status, and ensure
               SOP-compliant timely resolution through our integrated digital platform.</p>
             <div class="hero-actions">
               <a href="citizen-grievance-form.html" class="btn-hp"><i class="bi bi-pencil-square"></i> File a
                 Grievance</a>
-              <a href="page-not-found.html" class="btn-hs"><i class="bi bi-search"></i> Track Complaint</a>
+              <a href="citizen-tracking.html" class="btn-hs"><i class="bi bi-search"></i> Track Complaint</a>
             </div>
           </div>
         </div>
@@ -503,77 +1032,14 @@
                   <div class="stat-lbl">Under Process</div>
                 </div>
               </div>
-              <div class="hp-row">
-                <div class="stat-item">
-                  <div class="stat-num" id="cnt4">0</div>
-                  <div class="stat-lbl">Avg. Days to Resolve</div>
-                </div>
-              </div>
-              <div class="hp-row">
-                <div class="stat-item">
-                  <div class="stat-num" id="cnt5">0</div>
-                  <div class="stat-lbl">Citizen Satisfaction</div>
-                </div>
-              </div>
-            </div>
 
-            <!-- <div
-              style="margin-top:18px;border-top:1px solid rgba(255,255,255,.12);padding-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-              <div style="text-align:center;">
-                <div style="font-size:1.4rem;font-weight:800;color:white;font-family:'Instrument Serif',serif;">4,827
-                </div>
-                <div style="font-size:.65rem;color:rgba(255,255,255,.5);">Total Filed</div>
-              </div>
-              <div style="text-align:center;">
-                <div style="font-size:1.4rem;font-weight:800;color:#7ae0b8;font-family:'Instrument Serif',serif;">81%
-                </div>
-                <div style="font-size:.65rem;color:rgba(255,255,255,.5);">Resolved</div>
-              </div>
-            </div> -->
+            </div>
 
           </div>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- STATS STRIP -->
-  <!-- <div class="stats-strip">
-    <div class="container-fluid">
-      <div class="row g-3 justify-content-center">
-        <div class="col-6 col-md-2">
-          <div class="stat-item">
-            <div class="stat-num" id="cnt1">0</div>
-            <div class="stat-lbl">Complaints Registered</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-2">
-          <div class="stat-item">
-            <div class="stat-num" id="cnt2">0</div>
-            <div class="stat-lbl">Disposed</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-2">
-          <div class="stat-item">
-            <div class="stat-num" id="cnt3">0</div>
-            <div class="stat-lbl">Under Process</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-2">
-          <div class="stat-item">
-            <div class="stat-num" id="cnt4">0</div>
-            <div class="stat-lbl">Avg. Days to Resolve</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-2">
-          <div class="stat-item">
-            <div class="stat-num" id="cnt5">0</div>
-            <div class="stat-lbl">Citizen Satisfaction</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
   <!-- FEATURES -->
   <section class="section" style="background:var(--bg);">
@@ -584,42 +1050,30 @@
         <p class="sec-sub mt-2">A fully SOP-compliant grievance management platform for Punjab's citizens</p>
       </div>
       <div class="row g-4">
-        <div class="col-sm-6 col-lg-4 col-xl-4">
-          <div class="feat-card">
-            <div class="feat-icon"><i class="bi bi-broadcast"></i></div>
-            <h5>Multi-Channel Intake</h5>
-            <p>Portal, Email, WhatsApp, Letter, Social Media — all routed into one unified system.</p>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-4 col-xl-4">
+
+        <div class="col-sm-6 col-lg-3 col-xl-3">
           <div class="feat-card">
             <div class="feat-icon"><i class="bi bi-clock-history"></i></div>
             <h5>SOP-Compliant TAT</h5>
             <p>Every complaint tracked against defined timelines. Auto-escalation on overdue cases.</p>
           </div>
         </div>
-        <div class="col-sm-6 col-lg-4 col-xl-4">
-          <div class="feat-card">
-            <div class="feat-icon"><i class="bi bi-person-badge"></i></div>
-            <h5>Role-Based Workflow</h5>
-            <p>GRM Cell → Ex-EN → RO → SDO/ADO. Clear responsibilities, no manual paperwork.</p>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-4 col-xl-4">
+
+        <div class="col-sm-6 col-lg-3 col-xl-3">
           <div class="feat-card">
             <div class="feat-icon"><i class="bi bi-bell-fill"></i></div>
             <h5>Real-Time Alerts</h5>
             <p>Automatic SMS and email alerts to complainants and officers at every stage.</p>
           </div>
         </div>
-        <div class="col-sm-6 col-lg-4 col-xl-4">
+        <div class="col-sm-6 col-lg-3 col-xl-3">
           <div class="feat-card">
             <div class="feat-icon"><i class="bi bi-arrow-up-circle"></i></div>
             <h5>Appeal Mechanism</h5>
             <p>Two-level appeal: First to CEE, Second to Member Secretary. Full history available.</p>
           </div>
         </div>
-        <div class="col-sm-6 col-lg-4 col-xl-4">
+        <div class="col-sm-6 col-lg-3 col-xl-3">
           <div class="feat-card">
             <div class="feat-icon"><i class="bi bi-shield-lock"></i></div>
             <h5>Audit Trail</h5>
@@ -631,87 +1085,140 @@
   </section>
 
   <!-- PROCESS STEPS -->
-  <section class="section"
-    style="background:white;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-    <div class="container-fluid">
-      <div class="text-center mb-5">
-        <div class="sec-label">10-Step Workflow</div>
-        <h2 class="sec-title">Complaint Resolution Journey</h2>
-        <p class="sec-sub mt-2">From submission to final closure — SOP-compliant at every step</p>
-      </div>
-      <div class="row g-3">
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="step-card">
-            <div class="step-num">1</div>
-            <h6>Multi-Channel Intake</h6>
-            <p>Portal, Email, Letter, WhatsApp, Social Media into one system.</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="step-card">
-            <div class="step-num">2</div>
-            <h6>Registration & OTP</h6>
-            <p>Unique complaint number generated; auto-acknowledgement via SMS & Email.</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="step-card">
-            <div class="step-num">3</div>
-            <h6>Scrutiny by Ex-EN</h6>
-            <p>Review jurisdiction, completeness, and allocate to appropriate level.</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="step-card">
-            <div class="step-num">4</div>
-            <h6>RO Allocation</h6>
-            <p>Regional Officer receives case digitally with SOP timelines.</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="step-card">
-            <div class="step-num">5</div>
-            <h6>Field Inspection</h6>
-            <p>SDO/ADO visits site, collects evidence, uploads inspection report.</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="step-card">
-            <div class="step-num">6</div>
-            <h6>Regulatory Action</h6>
-            <p>Advisory, Notice, or Order issued. Compliance monitored via follow-up.</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="step-card">
-            <div class="step-num">7</div>
-            <h6>TAT Monitoring</h6>
-            <p>Auto-escalation if SOP timelines are breached.</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="step-card">
-            <div class="step-num">8</div>
-            <h6>ATR & Disposal</h6>
-            <p>Action Taken Report uploaded; complaint marked disposed.</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="step-card">
-            <div class="step-num">9</div>
-            <h6>Feedback & Appeal</h6>
-            <p>Two-level appeal mechanism available if unsatisfied.</p>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="step-card">
-            <div class="step-num" style="background:var(--success);">10</div>
-            <h6>Final Closure</h6>
-            <p>Closed with complete audit trail retained.</p>
-          </div>
-        </div>
+  <section class="sec">
+    <div class="text-center mb-4">
+      <div class="sec-eye">6-Step Workflow</div>
+      <div class="sec-title">Complaint Processing Journey</div>
+      <div class="sec-sub">Six interconnected steps from intake to final resolution.
       </div>
     </div>
+
+    <!-- progress -->
+    <div class="prog-row">
+      <span style="font-size:.68rem;font-weight:600;color:var(--mut);">Journey Progress</span>
+      <div class="prog-track">
+        <div class="prog-fill" id="pf"></div>
+      </div>
+      <span class="prog-pct" id="pp">0%</span>
+    </div>
+
+    <div class="tl-outer">
+
+      <!-- ══ ROW 1 : Steps 1 – 3 ══ -->
+      <div class="tl-row row1" id="row1">
+        <div class="spine spine-1" id="sp1"></div>
+
+        <!-- STEP 1 -->
+        <div class="step s1" id="step1">
+          <div class="box" id="box1">
+            <div class="box-bar"></div>
+            <div class="box-icon-wrap">
+              <i class="bi bi-person-check-fill"></i>
+              <div class="box-num">1</div>
+            </div>
+            <div class="box-title">Complaint Registration with OTP</div>
+            <div class="box-text">Complainant registers via Portal, WhatsApp or Email. OTP verified, unique complaint
+              number generated, auto-acknowledgement sent.</div>
+            <div class="box-tat"><i class="bi bi-clock-fill"></i> Same day</div>
+          </div>
+          <div class="step-dot" id="dot1"></div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="step s2" id="step2">
+          <div class="box" id="box2">
+            <div class="box-bar"></div>
+            <div class="box-icon-wrap">
+              <i class="bi bi-clipboard2-check-fill"></i>
+              <div class="box-num">2</div>
+            </div>
+            <div class="box-title">Complaint Scrutiny & Assignment</div>
+            <div class="box-text">Ex-EN reviews jurisdiction, completeness and priority level. Complaint allocated to
+              Regional Officer with SOP timelines.</div>
+            <div class="box-tat"><i class="bi bi-clock-fill"></i> 3 days</div>
+          </div>
+          <div class="step-dot" id="dot2"></div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step s3" id="step3">
+          <div class="box" id="box3">
+            <div class="box-bar"></div>
+            <div class="box-icon-wrap">
+              <i class="bi bi-binoculars-fill"></i>
+              <div class="box-num">3</div>
+            </div>
+            <div class="box-title">Field Inspection</div>
+            <div class="box-text">SDO/ADO conducts on-site visit, collects evidence — photos and videos — and uploads
+              the Unified Inspection Performa.</div>
+            <div class="box-tat"><i class="bi bi-clock-fill"></i> 7 days</div>
+          </div>
+          <div class="step-dot" id="dot3"></div>
+        </div>
+      </div><!-- /row1 -->
+
+      <!-- ══ U-TURN ══ -->
+      <div class="uturn" id="uturnWrap">
+        <svg class="uturn-svg" viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
+          <path class="uturn-path" id="uturnPath" d="M 4,0 L 4,36 Q 4,68 36,68 L 56,68" />
+        </svg>
+      </div>
+
+      <!-- ══ ROW 2 : Steps 4 – 6 (right to left visually) ══ -->
+      <div class="tl-row row2" id="row2">
+        <div class="spine spine-2" id="sp2"></div>
+
+        <!-- STEP 6 — leftmost cell but last step (right→left flow) -->
+        <div class="step s6" id="step6">
+          <div class="step-dot" id="dot6"></div>
+          <div class="box" id="box6">
+            <div class="box-bar"></div>
+            <div class="box-icon-wrap">
+              <i class="bi bi-arrow-up-circle-fill"></i>
+              <div class="box-num">6</div>
+            </div>
+            <div class="box-title">Feedback & Appeal</div>
+            <div class="box-text">Complainant provides satisfaction feedback. If unsatisfied, two-level appeal available
+              — to CEE then Member Secretary.</div>
+            <div class="box-tat"><i class="bi bi-clock-fill"></i> 45d / level</div>
+          </div>
+        </div>
+
+        <!-- STEP 5 -->
+        <div class="step s5" id="step5">
+          <div class="step-dot" id="dot5"></div>
+          <div class="box" id="box5">
+            <div class="box-bar"></div>
+            <div class="box-icon-wrap">
+              <i class="bi bi-file-earmark-check-fill"></i>
+              <div class="box-num">5</div>
+            </div>
+            <div class="box-title">Action Taken Report</div>
+            <div class="box-text">RO uploads ATR summarising actions, orders and compliance status. Complaint marked
+              Disposed Of after verification.</div>
+            <div class="box-tat"><i class="bi bi-clock-fill"></i> 5 days</div>
+          </div>
+        </div>
+
+        <!-- STEP 4 — rightmost cell -->
+        <div class="step s4" id="step4">
+          <div class="step-dot" id="dot4"></div>
+          <div class="box" id="box4">
+            <div class="box-bar"></div>
+            <div class="box-icon-wrap">
+              <i class="bi bi-hammer"></i>
+              <div class="box-num">4</div>
+            </div>
+            <div class="box-title">Regulatory Action</div>
+            <div class="box-text">Advisory, Show Cause Notice or Order issued based on findings. Environmental
+              Compensation and Bank Guarantee monitored.</div>
+            <div class="box-tat"><i class="bi bi-clock-fill"></i> 10 days</div>
+          </div>
+        </div>
+      </div><!-- /row2 -->
+
+    </div><!-- /tl-outer -->
+
   </section>
 
   <!-- TRACK SECTION -->
@@ -779,35 +1286,19 @@
                 <div class="trk-progress">
                   <div class="trk-step done">
                     <div class="trk-dot"><i class="bi bi-check" style="font-size:.7rem;"></i></div>
-                    <div class="trk-lbl">Registered</div>
+                    <div class="trk-lbl">Complaint Assigned</div>
                   </div>
                   <div class="trk-step done">
                     <div class="trk-dot"><i class="bi bi-check" style="font-size:.7rem;"></i></div>
-                    <div class="trk-lbl">Scrutinised</div>
+                    <div class="trk-lbl">Under Process</div>
                   </div>
                   <div class="trk-step done">
                     <div class="trk-dot"><i class="bi bi-check" style="font-size:.7rem;"></i></div>
-                    <div class="trk-lbl">Allocated</div>
-                  </div>
-                  <div class="trk-step curr">
-                    <div class="trk-dot">4</div>
-                    <div class="trk-lbl">Inspection</div>
-                  </div>
-                  <div class="trk-step">
-                    <div class="trk-dot">5</div>
-                    <div class="trk-lbl">Action</div>
-                  </div>
-                  <div class="trk-step">
-                    <div class="trk-dot">6</div>
-                    <div class="trk-lbl">ATR</div>
-                  </div>
-                  <div class="trk-step">
-                    <div class="trk-dot">7</div>
                     <div class="trk-lbl">Closed</div>
                   </div>
                 </div>
                 <div class="mt-3 text-center">
-                  <a href="page-not-found.html" class="btn-p"><i class="bi bi-arrow-right me-1"></i> Full Tracking
+                  <a href="page3-track.html" class="btn-p"><i class="bi bi-arrow-right me-1"></i> Full Tracking
                     Details</a>
                 </div>
               </div>
@@ -827,51 +1318,47 @@
           <div
             style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent-light);margin-bottom:12px;">
             Transparent. Accountable. Timely.</div>
-          <div style="font-size:.78rem;line-height:1.8;">Punjab Pollution Control Board<br>Government of Punjab</div>
+          <div style="font-size:1rem;line-height:1.8;">Punjab Pollution Control Board<br>Government of Punjab</div>
         </div>
         <div class="col-6 col-md-2">
           <div
-            style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
+            style="font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
             Quick Links</div>
           <div style="display:flex;flex-direction:column;gap:8px;">
-            <a href="page-not-found.html" style="font-size:.8rem;color:rgba(255,255,255,.55);text-decoration:none;">File
+            <a href="page2-submit.html" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">File
               Complaint</a>
-            <a href="page-not-found.html"
-              style="font-size:.8rem;color:rgba(255,255,255,.55);text-decoration:none;">Track
+            <a href="page3-track.html" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">Track
               Status</a>
-            <a href="login.html" style="font-size:.8rem;color:rgba(255,255,255,.55);text-decoration:none;">Officer
+            <a href="page4-login.html" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">Officer
               Login</a>
           </div>
         </div>
         <div class="col-6 col-md-2">
           <div
-            style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
+            style="font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
             Help</div>
           <div style="display:flex;flex-direction:column;gap:8px;">
-            <a href="page-not-found.html"
-              style="font-size:.8rem;color:rgba(255,255,255,.55);text-decoration:none;">FAQ</a>
-            <a href="page-not-found.html" style="font-size:.8rem;color:rgba(255,255,255,.55);text-decoration:none;">User
-              Guide</a>
-            <a href="page-not-found.html"
-              style="font-size:.8rem;color:rgba(255,255,255,.55);text-decoration:none;">RTI</a>
+            <a href="#" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">FAQ</a>
+            <a href="#" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">User Guide</a>
+            <a href="#" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">RTI</a>
           </div>
         </div>
         <div class="col-md-4">
           <div
-            style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
+            style="font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
             Contact</div>
-          <div style="font-size:.8rem;line-height:2;color:rgba(255,255,255,.55);">
+          <div style="font-size:1rem;line-height:2;color:rgba(255,255,255,.55);">
             <div><i class="bi bi-telephone-fill me-2" style="color:var(--accent-light);"></i>1800-XXX-XXXX (Toll Free)
             </div>
             <div><i class="bi bi-envelope-fill me-2" style="color:var(--accent-light);"></i>grm@ppcb.gov.in</div>
-            <div><i class="bi bi-clock-fill me-2" style="color:var(--accent-light);"></i>Mon–Fri, 09:00 AM – 05:00 PM
+            <div><i class="bi bi-clock-fill me-2" style="color:var(--accent-light);"></i>Mon–Fri, 10:00 AM – 5:00 PM
             </div>
           </div>
         </div>
       </div>
       <hr style="border-color:rgba(255,255,255,.1);margin:24px 0;">
       <div
-        style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.72rem;color:rgba(255,255,255,.35);">
+        style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:1rem;color:rgba(255,255,255,.35);">
         <span>© 2026 Punjab Pollution Control Board. All rights reserved.</span>
         <span>Privacy Policy &nbsp;|&nbsp; Terms &nbsp;|&nbsp; Accessibility</span>
       </div>
@@ -914,7 +1401,96 @@
       if (v) document.getElementById('trackResult').style.display = 'block';
       else alert('Please enter a complaint number.');
     }
+
+    // process
+
+    /* ═══════════════════════════════════════════
+      ANIMATION SEQUENCE
+   ═══════════════════════════════════════════ */
+
+    const SPINE_FULL = '84%';
+
+    const SEQUENCE = [
+      // { what, id, delay }
+      { what: 'box', id: 'box1', delay: 200 },
+      { what: 'dot', id: 'dot1', delay: 420 },
+      { what: 'spine', id: 'sp1', delay: 520, val: SPINE_FULL },
+      { what: 'box', id: 'box2', delay: 640 },
+      { what: 'dot', id: 'dot2', delay: 860 },
+      { what: 'box', id: 'box3', delay: 1040 },
+      { what: 'dot', id: 'dot3', delay: 1260 },
+      { what: 'uturn', id: 'uturnPath', delay: 1380 },
+      // row2 right→left: step4 is rightmost
+      { what: 'box', id: 'box4', delay: 1600 },
+      { what: 'dot', id: 'dot4', delay: 1820 },
+      { what: 'spine', id: 'sp2', delay: 1900, val: SPINE_FULL },
+      { what: 'box', id: 'box5', delay: 2020 },
+      { what: 'dot', id: 'dot5', delay: 2240 },
+      { what: 'box', id: 'box6', delay: 2400 },
+      { what: 'dot', id: 'dot6', delay: 2620 },
+    ];
+
+    let done = 0;
+    const TOTAL = 6; // 6 boxes
+
+    function updateProgress(n) {
+      const pct = Math.round(n / TOTAL * 100);
+      document.getElementById('pf').style.width = pct + '%';
+      document.getElementById('pp').textContent = pct + '%';
+    }
+
+    // Use IntersectionObserver to start when section scrolls into view
+    const tlo = document.querySelector('.tl-outer');
+    let started = false;
+
+    const startIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting || started) return;
+        started = true;
+        runSequence();
+        startIO.unobserve(tlo);
+      });
+    }, { threshold: .15 });
+    startIO.observe(tlo);
+
+    function runSequence() {
+      SEQUENCE.forEach(item => {
+        setTimeout(() => {
+          const el = document.getElementById(item.id);
+          if (!el) return;
+
+          if (item.what === 'box') {
+            el.classList.add('in');
+            done++;
+            updateProgress(done);
+          }
+          else if (item.what === 'dot') {
+            el.classList.add('lit');
+          }
+          else if (item.what === 'spine') {
+            el.style.width = item.val;
+          }
+          else if (item.what === 'uturn') {
+            el.classList.add('drawn');
+          }
+        }, item.delay);
+      });
+    }
+
+    // Stagger dot hover glow
+    document.querySelectorAll('.step-dot').forEach(d => {
+      d.addEventListener('mouseenter', () => {
+        d.style.transform = 'translateY(0) scale(1.4)';
+      });
+      d.addEventListener('mouseleave', () => {
+        d.style.transform = '';
+      });
+    });
+
+
   </script>
+  <script src="https://translation-plugin.bhashini.co.in/v2/website_translation_utility.js" data-pos-x="100"
+    data-pos-y="100"></script>
 
 </body>
 

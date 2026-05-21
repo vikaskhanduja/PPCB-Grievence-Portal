@@ -435,19 +435,22 @@
             </div>
           </div>
 
-          <div class="row g-3">
+          <div class="g-3">
             <!-- INDIVIDUAL COMPLAINANT FIELDS -->
-            <div id="individualCP" class="row g-3">
+            <div id="individualCP" class="row g-3 px-0">
+
               <div class="col-md-6">
                 <label class="f-label">Complainant Name <span class="req">*</span></label>
                 <input type="text" class="f-control" placeholder="As per official records" id="cp_Name">
               </div>
+
               <div class="col-md-6">
                 <label class="f-label">Complainant Contact No. <span class="req">*</span></label>
                 <input type="tel" class="f-control" placeholder="+91 XXXXX XXXXX" id="cp_Mobile">
                 <p class="f-hint">OTP will be sent to verify</p>
               </div>
-              <div class="col-md-6">
+
+              <div class="col-md-6 mt-0">
                 <label class="f-label">District <span class="req">*</span></label>
                 <select class="f-select" id="cp_District">
                   <option value="">-- Select District --</option>
@@ -465,23 +468,21 @@
                   <option>Sangrur</option>
                 </select>
               </div>
-              <div class="col-md-6">
+
+              <div class="col-md-6 mt-0">
                 <label class="f-label">Pin Code</label>
                 <input type="text" class="f-control" placeholder="PIN Code" id="cp_PinCode">
               </div>
-              <div class="col-md-6">
+
+              <div class="col-md-12 mb-3">
                 <label class="f-label">Complainant's Occupation</label>
                 <input type="text" class="f-control" placeholder="Occupation" id="cp_Occupation">
-              </div>
-              <div class="col-md-6">
-                <label class="f-label">Complainant's Address <span class="req">*</span></label>
-                <textarea class="f-control" rows="2" placeholder="House No., Street, Village/City, PIN Code"
-                  id="cp_Address"></textarea>
               </div>
             </div>
 
             <!-- GROUP COMPLAINANT FIELDS -->
             <div id="groupCP" class="row g-3" style="display:none;">
+
               <div class="col-md-6">
                 <label class="f-label">RWA/ Society/ Association/ CSO/ Other (Group Type) <span
                     class="req">*</span></label>
@@ -494,51 +495,36 @@
                   <option>Other (Group of Individuals)</option>
                 </select>
               </div>
+
               <div class="col-md-6">
                 <label class="f-label">Name of the Nodal Officer <span class="req">*</span></label>
                 <input type="text" class="f-control" placeholder="Name of Nodal Officer" id="cp_NodalName">
               </div>
+
               <div class="col-md-6">
                 <label class="f-label">Contact Number of the Nodal Officer <span class="req">*</span></label>
                 <input type="tel" class="f-control" placeholder="+91 XXXXX XXXXX" id="cp_NodalContact">
               </div>
+
               <div class="col-md-6">
                 <label class="f-label">Address of RWA/ Society/ Association/ CSO/ Group <span
                     class="req">*</span></label>
                 <textarea class="f-control" rows="2" placeholder="House No., Street, Village/City, PIN Code, District"
                   id="cp_GroupAddress"></textarea>
               </div>
+
             </div>
 
-            <div class="col-md-6">
-              <label class="f-label">Pollution Type<span class="req">*</span></label>
-              <select class="f-select" id="cCategory">
-                <option value="">-- Select Category --</option>
-                <option>Air Pollution</option>
-                <option>Water Pollution</option>
-                <option>Noise Pollution</option>
-              </select>
-            </div>
-
-            <div class="col-md-6">
+            <div class="col-md-12 mb-3">
               <label class="f-label">Industry / Source Name (if known)</label>
               <input type="text" class="f-control" placeholder="Name of factory, plant or establishment">
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-12 mb-3">
               <label class="f-label">Exact Location / Address of Pollution Source <span class="req">*</span></label>
               <input type="text" class="f-control" placeholder="Village, Ward, Street, Landmark, District, PIN Code">
             </div>
 
-
-            <div class="col-12">
-              <label class="f-label">Complaint Subject <span class="req">*</span></label>
-              <textarea class="f-control" rows="2" id="cSubject" placeholder="Brief subject of your complaint"
-                oninput="capitalizeWords(this); updateSubjectWordCount(this)"></textarea>
-              <div class="d-flex justify-content-end mt-1">
-                <span style="font-size:.7rem;color:var(--text-muted);" id="subjWordCnt">0/100 words</span>
-              </div>
-            </div>
 
             <div class="col-12">
               <label class="f-label">Detailed Description <span class="req">*</span></label>
@@ -552,7 +538,7 @@
               </div>
             </div>
 
-            <div class="col-12">
+            <div class="col-12 mt-3">
               <label class="f-label">Upload Supporting Evidence</label>
               <div class="upload-zone" onclick="document.getElementById('fileInp').click()">
                 <div style="font-size:2rem;color:var(--text-light);margin-bottom:8px;"><i
@@ -567,16 +553,6 @@
               <input type="file" id="fileInp" style="display:none;" multiple accept="image/*,video/*,.pdf,.doc,.docx"
                 onchange="showFiles(this)">
               <div id="fileList" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;"></div>
-            </div>
-
-
-
-            <div class="col-md-6 ">
-              <label class="f-label">Have you complained before?</label>
-              <div class="chips mt-1" id="prevChips">
-                <div class="chip" onclick="pickChip(this,'prevChips')">Yes</div>
-                <div class="chip sel" onclick="pickChip(this,'prevChips')">No</div>
-              </div>
             </div>
 
 
@@ -669,8 +645,8 @@
           <div class="d-flex align-items-start gap-2 mb-4">
             <input type="checkbox" id="declareCb"
               style="width:16px;height:16px;accent-color:var(--primary);margin-top:2px;flex-shrink:0;">
-            <label for="declareCb" style="font-size:.82rem;cursor:pointer;">I agree to the declaration above and confirm
-              all details are accurate and correct.</label>
+            <label for="declareCb" style="font-size:.82rem;cursor:pointer;">I agree to the <strong>Terms of
+                Service</strong> and confirm that all information submitted is genuine.</label>
           </div>
           <div class="d-flex justify-content-between flex-wrap gap-2">
             <button class="btn-o" onclick="goStep(2)"><i class="bi bi-arrow-left"></i> Back</button>
@@ -895,6 +871,7 @@
       document.getElementById('generatedNum').textContent = num;
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
   </script>
 </body>
 
