@@ -15,6 +15,10 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="css/dashboard.css">
+
+    <!-- ✅ ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 </head>
 
 <body>
@@ -37,17 +41,21 @@
         <!-- Menu Content -->
         <div class="sidebar-content">
             <ul class="nav flex-column">
-
-                <li class="nav-item mt-3 mb-1 nav-section-label">
-                    <span class="text-uppercase text-muted fw-bold ps-3" style="font-size: 0.75rem;">MAIN</span>
-                </li>
-
                 <li class="nav-item">
                     <a class="nav-link active" onclick="switchPage('dashboard', this)">
                         <i class="fas fa-th-large"></i> <span>Dashboard</span>
                     </a>
                 </li>
 
+                <li class="nav-item mt-3 mb-1 nav-section-label">
+                    <span class="text-uppercase text-muted fw-bold ps-3" style="font-size: 0.75rem;">MAIN</span>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" onclick="switchPage('grievance', this)">
+                        <i class="fas fa-th-large"></i> <span>Grievance Table</span>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" onclick="switchPage('employees', this)">
@@ -64,7 +72,6 @@
                         <i class="fas fa-file-pen"></i> <span>Manual Entry Form</span>
                     </a>
                 </li>
-
             </ul>
         </div>
     </nav>
@@ -91,7 +98,6 @@
 
             <div class="collapse navbar-collapse justify-content-end">
                 <ul class="navbar-nav align-items-center">
-
                     <!-- Notification Bell -->
                     <!-- <li class="nav-item me-3 position-relative">
                         <a class="" href="#">
@@ -139,28 +145,494 @@
                             <li><a class="dropdown-item text-danger" href="login.html">Logout</a></li>
                         </ul>
                     </li>
-
                 </ul>
             </div>
-
-
         </div>
     </nav>
 
     <!-- === MAIN CONTENT === -->
     <main class="main-content">
-
         <!-- PAGE 1: DASHBOARD -->
         <div id="dashboard" class="page-section active-section">
+            <div class="card profile-box border-0 rounded-3 overflow-hidden mb-4">
+                <!-- CARD HEADER -->
+                <div class="card-header header-card text-white py-3 mb-3">
+                    <h5 class="mb-0">
+                        <i class="fas fa-calendar-alt me-2"></i>Overall Status
+                    </h5>
+                </div>
+                <div class="row g-3 mb-4 p-4">
+                    <div class="col-6 col-md-4 col-xl-3">
+                        <div class="kpi-card kpi-primary">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="kpi-icon ki-primary"><i class="fa fa-folder-open"></i></div><span
+                                    class="kpi-change ch-up">+12%</span>
+                            </div>
+                            <div class="kpi-num">4,827</div>
+                            <div class="kpi-label">Total Complaints</div>
+                            <div class="kpi-sub">Since inception</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-xl-3">
+                        <div class="kpi-card kpi-accent">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="kpi-icon ki-accent"><i class="fa fa-hourglass-half"></i></div><span
+                                    class="kpi-change ch-down">+3</span>
+                            </div>
+                            <div class="kpi-num">915</div>
+                            <div class="kpi-label">Open / Pending</div>
+                            <div class="kpi-sub">Requires action</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-xl-3">
+                        <div class="kpi-card kpi-success">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="kpi-icon ki-success"><i class="fa fa-check-circle"></i></div><span
+                                    class="kpi-change ch-up">+8%</span>
+                            </div>
+                            <div class="kpi-num">3,912</div>
+                            <div class="kpi-label">Resolved</div>
+                            <div class="kpi-sub">81% resolution rate</div>
+                        </div>
+                    </div>
 
-            <div class="row mb-4">
+                    <div class="col-6 col-md-4 col-xl-3">
+                        <div class="kpi-card kpi-primary">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="kpi-icon ki-primary"><i class="fa fa-clock"></i></div>
+                            </div>
+                            <div class="kpi-num serif">18.4</div>
+                            <div class="kpi-label">Avg. Days to Resolve</div>
+                            <div class="kpi-sub">SOP target: 30 days</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--------------->
+
+            <div class="row g-3 mb-4">
                 <div class="col-12">
                     <div class="card profile-box border-0 rounded-3 overflow-hidden">
-
                         <!-- CARD HEADER -->
                         <div class="card-header header-card text-white py-3">
                             <h5 class="mb-0">
-                                <i class="fas fa-calendar-alt me-2"></i>Grievance Complaints
+                                <i class="fas fa-calendar-alt me-2"></i>Complaint Status - Regional Offices
+                            </h5>
+                        </div>
+
+                        <!-- BODY -->
+                        <div class="card-body p-4">
+                            <div class="row g-4 align-items-center">
+                                <div class="col-12">
+                                    <div class="table-scroll">
+                                        <table class="table table-hover align-middle text-center mb-0">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th class="fixed-col">SR No</th>
+                                                    <th>Office Name</th>
+                                                    <th>Total</th>
+                                                    <th>Forwarded</th>
+                                                    <th>Under Process</th>
+                                                    <th>Resloved</th>
+                                                    <th>Closed</th>
+                                                    <th>Rejected</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr>
+                                                    <td class="fixed-col">1</td>
+                                                    <td>Patiala</td>
+                                                    <td>300</td>
+                                                    <td>50</td>
+                                                    <td>40</td>
+                                                    <td>160</td>
+                                                    <td>48</td>
+                                                    <td>7</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="fixed-col">1</td>
+                                                    <td>Ludhiana</td>
+                                                    <td>300</td>
+                                                    <td>50</td>
+                                                    <td>40</td>
+                                                    <td>160</td>
+                                                    <td>48</td>
+                                                    <td>7</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="fixed-col">1</td>
+                                                    <td>Jalandhar</td>
+                                                    <td>300</td>
+                                                    <td>50</td>
+                                                    <td>40</td>
+                                                    <td>160</td>
+                                                    <td>48</td>
+                                                    <td>7</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="fixed-col">1</td>
+                                                    <td>Chandigarh</td>
+                                                    <td>300</td>
+                                                    <td>50</td>
+                                                    <td>40</td>
+                                                    <td>160</td>
+                                                    <td>48</td>
+                                                    <td>7</td>
+                                                </tr>
+
+
+                                                <!-- Add more rows as needed -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--------pagination---------->
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <div class="text-muted small">
+                                    Showing <strong>1</strong> to <strong>10</strong> of <strong>56</strong> entries
+                                </div>
+
+                                <nav aria-label="Table pagination">
+                                    <ul class="pagination pagination-clean mb-0">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </a>
+                                        </li>
+
+                                        <li class="page-item active">
+                                        </li>
+
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">1</a>
+                                        </li>
+
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">2</a>
+                                        </li>
+
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">3</a>
+                                        </li>
+
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!---------------------->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--------------->
+
+
+            <div class="row g-3 mb-4">
+                <div class="col-12">
+                    <div class="card profile-box border-0 rounded-3 overflow-hidden">
+                        <!-- CARD HEADER -->
+                        <div class="card-header header-card text-white py-3">
+                            <h5 class="mb-0">
+                                <i class="fas fa-calendar-alt me-2"></i>Monthly Trends
+                            </h5>
+                        </div>
+
+                        <!-- BODY -->
+                        <div class="card-body p-4">
+                            <!-- ✅ TOP TABS -->
+                            <div class="top-nav">
+                                <ul class="nav nav-pills" id="tabs">
+                                    <li class="nav-item">
+                                        <button class="nav-link active" data-bs-toggle="pill"
+                                            data-bs-target="#overview">Overview</button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button class="nav-link" data-bs-toggle="pill"
+                                            data-bs-target="#pendency">Pendency</button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button class="nav-link" data-bs-toggle="pill"
+                                            data-bs-target="#pollution">Pollution</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- ✅ TAB CONTENT -->
+                            <div class="tab-content">
+                                <!-- ✅ OVERVIEW TAB -->
+                                <div class="tab-pane fade show active" id="overview">
+                                    <!-- ROW 1 -->
+                                    <div class="row mt-3 mb-3">
+                                        <div class="col-md-12">
+                                            <div class="card p-3">
+                                                <div class="card-header">
+                                                    Monthly Complaint Trend
+                                                    <span class="badge badge-tag tag-green">AREA</span>
+                                                </div>
+                                                <div id="lineChart"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- ROW 2 -->
+                                    <div class="row mt-6 mb-3">
+
+                                        <div class="col-md-6">
+                                            <div class="card p-3">
+                                                <div class="card-header">
+                                                    Complaint Categories
+                                                    <span class="badge badge-tag tag-blue">DONUT</span>
+                                                </div>
+                                                <div id="donutChart"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="card p-3 h-100">
+                                                <div class="card-header">
+                                                    Pollution Types
+                                                    <span class="badge badge-tag tag-green">BAR</span>
+                                                </div>
+                                                <div id="barChart"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row mt-6 ">
+                                        <div class="col-md-6">
+                                            <div class="card p-3 h-100">
+                                                <div class="card-header">
+                                                    Gender Profile
+                                                    <span class="badge badge-tag tag-purple">PIE</span>
+                                                </div>
+                                                <div id="pieChart"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 ">
+                                            <div class="card p-3">
+                                                <div class="card-header">
+                                                    Satisfaction
+                                                    <span class="badge badge-tag tag-orange">RADIAL</span>
+                                                </div>
+                                                <div id="radialChart"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- ✅ PENDENCY TAB -->
+                                <div class="tab-pane fade" id="pendency">
+                                    <div class="row g-3">
+                                        <!-- Pendency Ageing -->
+                                        <div class="col-md-6 col-xl-6 col-12 mt-5">
+                                            <div class="card-box">
+                                                <div class="card-header-custom">
+                                                    <span>Pendency Ageing</span>
+                                                    <span class="active-text">915 active</span>
+                                                </div>
+
+                                                <div class="row-item">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="dot green"></div>
+                                                        <span>&lt; 30 Days</span>
+                                                    </div>
+                                                    <div class="progress w-50">
+                                                        <div class="progress-bar green" style="width: 70%"></div>
+                                                    </div>
+                                                    <span class="value">592</span>
+                                                </div>
+
+                                                <div class="row-item">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="dot yellow"></div>
+                                                        <span>30–60 Days</span>
+                                                    </div>
+                                                    <div class="progress w-50">
+                                                        <div class="progress-bar yellow" style="width: 30%"></div>
+                                                    </div>
+                                                    <span class="value">181</span>
+                                                </div>
+
+                                                <div class="row-item">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="dot orange"></div>
+                                                        <span>60–90 Days</span>
+                                                    </div>
+                                                    <div class="progress w-50">
+                                                        <div class="progress-bar orange" style="width: 20%"></div>
+                                                    </div>
+                                                    <span class="value">92</span>
+                                                </div>
+
+                                                <div class="row-item">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="dot red"></div>
+                                                        <span>&gt; 90 Days</span>
+                                                    </div>
+                                                    <div class="progress w-50">
+                                                        <div class="progress-bar red" style="width: 10%"></div>
+                                                    </div>
+                                                    <span class="value">50</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Office-wise Pending -->
+                                        <div class="col-md-6 col-xl-6 col-12 mt-5">
+                                            <div class="card-box">
+                                                <div class="card-header-custom">Office-wise Pending</div>
+
+                                                <div class="category-item">
+                                                    <div class="category-head">
+                                                        <span>Ludhiana Zone</span>
+                                                        <span class="text-orange">285</span>
+                                                    </div>
+                                                    <div class="progress">
+                                                        <div class="progress-bar orange" style="width: 85%"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="category-item">
+                                                    <div class="category-head">
+                                                        <span>Amritsar Zone</span>
+                                                        <span class="text-orange">210</span>
+                                                    </div>
+                                                    <div class="progress">
+                                                        <div class="progress-bar orange" style="width: 70%"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="category-item">
+                                                    <div class="category-head">
+                                                        <span>Jalandhar Zone</span>
+                                                        <span class="text-orange">195</span>
+                                                    </div>
+                                                    <div class="progress">
+                                                        <div class="progress-bar orange" style="width: 65%"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="category-item">
+                                                    <div class="category-head">
+                                                        <span>Patiala Zone</span>
+                                                        <span class="text-orange">142</span>
+                                                    </div>
+                                                    <div class="progress">
+                                                        <div class="progress-bar orange" style="width: 50%"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="category-item">
+                                                    <div class="category-head">
+                                                        <span>Mohali Zone</span>
+                                                        <span class="text-orange">83</span>
+                                                    </div>
+                                                    <div class="progress">
+                                                        <div class="progress-bar orange" style="width: 30%"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ✅ POLLUTION TAB -->
+                                <div class="tab-pane fade" id="pollution">
+                                    <!-- By Category -->
+                                    <div class="col-md-6 col-xl-6 col-12 mt-5">
+                                        <div class="card-box">
+                                            <div class="card-header-custom">By Category</div>
+
+                                            <div class="category-item">
+                                                <div class="category-head">
+                                                    <span>Water Pollution</span>
+                                                    <span class="text-green">1840</span>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar light-green" style="width: 80%"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="category-item">
+                                                <div class="category-head">
+                                                    <span>Air Pollution</span>
+                                                    <span class="text-green">1210</span>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar green" style="width: 60%"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="category-item">
+                                                <div class="category-head">
+                                                    <span>Solid Waste</span>
+                                                    <span class="text-green">820</span>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar green" style="width: 45%"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="category-item">
+                                                <div class="category-head">
+                                                    <span>Noise Pollution</span>
+                                                    <span class="text-green">540</span>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar green" style="width: 30%"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="category-item">
+                                                <div class="category-head">
+                                                    <span>Hazardous</span>
+                                                    <span class="text-green">420</span>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar green" style="width: 25%"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!------------------->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- PAGE 2: grivence -->
+        <div id="grievance" class="page-section">
+            <div class="row mb-4">
+                <div class="d-flex justify-content-end mb-4">
+                    <a href="officier_tracking-process.html" class="btn-glow">
+                    <i class="fa-solid fa-user-tie"></i> Officer Tracking Process
+                    </a>
+                </div>
+                
+                <div class="col-12">
+                    <div class="card profile-box border-0 rounded-3 overflow-hidden">
+                        <!-- CARD HEADER -->
+                        <div class="card-header header-card text-white py-3">
+                            <h5 class="mb-0">
+                                <i class="fas fa-calendar-alt me-2"></i>Grievance / Appeal Received
                             </h5>
                         </div>
 
@@ -177,6 +649,7 @@
                                                     <th>Phone Number</th>
                                                     <th>District</th>
                                                     <th>Pollution Type</th>
+                                                    <th>Grievance Type</th>
                                                     <th>View</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -187,9 +660,14 @@
                                                     <td class="fixed-col">1</td>
                                                     <td>Rohit Sharma</td>
                                                     <td>9876543210</td>
-                                                    <td>Noida</td>
-                                                    <td><span class="badge bg-warning text-dark">Air Pollution</span>
+                                                    <td>Patiala</td>
+                                                    <td><span class="badge"
+                                                            style="background-color:#d4f5e2; color:#0d7a55;">Air
+                                                            Pollution</span>
                                                     </td>
+                                                    <td><span class="badge"
+                                                            style="background-color:#fdf3d4; color:#d4920a;">Appeal
+                                                            1</span></td>
                                                     <td>
                                                         <button class="btn btn-sm btn-info text-white"
                                                             data-bs-toggle="modal" data-bs-target="#viewComplaintModal">
@@ -198,8 +676,8 @@
                                                     </td>
                                                     <td>
 
-                                                        <a href="complaint-processing.html"
-                                                            class="btn btn-sm btn-primary">
+                                                        <a href="first-appeal.html" class="btn btn-sm "
+                                                            style="background-color:#0d7a55; color: #fff">
                                                             <i class="fas fa-tasks me-1"></i> Process
                                                         </a>
                                                     </td>
@@ -209,8 +687,14 @@
                                                     <td class="fixed-col">2</td>
                                                     <td>Anita Verma</td>
                                                     <td>9123456780</td>
-                                                    <td>Ghaziabad</td>
-                                                    <td><span class="badge bg-primary">Water Pollution</span></td>
+                                                    <td>Chandigarh</td>
+                                                    <td><span class="badge"
+                                                            style="background-color:#d4f5e2; color:#0d7a55;">Water
+                                                            Pollution</span></td>
+                                                    <td><span class="badge"
+                                                            style="background-color:#d4f5e2; color:#0d7a55;">Grievance</span>
+                                                    </td>
+                                                    </td>
                                                     <td>
                                                         <button class="btn btn-sm btn-info text-white"
                                                             data-bs-toggle="modal" data-bs-target="#viewComplaintModal">
@@ -219,8 +703,35 @@
                                                     </td>
                                                     <td>
 
-                                                        <a href="complaint-processing.html"
-                                                            class="btn btn-sm btn-primary">
+                                                        <a href="complaint-processing.html" class="btn btn-sm"
+                                                            style="background-color:#0d7a55; color: #fff;">
+                                                            <i class="fas fa-tasks me-1"></i>Process
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="fixed-col">2</td>
+                                                    <td>Anita Verma</td>
+                                                    <td>9123456780</td>
+                                                    <td>Ludhiana</td>
+                                                    <td><span class="badge"
+                                                            style="background-color:#d4f5e2; color:#0d7a55;">Water
+                                                            Pollution</span></td>
+                                                    <td><span class="badge"
+                                                            style="background-color:#fde8e8; color:#c0392b;">Appeal
+                                                            2</span></td>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-info text-white"
+                                                            data-bs-toggle="modal" data-bs-target="#viewComplaintModal">
+                                                            <i class="fas fa-eye"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+
+                                                        <a href="second-appeal.html" class="btn btn-sm"
+                                                            style="background-color:#0d7a55; color: #fff;">
                                                             <i class="fas fa-tasks me-1"></i>Process
                                                         </a>
                                                     </td>
@@ -274,9 +785,7 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
 
         <!-- View Details Modal -->
         <div class="modal fade" id="viewComplaintModal" tabindex="-1">
@@ -327,9 +836,8 @@
             </div>
         </div>
 
-
         <!-- Other pages... (Simplified for brevity) -->
-        <!-- PAGE 2: EMPLOYEES -->
+        <!-- PAGE 3: EMPLOYEES -->
         <div id="employees" class="page-section">
             <h3>My Profile</h3>
             <div class="custom-accordion mb-4">
@@ -448,10 +956,10 @@
                 </div>
             </div>
         </div>
-        <div id="settings" class="page-section">
-            <h3>Coming Soon...</h3>
-            <p>Cotent goes soon.......</p>
-        </div>
+
+
+
+
 
 
     </main>
@@ -531,6 +1039,58 @@
                 item.classList.toggle("active");
             });
         });
+
+        // ✅ LINE CHART
+        new ApexCharts(document.querySelector("#lineChart"), {
+            chart: { type: 'area', height: 300 },
+            series: [
+                { name: "Received", data: [310, 280, 340, 390, 420, 380, 450, 470, 430, 510, 490, 520] },
+                { name: "Resolved", data: [270, 240, 300, 340, 380, 360, 410, 430, 400, 470, 460, 510] }
+            ],
+            xaxis: { categories: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'] }
+        }).render();
+
+        // ✅ DONUT
+        new ApexCharts(document.querySelector("#donutChart"), {
+            chart: { type: 'donut' },
+            series: [30, 22, 16, 14, 10, 8],
+            labels: ['Industrial', 'Air', 'Noise', 'Waste', 'Water', 'Others']
+        }).render();
+
+        // ✅ BAR
+        new ApexCharts(document.querySelector("#barChart"), {
+            chart: { type: 'bar' },
+            series: [{ data: [1420, 980, 650, 480, 320, 210, 158] }],
+            xaxis: { categories: ['Water', 'Air', 'Noise', 'Solid', 'Ground', 'Soil', 'Hazard'] }
+        }).render();
+
+        // ✅ PIE
+        new ApexCharts(document.querySelector("#pieChart"), {
+            chart: { type: 'pie' },
+            series: [68.5, 28, 3.5],
+            labels: ['Male', 'Female', 'Other']
+        }).render();
+
+        // ✅ RADIAL
+        new ApexCharts(document.querySelector("#radialChart"), {
+            chart: { type: 'radialBar' },
+            series: [75],
+            labels: ['Satisfaction']
+        }).render();
+
+        // ✅ PENDENCY
+        new ApexCharts(document.querySelector("#pendencyChart"), {
+            chart: { type: 'bar' },
+            series: [{ data: [120, 90, 60, 30] }],
+            xaxis: { categories: ['<30', '30-60', '60-90', '90+'] }
+        }).render();
+
+        // ✅ POLLUTION TAB
+        new ApexCharts(document.querySelector("#pollutionChart"), {
+            chart: { type: 'donut' },
+            series: [40, 25, 20, 15],
+            labels: ['Air', 'Water', 'Noise', 'Soil']
+        }).render();
     </script>
 
 </body>

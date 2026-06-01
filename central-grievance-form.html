@@ -281,7 +281,7 @@
                         <div class="col-md-8">
                             <label class="f-label">Source of Complaint <span class="req">*</span></label>
                             <div style="display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;">
-                                <div class="form-check">
+                                <!-- <div class="form-check">
                                     <input class="form-check-input" type="radio" name="source" id="srcCitizen"
                                         value="citizen" checked>
                                     <label class="form-check-label" for="srcCitizen">Citizen</label>
@@ -300,8 +300,29 @@
                                     <input class="form-check-input" type="radio" name="source" id="srcOther"
                                         value="other">
                                     <label class="form-check-label" for="srcOther">Other</label>
-                                </div>
-                            </div>
+                                </div> -->
+                                
+                                <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="source" value="social">
+                                        <label class="form-check-label">Social Media (Platforms)</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="source" value="email">
+                                        <label class="form-check-label">Email</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="source" value="phone">
+                                        <label class="form-check-label">Phone</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="source" value="whatsapp">
+                                        <label class="form-check-label">WhatsApp</label>
+                                    </div>
+                              </div>
+
                             <input type="text" class="f-control" placeholder="Specify if Other" id="srcOtherText"
                                 style="margin-top:10px;display:none;">
                         </div>
@@ -530,6 +551,7 @@
                                 id="siteAddress"></textarea>
                         </div>
 
+                        
                         <div class="col-12">
                             <label class="f-label">Media File / Geo-coordinates</label>
                             <div class="upload-zone" onclick="document.getElementById('mediaFile').click()">
@@ -543,6 +565,16 @@
                             <input type="file" id="mediaFile" style="display:none;" accept="image/*,video/*"
                                 onchange="showMedia(this)">
                             <div id="mediaList" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;"></div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="f-label">Latitude</label>
+                            <input type="text" class="f-control" id="latitude" placeholder="e.g. 28.6139">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="f-label">Longitude</label>
+                            <input type="text" class="f-control" id="longitude" placeholder="e.g. 77.2090">
                         </div>
                     </div>
 
@@ -590,7 +622,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="f-label">Assign Date <span class="req">*</span></label>
-                            <input type="date" class="f-control" id="dateReceipt">
+                            <input type="text" class="f-control" id="assignDate" readonly>
                         </div>
 
                     </div>
@@ -715,6 +747,10 @@
             document.getElementById('progressBar').style.width = pcts[n];
 
             if (n === 4) {
+                
+                setAssignDate();  // ✅ THIS LINE ADDED
+                document.getElementById('rv-source').textContent =
+                document.querySelector('input[name="source"]:checked')?.value || '—';
                 document.getElementById('rv-source').textContent = document.querySelector('input[name="source"]:checked').value || '—';
                 document.getElementById('rv-type').textContent = document.querySelector('input[name="pollutionType"]:checked').value || '—';
                 document.getElementById('rv-subject').textContent = document.getElementById('compSubject').value || '—';
@@ -768,6 +804,16 @@
             document.getElementById('generatedNum').textContent = num;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+
+       function setAssignDate() {
+            const today = new Date();
+            const formatted = today.toISOString().split('T')[0]; // YYYY-MM-DD
+            document.getElementById('assignDate').value = formatted;
+        }
+
+
+
     </script>
 </body>
 
