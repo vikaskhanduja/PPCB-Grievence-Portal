@@ -16,6 +16,8 @@
 
     <link rel="stylesheet" href="css/dashboard.css">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
     <!-- ✅ ApexCharts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
@@ -72,6 +74,17 @@
                         <i class="fas fa-file-pen"></i> <span>Manual Entry Form</span>
                     </a>
                 </li>
+
+                <li class="nav-item mt-3 mb-1 nav-section-label">
+                    <span class="text-uppercase text-muted fw-bold ps-3" style="font-size: 0.75rem;">Query</span>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" onclick="switchPage('query', this)">
+                        <i class="fas fa-th-large"></i> <span>Raise Query</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
     </nav>
@@ -92,31 +105,11 @@
                     Punjab Pollution Control Board
                 </span>
             </div>
-            ``
 
             <!-- Search / Title -->
 
             <div class="collapse navbar-collapse justify-content-end">
                 <ul class="navbar-nav align-items-center">
-                    <!-- Notification Bell -->
-                    <!-- <li class="nav-item me-3 position-relative">
-                        <a class="" href="#">
-                            <i class="far fa-bell fa-lg"></i>
-                            <span
-                                class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
-                        </a>
-                    </li> -->
-
-                    <!-- Messages Icon -->
-                    <!-- <li class="nav-item me-3 position-relative">
-                        <a class="" href="#">
-                            <i class="far fa-envelope fa-lg"></i>
-
-                            
-                            <span class="position-absolute top-0 start-100 translate-middle p-1"></span>
-                        </a>
-                    </li> -->
-
                     <!-- Profile Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
@@ -168,9 +161,8 @@
                                 <div class="kpi-icon ki-primary"><i class="fa fa-folder-open"></i></div><span
                                     class="kpi-change ch-up">+12%</span>
                             </div>
-                            <div class="kpi-num">4,827</div>
-                            <div class="kpi-label">Total Complaints</div>
-                            <div class="kpi-sub">Since inception</div>
+                            <div class="kpi-num">15</div>
+                            <div class="kpi-label">Complaince Check pending</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-4 col-xl-3">
@@ -179,9 +171,8 @@
                                 <div class="kpi-icon ki-accent"><i class="fa fa-hourglass-half"></i></div><span
                                     class="kpi-change ch-down">+3</span>
                             </div>
-                            <div class="kpi-num">915</div>
-                            <div class="kpi-label">Open / Pending</div>
-                            <div class="kpi-sub">Requires action</div>
+                            <div class="kpi-num">13</div>
+                            <div class="kpi-label">Personal Hearing Pending</div>
                         </div>
                     </div>
                     <div class="col-6 col-md-4 col-xl-3">
@@ -190,9 +181,8 @@
                                 <div class="kpi-icon ki-success"><i class="fa fa-check-circle"></i></div><span
                                     class="kpi-change ch-up">+8%</span>
                             </div>
-                            <div class="kpi-num">3,912</div>
-                            <div class="kpi-label">Resolved</div>
-                            <div class="kpi-sub">81% resolution rate</div>
+                            <div class="kpi-num">18</div>
+                            <div class="kpi-label">SCN Issued</div>
                         </div>
                     </div>
 
@@ -201,23 +191,37 @@
                             <div class="d-flex justify-content-between align-items-start mb-3">
                                 <div class="kpi-icon ki-primary"><i class="fa fa-clock"></i></div>
                             </div>
-                            <div class="kpi-num serif">18.4</div>
-                            <div class="kpi-label">Avg. Days to Resolve</div>
-                            <div class="kpi-sub">SOP target: 30 days</div>
+                            <div class="kpi-num serif">169</div>
+                            <div class="kpi-label">Under Process</div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-xl-3">
+                        <div class="kpi-card kpi-primary">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="kpi-icon ki-primary"><i class="fa fa-clock"></i></div>
+                            </div>
+                            <div class="kpi-num serif">9</div>
+                            <div class="kpi-label">Visit Pending</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--------------->
+            <!------------------------>
 
             <div class="row g-3 mb-4">
                 <div class="col-12">
                     <div class="card profile-box border-0 rounded-3 overflow-hidden">
                         <!-- CARD HEADER -->
-                        <div class="card-header header-card text-white py-3">
+                        <div
+                            class="card-header header-card text-white py-3 d-flex align-items-center justify-content-between">
                             <h5 class="mb-0">
                                 <i class="fas fa-calendar-alt me-2"></i>Complaint Status - Regional Offices
                             </h5>
+                            <button class="btn" onclick="downloadExcel()"
+                                style="background-color: #fff; color:#000; font-weight: 600;">
+                                Download Excel Report
+                            </button>
                         </div>
 
                         <!-- BODY -->
@@ -225,7 +229,7 @@
                             <div class="row g-4 align-items-center">
                                 <div class="col-12">
                                     <div class="table-scroll">
-                                        <table class="table table-hover align-middle text-center mb-0">
+                                        <table class="table table-hover align-middle text-center mb-0" id="reportTable">
                                             <thead class="table-dark">
                                                 <tr>
                                                     <th class="fixed-col">SR No</th>
@@ -365,6 +369,10 @@
                                         <button class="nav-link" data-bs-toggle="pill"
                                             data-bs-target="#pollution">Pollution</button>
                                     </li>
+                                    <li class="nav-item">
+                                        <button class="nav-link" data-bs-toggle="pill"
+                                            data-bs-target="#grievancestats">Grievance Category</button>
+                                    </li>
                                 </ul>
                             </div>
                             <!-- ✅ TAB CONTENT -->
@@ -376,10 +384,10 @@
                                         <div class="col-md-12">
                                             <div class="card p-3">
                                                 <div class="card-header">
-                                                    Monthly Complaint Trend
-                                                    <span class="badge badge-tag tag-green">AREA</span>
+                                                    District Wise Grievance Categories
+                                                    <!-- <span class="badge badge-tag tag-green">AREA</span> -->
                                                 </div>
-                                                <div id="lineChart"></div>
+                                                <div id="chart"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -390,12 +398,38 @@
                                         <div class="col-md-6">
                                             <div class="card p-3">
                                                 <div class="card-header">
-                                                    Complaint Categories
-                                                    <span class="badge badge-tag tag-blue">DONUT</span>
+                                                    Action Taken Report
+                                                    <!-- <span class="badge badge-tag tag-blue">DONUT</span> -->
                                                 </div>
-                                                <div id="donutChart"></div>
+                                                <!-- <div id="donutChart"></div> -->
+                                                <div id="atrDonutChart"></div>
                                             </div>
                                         </div>
+
+                                        <div class="col-md-6 ">
+                                            <div class="card p-3">
+                                                <div class="card-header">
+                                                    Satisfaction Analysis
+                                                    <!-- <span class="badge badge-tag tag-orange">RADIAL</span> -->
+                                                </div>
+                                                <!-- <div id="radialChart"></div> -->
+                                                <div id="satisfactionChart"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row mt-6 ">
+
+                                        <!-- <div class="col-md-6">
+                                            <div class="card p-3 h-100">
+                                                <div class="card-header">
+                                                    Gender Profile
+                                                    <span class="badge badge-tag tag-purple">PIE</span>
+                                                </div>
+                                                <div id="pieChart"></div>
+                                            </div>
+                                        </div> -->
 
                                         <div class="col-md-6">
                                             <div class="card p-3 h-100">
@@ -404,29 +438,6 @@
                                                     <span class="badge badge-tag tag-green">BAR</span>
                                                 </div>
                                                 <div id="barChart"></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row mt-6 ">
-                                        <div class="col-md-6">
-                                            <div class="card p-3 h-100">
-                                                <div class="card-header">
-                                                    Gender Profile
-                                                    <span class="badge badge-tag tag-purple">PIE</span>
-                                                </div>
-                                                <div id="pieChart"></div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 ">
-                                            <div class="card p-3">
-                                                <div class="card-header">
-                                                    Satisfaction
-                                                    <span class="badge badge-tag tag-orange">RADIAL</span>
-                                                </div>
-                                                <div id="radialChart"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -545,6 +556,23 @@
                                                 </div>
                                             </div>
                                         </div>
+
+
+                                        <!------office-wise-pendency----->
+                                        <div class="col-md-12">
+                                            <div class="card p-3 h-100">
+                                                <div class="card-header">
+                                                    Office wise Pendency
+                                                    <!-- <span class="badge badge-tag tag-purple">PIE</span> -->
+                                                </div>
+                                                <div class="chart-wrapper">
+                                                    <div id="stackedChart"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
                                     </div>
                                 </div>
 
@@ -609,6 +637,22 @@
                                     </div>
                                 </div>
                                 <!------------------->
+
+                                <!-- ✅ GRIEVANCE TAB -->
+                                <div class="tab-pane fade" id="grievancestats">
+                                    <!-- By Category -->
+                                    <div class="row mt-3 mb-3">
+                                        <div class="col-md-12">
+                                            <div class="card p-3">
+                                                <div class="card-header">
+                                                    PPCB Grievance Categories
+                                                    <!-- <span class="badge badge-tag tag-green">AREA</span> -->
+                                                </div>
+                                                <div id="grievanceChart"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -617,16 +661,15 @@
 
         </div>
 
-
         <!-- PAGE 2: grivence -->
         <div id="grievance" class="page-section">
             <div class="row mb-4">
                 <div class="d-flex justify-content-end mb-4">
                     <a href="officier_tracking-process.html" class="btn-glow">
-                    <i class="fa-solid fa-user-tie"></i> Officer Tracking Process
+                        <i class="fa-solid fa-user-tie"></i> Officer Tracking Process
                     </a>
                 </div>
-                
+
                 <div class="col-12">
                     <div class="card profile-box border-0 rounded-3 overflow-hidden">
                         <!-- CARD HEADER -->
@@ -675,7 +718,6 @@
                                                         </button>
                                                     </td>
                                                     <td>
-
                                                         <a href="first-appeal.html" class="btn btn-sm "
                                                             style="background-color:#0d7a55; color: #fff">
                                                             <i class="fas fa-tasks me-1"></i> Process
@@ -799,7 +841,34 @@
                     </div>
 
                     <div class="modal-body">
+                        <div class="row mb-4">
+                                <div class="col-md-6 ">
+                                    <label class="f-label">Assign to SDO <span class="req">*</span></label>
+                                    <select class="f-select" id="cp_District">
+                                        <option value="">-- Select SDO --</option>
+                                        <option>option 1</option>
+                                        <option>option 2</option>
+                                        <option>option 3</option>
+                                        <option>option 4</option>
+                                        <option>option 5</option>
+                                    </select>
+                                </div>
+    
+                                <div class="col-md-6">
+                                   <label class="f-label">Assign to RO Office <span class="req">*</span></label>
+                                    <select class="f-select" id="cp_District">
+                                        <option value="">-- Select RO --</option>
+                                        <option>option 1</option>
+                                        <option>option 2</option>
+                                        <option>option 3</option>
+                                        <option>option 4</option>
+                                        <option>option 5</option>
+                                    </select>
+                                </div>
+                        </div>
+
                         <div class="row g-3">
+                            
                             <div class="col-md-6">
                                 <strong>Complainant Name:</strong>
                                 <p>Rohit Sharma</p>
@@ -837,6 +906,7 @@
         </div>
 
         <!-- Other pages... (Simplified for brevity) -->
+
         <!-- PAGE 3: EMPLOYEES -->
         <div id="employees" class="page-section">
             <h3>My Profile</h3>
@@ -958,9 +1028,119 @@
         </div>
 
 
+        <!-- PAGE 3: raise query -->
+        <div id="query" class="page-section">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card profile-box border-0 rounded-3 overflow-hidden">
+                        <!-- CARD HEADER -->
+                        <div class="card-header header-card text-white py-3">
+                            <h5 class="mb-0">
+                                <i class="fas fa-calendar-alt me-2"></i>Raise Query
+                            </h5>
+                        </div>
 
+                        <!-- BODY -->
+                        <div class="card-body p-4">
+                            <div class="row g-4 align-items-center">
+                                <div class="col-12">
+                                    <div class="table-scroll">
+                                        <table class="table table-hover align-middle text-center mb-0">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th class="fixed-col">SR No</th>
+                                                    <th>Complaint Name</th>
+                                                    <th>View</th>
 
+                                                </tr>
+                                            </thead>
 
+                                            <tbody>
+                                                <tr>
+                                                    <td class="fixed-col">1</td>
+                                                    <td>Rohit Sharma</td>
+
+                                                    <td>
+                                                        <button class="btn btn-primary" data-bs-toggle="modal"
+                                                            data-bs-target="#raiseQueryModal">
+                                                            View More
+                                                        </button>
+                                                    </td>
+                                                    <!-- Add more rows as needed -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--------pagination---------->
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <div class="text-muted small">
+                                    Showing <strong>1</strong> to <strong>10</strong> of <strong>56</strong> entries
+                                </div>
+
+                                <nav aria-label="Table pagination">
+                                    <ul class="pagination pagination-clean mb-0">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </a>
+                                        </li>
+
+                                        <li class="page-item active">
+                                        </li>
+
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">1</a>
+                                        </li>
+
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">2</a>
+                                        </li>
+
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">3</a>
+                                        </li>
+
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!---------------------->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= RAISE QUERY MODAL ================= -->
+                <div class="modal fade" id="raiseQueryModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title">Raise Query</h5>
+                                <button class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <textarea id="queryText" class="form-control" placeholder="Enter query"></textarea>
+                                <div class="alert alert-warning mt-3">
+                                    Respond within <b>5 days</b>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" onclick="submitQuery()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
 
     </main>
 
@@ -1041,21 +1221,424 @@
         });
 
         // ✅ LINE CHART
-        new ApexCharts(document.querySelector("#lineChart"), {
-            chart: { type: 'area', height: 300 },
-            series: [
-                { name: "Received", data: [310, 280, 340, 390, 420, 380, 450, 470, 430, 510, 490, 520] },
-                { name: "Resolved", data: [270, 240, 300, 340, 380, 360, 410, 430, 400, 470, 460, 510] }
+        var options = {
+            series: [{
+                name: "Assigned Count",
+                data: [
+                    308, 166, 118, 101, 100, 96, 85, 79, 77, 66, 60, 56, 52, 49, 49, 43, 38, 33, 27, 22, 15, 11, 9, 8, 6, 6, 5
+                ]
+            }],
+
+            chart: {
+                type: 'bar',
+                height: 800
+            },
+
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    distributed: true,
+                    borderRadius: 5,
+                    barHeight: '65%'
+                }
+            },
+
+            colors: [
+                "#008FFB", "#00E396", "#FEB019", "#FF4560", "#775DD0",
+                "#3F51B5", "#546E7A", "#D4526E", "#8D5B4C", "#F86624",
+                "#D7263D", "#1B998B", "#2E294E", "#F46036", "#E2C044",
+                "#4CAF50", "#9C27B0", "#03A9F4", "#FF9800", "#795548",
+                "#607D8B", "#E91E63", "#CDDC39", "#FF5722", "#009688",
+                "#673AB7", "#2196F3"
             ],
-            xaxis: { categories: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'] }
-        }).render();
+
+            dataLabels: {
+                enabled: true
+            },
+
+            xaxis: {
+                categories: [
+                    "RO Mohali", "RO-3 Ludhiana", "RO Patiala", "RO Bathinda", "RO Amritsar",
+                    "RO-2 Jalandhar", "RO-2 Ludhiana", "RO Sangrur", "RO-4 Ludhiana",
+                    "RO Hoshiarpur", "RO Batala", "RO Ropar", "RO-1 Ludhiana",
+                    "RO-1 Jalandhar", "RO Fatehgarh Sahib", "RO Muktsar",
+                    "RO Tarn Taran", "ADO", "RO Barnala", "RO Faridkot",
+                    "HQ-3", "ZO-1 Patiala", "CEE Jalandhar", "ZO-2 Ludhiana",
+                    "ZO-1 Ludhiana", "HQ-2", "ZO-2 Patiala"
+                ],
+
+                // ✅ Horizontal axis label
+                title: {
+                    text: "Count of Assigned",
+                    style: {
+                        fontSize: '14px',
+                        fontWeight: 600
+                    }
+                }
+            },
+
+            yaxis: {
+                // ✅ Vertical axis label
+                title: {
+                    text: "Assigned To (Locations)",
+                    style: {
+                        fontSize: '14px',
+                        fontWeight: 600
+                    }
+                }
+            },
+
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val + " Assignments";
+                    }
+                }
+            },
+
+            responsive: [
+                {
+                    breakpoint: 768,
+                    options: {
+                        chart: { height: 400 }
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    options: {
+                        chart: { height: 350 },
+                        xaxis: {
+                            labels: { style: { fontSize: '10px' } }
+                        }
+                    }
+                }
+            ]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+
+
+        // Office wise Pendency
+        const dataValues = [
+            364, 349, 316, 218, 195, 178, 169, 167, 142, 134,
+            133, 124, 122, 120, 106, 100, 86, 79, 66, 66,
+            64, 58, 47, 45, 22, 8, 5
+        ];
+
+        const maxValue = Math.max(...dataValues);
+
+        // ✅ create stacked data
+        const remainingValues = dataValues.map(val => maxValue - val);
+
+        var options = {
+            series: [
+                {
+                    name: 'Pending',
+                    data: dataValues
+                },
+                {
+                    name: 'Remaining',
+                    data: remainingValues
+                }
+            ],
+
+            chart: {
+                type: 'bar',
+                height: 500,
+                stacked: true,
+                toolbar: { show: true }
+            },
+
+            plotOptions: {
+                bar: {
+                    columnWidth: '50%',
+                    borderRadius: 3
+                }
+            },
+
+            // ✅ MULTI-COLOR STACK
+            colors: [
+                '#42A5F5',   // Pending (blue)
+                '#E3F2FD'    // Remaining (light)
+            ],
+
+            dataLabels: {
+                enabled: false
+            },
+
+            xaxis: {
+                categories: [
+                    "HO-3", "RO-4 Ludhiana", "CEE Bathinda", "ZO-1 Ludhiana", "EE Air Lab",
+                    "HQ-3", "RO-2 Ludhiana", "RO Ropar", "RO Patiala", "ADO",
+                    "ZO-2 Ludhiana", "RO-3 Ludhiana", "RO-4 Ludhiana", "RO-1 Ludhiana",
+                    "RO-2 Jalandhar", "CVO CEE Ludhiana", "ZO-1 Patiala", "RO Hoshiarpur",
+                    "RO Fatehgarh Sahib", "RO Tarn Taran", "ZO-2 Patiala", "RO Mohali",
+                    "CEE Ludhiana", "RO Sangrur", "ZO-1 Patiala", "RO Amritsar", "RO Muktsar"
+                ],
+                labels: {
+                    rotate: -45,
+                    style: {
+                        fontSize: '12px'
+                    }
+                }
+            },
+
+            yaxis: {
+                title: {
+                    text: "Average Pendency"
+                }
+            },
+
+            tooltip: {
+                y: {
+                    formatter: val => val.toFixed(1)
+                }
+            },
+
+            legend: {
+                position: 'top'
+            },
+
+            responsive: [
+                {
+                    breakpoint: 768,
+                    options: {
+                        chart: { height: 400 },
+                        xaxis: {
+                            labels: { rotate: -30 }
+                        }
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    options: {
+                        chart: { height: 350 },
+                        xaxis: {
+                            labels: {
+                                rotate: -20,
+                                style: { fontSize: '10px' }
+                            }
+                        }
+                    }
+                }
+            ]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#stackedChart"), options);
+        chart.render();
+
+
+        // ✅ Grievance wise
+        var options = {
+            series: [{
+                name: "No. of Grievances",
+                data: [
+                    273, 226, 180, 164, 138, 134, 80, 71, 62, 53, 52, 51, 49, 48, 35,
+                    21, 18, 18, 15, 13, 10, 10, 9, 8, 7, 5, 3, 3, 1, 1, 0
+                ]
+            }],
+
+            chart: {
+                type: 'bar',
+                height: 1000,
+                background: '#ffffff'   // ✅ better for black labels
+            },
+
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    distributed: true,
+                    borderRadius: 4,
+                    barHeight: '60%'
+                }
+            },
+
+            // ✅ Improved multicolor palette
+            colors: [
+                "#4FC3F7", "#81C784", "#FFB74D", "#E57373", "#BA68C8",
+                "#4DB6AC", "#FFF176", "#F06292", "#90A4AE", "#AED581",
+                "#7986CB", "#FFD54F", "#FF8A65", "#9575CD", "#4DD0E1"
+            ],
+
+            dataLabels: {
+                enabled: true,
+                style: {
+                    colors: ['#000'],   // ✅ black for readability
+                    fontSize: '12px',
+                    fontWeight: 500
+                }
+            },
+
+            xaxis: {
+                categories: [
+                    "Miscellaneous", "Noise", "Effluent Discharge", "Smoke Emissions",
+                    "Unidentified", "Garbage-related", "Garbage Burning",
+                    "Effluent Discharges & Emissions", "PCB Officials",
+                    "Emissions & Noise Pollution", "MF related", "Mining",
+                    "Dairy/Poultry Farm related", "Hazardous Waste", "Stubble Burning",
+                    "Biomedical Waste", "Plastic-related", "Deforestation",
+                    "DS Sets", "Dust-related", "RMC-related", "Groundwater",
+                    "Effluent Discharge, Emissions & Noise", "Hot mix plant",
+                    "Fly ash-related", "Effluent Discharge & Noise",
+                    "Road Dust", "CCR related", "Miscellaneous", "Land Degradation",
+                    "Drinking water"
+                ],
+
+                // ✅ HORIZONTAL AXIS LABEL (FIXED)
+                title: {
+                    text: "Count of Grievances",
+                    style: {
+                        color: '#000',
+                        fontSize: '14px',
+                        fontWeight: 600
+                    }
+                },
+
+                labels: {
+                    style: {
+                        colors: '#000',
+                        fontSize: '12px'
+                    }
+                }
+            },
+
+            yaxis: {
+                // ✅ VERTICAL AXIS LABEL (FIXED)
+                title: {
+                    text: "Grievance Category",
+                    style: {
+                        color: '#000',
+                        fontSize: '14px',
+                        fontWeight: 600
+                    }
+                },
+
+                labels: {
+                    style: {
+                        colors: '#000',
+                        fontSize: '12px'
+                    }
+                }
+            },
+
+            grid: {
+                borderColor: '#e0e0e0'
+            },
+
+            tooltip: {
+                theme: 'light',
+                y: {
+                    formatter: val => val + " complaints"
+                }
+            },
+
+            legend: {
+                labels: {
+                    colors: '#000'
+                }
+            },
+
+            states: {
+                hover: {
+                    filter: {
+                        type: 'darken',
+                        value: 0.15
+                    }
+                }
+            },
+
+            responsive: [
+                {
+                    breakpoint: 768,
+                    options: {
+                        chart: { height: 600 }
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    options: {
+                        chart: { height: 500 },
+                        xaxis: {
+                            labels: {
+                                style: { fontSize: '10px' }
+                            }
+                        }
+                    }
+                }
+            ]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#grievanceChart"), options);
+        chart.render();
+
 
         // ✅ DONUT
-        new ApexCharts(document.querySelector("#donutChart"), {
-            chart: { type: 'donut' },
-            series: [30, 22, 16, 14, 10, 8],
-            labels: ['Industrial', 'Air', 'Noise', 'Waste', 'Water', 'Others']
-        }).render();
+        // new ApexCharts(document.querySelector("#donutChart"), {
+        //     chart: { type: 'donut' },
+        //     series: [30, 22, 16, 14, 10, 8],
+        //     labels: ['Industrial', 'Air', 'Noise', 'Waste', 'Water', 'Others']
+        // }).render();
+        var options = {
+            chart: {
+                type: 'donut',
+                height: 400
+            },
+            series: [98, 17, 16, 31, 473, 887],
+            labels: [
+                "Access Required",
+                "Incomplete ATR",
+                "Invalid Link",
+                "NA",
+                "No",
+                "Yes"
+            ],
+            colors: [
+                "#36b9cc",
+                "#f6c23e",
+                "#e74a3b",
+                "#858796",
+                "#fd7e14",
+                "#1cc88a"
+            ],
+            legend: {
+                position: 'bottom'
+            },
+            dataLabels: {
+                enabled: true,
+                formatter: function (val) {
+                    return val.toFixed(1) + "%";
+                }
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val + " cases";
+                    }
+                }
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '60%',
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true,
+                                label: 'Total',
+                                formatter: function () {
+                                    return 1703; // Grand total
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#atrDonutChart"), options);
+        chart.render();
+
 
         // ✅ BAR
         new ApexCharts(document.querySelector("#barChart"), {
@@ -1072,11 +1655,58 @@
         }).render();
 
         // ✅ RADIAL
-        new ApexCharts(document.querySelector("#radialChart"), {
-            chart: { type: 'radialBar' },
-            series: [75],
-            labels: ['Satisfaction']
-        }).render();
+        // new ApexCharts(document.querySelector("#radialChart"), {
+        //     chart: { type: 'radialBar' },
+        //     series: [75],
+        //     labels: ['Satisfaction']
+        // }).render();
+
+        var options = {
+            chart: {
+                type: 'pie',
+                height: 400
+            },
+            series: [2, 35, 16, 87, 194, 395, 10, 154],
+            labels: [
+                "Call Back",
+                "Didn't Answer",
+                "Invalid Number",
+                "NA",
+                "No",
+                "No Contact Details",
+                "Switched Off",
+                "Yes"
+            ],
+            colors: [
+                "#4e73df",
+                "#f6c23e",
+                "#e74a3b",
+                "#858796",
+                "#1cc88a",
+                "#36b9cc",
+                "#fd7e14",
+                "#20c997"
+            ],
+            legend: {
+                position: 'bottom'
+            },
+            dataLabels: {
+                enabled: true,
+                formatter: function (val) {
+                    return val.toFixed(1) + "%";
+                }
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val + " responses";
+                    }
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#satisfactionChart"), options);
+        chart.render();
 
         // ✅ PENDENCY
         new ApexCharts(document.querySelector("#pendencyChart"), {
@@ -1091,8 +1721,55 @@
             series: [40, 25, 20, 15],
             labels: ['Air', 'Water', 'Noise', 'Soil']
         }).render();
+
+
+        /******download report******/
+
+        function downloadExcel() {
+            let table = document.getElementById("reportTable");
+
+            // Convert table to workbook
+            let workbook = XLSX.utils.table_to_book(table, { sheet: "Report" });
+
+            // Download file
+            XLSX.writeFile(workbook, "Excel_Report.xlsx");
+        }
+
     </script>
 
+    <script>
+        // ✅ FIX: Define config (missing in your code)
+        let config = {
+            query: ""
+        };
+
+        function submitQuery() {
+
+            const q = document.getElementById('queryText').value.trim();
+
+            if (!q) {
+                alert("Enter query");
+                return;
+            }
+
+            // ✅ Confirmation popup
+            const confirmSubmit = confirm("Are you sure you want to submit this query?");
+
+            if (!confirmSubmit) return;
+
+            config.query = q;
+
+            alert("✅ Query Raised (SMS Sent)");
+
+            // ✅ Safely hide modal
+            const modalElement = document.getElementById('raiseQueryModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+            modalInstance.hide();
+
+            // ✅ Show next modal (make sure otpModal exists in HTML)
+            new bootstrap.Modal(document.getElementById('otpModal')).show();
+        }
+    </script>
 </body>
 
 </html>

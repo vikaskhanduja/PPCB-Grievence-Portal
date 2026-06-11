@@ -603,9 +603,9 @@
                   <div class="prog-lbl">Complaint Verified</div>
                 </div>
 
-                <div class="prog-step" onclick="openStep('resolved')">
+                <div class="prog-step" onclick="openStep('Complainant Satisfied')">
                   <div class="prog-dot">5</div>
-                  <div class="prog-lbl">Resolved</div>
+                  <div class="prog-lbl">Complainant Satisfied</div>
                 </div>
               </div>
             </div>
@@ -986,10 +986,10 @@
     `;
         }
 
-        if (type === "resolved") {
-          title = "Resolved";
+        if (type === "Complainant Satisfied") {
+          title = "Complainant Satisfied";
           icon = "bi-emoji-smile-fill";
-          content = `<p>Complaint has been successfully resolved.</p>`;
+          content = `<p>Complaint has been successfully Complainant Satisfied.</p>`;
         }
 
         document.getElementById("modalTitle").innerText = title;

@@ -525,19 +525,23 @@
     }
 
     /* tat tag */
-   .box-tat {
-        position: absolute;   /* ✅ move it out of flow */
-        top: 24px;            /* ✅ distance from top */
-        right: 12px;          /* ✅ align to right */
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        padding: 4px 10px;
-        border-radius: 100px;
-        font-size: .6rem;
-        font-weight: 700;
-        z-index: 3;           /* ✅ stays above content */
-}
+    .box-tat {
+      position: absolute;
+      /* ✅ move it out of flow */
+      top: 24px;
+      /* ✅ distance from top */
+      right: 12px;
+      /* ✅ align to right */
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: .6rem;
+      font-weight: 700;
+      z-index: 3;
+      /* ✅ stays above content */
+    }
 
     /* row1 box: label below */
     .row1 .step {
@@ -963,6 +967,343 @@
       display: flex;
       background-color: #1a6fc4 !important;
     }
+
+    /******* Accessibility*******/
+
+    .accessibility-toolbar {
+      position: fixed;
+      top: 32px;
+      right: 0;
+      width: 531px;
+      background: #dfdfdf;
+      color: #fff;
+      z-index: 9999;
+      box-shadow: 0 2px 12px #39ef7440;
+      padding: 0;
+      border-radius: 15px 0px 0px 15px;
+      border: 5px solid #ffffff;
+    }
+
+    .accessibility-toolbar-inner {
+      display: block;
+      align-items: center;
+      justify-content: center;
+
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .accessibility-title {
+      font-weight: 600;
+      font-size: 1.08em;
+      margin-right: 24px;
+      background: #0c577c;
+      width: 100%;
+      display: block;
+      padding: 10px;
+      border-radius: 10px 0px 0px 0px;
+    }
+
+    .accessibility-controls {
+      width: 100%;
+      padding: 12px 20px;
+    }
+
+    .accessibility-controls .access-btn {
+      background: #ffffff;
+      color: #222;
+      border: none;
+      border-radius: 6px;
+      margin: 8px 6px;
+      padding: 23px 5px;
+      font-size: 1.08em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      font-family: "Noto Sans", sans-serif;
+      width: 145px
+    }
+
+    .accessibility-controls span {
+      font-size: 14px;
+      display: block;
+      text-align: center;
+      font-family: "Noto Sans", sans-serif;
+    }
+
+
+    .accessibility-controls .access-btn:hover {
+      background: #dbffe9;
+
+    }
+
+    .accessibility-close {
+      position: absolute;
+      right: 12px;
+      top: 8px;
+      background: transparent;
+      color: #fff;
+      border: none;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+
+
+    .eco-panel {
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .eco-panel::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.03);
+      pointer-events: none;
+    }
+
+    .eco-panel::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: -40px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: rgba(29, 158, 117, 0.08);
+      pointer-events: none;
+    }
+
+    /* floating leaves */
+    .floating-leaf {
+      position: absolute;
+      font-size: 18px;
+      opacity: 0.15;
+      animation: leafFloat 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .fl1 {
+      top: 10%;
+      left: 3%;
+      animation-delay: 0s;
+    }
+
+    .fl2 {
+      top: 52%;
+      left: 2%;
+      animation-delay: 2s;
+    }
+
+    .fl3 {
+      top: 28%;
+      right: 3%;
+      animation-delay: 1s;
+    }
+
+    .fl4 {
+      bottom: 15%;
+      right: 4%;
+      animation-delay: 3s;
+    }
+
+    @keyframes leafFloat {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-10deg);
+      }
+
+      50% {
+        transform: translateY(-12px) rotate(10deg);
+      }
+    }
+
+    /* header */
+    .panel-header {
+      text-align: center;
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .header-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .script-text {
+      font-style: italic;
+      color: var(--accent-light);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .bold-env {
+      color: #fff;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+    }
+
+    .header-accent {
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #f6c248, #4ade80, #38bdf8);
+      border-radius: 2px;
+      margin: 8px auto 0;
+      animation: expandAcc 1.2s 0.3s ease forwards;
+    }
+
+    @keyframes expandAcc {
+      to {
+        width: 200px;
+      }
+    }
+
+    /* tip cards */
+    .tips-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tip-card {
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      transform: translateX(30px);
+      animation: slideIn 0.6s ease forwards;
+    }
+
+    .tc1 {
+      animation-delay: 0.4s;
+    }
+
+    .tc2 {
+      animation-delay: 0.7s;
+    }
+
+    .tc3 {
+      animation-delay: 1.0s;
+    }
+
+    .tc4 {
+      animation-delay: 1.3s;
+    }
+
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .icon-bubble {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+      border: 3px solid rgba(10, 51, 35, 0.8);
+    }
+
+    .icon-bubble svg {
+      width: 50px;
+      height: 50px;
+    }
+
+    .tip-body {
+      background: rgba(29, 158, 117, 0.35);
+      border: 1px solid rgba(29, 158, 117, 0.45);
+      border-radius: 0 36px 36px 0;
+      padding: 12px 18px 12px 24px;
+      flex: 1;
+      margin-left: -18px;
+      min-height: 68px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: background 0.3s, border-color 0.3s;
+      cursor: default;
+    }
+
+    .tip-card:hover .tip-body {
+      background: rgba(29, 158, 117, 0.52);
+      border-color: rgba(74, 222, 128, 0.5);
+    }
+
+    .tip-title {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .tip-desc {
+      color: rgba(255, 255, 255, 1);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    /* footer pill */
+    .panel-foot {
+      text-align: center;
+      margin-top: 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .foot-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 6px 16px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 11px;
+      letter-spacing: 0.4px;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
+    }
   </style>
 </head>
 
@@ -971,9 +1312,16 @@
   <!-- HEADER -->
   <header class="pub-header">
     <div class="topbar d-none d-md-flex">
-      <span><i class="bi bi-telephone-fill me-1"></i>Helpline: 1800-XXX-XXXX &nbsp;|&nbsp; <i
-          class="bi bi-envelope-fill me-1"></i>grm@ppcb.gov.in</span>
-      <span>Government of Punjab &nbsp;|&nbsp; Last Updated: 05 Jun 2025</span>
+      <span><i class="bi bi-telephone-fill me-1"></i>Helpline: 9878950593 &nbsp;|&nbsp; <i
+          class="bi bi-envelope-fill me-1"></i>ppcbcomplaintcell@gmail.com</span>
+      <span class="d-flex">Government of Punjab&nbsp;|&nbsp;
+        <li style="list-style-type: none; text-decoration: none; color: #fff;">
+          <a href="javascript:void(0)" id="accessibilityBtn" style="color: #fff; text-decoration: none;">
+            <span><i class="bi bi-universal-access"></i></span> Accessibility
+            Option
+          </a>
+        </li>
+      </span>
     </div>
     <div class="mainbar">
       <div class="brand-logo">
@@ -1011,7 +1359,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-5 offset-lg-1 d-none d-lg-block">
+        <!-- <div class="col-lg-5 offset-lg-1 d-none d-lg-block">
           <div class="hero-panel">
             <div
               style="font-size:.9rem;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px;">
@@ -1035,11 +1383,121 @@
                   <div class="stat-lbl">Under Process</div>
                 </div>
               </div>
+            </div>
+          </div>
+          
+        </div> -->
 
+        <div class="col-lg-6 d-none d-lg-block eco-panel">
+
+          <span class="floating-leaf fl1">🍃</span>
+          <span class="floating-leaf fl2">🍂</span>
+          <span class="floating-leaf fl3">🌿</span>
+          <span class="floating-leaf fl4">🍃</span>
+
+          <div class="panel-header">
+            <div class="header-row">
+              <span class="script-text">Make Better</span>
+              <span class="bold-env">ENVIRONMENT</span>
+            </div>
+            <div class="header-accent"></div>
+          </div>
+
+          <div class="tips-list">
+
+            <!-- Tip 1 -->
+            <div class="tip-card tc1">
+              <div class="icon-bubble">
+                <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <ellipse cx="22" cy="38" rx="10" ry="3" fill="#c8e6c9" opacity="0.5" />
+                  <rect x="20" y="20" width="4" height="16" rx="2" fill="#6d4c2a" />
+                  <path d="M22 20 Q14 14 10 6 Q18 8 22 16 Q26 8 34 6 Q30 14 22 20Z" fill="#4caf50" />
+                  <path d="M22 16 Q16 12 14 6 Q20 9 22 14Z" fill="#388e3c" opacity="0.6" />
+                  <circle cx="12" cy="30" r="3" fill="#a5d6a7" opacity="0.7" />
+                  <circle cx="32" cy="34" r="2.5" fill="#81c784" opacity="0.6" />
+                </svg>
+              </div>
+              <div class="tip-body">
+                <div class="tip-title">Plant Trees &amp; Greenery</div>
+                <div class="tip-desc">Planting trees, shrubs, and flowers helps improve air quality and biodiversity
+                  across Punjab.</div>
+              </div>
+            </div>
+
+            <!-- Tip 2 -->
+            <div class="tip-card tc2">
+              <div class="icon-bubble">
+                <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M22 6 C14 6 10 12 10 17 C10 22 13 25 16 27 L16 32 C16 33.1 16.9 34 18 34 L26 34 C27.1 34 28 33.1 28 32 L28 27 C31 25 34 22 34 17 C34 12 30 6 22 6Z"
+                    fill="#fff176" />
+                  <path d="M18 34 L26 34 L26 36 C26 37.1 25.1 38 24 38 L20 38 C18.9 38 18 37.1 18 36Z" fill="#bdbdbd" />
+                  <line x1="22" y1="14" x2="22" y2="24" stroke="#fbc02d" stroke-width="2" stroke-linecap="round" />
+                  <line x1="16" y1="18" x2="22" y2="22" stroke="#fbc02d" stroke-width="1.5" stroke-linecap="round" />
+                  <line x1="28" y1="18" x2="22" y2="22" stroke="#fbc02d" stroke-width="1.5" stroke-linecap="round" />
+                  <circle cx="22" cy="22" r="2" fill="#f9a825" />
+                </svg>
+              </div>
+              <div class="tip-body">
+                <div class="tip-title">Efficient Lighting</div>
+                <div class="tip-desc">Switch to energy-efficient LED bulbs and turn off lights when not in use to
+                  conserve electricity.</div>
+              </div>
+            </div>
+
+            <!-- Tip 3 -->
+            <div class="tip-card tc3">
+              <div class="icon-bubble">
+                <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M22 8 L28 16 L24 16 C24 22 28 26 34 26 C30 32 24 34 18 30 C12 26 10 18 14 12 C16 16 18 18 22 18 L18 18Z"
+                    fill="#66bb6a" />
+                  <path d="M22 8 L18 18 L22 18 C22 24 18 28 12 28 C10 22 12 16 16 12 C16 14 18 16 22 16Z" fill="#43a047"
+                    opacity="0.6" />
+                  <path d="M20 30 Q21 36 22 38" stroke="#6d4c2a" stroke-width="2.5" stroke-linecap="round"
+                    fill="none" />
+                </svg>
+              </div>
+              <div class="tip-body">
+                <div class="tip-title">Reduce, Reuse, Recycle</div>
+                <div class="tip-desc">Recycle paper, plastic, and glass. Embrace the practice of reducing and reusing
+                  whenever possible.</div>
+              </div>
+            </div>
+
+            <!-- Tip 4 -->
+            <div class="tip-card tc4">
+              <div class="icon-bubble">
+                <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="22" cy="24" r="13" fill="#42a5f5" />
+                  <ellipse cx="22" cy="24" rx="5" ry="13" fill="#1e88e5" opacity="0.5" />
+                  <ellipse cx="22" cy="24" rx="13" ry="5" fill="#1565c0" opacity="0.3" />
+                  <path d="M12 20 Q16 17 22 18 Q28 17 32 20" stroke="#fff" stroke-width="1.2" fill="none"
+                    opacity="0.5" />
+                  <path d="M10 24 Q14 21 22 22 Q30 21 34 24" stroke="#fff" stroke-width="1" fill="none" opacity="0.4" />
+                  <circle cx="17" cy="14" r="2.5" fill="#81c784" />
+                  <path d="M17 14 L17 10 Q19 8 21 11" stroke="#4caf50" stroke-width="1.2" fill="none" />
+                  <circle cx="27" cy="13" r="2" fill="#a5d6a7" />
+                </svg>
+              </div>
+              <div class="tip-body">
+                <div class="tip-title">Educate &amp; Advocate</div>
+                <div class="tip-desc">Raise awareness about environmental issues and advocate for sustainable practices
+                  in your community.</div>
+              </div>
             </div>
 
           </div>
+
+          <div class="panel-foot">
+            <span class="foot-pill">
+              <span class="live-dot"></span>
+              Punjab Pollution Control Board — Environmental Awareness
+            </span>
+          </div>
+
         </div>
+
       </div>
     </div>
   </section>
@@ -1120,7 +1578,8 @@
               <div class="box-num">1</div>
             </div>
             <div class="box-title">OTP-based Complaint Registration & Instant Acknowledgment</div>
-            <div class="box-text">Registering environemnt-related grievances made easy with an OTP-verification. Complainants will receive instant acknowledgement.</div>
+            <div class="box-text">Registering environemnt-related grievances made easy with an OTP-verification.
+              Complainants will receive instant acknowledgement.</div>
             <div class="box-tat"><i class="bi bi-clock-fill"></i> Same day</div>
           </div>
           <div class="step-dot" id="dot1"></div>
@@ -1135,7 +1594,8 @@
               <div class="box-num">2</div>
             </div>
             <div class="box-title">Complaint Scrutiny & Assignment</div>
-            <div class="box-text">Officials review and assign the complaints to the concerned office, which will inspect the grievance to provide remedy within prescribed timelines.</div>
+            <div class="box-text">Officials review and assign the complaints to the concerned office, which will inspect
+              the grievance to provide remedy within prescribed timelines.</div>
             <div class="box-tat"><i class="bi bi-clock-fill"></i> 10 Working days</div>
           </div>
           <div class="step-dot" id="dot2"></div>
@@ -1150,7 +1610,7 @@
               <div class="box-num">3</div>
             </div>
             <div class="box-title">Field Inspection</div>
-            <div class="box-text">SDO/ADO conducts on-site visit, collects evidence — photos and videos — and uploads
+            <div class="box-text">AEE/ADO conducts on-site visit, collects evidence — photos and videos — and uploads
               the Unified Inspection Performa.</div>
             <!-- <div class="box-tat"><i class="bi bi-clock-fill"></i> 7 days</div> -->
           </div>
@@ -1179,7 +1639,8 @@
               <div class="box-num">6</div>
             </div>
             <div class="box-title">Feedback & Appeal</div>
-            <div class="box-text">Complainants share feedback and/or files appeal based on the status of the grievance.</div>
+            <div class="box-text">Complainants share feedback and/or files appeal based on the status of the grievance.
+            </div>
             <div class="box-tat"><i class="bi bi-clock-fill"></i> 45d / level</div>
           </div>
         </div>
@@ -1326,8 +1787,7 @@
             <a href="citizen-grievance-form.html"
               style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">File
               Complaint</a>
-            <a href="terms-conditions.html"
-              style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">
+            <a href="terms-conditions.html" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">
               Terms & Condtions</a>
             <a href="privacy-policy.html" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">
               Privacy Policy</a>
@@ -1350,9 +1810,18 @@
             style="font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
             Contact</div>
           <div style="font-size:1rem;line-height:2;color:rgba(255,255,255,.55);">
-            <div><i class="bi bi-telephone-fill me-2" style="color:var(--accent-light);"></i>1800-XXX-XXXX (Toll Free)
+            <div>
+              <i class="bi bi-telephone-fill me-2" style="color:var(--accent-light);"></i>
+              <a href="tel:9878950593" style="text-decoration:none; color:inherit;">
+                9878950593
+              </a>
             </div>
-            <div><i class="bi bi-envelope-fill me-2" style="color:var(--accent-light);"></i>grm@ppcb.gov.in</div>
+            <div>
+              <i class="bi bi-envelope-fill me-2" style="color:var(--accent-light);"></i>
+              <a href="mailto:ppcbcomplaintcell@gmail.com" style="text-decoration:none; color:inherit;">
+                ppcbcomplaintcell@gmail.com
+              </a>
+            </div>
             <div><i class="bi bi-clock-fill me-2" style="color:var(--accent-light);"></i>Mon–Fri, 10:00 AM – 5:00 PM
             </div>
           </div>
@@ -1362,13 +1831,54 @@
       <div
         style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:1rem;color:rgba(255,255,255,.35);">
         <span>© 2026 Punjab Pollution Control Board. All rights reserved.</span>
-       
+
       </div>
     </div>
   </footer>
 
+  <!-- Accessibility Toolbar -->
+  <div id="accessibilityToolbar" class="accessibility-toolbar" style="display:none;">
+    <div class="accessibility-toolbar-inner">
+      <span class="accessibility-title">Accessibility Options</span>
+      <button class="accessibility-close" id="accessibilityCloseBtn" title="Close">&times;</button>
+      <div class="accessibility-controls">
+        <button class="access-btn" id="increaseFont" title="Increase Font Size" style="font-size:30px">A+<span>Bigger
+            Text</span></button>
+        <button class="access-btn" id="decreaseFont" title="Decrease Font Size" style="font-size:30px">A-
+          <span>Smaller text</span></button>
+        <button class="access-btn" id="resetFont" title="Reset Font Size" style="font-size:30px"><img
+            src="images/text-spacing.svg"><span>Text Spacing </span></button>
+
+        <button class="access-btn" id="" title="Reset Font Size" style="font-size:30px"><img
+            src="images/line-height.svg"><span>Line Height</span></button>
+        <button class="access-btn" id="" title="Reset Font Size" style="font-size:30px"><img
+            src="images/link-icon.svg"><span>Highlight Links</span></button>
+        <button class="access-btn" id="" title="Reset Font Size" style="font-size:30px"><img style="width:30px;"
+            src="images/df-icon.svg"><span>Dyslexia Friendly</span></button>
+        <button class="access-btn" id="" title="Reset Font Size" style="font-size:30px"><img style="width:30px;"
+            src="images/cursor.svg"><span>Cursor</span></button>
+
+        <button class="access-btn" id="toggleHighContrast" title="Toggle High Contrast">
+          <span style="font-weight:bold; font-size:30px">&#9681;</span> <span>High Contrast </span>
+        </button>
+        <button class="access-btn" id="toggleGrayscale" title="Toggle Grayscale">
+          <span style="font-weight:bold; font-size:30px">&#9724;</span><span>Grayscale </span>
+        </button>
+
+        <button class="access-btn" id="toggleGrayscale" title="Toggle Grayscale">
+          <span style="font-weight:bold; font-size:30px"><img src="images/speech.svg"></span><span>Text to
+            Speech </span>
+        </button>
+
+      </div>
+    </div>
+  </div>
+  <!-- End Accessibility Toolbar -->
+
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+
     // Counter animation
     function animCount(id, target, suffix, delay) {
       setTimeout(() => {
@@ -1389,13 +1899,17 @@
       ['cnt4', 18.4, '', 600],
       ['cnt5', 94, '%', 800],
     ];
-    const statsObs = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        targets.forEach(([id, val, sfx, delay]) => animCount(id, val, sfx, delay));
-        statsObs.disconnect();
-      }
-    }, { threshold: 0.3 });
-    statsObs.observe(document.querySelector('.stats-strip'));
+
+    const statsEl = document.querySelector('.stats-strip');
+    if (statsEl) {
+      const statsObs = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          targets.forEach(([id, val, sfx, delay]) => animCount(id, val, sfx, delay));
+          statsObs.disconnect();
+        }
+      }, { threshold: 0.3 });
+      statsObs.observe(statsEl);
+    }
 
     // Track
     function doTrack() {
@@ -1489,9 +2003,81 @@
       });
     });
 
+    //accesibity
+    // Accessibility Toolbar Logic
+    document.getElementById('accessibilityBtn').addEventListener('click', function () {
+      document.getElementById('accessibilityToolbar').style.display = 'block';
+    });
+    document.getElementById('accessibilityCloseBtn').addEventListener('click', function () {
+      document.getElementById('accessibilityToolbar').style.display = 'none';
+    });
+
+    // Font size logic
+    var html = document.documentElement;
+    var defaultFontSize = 16;
+    var currentFontSize = defaultFontSize;
+    function setFontSize(size) {
+      html.style.fontSize = size + 'px';
+    }
+    document.getElementById('increaseFont').onclick = function () {
+      if (currentFontSize < 22) {
+        currentFontSize += 2;
+        setFontSize(currentFontSize);
+      }
+    };
+    document.getElementById('decreaseFont').onclick = function () {
+      if (currentFontSize > 12) {
+        currentFontSize -= 2;
+        setFontSize(currentFontSize);
+      }
+    };
+    document.getElementById('resetFont').onclick = function () {
+      currentFontSize = defaultFontSize;
+      setFontSize(currentFontSize);
+    };
+
+    // High contrast logic
+    document.getElementById('toggleHighContrast').onclick = function () {
+      document.body.classList.toggle('high-contrast');
+    };
+
+    // Grayscale logic
+    document.getElementById('toggleGrayscale').onclick = function () {
+      document.body.classList.toggle('grayscale');
+    };
+
+    document.querySelectorAll('.accessibility-controls .access-btn').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        // If already active, remove active and feature
+        if (btn.classList.contains('active')) {
+          btn.classList.remove('active');
+          // Remove feature for each button
+          if (btn.id === 'increaseFont' || btn.id === 'decreaseFont' || btn.id === 'resetFont') {
+            // Reset font size
+            currentFontSize = defaultFontSize;
+            setFontSize(currentFontSize);
+          }
+          if (btn.id === 'toggleHighContrast') {
+            document.body.classList.remove('high-contrast');
+          }
+          if (btn.id === 'toggleGrayscale') {
+            document.body.classList.remove('grayscale');
+          }
+          return; // Stop further execution
+        }
+        // Otherwise, activate and apply feature
+        document.querySelectorAll('.accessibility-controls .access-btn').forEach(function (b) {
+          b.classList.remove('active');
+        });
+        btn.classList.add('active');
+        // Features already handled by other click handlers
+      });
+    });
+
 
   </script>
-  <script src="https://translation-plugin.bhashini.co.in/v2/website_translation_utility.js" translation-language-list="en,hi,pa" data-pos-x="100" data-pos-y="100"></script>
+  <script src="https://translation-plugin.bhashini.co.in/v2/website_translation_utility.js"
+    translation-language-list="en,hi,pa" data-pos-x="100" data-pos-y="100"></script>
 
 </body>
 

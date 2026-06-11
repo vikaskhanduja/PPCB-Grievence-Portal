@@ -301,27 +301,27 @@
                                         value="other">
                                     <label class="form-check-label" for="srcOther">Other</label>
                                 </div> -->
-                                
+
                                 <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="source" value="social">
-                                        <label class="form-check-label">Social Media (Platforms)</label>
-                                    </div>
+                                    <input class="form-check-input" type="radio" name="source" value="social">
+                                    <label class="form-check-label">Social Media (Platforms)</label>
+                                </div>
 
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="source" value="email">
-                                        <label class="form-check-label">Email</label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="source" value="email">
+                                    <label class="form-check-label">Email</label>
+                                </div>
 
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="source" value="phone">
-                                        <label class="form-check-label">Phone</label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="source" value="phone">
+                                    <label class="form-check-label">Phone</label>
+                                </div>
 
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="source" value="whatsapp">
-                                        <label class="form-check-label">WhatsApp</label>
-                                    </div>
-                              </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="source" value="whatsapp">
+                                    <label class="form-check-label">WhatsApp</label>
+                                </div>
+                            </div>
 
                             <input type="text" class="f-control" placeholder="Specify if Other" id="srcOtherText"
                                 style="margin-top:10px;display:none;">
@@ -348,7 +348,7 @@
                             </div>
                         </div> -->
 
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             <label class="f-label">Pollution Type <span class="req">*</span></label>
 
                             <div class="d-flex gap-3 flex-wrap mt-2">
@@ -369,14 +369,14 @@
                                 </div>
 
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col-12">
                             <label class="f-label">Complaint Subject Line <span class="req">*</span></label>
                             <textarea class="f-control" rows="2" id="compSubject"
                                 placeholder="Subject line of the complaint"
                                 oninput="updateSubjectWordCount(this)"></textarea>
-                            <div class="d-flex justify-content-end mt-1">
+                            <div class="d-flex justify-content-end">
                                 <span style="font-size:.7rem;color:var(--text-muted);" id="subjWordCnt">0/150
                                     words</span>
                             </div>
@@ -436,23 +436,58 @@
                                 <input type="text" class="f-control" placeholder="Full name" id="indName">
                             </div>
                             <div class="col-md-6">
-                                <label class="f-label">Complainant Contact No. </label>
-                                <input type="tel" class="f-control" placeholder="+91 XXXXX XXXXX" id="indContact">
+                                <label class="f-label">Complainant Contact No.</label>
+                                <div style="display:flex; gap:8px;">
+                                    <!-- Country Code -->
+                                    <input type="text"
+                                        value="+91"
+                                        class="f-control"
+                                        style="max-width:70px;"
+                                        readonly>
+
+                                    <!-- Mobile Number -->
+                                    <input type="tel"
+                                        class="f-control"
+                                        id="indContact"
+                                        placeholder="XXXXX XXXXX"
+                                        maxlength="10">
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="f-label">District </label>
-                                <select class="f-select" id="indDistrict">
-                                    <option value="">-- Select District --</option>
-                                    <option>Amritsar</option>
-                                    <option>Bathinda</option>
-                                    <option>Faridkot</option>
-                                    <option>Jalandhar</option>
-                                    <option>Ludhiana</option>
-                                    <option>Mohali</option>
-                                    <option>Patiala</option>
-                                    <option>Sangrur</option>
-                                </select>
+
+                            <div class="col-md-6" id="districtDiv">
+                                <label class="f-label">District <span class="req">*</span></label>
+                                <div class="d-flex align-items-center">
+                                    <select class="f-select" id="cp_District">
+                                        <option value="">-- Select District --</option>
+                                        <option>Amritsar</option>
+                                        <option>Ludhiana</option>
+                                        <option>Jalandhar</option>
+                                        <option>Patiala</option>
+                                        <option>Bathinda</option>
+                                        <option>Mohali (SAS Nagar)</option>
+                                        <option>Gurdaspur</option>
+                                        <option>Hoshiarpur</option>
+                                        <option>Moga</option>
+                                        <option>Firozpur</option>
+                                        <option>Faridkot</option>
+                                        <option>Sangrur</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                     <button class="btn btn-success ms-2 btn-p"
+                                            style="height: 40px;"
+                                            onclick="autoSelectDistrict()">
+                                        <i class="bi bi-geo-alt-fill me-1"></i> Auto fetch
+                                    </button>
+                                </div>
                             </div>
+
+                            <!-- Other District -->
+                            <div class="col-md-6" id="otherDistrictDiv" style="display:none;">
+                                <label class="f-label">Enter District</label>
+                                <input type="text" id="otherDistrict" class="f-control"
+                                    placeholder="As per official records">
+                            </div>
+
                             <div class="col-md-6">
                                 <label class="f-label">Pin Code</label>
                                 <input type="text" class="f-control" placeholder="PIN Code" id="indPin">
@@ -523,19 +558,31 @@
                                 is filed <span class="req">*</span></label>
                         </div>
 
-                        <div class="col-md-6">
-                            <label class="f-label" style="font-size:.85rem;">District</label>
-                            <select class="f-select" id="siteDistrict">
+                        <div class="col-md-6" id="districtDiv">
+                            <label class="f-label">District <span class="req">*</span></label>
+                            <select class="f-select" id="districtSelect">
                                 <option value="">-- Select District --</option>
                                 <option>Amritsar</option>
-                                <option>Bathinda</option>
-                                <option>Faridkot</option>
-                                <option>Jalandhar</option>
                                 <option>Ludhiana</option>
-                                <option>Mohali</option>
+                                <option>Jalandhar</option>
                                 <option>Patiala</option>
+                                <option>Bathinda</option>
+                                <option>Mohali (SAS Nagar)</option>
+                                <option>Gurdaspur</option>
+                                <option>Hoshiarpur</option>
+                                <option>Moga</option>
+                                <option>Firozpur</option>
+                                <option>Faridkot</option>
                                 <option>Sangrur</option>
+                                <option value="other">Other</option>
                             </select>
+                        </div>
+
+                        <!-- Other District -->
+                        <div class="col-md-6" id="otherDistrictContainer" style="display:none;">
+                            <label class="f-label">Enter District</label>
+                            <input type="text" id="otherDistrict" class="f-control"
+                                placeholder="As per official records">
                         </div>
 
                         <div class="col-md-6">
@@ -551,7 +598,7 @@
                                 id="siteAddress"></textarea>
                         </div>
 
-                        
+
                         <div class="col-12">
                             <label class="f-label">Media File / Geo-coordinates</label>
                             <div class="upload-zone" onclick="document.getElementById('mediaFile').click()">
@@ -567,7 +614,7 @@
                             <div id="mediaList" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;"></div>
                         </div>
 
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <label class="f-label">Latitude</label>
                             <input type="text" class="f-control" id="latitude" placeholder="e.g. 28.6139">
                         </div>
@@ -575,7 +622,7 @@
                         <div class="col-md-6">
                             <label class="f-label">Longitude</label>
                             <input type="text" class="f-control" id="longitude" placeholder="e.g. 77.2090">
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="d-flex justify-content-between mt-5">
@@ -702,7 +749,7 @@
                         Number</p>
 
                     <div class="d-flex gap-3 justify-content-center flex-wrap">
-                        <a href="page-not-found.html" class="btn-p" style="padding:11px 24px;"><i
+                        <a href="#" class="btn-p" style="padding:11px 24px;"><i
                                 class="bi bi-search me-1"></i> Track</a>
                         <a href="index.html" class="btn-o" style="padding:11px 24px;"><i class="bi bi-house me-1"></i>
                             Home</a>
@@ -747,10 +794,10 @@
             document.getElementById('progressBar').style.width = pcts[n];
 
             if (n === 4) {
-                
+
                 setAssignDate();  // ✅ THIS LINE ADDED
                 document.getElementById('rv-source').textContent =
-                document.querySelector('input[name="source"]:checked')?.value || '—';
+                    document.querySelector('input[name="source"]:checked')?.value || '—';
                 document.getElementById('rv-source').textContent = document.querySelector('input[name="source"]:checked').value || '—';
                 document.getElementById('rv-type').textContent = document.querySelector('input[name="pollutionType"]:checked').value || '—';
                 document.getElementById('rv-subject').textContent = document.getElementById('compSubject').value || '—';
@@ -806,11 +853,52 @@
         }
 
 
-       function setAssignDate() {
+        function setAssignDate() {
             const today = new Date();
             const formatted = today.toISOString().split('T')[0]; // YYYY-MM-DD
             document.getElementById('assignDate').value = formatted;
         }
+
+        /********Distrct********/
+        document.getElementById("cp_District").addEventListener("change", function () {
+            const otherDiv = document.getElementById("otherDistrictDiv");
+
+            if (this.value === "other") {
+                otherDiv.style.display = "block";
+            } else {
+                otherDiv.style.display = "none";
+            }
+        });
+
+        /************District***********/
+
+        document.getElementById("districtSelect").addEventListener("change", function () {
+                const otherDiv = document.getElementById("otherDistrictContainer");
+
+                if (this.value === "other") {
+                    otherDiv.style.display = "block";
+                } else {
+                    otherDiv.style.display = "none";
+                }
+         });
+
+         function autoSelectDistrict() {
+        const select = document.getElementById("cp_District");
+
+            // ✅ Set to Patiala
+            select.value = "Patiala";
+
+            // ✅ Optional: trigger change event (important if you have logic on change)
+            select.dispatchEvent(new Event("change"));
+
+            // ✅ Optional: show message
+            alert("Patiala auto-selected");
+        }
+
+
+
+
+
 
 
 
