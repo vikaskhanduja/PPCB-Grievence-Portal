@@ -19,6 +19,7 @@
 
     .track-head h2 {
       margin-bottom: 5px;
+      font-size: 1.5rem;
     }
 
     .track-head p {
@@ -322,21 +323,20 @@
 
     /********query*********/
 
-    .btn-glow{
-        display: inline-block;
-        padding: 8px 12px;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 8px;
-        background: #0d7a55;
-        box-shadow: 0 0 0 rgba(13, 122, 85, 0.7);
-        transition: 0.4s;
-        width: 235px;
-        text-align: center;
+    .btn-glow {
+      display: inline-block;
+      padding: 8px 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      background: #0d7a55;
+      box-shadow: 0 0 0 rgba(13, 122, 85, 0.7);
+      transition: 0.4s;
+      width: 235px;
+      text-align: center;
     }
-
   </style>
 </head>
 
@@ -408,7 +408,6 @@
 
     <!-- RESULT (shown after search) -->
     <div id="trackResult" style="display:none;">
-
       <!-- Summary card -->
       <div class="detail-section">
         <div class="ds-head">
@@ -479,85 +478,82 @@
         </div>
       </div>
 
-      </div>
-
       <div class="row g-3">
         <div class="col-lg-12">
           <!-- complaint feedback -->
-              <div class="detail-section mb-3">
-                <div class="ds-head">
-                  <div class="ds-title"><i class="bi bi-people-fill" style="color:var(--primary);"></i> Complaint
-                    Feedback
+          <div class="detail-section mb-3">
+            <div class="ds-head">
+              <div class="ds-title"><i class="bi bi-people-fill" style="color:var(--primary);"></i> Complaint
+                Feedback
+              </div>
+            </div>
+            <div class="ds-body" style="display:flex;flex-direction:column;gap:10px;">
+              <h6 class="">Are you Satified</h6>
+              <div class="yn mb-3" style="max-width:300px;">
+                <div class="yb yy" onclick="setOrigSatisfied(true)" id="origSatY">YES – Satisfied</div>
+                <div class="yb yn_" onclick="setOrigSatisfied(false)" id="origSatN">NO – Not Satisfied</div>
+              </div>
+  
+              <!-- If NO – reason + activate appeal -->
+              <div id="origNoBlock" style="display:none;">
+                <div class="d-flex">
+                  <h6 id="appealTitle">Do you want to Apply For the 1st Appeal</h6> &nbsp; : &nbsp;
+  
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="appealOption" value="yes"
+                      onchange="handleAppealOption(true)">
+                    <label class="form-check-label">Yes</label>
+                  </div>&nbsp;&nbsp;
+  
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="appealOption" value="no"
+                      onchange="handleAppealOption(false)">
+                    <label class="form-check-label">No</label>
                   </div>
                 </div>
-                <div class="ds-body" style="display:flex;flex-direction:column;gap:10px;">
-                  <h6 class="">Are you Satified</h6>
-                  <div class="yn mb-3" style="max-width:300px;">
-                    <div class="yb yy" onclick="setOrigSatisfied(true)" id="origSatY">YES – Satisfied</div>
-                    <div class="yb yn_" onclick="setOrigSatisfied(false)" id="origSatN">NO – Not Satisfied</div>
-                  </div>
-
-                  <!-- If NO – reason + activate appeal -->
-                  <div id="origNoBlock" style="display:none;">
-                    <div class="d-flex">
-                          <h6 id="appealTitle">Do you want to Apply For the 1st Appeal</h6> &nbsp; : &nbsp;
-        
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="appealOption" value="yes"
-                              onchange="handleAppealOption(true)">
-                            <label class="form-check-label">Yes</label>
-                          </div>&nbsp;&nbsp;
-
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="appealOption" value="no"
-                              onchange="handleAppealOption(false)">
-                            <label class="form-check-label">No</label>
-                          </div>
-                      </div>
-
-                    <div id="appealDetails" style="display:none;">
-                      <div class="row g-3">
-                        <div class="col-8">
-                          <label class="fl">Please enter reason <span class="req">*</span></label>
-                          <div class="wcw">
-                            <textarea class="fc" id="origReason" rows="4"
-                              placeholder="please enter description"
-                              oninput="wc(this,'origReasonWC',500)"></textarea>
-                            <span class="wcb" id="origReasonWC">0 / 500</span>
-                          </div>
-                        </div>
-
-                        <div class="col-4">
-                          <label class="fl">Upload Document</label>
-                          <div class="upz" onclick="document.getElementById('origATR').click()">
-                            <i class="bi bi-file-earmark-check-fill" style="color:var(--SUC);"></i>
-                            <p class="fw-semibold mb-1" style="font-size:.8rem;">Upload Document</p>
-                          </div>
-                          <input type="file" id="origATR" accept=".pdf" style="display:none;"
-                            onchange="showFiles(this,'origATRL')">
-                          <div id="origATRL" class="mt-2"></div>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  
-                <!-- ✅ HISTORY WILL SHOW HERE -->
-                <div id="appealHistory" class="mt-3"></div>
+  
+                <div id="appealDetails" style="display:none;">
                   <div class="row g-3">
-                    <div class="col-12">
-                      <div class="d-flex gap-2 flex-wrap justify-content-end">
-                        <button id="submitBtn" class="bp" onclick="saveAppeal()" style="display:none;">
-                          <i class="bi bi-check-circle-fill me-1"></i>Submit
-                        </button>
+                    <div class="col-8">
+                      <label class="fl">Please enter reason <span class="req">*</span></label>
+                      <div class="wcw">
+                        <textarea class="fc" id="origReason" rows="4" placeholder="please enter description"
+                          oninput="wc(this,'origReasonWC',500)"></textarea>
+                        <span class="wcb" id="origReasonWC">0 / 500</span>
                       </div>
                     </div>
+  
+                    <div class="col-4">
+                      <label class="fl">Upload Document</label>
+                      <div class="upz" onclick="document.getElementById('origATR').click()">
+                        <i class="bi bi-file-earmark-check-fill" style="color:var(--SUC);"></i>
+                        <p class="fw-semibold mb-1" style="font-size:.8rem;">Upload Document</p>
+                      </div>
+                      <input type="file" id="origATR" accept=".pdf" style="display:none;"
+                        onchange="showFiles(this,'origATRL')">
+                      <div id="origATRL" class="mt-2"></div>
+                    </div>
+                  </div>
+                </div>
+  
+              </div>
+  
+  
+              <!-- ✅ HISTORY WILL SHOW HERE -->
+              <div id="appealHistory" class="mt-3"></div>
+              <div class="row g-3">
+                <div class="col-12">
+                  <div class="d-flex gap-2 flex-wrap justify-content-end">
+                    <button id="submitBtn" class="bp" onclick="saveAppeal()" style="display:none;">
+                      <i class="bi bi-check-circle-fill me-1"></i>Submit
+                    </button>
                   </div>
                 </div>
               </div>
-
-
+            </div>
+          </div>
+  
+  
           <!-- Feedback (only shown if disposed) -->
           <div class="detail-section" id="feedbackSection" style="display:none;">
             <div class="ds-head">
@@ -578,145 +574,147 @@
               <button class="btn-p w-100"><i class="bi bi-send-fill me-1"></i> Submit Feedback</button>
             </div>
           </div>
-
+  
         </div><!-- /col -->
       </div><!-- /row -->
+    </div>
 
 
-      <!-- Help row -->
-      <div
-        style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-top:16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
-        <div style="flex:1;min-width:200px;">
-          <div style="font-weight:700;font-size:.88rem;margin-bottom:3px;">Need Help?</div>
-          <div style="font-size:.78rem;color:var(--text-muted);">Contact GRM Cell for assistance regarding your
-            complaint.</div>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <a href="mailto:grm@ppcb.gov.in" class="btn-o"><i class="bi bi-envelope-fill me-1"></i> Send Email</a>
-        </div>
+
+    <!-- Help row -->
+    <div
+      style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-top:16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+      <div style="flex:1;min-width:200px;">
+        <div style="font-weight:700;font-size:.88rem;margin-bottom:3px;">Need Help?</div>
+        <div style="font-size:.78rem;color:var(--text-muted);">Contact GRM Cell for assistance regarding your
+          complaint.</div>
       </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <a href="mailto:grm@ppcb.gov.in" class="btn-o"><i class="bi bi-envelope-fill me-1"></i> Send Email</a>
+      </div>
+    </div>
 
-    </div><!-- /trackResult -->
+  </div><!-- /trackResult -->
 
   </div><!-- /track-wrap -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
- <script>
-  function doSearch() {
-    const v = document.getElementById('trackNo').value.trim();
-    if (!v) { alert('Please enter a complaint number.'); return; }
-    document.getElementById('emptyState').style.display = 'none';
-    document.getElementById('trackResult').style.display = 'none';
+  <script>
+    function doSearch() {
+      const v = document.getElementById('trackNo').value.trim();
+      if (!v) { alert('Please enter a complaint number.'); return; }
+      document.getElementById('emptyState').style.display = 'none';
+      document.getElementById('trackResult').style.display = 'none';
 
-    if (v.startsWith('PPCB') || v.length > 5) {
-      document.getElementById('dispNo').textContent = v;
-      document.getElementById('trackResult').style.display = 'block';
-      document.getElementById('trackResult').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-      document.getElementById('emptyState').style.display = 'block';
-    }
-  }
-
-  function toggleBody(header) {
-    const body = header.nextElementSibling;
-    const icon = header.querySelector('i.bi-chevron-down, i.bi-chevron-up');
-    const open = body.style.display !== 'none';
-    body.style.display = open ? 'none' : 'block';
-    if (icon) icon.className = open ? 'bi bi-chevron-down' : 'bi bi-chevron-up';
-  }
-
-  function rateStar(n) {
-    document.querySelectorAll('.star').forEach((s, i) => {
-      s.classList.toggle('active', i < n);
-    });
-  }
-
-  window.addEventListener('load', () => {
-    const v = document.getElementById('trackNo').value.trim();
-    if (v) doSearch();
-  });
-
-  // ✅ FINAL APPEAL LOGIC (ONLY 2 APPEALS)
-  let appealData = [];
-
-  function handleAppealOption(isYes) {
-    document.getElementById('appealDetails').style.display = isYes ? 'block' : 'none';
-    document.getElementById('submitBtn').style.display = isYes ? 'inline-block' : 'none';
-  }
-
-  // function setOrigSatisfied(yes) {
-  //   document.getElementById('origSatY').classList.toggle('on', yes);
-  //   document.getElementById('origSatN').classList.toggle('on', !yes);
-  //   document.getElementById('origNoBlock').style.display = yes ? 'none' : 'block';
-  //   resetAppealUI();
-  // }
-
-  function setOrigSatisfied(yes) {
-  document.getElementById('origSatY').classList.toggle('on', yes);
-  document.getElementById('origSatN').classList.toggle('on', !yes);
-
-  document.getElementById('origNoBlock').style.display = yes ? 'none' : 'block';
-
-  // ✅ SHOW THANK YOU POPUP
-  if (yes) {
-    alert("✅ Thank you! We are glad that your issue has been resolved.");
-  }
-
-  resetAppealUI();
-}
-
-  function saveAppeal() {
-    const reason = document.getElementById('origReason').value.trim();
-    const fileInput = document.getElementById('origATR');
-
-    if (!reason) {
-      alert("Please enter reason");
-      return;
+      if (v.startsWith('PPCB') || v.length > 5) {
+        document.getElementById('dispNo').textContent = v;
+        document.getElementById('trackResult').style.display = 'block';
+        document.getElementById('trackResult').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        document.getElementById('emptyState').style.display = 'block';
+      }
     }
 
-    // ✅ LIMIT 2 APPEALS ONLY
-    if (appealData.length >= 2) {
-      alert("Only 2 appeals are allowed");
-      return;
+    function toggleBody(header) {
+      const body = header.nextElementSibling;
+      const icon = header.querySelector('i.bi-chevron-down, i.bi-chevron-up');
+      const open = body.style.display !== 'none';
+      body.style.display = open ? 'none' : 'block';
+      if (icon) icon.className = open ? 'bi bi-chevron-down' : 'bi bi-chevron-up';
     }
 
-    const appealNo = appealData.length + 1;
-
-    // ✅ POPUP FOR 1ST APPEAL
-    if (appealNo === 1) {
-      const confirmSubmit = confirm("Are you sure you want to submit the 1st Appeal?");
-      if (!confirmSubmit) return;
+    function rateStar(n) {
+      document.querySelectorAll('.star').forEach((s, i) => {
+        s.classList.toggle('active', i < n);
+      });
     }
 
-    appealData.push({
-      no: appealNo,
-      reason: reason,
-      file: fileInput.files[0] ? fileInput.files[0].name : "No file"
+    window.addEventListener('load', () => {
+      const v = document.getElementById('trackNo').value.trim();
+      if (v) doSearch();
     });
 
-    renderHistory();
+    // ✅ FINAL APPEAL LOGIC (ONLY 2 APPEALS)
+    let appealData = [];
 
-    // ✅ CHANGE TEXT FOR 2ND APPEAL
-    if (appealNo === 1) {
-      document.getElementById('appealTitle').innerText =
-        "Do you want to Apply For the 2nd Appeal";
+    function handleAppealOption(isYes) {
+      document.getElementById('appealDetails').style.display = isYes ? 'block' : 'none';
+      document.getElementById('submitBtn').style.display = isYes ? 'inline-block' : 'none';
     }
 
-    // ✅ STOP AFTER 2ND
-    if (appealNo === 2) {
-      document.getElementById('submitBtn').style.display = "none";
-      document.getElementById('appealTitle').innerText =
-        "Maximum 2 Appeals Submitted";
+    // function setOrigSatisfied(yes) {
+    //   document.getElementById('origSatY').classList.toggle('on', yes);
+    //   document.getElementById('origSatN').classList.toggle('on', !yes);
+    //   document.getElementById('origNoBlock').style.display = yes ? 'none' : 'block';
+    //   resetAppealUI();
+    // }
+
+    function setOrigSatisfied(yes) {
+      document.getElementById('origSatY').classList.toggle('on', yes);
+      document.getElementById('origSatN').classList.toggle('on', !yes);
+
+      document.getElementById('origNoBlock').style.display = yes ? 'none' : 'block';
+
+      // ✅ SHOW THANK YOU POPUP
+      if (yes) {
+        alert("✅ Thank you! We are glad that your issue has been resolved.");
+      }
+
+      resetAppealUI();
     }
 
-    resetAppealUI();
-  }
+    function saveAppeal() {
+      const reason = document.getElementById('origReason').value.trim();
+      const fileInput = document.getElementById('origATR');
 
-  function renderHistory() {
-    let html = "";
+      if (!reason) {
+        alert("Please enter reason");
+        return;
+      }
 
-    appealData.forEach(item => {
-      html += `
+      // ✅ LIMIT 2 APPEALS ONLY
+      if (appealData.length >= 2) {
+        alert("Only 2 appeals are allowed");
+        return;
+      }
+
+      const appealNo = appealData.length + 1;
+
+      // ✅ POPUP FOR 1ST APPEAL
+      if (appealNo === 1) {
+        const confirmSubmit = confirm("Are you sure you want to submit the 1st Appeal?");
+        if (!confirmSubmit) return;
+      }
+
+      appealData.push({
+        no: appealNo,
+        reason: reason,
+        file: fileInput.files[0] ? fileInput.files[0].name : "No file"
+      });
+
+      renderHistory();
+
+      // ✅ CHANGE TEXT FOR 2ND APPEAL
+      if (appealNo === 1) {
+        document.getElementById('appealTitle').innerText =
+          "Do you want to Apply For the 2nd Appeal";
+      }
+
+      // ✅ STOP AFTER 2ND
+      if (appealNo === 2) {
+        document.getElementById('submitBtn').style.display = "none";
+        document.getElementById('appealTitle').innerText =
+          "Maximum 2 Appeals Submitted";
+      }
+
+      resetAppealUI();
+    }
+
+    function renderHistory() {
+      let html = "";
+
+      appealData.forEach(item => {
+        html += `
   <div class="card p-3 mb-2">
     <h6 style="font-weight:700;color:#0a4f8f;">
       History of ${item.no === 1 ? "1st" : "2nd"} Appeal
@@ -725,21 +723,21 @@
     <p><strong>Document:</strong> ${item.file}</p>
   </div>
 `;
-    });
+      });
 
-    document.getElementById('appealHistory').innerHTML = html;
-  }
+      document.getElementById('appealHistory').innerHTML = html;
+    }
 
-  function resetAppealUI() {
-    document.getElementById('origReason').value = "";
-    document.getElementById('origATR').value = "";
+    function resetAppealUI() {
+      document.getElementById('origReason').value = "";
+      document.getElementById('origATR').value = "";
 
-    document.getElementById('appealDetails').style.display = "none";
-    document.getElementById('submitBtn').style.display = "none";
+      document.getElementById('appealDetails').style.display = "none";
+      document.getElementById('submitBtn').style.display = "none";
 
-    document.querySelectorAll('input[name="appealOption"]').forEach(r => r.checked = false);
-  }
-</script>
+      document.querySelectorAll('input[name="appealOption"]').forEach(r => r.checked = false);
+    }
+  </script>
 
 </body>
 

@@ -233,6 +233,7 @@
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
+      align-items: center;
     }
 
     .ns-icon {
@@ -357,6 +358,17 @@
 
   <!-- HEADER -->
   <header class="pub-header">
+    <div class="topbar d-none d-md-flex">
+      <span><i class="bi bi-telephone-fill me-1"></i>Helpline: 9878950593 &nbsp;|&nbsp; <i class="bi bi-envelope-fill me-1"></i>ppcbcomplaintcell@gmail.com</span>
+      <span class="d-flex">Government of Punjab&nbsp;|&nbsp;
+        <li style="list-style-type: none; text-decoration: none; color: #fff;">
+          <a href="javascript:void(0)" id="accessibilityBtn" style="color: #fff; text-decoration: none;">
+            <span><i class="bi bi-universal-access"></i></span> Accessibility
+            Option
+          </a>
+        </li>
+      </span>
+    </div>
     <div class="mainbar">
       <div class="brand-logo">
         <div class="logo-emblem"><img src="images/logo.png" width="60" /></div>
@@ -410,11 +422,14 @@
 
         <!-- STEP 1: Complainant Info -->
         <div class="form-section active" id="fs1">
+
           <!-- Individual or Group Selection -->
-          <div class="row g-3 mb-1" style="padding-bottom:10px;border-bottom:1px solid var(--border);">
+          <div class="row g-3 mb-3" style="padding-bottom:10px;border-bottom:1px solid var(--border);">
+
             <div class="col-12">
               <label class="f-label">Complainant Type <span class="req">*</span></label>
             </div>
+
             <div class="col-12">
               <div class="d-flex gap-3">
                 <div class="form-check">
@@ -433,6 +448,7 @@
                 </div>
               </div>
             </div>
+
           </div>
 
           <div class="g-3">
@@ -459,54 +475,20 @@
                           placeholder="XXXXX XXXXX"
                           maxlength="10">
                   </div>
-
-                  <p class="f-hint">OTP will be sent to verify</p>
+                  <p class="f-hint">OTP will be sent to verify in the next step</p>
               </div>
 
-              <div class="col-md-6">
-                 <label class="f-label">District <span class="req">*</span></label>
-                  <div class="d-flex align-items-center">
-                    <select class="f-select" id="cp_District">
-                      <option value="">-- Select District --</option>
-                      <option>Amritsar</option>
-                      <option>Ludhiana</option>
-                      <option>Jalandhar</option>
-                      <option>Patiala</option>
-                      <option>Bathinda</option>
-                      <option>Mohali (SAS Nagar)</option>
-                      <option>Gurdaspur</option>
-                      <option>Hoshiarpur</option>
-                      <option>Moga</option>
-                      <option>Firozpur</option>
-                      <option>Faridkot</option>
-                      <option>Sangrur</option>
-                      <option value="other">Other</option>
-                    </select>
-                     <button class="btn btn-success ms-2 btn-p"
-                            style="height: 40px;"
-                            onclick="autoSelectDistrict()">
-                        <i class="bi bi-geo-alt-fill me-1"></i> Auto fetch
-                    </button>
-                  </div>
-              </div>
-
-                <!-- Hidden input -->
-                <div class="col-md-6" id="otherDistrictDiv" style="display:none;">
-                  <label class="f-label">Enter District</label>
-                  <input type="text" id="otherDistrict" class="f-control" placeholder="As per official records">
-                </div>
-
-
-              <div class="col-md-6">
-                <label class="f-label">Pin Code</label>
-                <input type="text" class="f-control" placeholder="PIN Code" id="cp_PinCode">
-              </div>
-
-              <div class="col-md-12 mb-3">
+              
+              <div class="col-md-6 mb-3 ">
                 <label class="f-label">Complainant's Occupation</label>
                 <input type="text" class="f-control" placeholder="Occupation" id="cp_Occupation">
               </div>
-            </div>
+
+               <div class="col-md-6 mb-3">
+                 <label class="f-label">Source of Pollution (Industry’s Name, if applicable)</label>
+                 <input type="text" class="f-control" placeholder="Name of factory, plant or establishment">
+              </div>
+           </div>
 
             <!-- GROUP COMPLAINANT FIELDS -->
             <div id="groupCP" class="row g-3" style="display:none;">
@@ -535,7 +517,6 @@
                     </label>
 
                     <div style="display:flex; gap:8px;">
-                      
                       <!-- Country Code -->
                       <input type="text"
                             value="+91"
@@ -550,30 +531,66 @@
                             placeholder="XXXXX XXXXX"
                             maxlength="10">
                     </div>
-                </div>
-
-
-              <div class="col-md-6">
-                <label class="f-label">Address of RWA/ Society/ Association/ CSO/ Group <span
-                    class="req">*</span></label>
-                <textarea class="f-control" rows="2" placeholder="House No., Street, Village/City, PIN Code, District"
-                  id="cp_GroupAddress"></textarea>
               </div>
 
+              <div class="col-md-6 mb-3">
+                 <label class="f-label">Source of Pollution (Industry’s Name, if applicable)</label>
+                 <input type="text" class="f-control" placeholder="Name of factory, plant or establishment">
+              </div>
+              <!-- <div class="col-md-6">
+                <label class="f-label">Address of RWA/ Society/ Association/ CSO/ Group</label>
+                <textarea class="f-control" rows="2" placeholder="House No., Street, Village/City, PIN Code, District"
+                  id="cp_GroupAddress"></textarea>
+              </div> -->
+
             </div>
 
-            <div class="col-md-12 mb-3">
-              <label class="f-label">Source of Pollution (Industry’s Name, if applicable)</label>
-              <input type="text" class="f-control" placeholder="Name of factory, plant or establishment">
-            </div>
 
             <div class="col-md-12 mb-3">
               <label class="f-label">Exact Location / Address of Pollution Source <span class="req">*</span></label>
               <input type="text" class="f-control" placeholder="Village, Ward, Street, Landmark, District, PIN Code">
             </div>
 
+             <div class="row mb-2">
+               <div class="col-md-6">
+                 <label class="f-label">District <span class="req">*</span></label>
+                  <div class="d-flex align-items-center">
+                    <select class="f-select" id="cp_District">
+                      <option value="">-- Select District --</option>
+                      <option>Amritsar</option>
+                      <option>Ludhiana</option>
+                      <option>Jalandhar</option>
+                      <option>Patiala</option>
+                      <option>Bathinda</option>
+                      <option>Mohali (SAS Nagar)</option>
+                      <option>Gurdaspur</option>
+                      <option>Hoshiarpur</option>
+                      <option>Moga</option>
+                      <option>Firozpur</option>
+                      <option>Faridkot</option>
+                      <option>Sangrur</option>
+                      <option value="other">Other</option>
+                    </select>
+                     <button class="btn btn-success ms-2 btn-p"
+                            style="height: 40px;"
+                            onclick="autoSelectDistrict()">
+                        <i class="bi bi-geo-alt-fill me-1"></i> Auto fetch
+                    </button>
+                  </div>
+               </div>
+              <!-- Hidden input -->
+              <div class="col-md-6" id="otherDistrictDiv" style="display:none;">
+                <label class="f-label">Enter District</label>
+                <input type="text" id="otherDistrict" class="f-control" placeholder="As per official records">
+              </div>
+              <div class="col-md-6">
+                  <label class="f-label">Pin Code</label>
+                  <input type="text" class="f-control" placeholder="PIN Code" id="cp_PinCode">
+              </div>
+             </div>
 
-            <div class="col-12">
+
+            <div class="col-12 mt-2">
               <label class="f-label">Detailed Description <span class="req">*</span></label>
               <textarea class="f-control" rows="5" id="cDesc"
                 placeholder="Describe: nature of pollution, its impact on environment and health, affected population, any previous complaints made and action taken (minimum 50 words)…"
@@ -703,7 +720,7 @@
           <div class="d-flex align-items-start gap-2 mb-4">
             <input type="checkbox" id="declareCb"
               style="width:16px;height:16px;accent-color:var(--primary);margin-top:2px;flex-shrink:0;">
-            <label for="declareCb" style="font-size:.82rem;cursor:pointer;">I agree to the <strong>Terms of
+              <label for="declareCb" style="font-size:.82rem;cursor:pointer;">I agree to the <strong>Terms of
                 Service</strong> and confirm that all information submitted is genuine.</label>
           </div>
           <div class="d-flex justify-content-between flex-wrap gap-2">
@@ -723,7 +740,7 @@
           <div class="success-icon">✅</div>
           <h4 class="fw-800 mb-2">Complaint Registered Successfully!</h4>
           <p style="color:var(--text-muted);font-size:.88rem;max-width:460px;margin:0 auto 6px;">Your grievance has been
-            received. An acknowledgement has been sent to your mobile and email.</p>
+            received. An acknowledgement has been sent to your mobile.</p>
           <div class="comp-num" id="generatedNum">PPCB/GRM/2025/04828</div>
           <p style="font-size:.78rem;color:var(--text-muted);margin-bottom:28px;">Save this number to track your
             complaint status at any time</p>
@@ -732,25 +749,23 @@
             <div class="next-step-item">
               <div class="ns-icon" style="background:#d4f5e2;color:var(--success);"><i class="bi bi-check2"></i></div>
               <div>
-                <div style="font-weight:700;font-size:.82rem;">SMS & Email Acknowledgement Sent</div>
-                <div style="font-size:.74rem;color:var(--text-muted);margin-top:2px;">Delivered to your registered
-                  contact details</div>
+                <div style="font-weight:700;font-size:.82rem;">SMS Acknowledgement Sent</div>
+                <div style="font-size:.74rem;color:var(--text-muted);margin-top:2px;"></div>
               </div>
             </div>
-            <div class="next-step-item">
+            <!-- <div class="next-step-item">
               <div class="ns-icon" style="background:#deeafb;color:var(--primary);"><i class="bi bi-person-check"></i>
               </div>
               <div>
                 <div style="font-weight:700;font-size:.82rem;">Officials of PPCB</div>
                 <div style="font-size:.74rem;color:var(--text-muted);margin-top:2px;">Review within 2 working days</div>
-              </div>
-            </div>
+              </div> 
+            </div> -->
             <div class="next-step-item">
               <div class="ns-icon" style="background:#fdf3d4;color:var(--warning);"><i class="bi bi-clock"></i></div>
               <div>
                 <div style="font-weight:700;font-size:.82rem;">Expected Resolution: 30 Working Days</div>
-                <div style="font-size:.74rem;color:var(--text-muted);margin-top:2px;">As per SOP. You'll receive status
-                  updates via SMS/Email.</div>
+                <div style="font-size:.74rem;color:var(--text-muted);margin-top:2px;"></div>
               </div>
             </div>
           </div>
@@ -920,15 +935,33 @@
       }
     }
 
-    function submitComplaint() {
-      if (!document.getElementById('declareCb').checked) { alert('Please check the declaration checkbox to proceed.'); return; }
-      document.getElementById('formCard').style.display = 'none';
-      document.getElementById('successState').style.display = 'block';
-      // Generate random complaint number
-      const num = 'PPCB/GRM/2025/0' + (4828 + Math.floor(Math.random() * 10));
-      document.getElementById('generatedNum').textContent = num;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+   function submitComplaint() {
+      // ✅ Step 1: Check checkbox first
+      if (!document.getElementById('declareCb').checked) {
+        alert('Please check the declaration checkbox to proceed.');
+        return;
+      }
+
+      // ✅ Step 2: Show confirmation popup
+      const confirmSubmit = confirm("Are you sure you want to submit the complaint?");
+
+      // ❌ If user clicks Cancel → stop
+      if (!confirmSubmit) {
+        return;
     }
+
+
+  // ✅ Step 3: Proceed with submission
+  document.getElementById('formCard').style.display = 'none';
+  document.getElementById('successState').style.display = 'block';
+
+  // Generate random complaint number
+  const num = 'PPCB/GRM/2025/0' + (4828 + Math.floor(Math.random() * 10));
+  document.getElementById('generatedNum').textContent = num;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+    
 
     /********Distrct********/
      document.getElementById("cp_District").addEventListener("change", function () {

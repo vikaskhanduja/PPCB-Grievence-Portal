@@ -788,3 +788,51 @@ thead th.fixed-col {
     background-position: right 12px center;
     padding-right: 32px;
 }
+
+/*********modal*********/
+
+ #viewComplaintModal .modal-title {
+        font-size: 1.125rem; /* 18px */
+        font-weight: 600;
+    }
+
+    #viewComplaintModal .section-title {
+        font-size: 1rem; /* 16px */
+        font-weight: 600;
+        color: #0d7a55;
+    }
+
+    #viewComplaintModal .f-label {
+        font-size: 0.875rem; /* 14px */
+        font-weight: 600;
+        margin-bottom: 6px;
+        display: inline-block;
+        color: #212529;
+    }
+
+    #viewComplaintModal .f-select {
+        font-size: 0.875rem; /* 14px */
+        min-height: 40px;
+    }
+
+    #viewComplaintModal strong {
+        font-size: 0.875rem; /* 14px */
+        font-weight: 600;
+        color: #212529;
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    #viewComplaintModal p {
+        font-size: 0.9375rem; /* 15px */
+        margin-bottom: 0;
+        color: #495057;
+    }
+
+    #viewComplaintModal .req {
+        color: red;
+    }
+
+    #viewComplaintModal .section-block {
+        margin-bottom: 1.5rem;
+    }

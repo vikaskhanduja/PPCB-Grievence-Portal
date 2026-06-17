@@ -1437,10 +1437,6 @@
                 <div class="pi-n" id="curStat" style="font-size:1rem;color:#7ae0b8;">Under Process</div>
                 <div class="pi-l">Current Status</div>
             </div>
-            <div class="pi">
-                <div class="pi-n" id="satDisp" style="font-size:1rem;color:#f0c040;">—</div>
-                <div class="pi-l">Complainant Satisfied</div>
-            </div>
         </div>
 
         <!-- BANNER -->
@@ -1565,7 +1561,7 @@
 
                 <!-- STEP 1 : Complaint Summary -->
                 <div class="vstep-panel active" id="vsp0">
-                    <h6 class="fw-bold mb-1" style="font-size:.88rem;">Officer's Complaint Summary of Complaint</h6>
+                    <h6 class="fw-bold mb-1" style="font-size:.8rem;">Officer's Complaint Summary of Complaint</h6>
                     <p class="fh mb-3">Write a concise, factual overview. This appears in all reports and escalation
                         alerts.</p>
                     <div class="wcw">
@@ -1577,8 +1573,8 @@
                     <p class="fh mt-2"><i class="bi bi-info-circle me-1"></i>Be factual and objective. This summary is
                         used in all escalation and ATR communications.</p>
 
-                    <h6 class="fw-bold mb-3" style="font-size:.88rem;">Industry Details & Pollution Classification</h6>
-                    <div class="row g-3">
+                    <h6 class="fw-bold mb-3" style="font-size:.8rem;">Industry Details & Pollution Classification</h6>
+                    <div class="row g-3 mb-3">
                         <div class="col-12">
                             <label class="fl">Industry / Unit Name & Type <span class="req">*</span><span
                                     class="hn">(PPCB colour classification)</span></label>
@@ -1603,27 +1599,39 @@
                             <input type="text" class="fc"
                                 placeholder="Full name, address, district of the unit / industry…">
                         </div>
-                        <div class="col-12 mb-3">
-                            <label class="fl mb-2">Pollution Type (Multiple)</label>
-                            <div class="d-flex flex-wrap gap-2">
-                                <label><input type="checkbox"> Air</label>
-                                <label><input type="checkbox"> Water</label>
-                                <label><input type="checkbox"> Noise</label>
-                                <label><input type="checkbox"> Solid Waste</label>
-                                <label><input type="checkbox"> Hazardous Waste</label>
-                                <label><input type="checkbox"> BioMedical Waste</label>
-                            </div>
+                       
+                         <div class="col-md-12">
+                            <h6 class="fw-bold mb-1" style="font-size:.8rem;">Pollution Type (Multiple)</h6>
+                            <div
+                                style="border:1.5px solid var(--bdr);border-radius:var(--rs);padding:10px;background:white;max-height:180px;overflow-y:auto;">
+                                <label
+                                    style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:.8rem;cursor:pointer;border-bottom:1px solid #f0f4f9;"><input
+                                        type="checkbox" style="accent-color:var(--P);width:14px;height:14px;">1.Air</label>
+                                <label
+                                    style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:.8rem;cursor:pointer;border-bottom:1px solid #f0f4f9;"><input
+                                        type="checkbox" style="accent-color:var(--P);width:14px;height:14px;"> 2.Water</label>
+                                <label
+                                    style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:.8rem;cursor:pointer;border-bottom:1px solid #f0f4f9;"><input
+                                        type="checkbox" style="accent-color:var(--P);width:14px;height:14px;"> 3.Noise</label>
+                                <label
+                                    style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:.8rem;cursor:pointer;border-bottom:1px solid #f0f4f9;"><input
+                                        type="checkbox" style="accent-color:var(--P);width:14px;height:14px;"> 4.Solid Waste</label>
+                                <label
+                                    style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:.8rem;cursor:pointer;border-bottom:1px solid #f0f4f9;"><input
+                                        type="checkbox" style="accent-color:var(--P);width:14px;height:14px;">5.Hazardous Waste</label>
+                                <label
+                                    style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:.8rem;cursor:pointer;border-bottom:1px solid #f0f4f9;"><input
+                                        type="checkbox" style="accent-color:var(--P);width:14px;height:14px;">6.BioMedical Waste</label>
+                           </div>
                         </div>
+
                     </div>
 
-                    <h6 class="fw-bold mb-1" style="font-size:.88rem;">Grievance Category</h6>
-                    <p class="fh mb-3">Select the applicable grievance category from the dropdown. Multiple categories
-                        can be selected using checkboxes.</p>
+    
                     <div class="row g-3">
-
                         <div class="col-md-12">
-                            <label class="fl">Grievance Categories <span class="hn">(select all
-                                    applicable)</span></label>
+                            <h6 class="fw-bold mb-1" style="font-size:.8rem;">Grievance Categories <span class="hn">(select all
+                                    applicable)</span></h6>
                             <div
                                 style="border:1.5px solid var(--bdr);border-radius:var(--rs);padding:10px;background:white;max-height:180px;overflow-y:auto;">
                                 <label
@@ -1719,12 +1727,11 @@
                                     style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:.8rem;cursor:pointer;"><input
                                         type="checkbox" style="accent-color:var(--P);width:14px;height:14px;">
                                     22.Miscellaneous </label>
-
                             </div>
                         </div>
 
                         <div class="col-md-12">
-                            <label class="fl">Assign To <span class="req">*</span></label>
+                            <h6 class="fw-bold mb-1" style="font-size:.8rem;">Assign To <span class="req">*</span></h6>
                             <select class="fsel" id="assignOff" onchange="autoAssign()">
                                 <option value="">-- Select Inspecting Officer --</option>
                                 <option>Sh. R. Malhotra (SDO – Ludhiana)</option>
@@ -1740,20 +1747,17 @@
                         </div>
 
                         <div class="col-12">
-                            <label class="fl">Remarks / Additional Context</label>
+                            <h6 class="fw-bold mb-1" style="font-size:.8rem;">Remarks / Additional Context</h6>
                             <textarea class="fc" rows="3"
                                 placeholder="Describe any specific details related to the selected grievance category…"></textarea>
                         </div>
-                        <div class="col-12">
-                            <div class="info-box"><i class="bi bi-shield-lock-fill me-1"></i><strong>Admin
-                                    Only:</strong> To add, edit or remove grievance categories, use Admin Panel →
-                                Category Management. Changes apply system-wide.</div>
-                        </div>
+                        
                     </div>
                 </div>
 
                 <!-- STEP 2 : VISIT DETAILS -->
                 <div class="vstep-panel" id="vsp3">
+                    
                     <div class="assign-box">
                         <div class="sec-sub"><i class="bi bi-person-badge-fill"></i>Officer Assignment</div>
                         <div class="row g-3 align-items-end">
@@ -1764,49 +1768,49 @@
                                 <div class="ach" id="visAl" style="display:none;"><i class="bi bi-bell-fill"></i><span
                                         id="visAlTxt"></span></div>
                             </div>
-
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="fl">Upload Duly Signed Field Inspection Report</label>
+                                <div class="upz" onclick="document.getElementById('inspPDF').click()">
+                                    <i class="bi bi-file-earmark-pdf-fill" style="color:var(--DAN);"></i>
+                                    <p class="fw-semibold mb-1" style="font-size:.8rem;">Click to Upload PDF</p>
+                                    <p style="font-size:.68rem;">Max 20 MB · Optional</p>
+                                </div>
+                                <input type="file" id="inspPDF" accept=".pdf" style="display:none;"
+                                    onchange="showFiles(this,'inspList')">
+                                <div id="inspList" class="mt-2"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="fl">Media Files (Photos / Videos) <span class="req">*</span><span
+                                        class="hn">Mandatory — site evidence</span></label>
+                                <div class="upz req-up" onclick="document.getElementById('mediaF').click()">
+                                    <i class="bi bi-camera-video-fill" style="color:var(--DAN);"></i>
+                                    <p class="fw-semibold mb-1" style="font-size:.8rem;">Upload Photos / Videos <span
+                                            style="color:var(--DAN);">*</span></p>
+                                    <p style="font-size:.68rem;">JPG PNG MP4 · Multiple files · Mandatory</p>
+                                </div>
+                                <input type="file" id="mediaF" accept="image/*,video/*" multiple style="display:none;"
+                                    onchange="showFiles(this,'mediaList')">
+                                <div id="mediaList" class="mt-2"></div>
+                                <div class="mandatory-note"><i class="bi bi-exclamation-circle-fill"></i> At least one
+                                    photo/video is mandatory for case processing.</div>
+                            </div>
+                            <div class="col-12">
+                                <label class="fl">Officer's Field Comments / Observations</label>
+                                <div class="wcw">
+                                    <textarea class="fc" id="visitComments" rows="4"
+                                        placeholder="Describe observations: compliance status, nature of pollution observed, equipment/infrastructure, interaction with unit management, immediate risk assessment… (max 300 words)"
+                                        oninput="wc(this,'visitWC',300)"></textarea>
+                                    <span class="wcb" id="visitWC">0 / 300</span>
+                                </div>
+                                <p class="fh mt-1"><i class="bi bi-pencil-fill me-1"></i>These comments form the basis for
+                                    regulatory action. Be specific and objective.</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="row g-3">
-
-                        <div class="col-md-6">
-                            <label class="fl">Upload Duly Signed Field Inspection Report</label>
-                            <div class="upz" onclick="document.getElementById('inspPDF').click()">
-                                <i class="bi bi-file-earmark-pdf-fill" style="color:var(--DAN);"></i>
-                                <p class="fw-semibold mb-1" style="font-size:.8rem;">Click to Upload PDF</p>
-                                <p style="font-size:.68rem;">Max 20 MB · Optional</p>
-                            </div>
-                            <input type="file" id="inspPDF" accept=".pdf" style="display:none;"
-                                onchange="showFiles(this,'inspList')">
-                            <div id="inspList" class="mt-2"></div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="fl">Media Files (Photos / Videos) <span class="req">*</span><span
-                                    class="hn">Mandatory — site evidence</span></label>
-                            <div class="upz req-up" onclick="document.getElementById('mediaF').click()">
-                                <i class="bi bi-camera-video-fill" style="color:var(--DAN);"></i>
-                                <p class="fw-semibold mb-1" style="font-size:.8rem;">Upload Photos / Videos <span
-                                        style="color:var(--DAN);">*</span></p>
-                                <p style="font-size:.68rem;">JPG PNG MP4 · Multiple files · Mandatory</p>
-                            </div>
-                            <input type="file" id="mediaF" accept="image/*,video/*" multiple style="display:none;"
-                                onchange="showFiles(this,'mediaList')">
-                            <div id="mediaList" class="mt-2"></div>
-                            <div class="mandatory-note"><i class="bi bi-exclamation-circle-fill"></i> At least one
-                                photo/video is mandatory for case processing.</div>
-                        </div>
-                        <div class="col-12">
-                            <label class="fl">Officer's Field Comments / Observations</label>
-                            <div class="wcw">
-                                <textarea class="fc" id="visitComments" rows="4"
-                                    placeholder="Describe observations: compliance status, nature of pollution observed, equipment/infrastructure, interaction with unit management, immediate risk assessment… (max 300 words)"
-                                    oninput="wc(this,'visitWC',300)"></textarea>
-                                <span class="wcb" id="visitWC">0 / 300</span>
-                            </div>
-                            <p class="fh mt-1"><i class="bi bi-pencil-fill me-1"></i>These comments form the basis for
-                                regulatory action. Be specific and objective.</p>
-                        </div>
-                    </div>
+                    <button class="btn btn-success">Add Another Visit</button>
+                    
                 </div>
 
                 <!-- STEP 3 : ACTION TAKEN -->
@@ -1996,7 +2000,7 @@
                     </p>
 
                     <!-- Bank Guarantee -->
-                    <div class="cb">
+                    <!-- <div class="cb">
                         <div class="cb-hd" onclick="toggleCB(this,'bg_b')">
                             <input type="checkbox" id="cb_bg" onclick="event.stopPropagation()"
                                 onchange="openCBBody('bg_b',this)">
@@ -2028,10 +2032,10 @@
                                         placeholder="Conditions, bank details, validity period…"></textarea></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Environmental Compensation -->
-                    <div class="cb">
+                    <!-- <div class="cb">
                         <div class="cb-hd" onclick="toggleCB(this,'ec_b')">
                             <input type="checkbox" id="cb_ec" onclick="event.stopPropagation()"
                                 onchange="openCBBody('ec_b',this)">
@@ -2072,46 +2076,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- SCN / Direction Order -->
-                    <!-- <div class="cb">
-                        <div class="cb-hd" onclick="toggleCB(this,'scnord_b')">
-                            <input type="checkbox" id="cb_scnord" onclick="event.stopPropagation()"
-                                onchange="openCBBody('scnord_b',this)">
-                            <label for="cb_scnord" class="cb-lbl"><i class="bi bi-file-earmark-exclamation me-2"
-                                    style="color:var(--WAR);"></i>SCN / Direction / Notice Order</label>
-                            <i class="bi bi-chevron-down chv"></i>
-                        </div>
-                        <div class="cb-body" id="scnord_b">
-                            <div class="row g-3">
-                                <div class="col-md-4"><label class="fl">Order / Notice Reference</label><input
-                                        type="text" class="fc" placeholder="e.g. DIR/LDH/2025/045"></div>
-                                <div class="col-md-4"><label class="fl">Date of Order</label><input type="date"
-                                        class="fc"></div>
-                                <div class="col-md-4">
-                                    <label class="fl">Response / Compliance By</label>
-                                    <input type="date" class="fc" id="scnOrdD"
-                                        onchange="setAlert('scnOrdD','scnOrdAl','scnOrdAlTxt','SCN/Direction compliance due')">
-                                    <div class="ach" id="scnOrdAl" style="display:none;"><i
-                                            class="bi bi-bell-fill"></i><span id="scnOrdAlTxt"></span></div>
-                                </div>
-                                <div class="col-md-8"><label class="fl">Order Details</label><textarea class="fc"
-                                        rows="2" placeholder="Directions issued, compliance required…"></textarea></div>
-                                <div class="col-md-4">
-                                    <label class="fl">Order Document</label>
-                                    <div class="upz" style="padding:11px;"
-                                        onclick="document.getElementById('scnOrdF').click()"><i class="bi bi-paperclip"
-                                            style="font-size:1rem;"></i>
-                                        <p style="font-size:.68rem;">Attach Order PDF</p>
-                                    </div>
-                                    <input type="file" id="scnOrdF" accept=".pdf" style="display:none;"
-                                        onchange="showFiles(this,'scnOrdFL')">
-                                    <div id="scnOrdFL" class="mt-1"></div>
-                                </div>
-                            </div>
-                        </div>
                     </div> -->
+
 
                     <!-- Follow up Required -->
                     <div class="cb">
@@ -2124,7 +2090,7 @@
                         </div>
                         <div class="cb-body open">
                             <div class="row g-3">
-                                <div class="col-md-4"><label class="fl">Scheduled Visit Date <span
+                                <div class="col-md-12"><label class="fl">Scheduled Visit Date <span
                                             class="req">*</span></label><input class="fc" type="date" value=""></div>
                                 <!-- <div class="col-md-4"><label class="fl">Whether Visit Occurred</label>
                                     <div class="yn">
@@ -2184,15 +2150,52 @@
                         </div>
                     </div>
 
-                    <div class="div"></div>
-                    <label class="fl">Final Order Document <span class="hn">(if already issued)</span></label>
-                    <div class="upz" style="padding:18px;" onclick="document.getElementById('finalO').click()">
-                        <i class="bi bi-file-earmark-check-fill" style="color:var(--SUC);"></i>
-                        <p class="fw-semibold mb-1" style="font-size:.8rem;">Upload Final Order PDF</p>
-                        <p style="font-size:.68rem;">Max 20 MB</p>
+                     <!-- other order -->
+                    <div class="cb">
+                        <div class="cb-hd" onclick="toggleCB(this,'scnord_b')">
+                            <input type="checkbox" id="cb_scnord" onclick="event.stopPropagation()"
+                                onchange="openCBBody('scnord_b',this)">
+                            <label for="cb_scnord" class="cb-lbl"><i class="bi bi-file-earmark-exclamation me-2"
+                                    style="color:var(--WAR);"></i>Other Order</label>
+                            <i class="bi bi-chevron-down chv"></i>
+                        </div>
+                        <div class="cb-body" id="scnord_b">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="fl">Date of Order</label><input type="date" class="fc">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="fl">Due Date</label>
+                                    <input type="date" class="fc" id="scnOrdD"
+                                        onchange="setAlert('scnOrdD','scnOrdAl','scnOrdAlTxt','SCN/Direction compliance due')">
+                                    <div class="ach" id="scnOrdAl" style="display:none;"><i
+                                            class="bi bi-bell-fill"></i><span id="scnOrdAlTxt"></span></div>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <label class="fl">Order Details</label><textarea class="fc"
+                                        rows="2" placeholder="Directions issued, compliance required…"></textarea>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="fl">Order Document</label>
+                                    <div class="upz" style="padding:11px;"
+                                        onclick="document.getElementById('scnOrdF').click()"><i class="bi bi-paperclip"
+                                            style="font-size:1rem;"></i>
+                                        <p style="font-size:.68rem;">Attach Order PDF</p>
+                                    </div>
+                                    <input type="file" id="scnOrdF" accept=".pdf" style="display:none;"
+                                        onchange="showFiles(this,'scnOrdFL')">
+                                    <div id="scnOrdFL" class="mt-1"></div>
+                                </div>
+                            </div>
+                            <br>
+                            <button class="btn btn-success">Add Another Order</button>
+                    
+                        </div>
                     </div>
-                    <input type="file" id="finalO" accept=".pdf,.doc,.docx" style="display:none;"
-                        onchange="showFiles(this,'finalOL')">
+
                     <div id="finalOL" class="mt-2"></div>
                 </div>
 
@@ -2208,26 +2211,38 @@
                             <input type="checkbox" id="cb_othc" onclick="event.stopPropagation()"
                                 onchange="openCBBody('othc_b',this)">
                             <label for="cb_othc" class="cb-lbl"><i class="bi bi-file-earmark-text me-2"
-                                    style="color:var(--mut);"></i>Other Order — Compliance Verification</label>
+                                    style="color:var(--mut);"></i>Follow Up Visit</label>
                             <i class="bi bi-chevron-down chv"></i>
                         </div>
                         <div class="cb-body" id="othc_b">
                             <div class="row g-3">
-                                <div class="col-md-5">
-                                    <label class="fl">Date of Compliance Due <span class="req">*</span></label>
+                                <div class="col-md-4">
+                                    <label class="fl">Due Date <span class="req">*</span></label>
                                     <input type="date" class="fc" id="othcD"
                                         onchange="setAlert('othcD','othcAl','othcAlTxt','Order compliance due')">
                                     <div class="ach" id="othcAl" style="display:none;"><i
                                             class="bi bi-bell-fill"></i><span id="othcAlTxt"></span></div>
                                 </div>
-                                <div class="col-md-4"><label class="fl">Whether Compliance Verified</label>
+                                 <div class="col-md-4">
+                                    <label class="fl">Assign Officer</label>
+                                    <input type="text" class="fc" placeholder="Assign Officer">
+                                </div>
+                                 <div class="col-md-4">
+                                    <label class="fl">Verified on Date <span class="req">*</span></label>
+                                    <input type="date" class="fc" id="othcD"
+                                        onchange="setAlert('othcD','othcAl','othcAlTxt','Order compliance due')">
+                                    <div class="ach" id="othcAl" style="display:none;"><i
+                                            class="bi bi-bell-fill"></i><span id="othcAlTxt"></span>
+                                </div>
+                                </div>
+                                <div class="col-md-12"><label class="fl">Whether Compliance Verified</label>
                                     <div class="yn">
                                         <div class="yb yy" onclick="setYN(this)">YES</div>
                                         <div class="yb yn_" onclick="setYN(this)">NO</div>
                                         <div class="yb yp" onclick="setYN(this)">Partial</div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <label class="fl">Compliance Document</label>
                                     <div class="upz" style="padding:11px;"
                                         onclick="document.getElementById('othcF').click()"><i class="bi bi-paperclip"
@@ -2238,50 +2253,10 @@
                                         onchange="showFiles(this,'othcFL')">
                                     <div id="othcFL" class="mt-1"></div>
                                 </div>
-                                <div class="col-12"><label class="fl">Compliance Remarks</label><textarea class="fc"
+                                <div class="col-6"><label class="fl">Compliance Remarks</label><textarea class="fc"
                                         rows="2" placeholder="Outcome, pending actions…"></textarea>
                                 </div>
-
                             </div>
-                            <div class="row g-3 mt-3">
-                                <div class="col-md-4">
-                                    <label class="fl">Scheduled Visit Date <span class="req">*</span></label>
-                                    <input type="date" class="fc" id="fvD"
-                                        onchange="setAlert('fvD','fvAl','fvAlTxt','Follow-up compliance visit due')">
-                                    <div class="ach" id="fvAl" style="display:none;"><i
-                                            class="bi bi-bell-fill"></i><span id="fvAlTxt"></span></div>
-                                </div>
-                                <div class="col-md-4"><label class="fl">Whether Visit Occurred</label>
-                                    <div class="yn">
-                                        <div class="yb yy" onclick="setYN(this)">YES</div>
-                                        <div class="yb yn_" onclick="setYN(this)">NO</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4"><label class="fl">Actual Visit Date</label><input type="date"
-                                        class="fc"></div>
-                                <div class="col-12"><label class="fl">Visit Findings / Compliance
-                                        Observations</label><textarea class="fc" rows="3"
-                                        placeholder="Compliance status, measures implemented, remaining violations…"></textarea>
-                                </div>
-                                <div class="col-md-6"><label class="fl">Further Regulatory Action Required?</label>
-                                    <div class="yn" style="max-width:200px;">
-                                        <div class="yb yy" onclick="setYN(this)">YES</div>
-                                        <div class="yb yn_" onclick="setYN(this)">NO</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="fl">Visit Media Evidence</label>
-                                    <div class="upz" style="padding:11px;"
-                                        onclick="document.getElementById('fvMedia').click()"><i
-                                            class="bi bi-camera-fill" style="font-size:1rem;"></i>
-                                        <p style="font-size:.68rem;">Attach Photos / PDF</p>
-                                    </div>
-                                    <input type="file" id="fvMedia" accept="image/*,.pdf" multiple style="display:none;"
-                                        onchange="showFiles(this,'fvMediaL')">
-                                    <div id="fvMediaL" class="mt-1"></div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
 
@@ -2291,38 +2266,55 @@
                             <input type="checkbox" id="cb_bgc" onclick="event.stopPropagation()"
                                 onchange="openCBBody('bgc_b',this)">
                             <label for="cb_bgc" class="cb-lbl"><i class="bi bi-bank2 me-2"
-                                    style="color:var(--P);"></i>Bank Guarantee — Compliance Status</label>
+                                    style="color:var(--P);"></i>Other Orders</label>
                             <i class="bi bi-chevron-down chv"></i>
                         </div>
                         <div class="cb-body" id="bgc_b">
                             <div class="row g-3">
                                 <div class="col-md-4">
-                                    <label class="fl">Date of Compliance Due <span class="req">*</span></label>
+                                    <label class="fl">Due Date<span class="req">*</span></label>
                                     <input type="date" class="fc" id="bgcD"
                                         onchange="setAlert('bgcD','bgcAl','bgcAlTxt','Bank Guarantee submission due')">
                                     <div class="ach" id="bgcAl" style="display:none;"><i
                                             class="bi bi-bell-fill"></i><span id="bgcAlTxt"></span></div>
                                 </div>
-                                <div class="col-md-4"><label class="fl">Whether BG Submitted</label>
+                                <div class="col-md-4"><label class="fl">Order Complied</label>
                                     <div class="yn">
                                         <div class="yb yy" onclick="setYN(this)">YES</div>
                                         <div class="yb yn_" onclick="setYN(this)">NO</div>
                                         <div class="yb yp" onclick="setYN(this)">Partial</div>
                                     </div>
                                 </div>
-                                <div class="col-md-4"><label class="fl">Amount Submitted (₹)</label><input type="number"
-                                        class="fc" placeholder="Amount received"></div>
-                                <div class="col-md-4"><label class="fl">Date of Submission</label><input class="fc"
-                                        type="date" value=""></div>
-                                <div class="col-12"><label class="fl">Compliance Remarks</label><textarea class="fc"
-                                        rows="2"
-                                        placeholder="Shortfall details, bank name, validity period…"></textarea></div>
-                            </div>
+                                <div class="col-md-4">
+                                    <label class="fl">Order Complied On Date<span class="req">*</span></label>
+                                    <input type="date" class="fc" id="bgcD"
+                                        onchange="setAlert('bgcD','bgcAl','bgcAlTxt','Bank Guarantee submission due')">
+                                    <div class="ach" id="bgcAl" style="display:none;"><i
+                                            class="bi bi-bell-fill"></i><span id="bgcAlTxt"></span></div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="fl">Compliance Document</label>
+                                    <div class="upz" style="padding:11px;"
+                                        onclick="document.getElementById('othcF').click()"><i class="bi bi-paperclip"
+                                            style="font-size:1rem;"></i>
+                                        <p style="font-size:.68rem;">Attach PDF</p>
+                                    </div>
+                                    <input type="file" id="othcF" accept=".pdf" style="display:none;"
+                                        onchange="showFiles(this,'othcFL')">
+                                    <div id="othcFL" class="mt-1"></div>
+                                </div>
+
+                                <div class="col-6">
+                                    <label class="fl">Compliance Remarks</label>
+                                    <textarea class="fc" rows="2" placeholder="Remarks"></textarea>
+                                </div>
+                            </div>  
                         </div>
                     </div>
 
                     <!-- EC Compliance -->
-                    <div class="cb">
+                    <!-- <div class="cb">
                         <div class="cb-hd" onclick="toggleCB(this,'ecc_b')">
                             <input type="checkbox" id="cb_ecc" onclick="event.stopPropagation()"
                                 onchange="openCBBody('ecc_b',this)">
@@ -2366,7 +2358,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
 
@@ -2417,8 +2409,6 @@
                         </div>
                     </div>
                 </div>
-
-
 
                 <!-- FOOTER NAV -->
                 <div class="vstep-footer">
@@ -2488,8 +2478,8 @@
             // { t: 'Grievance Category', s: 'Primary & additional categories', b: 'Grievance', i: 'bi-list-check' },
             { t: 'Visit Details', s: 'Assign · visit · comments · media', b: 'Visit', i: 'bi-geo-alt-fill' },
             { t: 'Action Taken', s: 'Advisory · SCN · External · Hearing', b: 'Action', i: 'bi-lightning-charge-fill' },
-            { t: 'Orders', s: 'BG · EC · SCN Order · Closure · Other', b: 'Orders', i: 'bi-check2-square' },
-            { t: 'Compliance', s: 'BG · EC · Follow-up · Other compliance', b: 'Compliance', i: 'bi-clipboard2-check-fill' },
+            { t: 'Orders', s: 'Follow up - Closure - Other Orders', b: 'Orders', i: 'bi-check2-square' },
+            { t: 'Compliance', s: 'Follow-up · Other compliance', b: 'Compliance', i: 'bi-clipboard2-check-fill' },
             { t: 'ATR & Disposal', s: 'ATR · satisfaction · appeal activation', b: 'ATR', i: 'bi-file-earmark-check-fill' },
             // { t: '1st Appeal (CEE)', s: 'Chief Environmental Engineer review', b: 'Appeal 1', i: 'bi-arrow-up-circle-fill' },
             // { t: '2nd Appeal (MS)', s: 'Member Secretary · final decision', b: 'Appeal 2', i: 'bi-arrow-up-square-fill' },
