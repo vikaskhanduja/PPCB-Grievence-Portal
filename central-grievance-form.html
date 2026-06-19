@@ -415,11 +415,11 @@
 
                     <div class="row g-3 mb-1" style="padding-bottom:10px;border-bottom:1px solid var(--border);">
                         <div class="col-12">
-                            <label class="f-label">Whether filed by Individual or Group <span
+                            <label class="f-label">Whether filed by Individual, Group or Anonymous <span
                                     class="req">*</span></label>
                         </div>
                         <div class="col-12">
-                            <div class="d-flex gap-3">
+                            <div class="d-flex gap-3 flex-wrap">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="complainantType"
                                         id="typeIndividual" value="individual" checked
@@ -431,6 +431,11 @@
                                         value="group" onchange="toggleComplaintType('group')">
                                     <label class="form-check-label" for="typeGroup">RWA / Society / Association / CSO /
                                         Other (Group)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="complainantType" id="typeAnonymous"
+                                        value="anonymous" onchange="toggleComplaintType('anonymous')">
+                                    <label class="form-check-label" for="typeAnonymous">Anonymous</label>
                                 </div>
                             </div>
                         </div>
@@ -537,6 +542,14 @@
                                 <label class="f-label">Address of Group <span class="req">*</span></label>
                                 <textarea class="f-control" rows="2" placeholder="RWA/Society address"
                                     id="groupAddress"></textarea>
+                            </div>
+                        </div>
+
+                        <div id="anonymousNote" class="col-12" style="display:none;">
+                            <div style="background: rgba(0, 123, 255, 0.05); border: 1px dashed rgba(0, 123, 255, 0.35); border-radius: 16px; padding: 24px; text-align: center; color: var(--text-muted);">
+                                <div style="font-size: 1.5rem; color: var(--primary); margin-bottom: 10px;"><i class="bi bi-person-circle"></i></div>
+                                <div style="font-weight:700; margin-bottom: 6px; color: var(--text);">No complainant information required</div>
+                                <div style="font-size:.9rem; max-width: 640px; margin: 0 auto;">This complaint has been filed anonymously, so individual or group contact details are not required.</div>
                             </div>
                         </div>
                     </div>
@@ -812,9 +825,13 @@
                 const complaintType = document.querySelector('input[name="complainantType"]:checked').value;
                 if (complaintType === 'individual') {
                     document.getElementById('rv-complainant').textContent = document.getElementById('indName').value || '—';
-                    document.getElementById('rv-district').textContent = document.getElementById('indDistrict').value || '—';
-                } else {
+                    document.getElementById('rv-district').textContent = document.getElementById('cp_District').value || '—';
+                } else if (complaintType === 'group') {
                     document.getElementById('rv-complainant').textContent = document.getElementById('nodalName').value || '—';
+                    document.getElementById('rv-district').textContent = '—';
+                } else {
+                    document.getElementById('rv-complainant').textContent = 'Anonymous';
+                    document.getElementById('rv-district').textContent = '—';
                 }
                 document.getElementById('rv-assigned').textContent = document.getElementById('assignedTo').value || '—';
             }
@@ -824,8 +841,11 @@
         function toggleComplaintType(type) {
             const indFields = document.getElementById('individualFields');
             const grpFields = document.getElementById('groupFields');
+            const anonymousNote = document.getElementById('anonymousNote');
+
             indFields.style.display = type === 'individual' ? 'flex' : 'none';
             grpFields.style.display = type === 'group' ? 'flex' : 'none';
+            anonymousNote.style.display = type === 'anonymous' ? 'block' : 'none';
         }
 
         function updateSubjectWordCount(el) {
