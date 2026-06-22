@@ -649,7 +649,7 @@ thead th.fixed-col {
 .kpi-card {
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 16px;
   padding: 12px;
   position: relative;
   overflow: hidden;
@@ -721,9 +721,9 @@ thead th.fixed-col {
 /* KPI Label */
 .kpi-label {
   margin-top: 8px;
-  font-size: 0.95rem;
+  font-size: 0.82rem;
   font-weight: 600;
-  color: var(--text-muted);
+  color: rgb(55, 65, 81);
   min-height: 24px;
 }
 
