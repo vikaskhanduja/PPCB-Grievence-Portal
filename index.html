@@ -1,1368 +1,1420 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PPCB GRM Portal – Home</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
-  <link rel="stylesheet" href="css/shared.css">
-  <style>
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, #1a5ba0 100%);
-      padding: 64px 24px 80px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: rgba(232, 130, 12, .18);
-      border: 1px solid rgba(232, 130, 12, .4);
-      color: var(--accent-light);
-      padding: 5px 14px;
-      border-radius: 100px;
-      font-size: .72rem;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-
-    .hero-title {
-      font-size: clamp(1.8rem, 5vw, 2.4rem);
-      color: white;
-      line-height: 1.2;
-      margin-bottom: 16px;
-    }
-
-    .hero-title em {
-      color: var(--accent-light);
-      font-style: italic;
-    }
-
-    .hero-sub {
-      font-size: 1rem;
-      color: rgba(255, 255, 255, .7);
-      line-height: 1.8;
-      margin-bottom: 36px;
-      max-width: 540px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn-hp {
-      background: var(--accent);
-      color: white;
-      padding: 13px 28px;
-      border-radius: var(--radius-sm);
-      font-weight: 700;
-      font-size: .88rem;
-      border: none;
-      cursor: pointer;
-      transition: all .2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 16px rgba(232, 130, 12, .4);
-      text-decoration: none;
-    }
-
-    .btn-hp:hover {
-      background: var(--accent-light);
-      transform: translateY(-2px);
-      color: white;
-    }
-
-    .btn-hs {
-      background: rgba(255, 255, 255, .1);
-      color: white;
-      padding: 13px 28px;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      font-size: .88rem;
-      border: 1px solid rgba(255, 255, 255, .25);
-      cursor: pointer;
-      transition: all .2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-    }
-
-    .btn-hs:hover {
-      background: rgba(255, 255, 255, .18);
-      color: white;
-    }
-
-    /* Hero image panel */
-    .hero-panel {
-      background: rgba(255, 255, 255, .07);
-      border: 1px solid rgba(255, 255, 255, .15);
-      border-radius: var(--radius);
-      padding: 24px;
-      backdrop-filter: blur(8px);
-    }
-
-    .hp-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 14px;
-      background: rgba(255, 255, 255, .08);
-      border-radius: var(--radius-sm);
-      margin-bottom: 8px;
-      border-left: 3px solid var(--accent);
-      width: 100%;
-    }
-
-    .hp-row:last-child {
-      margin-bottom: 0;
-    }
-
-    .hp-id {
-      font-family: 'Instrument Serif', serif;
-      font-size: .88rem;
-      color: white;
-      font-weight: 700;
-    }
-
-    .hp-cat {
-      font-size: .7rem;
-      color: rgba(255, 255, 255, .6);
-      margin-top: 1px;
-    }
-
-    .hp-bs {
-      padding: 3px 8px;
-      border-radius: 100px;
-      font-size: .65rem;
-      font-weight: 700;
-    }
-
-    .hp-progress {
-      background: rgba(26, 111, 196, .3);
-      color: #90c8f8;
-    }
-
-    .hp-new {
-      background: rgba(10, 79, 143, .3);
-      color: #90b8f0;
-    }
-
-    .hp-disposed {
-      background: rgba(13, 122, 85, .3);
-      color: #7ae0b8;
-    }
-
-    /* Stats */
-
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-num {
-      font-size: clamp(1.4rem, 3vw, 1.9rem);
-      font-weight: 500;
-      color: #fff;
-    }
-
-    .stat-lbl {
-      font-size: .8rem;
-      color: #fff;
-      letter-spacing: .04em;
-      margin-top: 2px;
-      font-weight: 500;
-    }
-
-    /* Section */
-    .section {
-      padding: 40px 24px;
-    }
-
-    .sec-label {
-      font-size: 1.4rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .sec-title {
-      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-      color: var(--primary-dark);
-      line-height: 1.2;
-    }
-
-    .sec-sub {
-      color: var(--text-muted);
-      font-size: .88rem;
-      margin-top: 8px;
-    }
-
-    /* Feature card */
-    .feat-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px 20px;
-      height: 100%;
-      transition: all .3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .feat-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .3s;
-    }
-
-    .feat-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
-      border-color: transparent;
-    }
-
-    .feat-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .feat-icon {
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, #e8f0fb, #d0e4f7);
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      color: var(--primary);
-      margin-bottom: 14px;
-    }
-
-    .feat-card h5 {
-      font-weight: 700;
-      font-size: 1rem;
-      margin-bottom: 6px;
-    }
-
-    .feat-card p {
-      font-size: .9rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      margin: 0;
-    }
-
-    /************** Process steps ****************/
-
-    .sec {
-      padding: 52px 32px 40px;
-      margin: 0 auto;
-    }
-
-    .sec-eye {
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
-      font-size: 1.4rem;
-      font-weight: 700;
-    }
-
-    .sec-title {
-      color: var(--navy);
-      margin-bottom: 6px;
-      font-size: clamp(1.6rem, 3.5vw, 2.3rem);
-    }
-
-    .sec-sub {
-      color: var(--mut);
-      font-size: .8rem;
-    }
-
-    .tl-outer {
-      margin-top: 48px;
-      position: relative;
-    }
-
-    /* ── ROWS ── */
-    .tl-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      position: relative;
-      gap: 0;
-    }
-
-    /* ── DOTTED SPINE behind each row ── */
-    .tl-row::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 8%;
-      right: 8%;
-      height: 0;
-      border-top: 2.5px dashed var(--bdr);
-      z-index: 0;
-    }
-
-    /* Row 1 spine grows from left; filled by JS */
-    .spine {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 8%;
-      height: 0;
-      width: 0;
-      border-top: 2.5px dashed;
-      z-index: 1;
-      border-radius: 0;
-      transition: width 1.2s cubic-bezier(.4, 0, .2, 1);
-    }
-
-    .spine-1 {
-      border-color: var(--c2);
-    }
-
-    .spine-2 {
-      border-color: var(--c5);
-    }
-
-    /* ── U-TURN CONNECTOR ── */
-    .uturn {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 0 8%;
-      height: 72px;
-      position: relative;
-    }
-
-    .uturn-svg {
-      position: absolute;
-      right: 8%;
-      width: 56px;
-      height: 72px;
-      overflow: visible;
-    }
-
-    .uturn-path {
-      fill: none;
-      stroke: var(--bdr);
-      stroke-width: 2.5;
-      stroke-dasharray: 5 4;
-      stroke-dashoffset: 200;
-      transition: stroke-dashoffset 0.8s ease 1.2s;
-    }
-
-    .uturn-path.drawn {
-      stroke-dashoffset: 0;
-    }
-
-    /* ── STEP CELL ── */
-    .step {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 12px;
-      position: relative;
-      z-index: 2;
-    }
-
-    /* ── CONNECTOR DOT on spine ── */
-    .step-dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 5;
-      background: var(--wh);
-      border: 2.5px solid var(--bdr);
-      transition: all .4s ease;
-      opacity: 0;
-    }
-
-    /* row 1 dots above centre line */
-    .row1 .step-dot {
-      top: calc(50%);
-      margin-top: 0;
-    }
-
-    /* row 2 dots below centre line */
-    .row2 .step-dot {
-      top: calc(50%);
-    }
-
-    .step-dot.lit {
-      opacity: 1;
-      border-color: currentColor;
-      background: currentColor;
-      box-shadow: 0 0 0 4px rgba(255, 255, 255, .8), 0 0 0 6px currentColor;
-      transform: translate(-50%, -50%) scale(1.1);
-    }
-
-    /* ── BOX ── */
-    .box {
-      background: var(--wh);
-      border: 2px dashed var(--bdr);
-      border-radius: 18px;
-      padding: 20px 18px 16px;
-      width: 100%;
-      position: relative;
-      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
-      cursor: default;
-      /* entrance animation */
-      opacity: 0;
-      transform: translateY(22px) scale(.96);
-      min-height: 250px;
-    }
-
-    .box.in {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      transition: opacity .55s ease, transform .55s cubic-bezier(.34, 1.2, .64, 1),
-        box-shadow .28s, border-color .28s;
-    }
-
-    .box:hover {
-      transform: translateY(-5px) !important;
-      box-shadow: 0 12px 36px rgba(10, 79, 143, .13);
-    }
-
-    /* hover changes dashed border to solid accent */
-    .box:hover {
-      border-style: solid;
-    }
-
-    /* box top accent bar */
-    .box-bar {
-      position: absolute;
-      top: 0;
-      left: 16px;
-      right: 16px;
-      height: 3px;
-      border-radius: 0 0 4px 4px;
-    }
-
-    /* icon */
-    .box-icon-wrap {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 19px;
-      margin-bottom: 12px;
-      position: relative;
-    }
-
-    /* number badge */
-    .box-num {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--navy);
-      color: white;
-      font-size: .56rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid var(--wh);
-    }
-
-    .box-title {
-      color: var(--navy);
-      margin-bottom: 7px;
-      font-size: .9rem;
-      font-weight: 700;
-      line-height: 1.3;
-
-    }
-
-    .box-text {
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.65;
-    }
-
-    /* tat tag */
-    .box-tat {
-      position: absolute;
-      /* ✅ move it out of flow */
-      top: 24px;
-      /* ✅ distance from top */
-      right: 12px;
-      /* ✅ align to right */
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 4px 10px;
-      border-radius: 100px;
-      font-size: .6rem;
-      font-weight: 700;
-      z-index: 3;
-      /* ✅ stays above content */
-    }
-
-    /* row1 box: label below */
-    .row1 .step {
-      flex-direction: column;
-    }
-
-    .row1 .step .step-dot {
-      order: 2;
-      margin: 0;
-      position: relative;
-      top: auto;
-      left: auto;
-      transform: none;
-      margin-top: -7px;
-      margin-bottom: -7px;
-      z-index: 5;
-    }
-
-    .row1 .step .box {
-      order: 1;
-    }
-
-    /* row2 box: dot top, box below */
-    .row2 .step {
-      flex-direction: column;
-    }
-
-    .row2 .step .step-dot {
-      order: 1;
-      position: relative;
-      top: auto;
-      left: auto;
-      transform: none;
-      margin-bottom: -7px;
-      z-index: 5;
-    }
-
-    .row2 .step .box {
-      order: 2;
-    }
-
-    /* row1 dots sit between box and spine  */
-    /* row2 dots sit between spine and box  */
-
-    /* ── STEP-SPECIFIC COLOURS ── */
-    .s1 .box {
-      border-color: #b8e6d4;
-    }
-
-    .s1 .box:hover {
-      border-color: var(--c1);
-    }
-
-    .s1 .box-bar {
-      background: var(--c1);
-    }
-
-    .s1 .box-icon-wrap {
-      background: var(--c1l);
-      color: var(--c1);
-    }
-
-    .s1 .box-tat {
-      background: var(--c1l);
-      color: var(--c1);
-    }
-
-    .s1 .step-dot {
-      color: var(--c1);
-    }
-
-    .s2 .box {
-      border-color: #b8d4f0;
-    }
-
-    .s2 .box:hover {
-      border-color: var(--c2);
-    }
-
-    .s2 .box-bar {
-      background: var(--c2);
-    }
-
-    .s2 .box-icon-wrap {
-      background: var(--c2l);
-      color: var(--c2);
-    }
-
-    .s2 .box-tat {
-      background: var(--c2l);
-      color: var(--c2);
-    }
-
-    .s2 .step-dot {
-      color: var(--c2);
-    }
-
-    .s3 .box {
-      border-color: #d8b8f5;
-    }
-
-    .s3 .box:hover {
-      border-color: var(--c3);
-    }
-
-    .s3 .box-bar {
-      background: var(--c3);
-    }
-
-    .s3 .box-icon-wrap {
-      background: var(--c3l);
-      color: var(--c3);
-    }
-
-    .s3 .box-tat {
-      background: var(--c3l);
-      color: var(--c3);
-    }
-
-    .s3 .step-dot {
-      color: var(--c3);
-    }
-
-    .s4 .box {
-      border-color: #f5b8b5;
-    }
-
-    .s4 .box:hover {
-      border-color: var(--c4);
-    }
-
-    .s4 .box-bar {
-      background: var(--c4);
-    }
-
-    .s4 .box-icon-wrap {
-      background: var(--c4l);
-      color: var(--c4);
-    }
-
-    .s4 .box-tat {
-      background: var(--c4l);
-      color: var(--c4);
-    }
-
-    .s4 .step-dot {
-      color: var(--c4);
-    }
-
-    .s5 .box {
-      border-color: #f5dfb0;
-    }
-
-    .s5 .box:hover {
-      border-color: var(--c5);
-    }
-
-    .s5 .box-bar {
-      background: var(--c5);
-    }
-
-    .s5 .box-icon-wrap {
-      background: var(--c5l);
-      color: var(--c5);
-    }
-
-    .s5 .box-tat {
-      background: var(--c5l);
-      color: var(--c5);
-    }
-
-    .s5 .step-dot {
-      color: var(--c5);
-    }
-
-    .s6 .box {
-      border-color: #b0def0;
-    }
-
-    .s6 .box:hover {
-      border-color: var(--c6);
-    }
-
-    .s6 .box-bar {
-      background: var(--c6);
-    }
-
-    .s6 .box-icon-wrap {
-      background: var(--c6l);
-      color: var(--c6);
-    }
-
-    .s6 .box-tat {
-      background: var(--c6l);
-      color: var(--c6);
-    }
-
-    .s6 .step-dot {
-      color: var(--c6);
-    }
-
-    /* ── PROGRESS BAR ── */
-    .prog-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 44px;
-    }
-
-    .prog-track {
-      width: min(420px, 100%);
-      height: 5px;
-      background: var(--bdr);
-      border-radius: 100px;
-      overflow: hidden;
-    }
-
-    .prog-fill {
-      height: 100%;
-      width: 0%;
-      border-radius: 100px;
-      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c5), var(--c6));
-      transition: width 1.6s cubic-bezier(.4, 0, .2, 1);
-    }
-
-    .prog-pct {
-      font-size: .7rem;
-      font-weight: 800;
-      color: var(--c2);
-      min-width: 36px;
-    }
-
-    /* ── LEGEND ── */
-    .legend {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 40px;
-    }
-
-    .leg {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: .7rem;
-      font-weight: 600;
-      color: var(--mut);
-    }
-
-    .leg-d {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-
-
-    /* ─── MOBILE ─── */
-    @media(max-width:767px) {
-      .tl-row {
-        grid-template-columns: 1fr;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PPCB GRM Portal – Home</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+    />
+    <link rel="stylesheet" href="css/shared.css" />
+    <style>
+      /* ── HERO ── */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--primary-dark) 0%,
+          var(--primary) 60%,
+          #1a5ba0 100%
+        );
+        padding: 64px 24px 80px;
+        position: relative;
+        overflow: hidden;
       }
 
-      .tl-row::before,
-      .spine {
-        display: none;
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       }
 
-      .uturn {
-        display: none;
+      .hero-content {
+        position: relative;
+        z-index: 1;
       }
 
-      .step {
-        flex-direction: row !important;
-        gap: 14px;
-        padding: 0 0 16px;
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(232, 130, 12, 0.18);
+        border: 1px solid rgba(232, 130, 12, 0.4);
+        color: var(--accent-light);
+        padding: 5px 14px;
+        border-radius: 100px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        margin-bottom: 20px;
       }
 
-      .row1 .step .step-dot,
-      .row2 .step .step-dot {
-        display: none;
+      .hero-title {
+        font-size: clamp(1.8rem, 5vw, 2.4rem);
+        color: white;
+        line-height: 1.2;
+        margin-bottom: 16px;
       }
 
-      .row1 .step .box,
-      .row2 .step .box {
-        flex: 1;
+      .hero-title em {
+        color: var(--accent-light);
+        font-style: italic;
       }
+
+      .hero-sub {
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.8;
+        margin-bottom: 36px;
+        max-width: 540px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .btn-hp {
+        background: var(--accent);
+        color: white;
+        padding: 13px 28px;
+        border-radius: var(--radius-sm);
+        font-weight: 700;
+        font-size: 0.88rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 16px rgba(232, 130, 12, 0.4);
+        text-decoration: none;
+      }
+
+      .btn-hp:hover {
+        background: var(--accent-light);
+        transform: translateY(-2px);
+        color: white;
+      }
+
+      .btn-hs {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        padding: 13px 28px;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.88rem;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        cursor: pointer;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+
+      .btn-hs:hover {
+        background: rgba(255, 255, 255, 0.18);
+        color: white;
+      }
+
+      /* Hero image panel */
+      .hero-panel {
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: var(--radius);
+        padding: 24px;
+        backdrop-filter: blur(8px);
+      }
+
+      .hp-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 14px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: var(--radius-sm);
+        margin-bottom: 8px;
+        border-left: 3px solid var(--accent);
+        width: 100%;
+      }
+
+      .hp-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .hp-id {
+        font-family: "Instrument Serif", serif;
+        font-size: 0.88rem;
+        color: white;
+        font-weight: 700;
+      }
+
+      .hp-cat {
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 1px;
+      }
+
+      .hp-bs {
+        padding: 3px 8px;
+        border-radius: 100px;
+        font-size: 0.65rem;
+        font-weight: 700;
+      }
+
+      .hp-progress {
+        background: rgba(26, 111, 196, 0.3);
+        color: #90c8f8;
+      }
+
+      .hp-new {
+        background: rgba(10, 79, 143, 0.3);
+        color: #90b8f0;
+      }
+
+      .hp-disposed {
+        background: rgba(13, 122, 85, 0.3);
+        color: #7ae0b8;
+      }
+
+      /* Stats */
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-num {
+        font-size: clamp(1.4rem, 3vw, 1.9rem);
+        font-weight: 500;
+        color: #fff;
+      }
+
+      .stat-lbl {
+        font-size: 0.8rem;
+        color: #fff;
+        letter-spacing: 0.04em;
+        margin-top: 2px;
+        font-weight: 500;
+      }
+
+      /* Section */
+      .section {
+        padding: 40px 24px;
+      }
+
+      .sec-label {
+        font-size: 1.4rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .sec-title {
+        font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+        color: var(--primary-dark);
+        line-height: 1.2;
+      }
+
+      .sec-sub {
+        color: var(--text-muted);
+        font-size: 0.88rem;
+        margin-top: 8px;
+      }
+
+      /* Feature card */
+      .feat-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px 20px;
+        height: 100%;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feat-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s;
+      }
+
+      .feat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow);
+        border-color: transparent;
+      }
+
+      .feat-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .feat-icon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, #e8f0fb, #d0e4f7);
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        color: var(--primary);
+        margin-bottom: 14px;
+      }
+
+      .feat-card h5 {
+        font-weight: 700;
+        font-size: 1rem;
+        margin-bottom: 6px;
+      }
+
+      .feat-card p {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+        margin: 0;
+      }
+
+      /************** Process steps ****************/
 
       .sec {
-        padding: 36px 16px 48px;
+        padding: 52px 32px 40px;
+        margin: 0 auto;
       }
-    }
 
-    @media(max-width:540px) {
+      .sec-eye {
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+        font-size: 1.4rem;
+        font-weight: 700;
+      }
+
+      .sec-title {
+        color: var(--navy);
+        margin-bottom: 6px;
+        font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+      }
+
+      .sec-sub {
+        color: var(--mut);
+        font-size: 0.8rem;
+      }
+
+      .tl-outer {
+        margin-top: 48px;
+        position: relative;
+      }
+
+      /* ── ROWS ── */
+      .tl-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        position: relative;
+        gap: 0;
+      }
+
+      /* ── DOTTED SPINE behind each row ── */
+      .tl-row::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 8%;
+        right: 8%;
+        height: 0;
+        border-top: 2.5px dashed var(--bdr);
+        z-index: 0;
+      }
+
+      /* Row 1 spine grows from left; filled by JS */
+      .spine {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 8%;
+        height: 0;
+        width: 0;
+        border-top: 2.5px dashed;
+        z-index: 1;
+        border-radius: 0;
+        transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .spine-1 {
+        border-color: var(--c2);
+      }
+
+      .spine-2 {
+        border-color: var(--c5);
+      }
+
+      /* ── U-TURN CONNECTOR ── */
+      .uturn {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0 8%;
+        height: 72px;
+        position: relative;
+      }
+
+      .uturn-svg {
+        position: absolute;
+        right: 8%;
+        width: 56px;
+        height: 72px;
+        overflow: visible;
+      }
+
+      .uturn-path {
+        fill: none;
+        stroke: var(--bdr);
+        stroke-width: 2.5;
+        stroke-dasharray: 5 4;
+        stroke-dashoffset: 200;
+        transition: stroke-dashoffset 0.8s ease 1.2s;
+      }
+
+      .uturn-path.drawn {
+        stroke-dashoffset: 0;
+      }
+
+      /* ── STEP CELL ── */
+      .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 12px;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* ── CONNECTOR DOT on spine ── */
+      .step-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 5;
+        background: var(--wh);
+        border: 2.5px solid var(--bdr);
+        transition: all 0.4s ease;
+        opacity: 0;
+      }
+
+      /* row 1 dots above centre line */
+      .row1 .step-dot {
+        top: calc(50%);
+        margin-top: 0;
+      }
+
+      /* row 2 dots below centre line */
+      .row2 .step-dot {
+        top: calc(50%);
+      }
+
+      .step-dot.lit {
+        opacity: 1;
+        border-color: currentColor;
+        background: currentColor;
+        box-shadow:
+          0 0 0 4px rgba(255, 255, 255, 0.8),
+          0 0 0 6px currentColor;
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+
+      /* ── BOX ── */
       .box {
-        padding: 16px 14px 13px;
+        background: var(--wh);
+        border: 2px dashed var(--bdr);
+        border-radius: 18px;
+        padding: 20px 18px 16px;
+        width: 100%;
+        position: relative;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease,
+          border-color 0.3s ease;
+        cursor: default;
+        /* entrance animation */
+        opacity: 0;
+        transform: translateY(22px) scale(0.96);
+        min-height: 250px;
+      }
+
+      .box.in {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        transition:
+          opacity 0.55s ease,
+          transform 0.55s cubic-bezier(0.34, 1.2, 0.64, 1),
+          box-shadow 0.28s,
+          border-color 0.28s;
+      }
+
+      .box:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: 0 12px 36px rgba(10, 79, 143, 0.13);
+      }
+
+      /* hover changes dashed border to solid accent */
+      .box:hover {
+        border-style: solid;
+      }
+
+      /* box top accent bar */
+      .box-bar {
+        position: absolute;
+        top: 0;
+        left: 16px;
+        right: 16px;
+        height: 3px;
+        border-radius: 0 0 4px 4px;
+      }
+
+      /* icon */
+      .box-icon-wrap {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 19px;
+        margin-bottom: 12px;
+        position: relative;
+      }
+
+      /* number badge */
+      .box-num {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--navy);
+        color: white;
+        font-size: 0.56rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid var(--wh);
       }
 
       .box-title {
-        font-size: .8rem;
+        color: var(--navy);
+        margin-bottom: 7px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        line-height: 1.3;
       }
 
       .box-text {
-        font-size: .68rem;
-      }
-    }
-
-
-    /* Track section */
-    .track-section {
-      padding: 60px 24px;
-      background: linear-gradient(135deg, #e8f0fb 0%, #f0f4f9 100%);
-    }
-
-    .track-card {
-      background: white;
-      border-radius: var(--radius);
-      padding: 32px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-    }
-
-    /* Track result */
-    .track-result {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-top: 18px;
-    }
-
-    .trk-progress {
-      display: flex;
-      gap: 0;
-      margin: 20px 0;
-      overflow-x: auto;
-      padding-bottom: 4px;
-    }
-
-    .trk-step {
-      flex: 1;
-      text-align: center;
-      position: relative;
-      min-width: 70px;
-    }
-
-    .trk-step::before {
-      content: '';
-      position: absolute;
-      top: 12px;
-      left: 50%;
-      right: -50%;
-      height: 2px;
-      background: var(--border);
-      z-index: 0;
-    }
-
-    .trk-step:last-child::before {
-      display: none;
-    }
-
-    .trk-dot {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--border);
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: .65rem;
-      font-weight: 700;
-      margin: 0 auto 6px;
-      position: relative;
-      z-index: 1;
-      border: 2px solid white;
-    }
-
-    .trk-step.done .trk-dot {
-      background: var(--success);
-      color: white;
-    }
-
-    .trk-step.done::before {
-      background: var(--success);
-    }
-
-    .trk-step.curr .trk-dot {
-      background: var(--primary);
-      color: white;
-      box-shadow: 0 0 0 3px rgba(10, 79, 143, .2);
-    }
-
-    .trk-lbl {
-      font-size: .62rem;
-      color: var(--text-muted);
-      font-weight: 500;
-      line-height: 1.3;
-    }
-
-    .trk-step.done .trk-lbl,
-    .trk-step.curr .trk-lbl {
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    /* Footer */
-    footer {
-      background: var(--primary-dark);
-      color: rgba(255, 255, 255, .65);
-      padding: 28px 24px;
-    }
-
-    /* bhashini plugin overrides */
-    .bhashini-dropdown {
-      position: fixed;
-      z-index: 1000;
-      bottom: 0 !important;
-    }
-
-    .bhashini-dropdown-btn {
-      display: flex;
-      background-color: #1a6fc4 !important;
-    }
-
-    /******* Accessibility*******/
-
-    .accessibility-toolbar {
-      position: fixed;
-      top: 32px;
-      right: 0;
-      width: 531px;
-      background: #dfdfdf;
-      color: #fff;
-      z-index: 9999;
-      box-shadow: 0 2px 12px #39ef7440;
-      padding: 0;
-      border-radius: 15px 0px 0px 15px;
-      border: 5px solid #ffffff;
-    }
-
-    .accessibility-toolbar-inner {
-      display: block;
-      align-items: center;
-      justify-content: center;
-
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .accessibility-title {
-      font-weight: 600;
-      font-size: 1.08em;
-      margin-right: 24px;
-      background: #0c577c;
-      width: 100%;
-      display: block;
-      padding: 10px;
-      border-radius: 10px 0px 0px 0px;
-    }
-
-    .accessibility-controls {
-      width: 100%;
-      padding: 12px 20px;
-    }
-
-    .accessibility-controls .access-btn {
-      background: #ffffff;
-      color: #222;
-      border: none;
-      border-radius: 6px;
-      margin: 8px 6px;
-      padding: 23px 5px;
-      font-size: 1.08em;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      font-family: "Noto Sans", sans-serif;
-      width: 145px
-    }
-
-    .accessibility-controls span {
-      font-size: 14px;
-      display: block;
-      text-align: center;
-      font-family: "Noto Sans", sans-serif;
-    }
-
-
-    .accessibility-controls .access-btn:hover {
-      background: #dbffe9;
-
-    }
-
-    .accessibility-close {
-      position: absolute;
-      right: 12px;
-      top: 8px;
-      background: transparent;
-      color: #fff;
-      border: none;
-      font-size: 1.5em;
-      cursor: pointer;
-    }
-
-
-    /********************/
-    
-    .eco-panel {
-      border-radius: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .eco-panel::before {
-      content: '';
-      position: absolute;
-      top: -60px;
-      right: -60px;
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.03);
-      pointer-events: none;
-    }
-
-    .eco-panel::after {
-      content: '';
-      position: absolute;
-      bottom: -40px;
-      left: -40px;
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      background: rgba(29, 158, 117, 0.08);
-      pointer-events: none;
-    }
-
-    /* floating leaves */
-    .floating-leaf {
-      position: absolute;
-      font-size: 18px;
-      opacity: 0.15;
-      animation: leafFloat 6s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    .fl1 {
-      top: 10%;
-      left: 3%;
-      animation-delay: 0s;
-    }
-
-    .fl2 {
-      top: 52%;
-      left: 2%;
-      animation-delay: 2s;
-    }
-
-    .fl3 {
-      top: 28%;
-      right: 3%;
-      animation-delay: 1s;
-    }
-
-    .fl4 {
-      bottom: 15%;
-      right: 4%;
-      animation-delay: 3s;
-    }
-
-    @keyframes leafFloat {
-
-      0%,
-      100% {
-        transform: translateY(0) rotate(-10deg);
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.65;
       }
 
-      50% {
-        transform: translateY(-12px) rotate(10deg);
+      /* tat tag */
+      .box-tat {
+        position: absolute;
+        /* ✅ move it out of flow */
+        top: 24px;
+        /* ✅ distance from top */
+        right: 12px;
+        /* ✅ align to right */
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        border-radius: 100px;
+        font-size: 0.6rem;
+        font-weight: 700;
+        z-index: 3;
+        /* ✅ stays above content */
       }
-    }
 
-    /* header */
-    .panel-header {
-      text-align: center;
-      margin-bottom: 22px;
-      position: relative;
-      z-index: 2;
-    }
+      /* row1 box: label below */
+      .row1 .step {
+        flex-direction: column;
+      }
 
-    .header-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
+      .row1 .step .step-dot {
+        order: 2;
+        margin: 0;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin-top: -7px;
+        margin-bottom: -7px;
+        z-index: 5;
+      }
 
-    .script-text {
-      font-style: italic;
-      color: var(--accent-light);
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
+      .row1 .step .box {
+        order: 1;
+      }
 
-    .bold-env {
-      color: #fff;
-      font-size: 20px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-    }
+      /* row2 box: dot top, box below */
+      .row2 .step {
+        flex-direction: column;
+      }
 
-    .header-accent {
-      width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, #f6c248, #4ade80, #38bdf8);
-      border-radius: 2px;
-      margin: 8px auto 0;
-      animation: expandAcc 1.2s 0.3s ease forwards;
-    }
+      .row2 .step .step-dot {
+        order: 1;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin-bottom: -7px;
+        z-index: 5;
+      }
 
-    @keyframes expandAcc {
-      to {
+      .row2 .step .box {
+        order: 2;
+      }
+
+      /* row1 dots sit between box and spine  */
+      /* row2 dots sit between spine and box  */
+
+      /* ── STEP-SPECIFIC COLOURS ── */
+      .s1 .box {
+        border-color: #b8e6d4;
+      }
+
+      .s1 .box:hover {
+        border-color: var(--c1);
+      }
+
+      .s1 .box-bar {
+        background: var(--c1);
+      }
+
+      .s1 .box-icon-wrap {
+        background: var(--c1l);
+        color: var(--c1);
+      }
+
+      .s1 .box-tat {
+        background: var(--c1l);
+        color: var(--c1);
+      }
+
+      .s1 .step-dot {
+        color: var(--c1);
+      }
+
+      .s2 .box {
+        border-color: #b8d4f0;
+      }
+
+      .s2 .box:hover {
+        border-color: var(--c2);
+      }
+
+      .s2 .box-bar {
+        background: var(--c2);
+      }
+
+      .s2 .box-icon-wrap {
+        background: var(--c2l);
+        color: var(--c2);
+      }
+
+      .s2 .box-tat {
+        background: var(--c2l);
+        color: var(--c2);
+      }
+
+      .s2 .step-dot {
+        color: var(--c2);
+      }
+
+      .s3 .box {
+        border-color: #d8b8f5;
+      }
+
+      .s3 .box:hover {
+        border-color: var(--c3);
+      }
+
+      .s3 .box-bar {
+        background: var(--c3);
+      }
+
+      .s3 .box-icon-wrap {
+        background: var(--c3l);
+        color: var(--c3);
+      }
+
+      .s3 .box-tat {
+        background: var(--c3l);
+        color: var(--c3);
+      }
+
+      .s3 .step-dot {
+        color: var(--c3);
+      }
+
+      .s4 .box {
+        border-color: #f5b8b5;
+      }
+
+      .s4 .box:hover {
+        border-color: var(--c4);
+      }
+
+      .s4 .box-bar {
+        background: var(--c4);
+      }
+
+      .s4 .box-icon-wrap {
+        background: var(--c4l);
+        color: var(--c4);
+      }
+
+      .s4 .box-tat {
+        background: var(--c4l);
+        color: var(--c4);
+      }
+
+      .s4 .step-dot {
+        color: var(--c4);
+      }
+
+      .s5 .box {
+        border-color: #f5dfb0;
+      }
+
+      .s5 .box:hover {
+        border-color: var(--c5);
+      }
+
+      .s5 .box-bar {
+        background: var(--c5);
+      }
+
+      .s5 .box-icon-wrap {
+        background: var(--c5l);
+        color: var(--c5);
+      }
+
+      .s5 .box-tat {
+        background: var(--c5l);
+        color: var(--c5);
+      }
+
+      .s5 .step-dot {
+        color: var(--c5);
+      }
+
+      .s6 .box {
+        border-color: #b0def0;
+      }
+
+      .s6 .box:hover {
+        border-color: var(--c6);
+      }
+
+      .s6 .box-bar {
+        background: var(--c6);
+      }
+
+      .s6 .box-icon-wrap {
+        background: var(--c6l);
+        color: var(--c6);
+      }
+
+      .s6 .box-tat {
+        background: var(--c6l);
+        color: var(--c6);
+      }
+
+      .s6 .step-dot {
+        color: var(--c6);
+      }
+
+      /* ── PROGRESS BAR ── */
+      .prog-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 44px;
+      }
+
+      .prog-track {
+        width: min(420px, 100%);
+        height: 5px;
+        background: var(--bdr);
+        border-radius: 100px;
+        overflow: hidden;
+      }
+
+      .prog-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: 100px;
+        background: linear-gradient(
+          90deg,
+          var(--c1),
+          var(--c2),
+          var(--c3),
+          var(--c5),
+          var(--c6)
+        );
+        transition: width 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .prog-pct {
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: var(--c2);
+        min-width: 36px;
+      }
+
+      /* ── LEGEND ── */
+      .legend {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 40px;
+      }
+
+      .leg {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--mut);
+      }
+
+      .leg-d {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+
+      /* ─── MOBILE ─── */
+      @media (max-width: 767px) {
+        .tl-row {
+          grid-template-columns: 1fr;
+        }
+
+        .tl-row::before,
+        .spine {
+          display: none;
+        }
+
+        .uturn {
+          display: none;
+        }
+
+        .step {
+          flex-direction: row !important;
+          gap: 14px;
+          padding: 0 0 16px;
+        }
+
+        .row1 .step .step-dot,
+        .row2 .step .step-dot {
+          display: none;
+        }
+
+        .row1 .step .box,
+        .row2 .step .box {
+          flex: 1;
+        }
+
+        .sec {
+          padding: 36px 16px 48px;
+        }
+      }
+
+      @media (max-width: 540px) {
+        .box {
+          padding: 16px 14px 13px;
+        }
+
+        .box-title {
+          font-size: 0.8rem;
+        }
+
+        .box-text {
+          font-size: 0.68rem;
+        }
+      }
+
+      /* Track section */
+      .track-section {
+        padding: 60px 24px;
+        background: linear-gradient(135deg, #e8f0fb 0%, #f0f4f9 100%);
+      }
+
+      .track-card {
+        background: white;
+        border-radius: var(--radius);
+        padding: 32px;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+      }
+
+      /* Track result */
+      .track-result {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px;
+        margin-top: 18px;
+      }
+
+      .trk-progress {
+        display: flex;
+        gap: 0;
+        margin: 20px 0;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .trk-step {
+        flex: 1;
+        text-align: center;
+        position: relative;
+        min-width: 70px;
+      }
+
+      .trk-step::before {
+        content: "";
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        right: -50%;
+        height: 2px;
+        background: var(--border);
+        z-index: 0;
+      }
+
+      .trk-step:last-child::before {
+        display: none;
+      }
+
+      .trk-dot {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--border);
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.65rem;
+        font-weight: 700;
+        margin: 0 auto 6px;
+        position: relative;
+        z-index: 1;
+        border: 2px solid white;
+      }
+
+      .trk-step.done .trk-dot {
+        background: var(--success);
+        color: white;
+      }
+
+      .trk-step.done::before {
+        background: var(--success);
+      }
+
+      .trk-step.curr .trk-dot {
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 0 0 3px rgba(10, 79, 143, 0.2);
+      }
+
+      .trk-lbl {
+        font-size: 0.62rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        line-height: 1.3;
+      }
+
+      .trk-step.done .trk-lbl,
+      .trk-step.curr .trk-lbl {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--primary-dark);
+        color: rgba(255, 255, 255, 0.65);
+        padding: 28px 24px;
+      }
+
+      /* bhashini plugin overrides */
+      .bhashini-dropdown {
+        position: fixed;
+        z-index: 1000;
+        bottom: 0 !important;
+      }
+
+      .bhashini-dropdown-btn {
+        display: flex;
+        background-color: #1a6fc4 !important;
+      }
+
+      /******* Accessibility*******/
+
+      .accessibility-toolbar {
+        position: fixed;
+        top: 32px;
+        right: 0;
+        width: 531px;
+        background: #dfdfdf;
+        color: #fff;
+        z-index: 9999;
+        box-shadow: 0 2px 12px #39ef7440;
+        padding: 0;
+        border-radius: 15px 0px 0px 15px;
+        border: 5px solid #ffffff;
+      }
+
+      .accessibility-toolbar-inner {
+        display: block;
+        align-items: center;
+        justify-content: center;
+
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .accessibility-title {
+        font-weight: 600;
+        font-size: 1.08em;
+        margin-right: 24px;
+        background: #0c577c;
+        width: 100%;
+        display: block;
+        padding: 10px;
+        border-radius: 10px 0px 0px 0px;
+      }
+
+      .accessibility-controls {
+        width: 100%;
+        padding: 12px 20px;
+      }
+
+      .accessibility-controls .access-btn {
+        background: #ffffff;
+        color: #222;
+        border: none;
+        border-radius: 6px;
+        margin: 8px 6px;
+        padding: 23px 5px;
+        font-size: 1.08em;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s;
+        font-family: "Noto Sans", sans-serif;
+        width: 145px;
+      }
+
+      .accessibility-controls span {
+        font-size: 14px;
+        display: block;
+        text-align: center;
+        font-family: "Noto Sans", sans-serif;
+      }
+
+      .accessibility-controls .access-btn:hover {
+        background: #dbffe9;
+      }
+
+      .accessibility-close {
+        position: absolute;
+        right: 12px;
+        top: 8px;
+        background: transparent;
+        color: #fff;
+        border: none;
+        font-size: 1.5em;
+        cursor: pointer;
+      }
+
+      /********************/
+
+      .eco-panel {
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .eco-panel::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
         width: 200px;
-      }
-    }
-
-    /* tip cards */
-    .tips-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .tip-card {
-      display: flex;
-      align-items: center;
-      opacity: 0;
-      transform: translateX(30px);
-      animation: slideIn 0.6s ease forwards;
-    }
-
-    .tc1 {
-      animation-delay: 0.4s;
-    }
-
-    .tc2 {
-      animation-delay: 0.7s;
-    }
-
-    .tc3 {
-      animation-delay: 1.0s;
-    }
-
-    .tc4 {
-      animation-delay: 1.3s;
-    }
-
-    @keyframes slideIn {
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    .icon-bubble {
-      width: 68px;
-      height: 68px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.92);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 1;
-      border: 3px solid rgba(10, 51, 35, 0.8);
-    }
-
-    .icon-bubble svg {
-      width: 50px;
-      height: 50px;
-    }
-
-    .tip-body {
-      background: rgba(29, 158, 117, 0.35);
-      border: 1px solid rgba(29, 158, 117, 0.45);
-      border-radius: 0 36px 36px 0;
-      padding: 12px 18px 12px 24px;
-      flex: 1;
-      margin-left: -18px;
-      min-height: 68px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      transition: background 0.3s, border-color 0.3s;
-      cursor: default;
-    }
-
-    .tip-card:hover .tip-body {
-      background: rgba(29, 158, 117, 0.52);
-      border-color: rgba(74, 222, 128, 0.5);
-    }
-
-    .tip-title {
-      color: #fff;
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-
-    .tip-desc {
-      color: rgba(255, 255, 255, 1);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    /* footer pill */
-    .panel-foot {
-      text-align: center;
-      margin-top: 18px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .foot-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 20px;
-      padding: 6px 16px;
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 11px;
-      letter-spacing: 0.4px;
-    }
-
-    .live-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #4ade80;
-      animation: blink 2s ease-in-out infinite;
-    }
-
-    @keyframes blink {
-
-      0%,
-      100% {
-        opacity: 1;
+        height: 200px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.03);
+        pointer-events: none;
       }
 
-      50% {
-        opacity: 0.3;
+      .eco-panel::after {
+        content: "";
+        position: absolute;
+        bottom: -40px;
+        left: -40px;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: rgba(29, 158, 117, 0.08);
+        pointer-events: none;
       }
-    }
-  </style>
-</head>
 
-<body>
-  <!-- <div class="bhashini-plugin-container"></div> -->
-  <!-- HEADER -->
-  <header class="pub-header">
-    <div class="topbar d-none d-md-flex">
-      <span><i class="bi bi-telephone-fill me-1"></i>Helpline: 9878950593 &nbsp;|&nbsp; <i
-          class="bi bi-envelope-fill me-1"></i>ppcbcomplaintcell@gmail.com</span>
-      <span class="d-flex">Government of Punjab&nbsp;|&nbsp;
-        <li style="list-style-type: none; text-decoration: none; color: #fff;">
-          <a href="javascript:void(0)" id="accessibilityBtn" style="color: #fff; text-decoration: none;">
-            <span><i class="bi bi-universal-access"></i></span> Accessibility
-            Option
-          </a>
-        </li>
-      </span>
-    </div>
-    <div class="mainbar">
-      <div class="brand-logo">
-        <div class="logo-emblem"><img src="images/logo.png" width="60" /></div>
-        <div class="brand-text">
-          <h1>PPCB – Grievance Redressal Mechanism</h1>
-          <p>Punjab Pollution Control Board &nbsp;|&nbsp; Government of Punjab</p>
-        </div>
+      /* floating leaves */
+      .floating-leaf {
+        position: absolute;
+        font-size: 18px;
+        opacity: 0.15;
+        animation: leafFloat 6s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      .fl1 {
+        top: 10%;
+        left: 3%;
+        animation-delay: 0s;
+      }
+
+      .fl2 {
+        top: 52%;
+        left: 2%;
+        animation-delay: 2s;
+      }
+
+      .fl3 {
+        top: 28%;
+        right: 3%;
+        animation-delay: 1s;
+      }
+
+      .fl4 {
+        bottom: 15%;
+        right: 4%;
+        animation-delay: 3s;
+      }
+
+      @keyframes leafFloat {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-10deg);
+        }
+
+        50% {
+          transform: translateY(-12px) rotate(10deg);
+        }
+      }
+
+      /* header */
+      .panel-header {
+        text-align: center;
+        margin-bottom: 22px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .header-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+
+      .script-text {
+        font-style: italic;
+        color: var(--accent-light);
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+
+      .bold-env {
+        color: #fff;
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+      }
+
+      .header-accent {
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #f6c248, #4ade80, #38bdf8);
+        border-radius: 2px;
+        margin: 8px auto 0;
+        animation: expandAcc 1.2s 0.3s ease forwards;
+      }
+
+      @keyframes expandAcc {
+        to {
+          width: 200px;
+        }
+      }
+
+      /* tip cards */
+      .tips-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .tip-card {
+        display: flex;
+        align-items: center;
+        opacity: 0;
+        transform: translateX(30px);
+        animation: slideIn 0.6s ease forwards;
+      }
+
+      .tc1 {
+        animation-delay: 0.4s;
+      }
+
+      .tc2 {
+        animation-delay: 0.7s;
+      }
+
+      .tc3 {
+        animation-delay: 1s;
+      }
+
+      .tc4 {
+        animation-delay: 1.3s;
+      }
+
+      @keyframes slideIn {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .icon-bubble {
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.92);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 1;
+        border: 3px solid rgba(10, 51, 35, 0.8);
+      }
+
+      .icon-bubble svg {
+        width: 50px;
+        height: 50px;
+      }
+
+      .tip-body {
+        background: rgba(29, 158, 117, 0.35);
+        border: 1px solid rgba(29, 158, 117, 0.45);
+        border-radius: 0 36px 36px 0;
+        padding: 12px 18px 12px 24px;
+        flex: 1;
+        margin-left: -18px;
+        min-height: 68px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        transition:
+          background 0.3s,
+          border-color 0.3s;
+        cursor: default;
+      }
+
+      .tip-card:hover .tip-body {
+        background: rgba(29, 158, 117, 0.52);
+        border-color: rgba(74, 222, 128, 0.5);
+      }
+
+      .tip-title {
+        color: #fff;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+
+      .tip-desc {
+        color: rgba(255, 255, 255, 1);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      /* footer pill */
+      .panel-foot {
+        text-align: center;
+        margin-top: 18px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .foot-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 20px;
+        padding: 6px 16px;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 11px;
+        letter-spacing: 0.4px;
+      }
+
+      .live-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #4ade80;
+        animation: blink 2s ease-in-out infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+
+        50% {
+          opacity: 0.3;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- <div class="bhashini-plugin-container"></div> -->
+    <!-- HEADER -->
+    <header class="pub-header">
+      <div class="topbar d-none d-md-flex">
+        <span
+          ><i class="bi bi-telephone-fill me-1"></i>Helpline: 9878950593
+          &nbsp;|&nbsp;
+          <i class="bi bi-envelope-fill me-1"></i
+          >ppcbcomplaintcell@gmail.com</span
+        >
+        <span class="d-flex"
+          >Government of Punjab&nbsp;|&nbsp;
+          <li style="list-style-type: none; text-decoration: none; color: #fff">
+            <a
+              href="javascript:void(0)"
+              id="accessibilityBtn"
+              style="color: #fff; text-decoration: none"
+            >
+              <span><i class="bi bi-universal-access"></i></span> Accessibility
+              Option
+            </a>
+          </li>
+        </span>
       </div>
-      <div class="header-nav">
-        <a href="citizen-tracking.html" class="hn-btn hn-outline"><i class="bi bi-search"></i><span
-            class="hide-xs">Track Complaint</span></a>
-        <a href="citizen-grievance-form.html" class="hn-btn hn-outline"><i class="bi bi-pencil-square"></i><span
-            class="hide-xs">File Complaint</span></a>
-        <a href="login.html" class="hn-btn hn-solid"><i class="bi bi-person-fill"></i><span class="hide-xs">Officer
-            Login</span></a>
-      </div>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container-fluid">
-      <div class="row align-items-center g-4">
-        <div class="col-lg-6">
-          <div class="hero-content">
-            <div class="hero-badge"><i class="bi bi-shield-check-fill"></i> Official Government Portal</div>
-            <h1 class="hero-title">PPCB <em>Grievance</em><br>Redressal System</h1>
-            <p class="hero-sub">Submit complaints about environmental pollution in Punjab, track real-time status, and ensure
-              timely resolution through our integrated digital platform.</p>
-            <div class="hero-actions">
-              <a href="citizen-grievance-form.html" class="btn-hp"><i class="bi bi-pencil-square"></i> File a
-                Grievance</a>
-              <a href="citizen-tracking.html" class="btn-hs"><i class="bi bi-search"></i> Track Complaint</a>
-            </div>
+      <div class="mainbar">
+        <div class="brand-logo">
+          <div class="logo-emblem">
+            <img src="images/logo.png" width="60" />
+          </div>
+          <div class="brand-text">
+            <h1>PPCB – Grievance Redressal Mechanism</h1>
+            <p>
+              Punjab Pollution Control Board &nbsp;|&nbsp; Government of Punjab
+            </p>
           </div>
         </div>
+        <div class="header-nav">
+          <a href="citizen-tracking.html" class="hn-btn hn-outline"
+            ><i class="bi bi-search"></i
+            ><span class="hide-xs">Track Complaint</span></a
+          >
+          <a href="citizen-grievance-form.html" class="hn-btn hn-outline"
+            ><i class="bi bi-pencil-square"></i
+            ><span class="hide-xs">File Complaint</span></a
+          >
+          <a href="login.html" class="hn-btn hn-solid"
+            ><i class="bi bi-person-fill"></i
+            ><span class="hide-xs">Officer Login</span></a
+          >
+        </div>
+      </div>
+    </header>
 
-        <!-- <div class="col-lg-5 offset-lg-1 d-none d-lg-block">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container-fluid">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-6">
+            <div class="hero-content">
+              <div class="hero-badge">
+                <i class="bi bi-shield-check-fill"></i> Official Government
+                Portal
+              </div>
+              <h1 class="hero-title">
+                PPCB <em>Grievance</em><br />Redressal System
+              </h1>
+              <p class="hero-sub">
+                Submit complaints about environmental pollution in Punjab, track
+                real-time status, and ensure timely resolution through our
+                integrated digital platform.
+              </p>
+              <div class="hero-actions">
+                <a href="citizen-grievance-form.html" class="btn-hp"
+                  ><i class="bi bi-pencil-square"></i> File a Grievance</a
+                >
+                <a href="citizen-tracking.html" class="btn-hs"
+                  ><i class="bi bi-search"></i> Track Complaint</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="col-lg-5 offset-lg-1 d-none d-lg-block">
           <div class="hero-panel">
             <div
               style="font-size:.9rem;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px;">
@@ -1391,679 +1443,1162 @@
           
         </div> -->
 
-        <div class="col-lg-6 d-none d-lg-block eco-panel">
+          <div class="col-lg-6 d-none d-lg-block eco-panel">
+            <span class="floating-leaf fl1">🍃</span>
+            <span class="floating-leaf fl2">🍂</span>
+            <span class="floating-leaf fl3">🌿</span>
+            <span class="floating-leaf fl4">🍃</span>
 
-          <span class="floating-leaf fl1">🍃</span>
-          <span class="floating-leaf fl2">🍂</span>
-          <span class="floating-leaf fl3">🌿</span>
-          <span class="floating-leaf fl4">🍃</span>
-
-          <div class="panel-header">
-            <div class="header-row">
-              <span class="script-text">Make Better</span>
-              <span class="bold-env">ENVIRONMENT</span>
-            </div>
-            <div class="header-accent"></div>
-          </div>
-
-          <div class="tips-list">
-
-            <!-- Tip 1 -->
-            <div class="tip-card tc1">
-              <div class="icon-bubble">
-                <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <ellipse cx="22" cy="38" rx="10" ry="3" fill="#c8e6c9" opacity="0.5" />
-                  <rect x="20" y="20" width="4" height="16" rx="2" fill="#6d4c2a" />
-                  <path d="M22 20 Q14 14 10 6 Q18 8 22 16 Q26 8 34 6 Q30 14 22 20Z" fill="#4caf50" />
-                  <path d="M22 16 Q16 12 14 6 Q20 9 22 14Z" fill="#388e3c" opacity="0.6" />
-                  <circle cx="12" cy="30" r="3" fill="#a5d6a7" opacity="0.7" />
-                  <circle cx="32" cy="34" r="2.5" fill="#81c784" opacity="0.6" />
-                </svg>
+            <div class="panel-header">
+              <div class="header-row">
+                <span class="script-text">Make Better</span>
+                <span class="bold-env">ENVIRONMENT</span>
               </div>
-              <div class="tip-body">
-                <div class="tip-title">Plant Trees &amp; Greenery</div>
-                <div class="tip-desc">Planting trees, shrubs and flowers helps improve air quality and biodiversity
-                  across Punjab.</div>
-              </div>
+              <div class="header-accent"></div>
             </div>
 
-            <!-- Tip 2 -->
-            <div class="tip-card tc2">
-              <div class="icon-bubble">
-                <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M22 6 C14 6 10 12 10 17 C10 22 13 25 16 27 L16 32 C16 33.1 16.9 34 18 34 L26 34 C27.1 34 28 33.1 28 32 L28 27 C31 25 34 22 34 17 C34 12 30 6 22 6Z"
-                    fill="#fff176" />
-                  <path d="M18 34 L26 34 L26 36 C26 37.1 25.1 38 24 38 L20 38 C18.9 38 18 37.1 18 36Z" fill="#bdbdbd" />
-                  <line x1="22" y1="14" x2="22" y2="24" stroke="#fbc02d" stroke-width="2" stroke-linecap="round" />
-                  <line x1="16" y1="18" x2="22" y2="22" stroke="#fbc02d" stroke-width="1.5" stroke-linecap="round" />
-                  <line x1="28" y1="18" x2="22" y2="22" stroke="#fbc02d" stroke-width="1.5" stroke-linecap="round" />
-                  <circle cx="22" cy="22" r="2" fill="#f9a825" />
-                </svg>
-              </div>
-              <div class="tip-body">
-                <div class="tip-title">Efficient Lighting</div>
-                <div class="tip-desc">Switch to energy-efficient LED bulbs and turn off lights when not in use to
-                  conserve electricity.</div>
-              </div>
-            </div>
-
-            <!-- Tip 3 -->
-            <div class="tip-card tc3">
-              <div class="icon-bubble">
-                <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M22 8 L28 16 L24 16 C24 22 28 26 34 26 C30 32 24 34 18 30 C12 26 10 18 14 12 C16 16 18 18 22 18 L18 18Z"
-                    fill="#66bb6a" />
-                  <path d="M22 8 L18 18 L22 18 C22 24 18 28 12 28 C10 22 12 16 16 12 C16 14 18 16 22 16Z" fill="#43a047"
-                    opacity="0.6" />
-                  <path d="M20 30 Q21 36 22 38" stroke="#6d4c2a" stroke-width="2.5" stroke-linecap="round"
-                    fill="none" />
-                </svg>
-              </div>
-              <div class="tip-body">
-                <div class="tip-title">Reduce, Reuse, Recycle</div>
-                <div class="tip-desc">Recycle paper, plastic and glass. Embrace the practice of reducing and reusing
-                  whenever possible.</div>
-              </div>
-            </div>
-
-            <!-- Tip 4 -->
-            <div class="tip-card tc4">
-              <div class="icon-bubble">
-                <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="22" cy="24" r="13" fill="#42a5f5" />
-                  <ellipse cx="22" cy="24" rx="5" ry="13" fill="#1e88e5" opacity="0.5" />
-                  <ellipse cx="22" cy="24" rx="13" ry="5" fill="#1565c0" opacity="0.3" />
-                  <path d="M12 20 Q16 17 22 18 Q28 17 32 20" stroke="#fff" stroke-width="1.2" fill="none"
-                    opacity="0.5" />
-                  <path d="M10 24 Q14 21 22 22 Q30 21 34 24" stroke="#fff" stroke-width="1" fill="none" opacity="0.4" />
-                  <circle cx="17" cy="14" r="2.5" fill="#81c784" />
-                  <path d="M17 14 L17 10 Q19 8 21 11" stroke="#4caf50" stroke-width="1.2" fill="none" />
-                  <circle cx="27" cy="13" r="2" fill="#a5d6a7" />
-                </svg>
-              </div>
-              <div class="tip-body">
-                <div class="tip-title">Educate &amp; Advocate</div>
-                <div class="tip-desc">Raise awareness about environmental issues and advocate for sustainable practices
-                  in your community.</div>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="panel-foot">
-            <span class="foot-pill">
-              <span class="live-dot"></span>
-              Punjab Pollution Control Board — Environmental Awareness
-            </span>
-          </div>
-
-        </div>
-
-
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <section class="section" style="background:var(--bg);">
-    <div class="container-fluid">
-      <div class="text-center mb-5">
-        <div class="sec-label">Why Use This Portal</div>
-        <!--   -->
-        <p class="sec-sub mt-2">A comprehensive Environemnt-related grievance management platform for the citizens of Punjab</p>
-      </div>
-      <div class="row g-4">
-
-        <div class="col-sm-6 col-lg-3 col-xl-3">
-          <div class="feat-card">
-            <div class="feat-icon"><i class="bi bi-clock-history"></i></div>
-            <h5>Timely resolution</h5>
-            <p>Every complaint tracked against defined timelines. Auto-escalation on overdue cases.</p>
-          </div>
-        </div>
-
-        <div class="col-sm-6 col-lg-3 col-xl-3">
-          <div class="feat-card">
-            <div class="feat-icon"><i class="bi bi-bell-fill"></i></div>
-            <h5>Real-Time Alerts</h5>
-            <p>Automatic SMS and email alerts to complainants and officers at every stage.</p>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-3 col-xl-3">
-          <div class="feat-card">
-            <div class="feat-icon"><i class="bi bi-arrow-up-circle"></i></div>
-            <h5>Appeal Mechanism</h5>
-            <p>Two-level appeal: First to Senior Enviromental Engineer (SEE), Second to Member Secretary. Full history available.</p>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-3 col-xl-3">
-          <div class="feat-card">
-            <div class="feat-icon"><i class="bi bi-shield-lock"></i></div>
-            <h5>Audit Trail</h5>
-            <p>Complete digital record of every action. Transparent, accountable, tamper-proof.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROCESS STEPS -->
-  <section class="sec">
-    <div class="text-center mb-4">
-      <div class="sec-eye">6-Step Workflow</div>
-      <div class="sec-title">Complaint Processing Journey</div>
-      <div class="sec-sub">Six interconnected steps from intake to final resolution.
-      </div>
-    </div>
-
-    <!-- progress -->
-    <div class="prog-row">
-      <span style="font-size:.68rem;font-weight:600;color:var(--mut);">Journey Progress</span>
-      <div class="prog-track">
-        <div class="prog-fill" id="pf"></div>
-      </div>
-      <span class="prog-pct" id="pp">0%</span>
-    </div>
-
-    <div class="tl-outer">
-
-      <!-- ══ ROW 1 : Steps 1 – 3 ══ -->
-      <div class="tl-row row1" id="row1">
-        <div class="spine spine-1" id="sp1"></div>
-
-        <!-- STEP 1 -->
-        <div class="step s1" id="step1">
-          <div class="box" id="box1">
-            <div class="box-bar"></div>
-            <div class="box-icon-wrap">
-              <i class="bi bi-person-check-fill"></i>
-              <div class="box-num">1</div>
-            </div>
-            <div class="box-title">OTP-based Complaint Registration & Instant Acknowledgment</div>
-            <div class="box-text">Registering environemnt-related grievances made easy with an OTP-verification.
-              Complainants will receive instant acknowledgement.</div>
-            <div class="box-tat"><i class="bi bi-clock-fill"></i> Same day</div>
-          </div>
-          <div class="step-dot" id="dot1"></div>
-        </div>
-
-        <!-- STEP 2 -->
-        <div class="step s2" id="step2">
-          <div class="box" id="box2">
-            <div class="box-bar"></div>
-            <div class="box-icon-wrap">
-              <i class="bi bi-clipboard2-check-fill"></i>
-              <div class="box-num">2</div>
-            </div>
-            <div class="box-title">Complaint Scrutiny & Assignment</div>
-            <div class="box-text">Officials review and assign the complaints to the concerned office, which will inspect
-              the grievance to provide remedy within prescribed timelines.</div>
-            <div class="box-tat"><i class="bi bi-clock-fill"></i> 10 Working days</div>
-          </div>
-          <div class="step-dot" id="dot2"></div>
-        </div>
-
-        <!-- STEP 3 -->
-        <div class="step s3" id="step3">
-          <div class="box" id="box3">
-            <div class="box-bar"></div>
-            <div class="box-icon-wrap">
-              <i class="bi bi-binoculars-fill"></i>
-              <div class="box-num">3</div>
-            </div>
-            <div class="box-title">Field Inspection</div>
-            <div class="box-text">AEE/ADO conducts on-site visit, collects evidence — photos and videos — and uploads
-              the Unified Inspection Performa.</div>
-            <!-- <div class="box-tat"><i class="bi bi-clock-fill"></i> 7 days</div> -->
-          </div>
-          <div class="step-dot" id="dot3"></div>
-        </div>
-      </div><!-- /row1 -->
-
-      <!-- ══ U-TURN ══ -->
-      <div class="uturn" id="uturnWrap">
-        <svg class="uturn-svg" viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
-          <path class="uturn-path" id="uturnPath" d="M 4,0 L 4,36 Q 4,68 36,68 L 56,68" />
-        </svg>
-      </div>
-
-      <!-- ══ ROW 2 : Steps 4 – 6 (right to left visually) ══ -->
-      <div class="tl-row row2" id="row2">
-        <div class="spine spine-2" id="sp2"></div>
-
-        <!-- STEP 6 — leftmost cell but last step (right→left flow) -->
-        <div class="step s6" id="step6">
-          <div class="step-dot" id="dot6"></div>
-          <div class="box" id="box6">
-            <div class="box-bar"></div>
-            <div class="box-icon-wrap">
-              <i class="bi bi-arrow-up-circle-fill"></i>
-              <div class="box-num">6</div>
-            </div>
-            <div class="box-title">Feedback & Appeal</div>
-            <div class="box-text">Complainants share feedback and/or files appeal based on the status of the grievance.
-            </div>
-            <div class="box-tat"><i class="bi bi-clock-fill"></i> 45d / level</div>
-          </div>
-        </div>
-
-        <!-- STEP 5 -->
-        <div class="step s5" id="step5">
-          <div class="step-dot" id="dot5"></div>
-          <div class="box" id="box5">
-            <div class="box-bar"></div>
-            <div class="box-icon-wrap">
-              <i class="bi bi-file-earmark-check-fill"></i>
-              <div class="box-num">5</div>
-            </div>
-            <div class="box-title">Action Taken Report</div>
-            <div class="box-text">Officers will share action taken report.</div>
-            <div class="box-tat"><i class="bi bi-clock-fill"></i> 10 Working days</div>
-          </div>
-        </div>
-
-        <!-- STEP 4 — rightmost cell -->
-        <div class="step s4" id="step4">
-          <div class="step-dot" id="dot4"></div>
-          <div class="box" id="box4">
-            <div class="box-bar"></div>
-            <div class="box-icon-wrap">
-              <i class="bi bi-hammer"></i>
-              <div class="box-num">4</div>
-            </div>
-            <div class="box-title">Regulatory Action</div>
-            <div class="box-text">Advisory, notice or directions would be issued based on the findings.</div>
-            <div class="box-tat"><i class="bi bi-clock-fill"></i> 20 Working days</div>
-          </div>
-        </div>
-      </div><!-- /row2 -->
-
-    </div><!-- /tl-outer -->
-
-  </section>
-
-  <!-- TRACK SECTION -->
-  <section class="track-section">
-    <div class="container-fluid">
-      <div class="row g-4 align-items-center">
-        <div class="col-lg-4">
-          <div class="sec-label">Track Instantly</div>
-          <h2 class="sec-title">Check Your Complaint Status</h2>
-          <p class="sec-sub mt-2">Enter your complaint number to view real-time status, assigned officer, and complete
-            action history.</p>
-        </div>
-        <div class="col-lg-8">
-          <div class="track-card">
-            <div class="row g-3 align-items-end">
-              <div class="col-md-5">
-                <label class="f-label">Complaint Number <span class="req">*</span></label>
-                <input type="text" class="f-control" placeholder="e.g. PPCB/GRM/2025/00123" id="trackInput">
-              </div>
-              <div class="col-md-4">
-                <label class="f-label">Mobile / Email</label>
-                <input type="text" class="f-control" placeholder="Verify identity">
-              </div>
-              <div class="col-md-3">
-                <button class="btn-full" onclick="doTrack()"><i class="bi bi-search"></i> Track Status</button>
-              </div>
-            </div>
-            <div id="trackResult" style="display:none;">
-              <hr class="divider">
-              <div class="track-result">
-                <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
-                  <div>
-                    <div style="font-size:.68rem;color:var(--text-muted);font-weight:700;letter-spacing:.04em;">
-                      COMPLAINT NO.</div>
-                    <div class="cid" style="font-size:1.05rem;">PPCB/GRM/2025/00247</div>
-                  </div>
-                  <span class="bs bs-progress">In Progress</span>
+            <div class="tips-list">
+              <!-- Tip 1 -->
+              <div class="tip-card tc1">
+                <div class="icon-bubble">
+                  <svg
+                    viewBox="0 0 44 44"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <ellipse
+                      cx="22"
+                      cy="38"
+                      rx="10"
+                      ry="3"
+                      fill="#c8e6c9"
+                      opacity="0.5"
+                    />
+                    <rect
+                      x="20"
+                      y="20"
+                      width="4"
+                      height="16"
+                      rx="2"
+                      fill="#6d4c2a"
+                    />
+                    <path
+                      d="M22 20 Q14 14 10 6 Q18 8 22 16 Q26 8 34 6 Q30 14 22 20Z"
+                      fill="#4caf50"
+                    />
+                    <path
+                      d="M22 16 Q16 12 14 6 Q20 9 22 14Z"
+                      fill="#388e3c"
+                      opacity="0.6"
+                    />
+                    <circle
+                      cx="12"
+                      cy="30"
+                      r="3"
+                      fill="#a5d6a7"
+                      opacity="0.7"
+                    />
+                    <circle
+                      cx="32"
+                      cy="34"
+                      r="2.5"
+                      fill="#81c784"
+                      opacity="0.6"
+                    />
+                  </svg>
                 </div>
-                <div class="row g-3 mb-3">
-                  <div class="col-6 col-md-3">
-                    <div
-                      style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);">
-                      Filed On</div>
-                    <div style="font-size:.82rem;font-weight:700;margin-top:3px;">12 May 2025</div>
-                  </div>
-                  <div class="col-6 col-md-3">
-                    <div
-                      style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);">
-                      Category</div>
-                    <div style="font-size:.82rem;font-weight:700;margin-top:3px;">Air Pollution</div>
-                  </div>
-                  <div class="col-6 col-md-3">
-                    <div
-                      style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);">
-                      Assigned To</div>
-                    <div style="font-size:.82rem;font-weight:700;margin-top:3px;">RO – Ludhiana</div>
-                  </div>
-                  <div class="col-6 col-md-3">
-                    <div
-                      style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);">
-                      Days Elapsed</div>
-                    <div style="font-size:.82rem;font-weight:700;margin-top:3px;color:var(--warning);">24 days</div>
+                <div class="tip-body">
+                  <div class="tip-title">Plant Trees &amp; Greenery</div>
+                  <div class="tip-desc">
+                    Planting trees, shrubs and flowers helps improve air quality
+                    and biodiversity across Punjab.
                   </div>
                 </div>
-                <div class="trk-progress">
-                  <div class="trk-step done">
-                    <div class="trk-dot"><i class="bi bi-check" style="font-size:.7rem;"></i></div>
-                    <div class="trk-lbl">Complaint Assigned</div>
-                  </div>
-                  <div class="trk-step done">
-                    <div class="trk-dot"><i class="bi bi-check" style="font-size:.7rem;"></i></div>
-                    <div class="trk-lbl">Under Process</div>
-                  </div>
-                  <div class="trk-step done">
-                    <div class="trk-dot"><i class="bi bi-check" style="font-size:.7rem;"></i></div>
-                    <div class="trk-lbl">Closed</div>
+              </div>
+
+              <!-- Tip 2 -->
+              <div class="tip-card tc2">
+                <div class="icon-bubble">
+                  <svg
+                    viewBox="0 0 44 44"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M22 6 C14 6 10 12 10 17 C10 22 13 25 16 27 L16 32 C16 33.1 16.9 34 18 34 L26 34 C27.1 34 28 33.1 28 32 L28 27 C31 25 34 22 34 17 C34 12 30 6 22 6Z"
+                      fill="#fff176"
+                    />
+                    <path
+                      d="M18 34 L26 34 L26 36 C26 37.1 25.1 38 24 38 L20 38 C18.9 38 18 37.1 18 36Z"
+                      fill="#bdbdbd"
+                    />
+                    <line
+                      x1="22"
+                      y1="14"
+                      x2="22"
+                      y2="24"
+                      stroke="#fbc02d"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                    <line
+                      x1="16"
+                      y1="18"
+                      x2="22"
+                      y2="22"
+                      stroke="#fbc02d"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                    <line
+                      x1="28"
+                      y1="18"
+                      x2="22"
+                      y2="22"
+                      stroke="#fbc02d"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                    <circle cx="22" cy="22" r="2" fill="#f9a825" />
+                  </svg>
+                </div>
+                <div class="tip-body">
+                  <div class="tip-title">Efficient Lighting</div>
+                  <div class="tip-desc">
+                    Switch to energy-efficient LED bulbs and turn off lights
+                    when not in use to conserve electricity.
                   </div>
                 </div>
-                <div class="mt-3 text-center">
-                  <a href="citizen-tracking.html" class="btn-p"><i class="bi bi-arrow-right me-1"></i> Full Tracking
-                    Details</a>
+              </div>
+
+              <!-- Tip 3 -->
+              <div class="tip-card tc3">
+                <div class="icon-bubble">
+                  <svg
+                    viewBox="0 0 44 44"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M22 8 L28 16 L24 16 C24 22 28 26 34 26 C30 32 24 34 18 30 C12 26 10 18 14 12 C16 16 18 18 22 18 L18 18Z"
+                      fill="#66bb6a"
+                    />
+                    <path
+                      d="M22 8 L18 18 L22 18 C22 24 18 28 12 28 C10 22 12 16 16 12 C16 14 18 16 22 16Z"
+                      fill="#43a047"
+                      opacity="0.6"
+                    />
+                    <path
+                      d="M20 30 Q21 36 22 38"
+                      stroke="#6d4c2a"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      fill="none"
+                    />
+                  </svg>
+                </div>
+                <div class="tip-body">
+                  <div class="tip-title">Reduce, Reuse, Recycle</div>
+                  <div class="tip-desc">
+                    Recycle paper, plastic and glass. Embrace the practice of
+                    reducing and reusing whenever possible.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tip 4 -->
+              <div class="tip-card tc4">
+                <div class="icon-bubble">
+                  <svg
+                    viewBox="0 0 44 44"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle cx="22" cy="24" r="13" fill="#42a5f5" />
+                    <ellipse
+                      cx="22"
+                      cy="24"
+                      rx="5"
+                      ry="13"
+                      fill="#1e88e5"
+                      opacity="0.5"
+                    />
+                    <ellipse
+                      cx="22"
+                      cy="24"
+                      rx="13"
+                      ry="5"
+                      fill="#1565c0"
+                      opacity="0.3"
+                    />
+                    <path
+                      d="M12 20 Q16 17 22 18 Q28 17 32 20"
+                      stroke="#fff"
+                      stroke-width="1.2"
+                      fill="none"
+                      opacity="0.5"
+                    />
+                    <path
+                      d="M10 24 Q14 21 22 22 Q30 21 34 24"
+                      stroke="#fff"
+                      stroke-width="1"
+                      fill="none"
+                      opacity="0.4"
+                    />
+                    <circle cx="17" cy="14" r="2.5" fill="#81c784" />
+                    <path
+                      d="M17 14 L17 10 Q19 8 21 11"
+                      stroke="#4caf50"
+                      stroke-width="1.2"
+                      fill="none"
+                    />
+                    <circle cx="27" cy="13" r="2" fill="#a5d6a7" />
+                  </svg>
+                </div>
+                <div class="tip-body">
+                  <div class="tip-title">Educate &amp; Advocate</div>
+                  <div class="tip-desc">
+                    Raise awareness about environmental issues and advocate for
+                    sustainable practices in your community.
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="container-fluid">
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div style="font-size:1.5rem;font-weight:800;color:white;margin-bottom:8px;">PPCB GRM Portal</div>
-          <div
-            style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent-light);margin-bottom:12px;">
-            Transparent. Accountable. Efficient.</div>
-          <div style="font-size:1rem;line-height:1.8;">Punjab Pollution Control Board<br>Government of Punjab</div>
-        </div>
-        <div class="col-6 col-md-2">
-          <div
-            style="font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
-            Quick Links</div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <a href="citizen-grievance-form.html"
-              style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">File
-              Complaint</a>
-            <a href="terms-conditions.html" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">
-              Terms & Condtions</a>
-            <a href="privacy-policy.html" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">
-              Privacy Policy</a>
-            <a href="#" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">
-              Disclaimer</a>
-          </div>
-        </div>
-        <div class="col-6 col-md-2">
-          <div
-            style="font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
-            Help</div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <a href="#" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">FAQ</a>
-            <a href="#" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">User Guide</a>
-            <a href="#" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">RTI</a>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div
-            style="font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
-            Contact</div>
-          <div style="font-size:1rem;line-height:2;color:rgba(255,255,255,.55);">
-            <div>
-              <i class="bi bi-telephone-fill me-2" style="color:var(--accent-light);"></i>
-              <a href="tel:9878950593" style="text-decoration:none; color:inherit;">
-                9878950593
-              </a>
-            </div>
-            <div>
-              <i class="bi bi-envelope-fill me-2" style="color:var(--accent-light);"></i>
-              <a href="mailto:ppcbcomplaintcell@gmail.com" style="text-decoration:none; color:inherit;">
-                ppcbcomplaintcell@gmail.com
-              </a>
-            </div>
-            <div><i class="bi bi-clock-fill me-2" style="color:var(--accent-light);"></i>Mon–Fri, 10:00 AM – 5:00 PM
+            <div class="panel-foot">
+              <span class="foot-pill">
+                <span class="live-dot"></span>
+                Punjab Pollution Control Board — Environmental Awareness
+              </span>
             </div>
           </div>
         </div>
       </div>
-      <hr style="border-color:rgba(255,255,255,.1);margin:24px 0;">
-      <div
-        style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:1rem;color:rgba(255,255,255,.35);">
-        <span>© 2026 Punjab Pollution Control Board. All rights reserved.</span>
+    </section>
 
+    <!-- FEATURES -->
+    <section class="section" style="background: var(--bg)">
+      <div class="container-fluid">
+        <div class="text-center mb-5">
+          <div class="sec-label">Why Use This Portal</div>
+          <!--   -->
+          <p class="sec-sub mt-2">
+            A comprehensive Environemnt-related grievance management platform
+            for the citizens of Punjab
+          </p>
+        </div>
+        <div class="row g-4">
+          <div class="col-sm-6 col-lg-3 col-xl-3">
+            <div class="feat-card">
+              <div class="feat-icon"><i class="bi bi-clock-history"></i></div>
+              <h5>Timely resolution</h5>
+              <p>
+                Every complaint tracked against defined timelines.
+                Auto-escalation on overdue cases.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-3 col-xl-3">
+            <div class="feat-card">
+              <div class="feat-icon"><i class="bi bi-bell-fill"></i></div>
+              <h5>Real-Time Alerts</h5>
+              <p>
+                Automatic SMS and email alerts to complainants and officers at
+                every stage.
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3 col-xl-3">
+            <div class="feat-card">
+              <div class="feat-icon"><i class="bi bi-arrow-up-circle"></i></div>
+              <h5>Appeal Mechanism</h5>
+              <p>
+                Two-level appeal: First to Senior Enviromental Engineer (SEE),
+                Second to Member Secretary. Full history available.
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3 col-xl-3">
+            <div class="feat-card">
+              <div class="feat-icon"><i class="bi bi-shield-lock"></i></div>
+              <h5>Audit Trail</h5>
+              <p>
+                Complete digital record of every action. Transparent,
+                accountable, tamper-proof.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </footer>
+    </section>
 
-  <!-- Accessibility Toolbar -->
-  <div id="accessibilityToolbar" class="accessibility-toolbar" style="display:none;">
-    <div class="accessibility-toolbar-inner">
-      <span class="accessibility-title">Accessibility Options</span>
-      <button class="accessibility-close" id="accessibilityCloseBtn" title="Close">&times;</button>
-      <div class="accessibility-controls">
-        <button class="access-btn" id="increaseFont" title="Increase Font Size" style="font-size:30px">A+<span>Bigger
-            Text</span></button>
-        <button class="access-btn" id="decreaseFont" title="Decrease Font Size" style="font-size:30px">A-
-          <span>Smaller text</span></button>
-        <button class="access-btn" id="resetFont" title="Reset Font Size" style="font-size:30px"><img
-            src="images/text-spacing.svg"><span>Text Spacing </span></button>
+    <!-- PROCESS STEPS -->
+    <section class="sec">
+      <div class="text-center mb-4">
+        <div class="sec-eye">6-Step Workflow</div>
+        <div class="sec-title">Complaint Processing Journey</div>
+        <div class="sec-sub">
+          Six interconnected steps from intake to final resolution.
+        </div>
+      </div>
 
-        <button class="access-btn" id="" title="Reset Font Size" style="font-size:30px"><img
-            src="images/line-height.svg"><span>Line Height</span></button>
-        <button class="access-btn" id="" title="Reset Font Size" style="font-size:30px"><img
-            src="images/link-icon.svg"><span>Highlight Links</span></button>
-        <button class="access-btn" id="" title="Reset Font Size" style="font-size:30px"><img style="width:30px;"
-            src="images/df-icon.svg"><span>Dyslexia Friendly</span></button>
-        <button class="access-btn" id="" title="Reset Font Size" style="font-size:30px"><img style="width:30px;"
-            src="images/cursor.svg"><span>Cursor</span></button>
+      <!-- progress -->
+      <div class="prog-row">
+        <span style="font-size: 0.68rem; font-weight: 600; color: var(--mut)"
+          >Journey Progress</span
+        >
+        <div class="prog-track">
+          <div class="prog-fill" id="pf"></div>
+        </div>
+        <span class="prog-pct" id="pp">0%</span>
+      </div>
 
-        <button class="access-btn" id="toggleHighContrast" title="Toggle High Contrast">
-          <span style="font-weight:bold; font-size:30px">&#9681;</span> <span>High Contrast </span>
+      <div class="tl-outer">
+        <!-- ══ ROW 1 : Steps 1 – 3 ══ -->
+        <div class="tl-row row1" id="row1">
+          <div class="spine spine-1" id="sp1"></div>
+
+          <!-- STEP 1 -->
+          <div class="step s1" id="step1">
+            <div class="box" id="box1">
+              <div class="box-bar"></div>
+              <div class="box-icon-wrap">
+                <i class="bi bi-person-check-fill"></i>
+                <div class="box-num">1</div>
+              </div>
+              <div class="box-title">
+                OTP-based Complaint Registration & Instant Acknowledgment
+              </div>
+              <div class="box-text">
+                Registering environemnt-related grievances made easy with an
+                OTP-verification. Complainants will receive instant
+                acknowledgement.
+              </div>
+              <div class="box-tat">
+                <i class="bi bi-clock-fill"></i> Same day
+              </div>
+            </div>
+            <div class="step-dot" id="dot1"></div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="step s2" id="step2">
+            <div class="box" id="box2">
+              <div class="box-bar"></div>
+              <div class="box-icon-wrap">
+                <i class="bi bi-clipboard2-check-fill"></i>
+                <div class="box-num">2</div>
+              </div>
+              <div class="box-title">Complaint Scrutiny & Assignment</div>
+              <div class="box-text">
+                Officials review and assign the complaints to the concerned
+                office, which will inspect the grievance to provide remedy
+                within prescribed timelines.
+              </div>
+              <div class="box-tat">
+                <i class="bi bi-clock-fill"></i> 10 Working days
+              </div>
+            </div>
+            <div class="step-dot" id="dot2"></div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="step s3" id="step3">
+            <div class="box" id="box3">
+              <div class="box-bar"></div>
+              <div class="box-icon-wrap">
+                <i class="bi bi-binoculars-fill"></i>
+                <div class="box-num">3</div>
+              </div>
+              <div class="box-title">Field Inspection</div>
+              <div class="box-text">
+                AEE/ADO conducts on-site visit, collects evidence — photos and
+                videos — and uploads the Unified Inspection Performa.
+              </div>
+              <!-- <div class="box-tat"><i class="bi bi-clock-fill"></i> 7 days</div> -->
+            </div>
+            <div class="step-dot" id="dot3"></div>
+          </div>
+        </div>
+        <!-- /row1 -->
+
+        <!-- ══ U-TURN ══ -->
+        <div class="uturn" id="uturnWrap">
+          <svg
+            class="uturn-svg"
+            viewBox="0 0 56 72"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              class="uturn-path"
+              id="uturnPath"
+              d="M 4,0 L 4,36 Q 4,68 36,68 L 56,68"
+            />
+          </svg>
+        </div>
+
+        <!-- ══ ROW 2 : Steps 4 – 6 (right to left visually) ══ -->
+        <div class="tl-row row2" id="row2">
+          <div class="spine spine-2" id="sp2"></div>
+
+          <!-- STEP 6 — leftmost cell but last step (right→left flow) -->
+          <div class="step s6" id="step6">
+            <div class="step-dot" id="dot6"></div>
+            <div class="box" id="box6">
+              <div class="box-bar"></div>
+              <div class="box-icon-wrap">
+                <i class="bi bi-arrow-up-circle-fill"></i>
+                <div class="box-num">6</div>
+              </div>
+              <div class="box-title">Feedback & Appeal</div>
+              <div class="box-text">
+                Complainants share feedback and/or files appeal based on the
+                status of the grievance.
+              </div>
+              <div class="box-tat">
+                <i class="bi bi-clock-fill"></i> 45d / level
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 5 -->
+          <div class="step s5" id="step5">
+            <div class="step-dot" id="dot5"></div>
+            <div class="box" id="box5">
+              <div class="box-bar"></div>
+              <div class="box-icon-wrap">
+                <i class="bi bi-file-earmark-check-fill"></i>
+                <div class="box-num">5</div>
+              </div>
+              <div class="box-title">Action Taken Report</div>
+              <div class="box-text">
+                Officers will share action taken report.
+              </div>
+              <div class="box-tat">
+                <i class="bi bi-clock-fill"></i> 10 Working days
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4 — rightmost cell -->
+          <div class="step s4" id="step4">
+            <div class="step-dot" id="dot4"></div>
+            <div class="box" id="box4">
+              <div class="box-bar"></div>
+              <div class="box-icon-wrap">
+                <i class="bi bi-hammer"></i>
+                <div class="box-num">4</div>
+              </div>
+              <div class="box-title">Regulatory Action</div>
+              <div class="box-text">
+                Advisory, notice or directions would be issued based on the
+                findings.
+              </div>
+              <div class="box-tat">
+                <i class="bi bi-clock-fill"></i> 20 Working days
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /row2 -->
+      </div>
+      <!-- /tl-outer -->
+    </section>
+
+    <!-- TRACK SECTION -->
+    <section class="track-section">
+      <div class="container-fluid">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-4">
+            <div class="sec-label">Track Instantly</div>
+            <h2 class="sec-title">Check Your Complaint Status</h2>
+            <p class="sec-sub mt-2">
+              Enter your complaint number to view real-time status, assigned
+              officer, and complete action history.
+            </p>
+          </div>
+          <div class="col-lg-8">
+            <div class="track-card">
+              <div class="row g-3 align-items-end">
+                <div class="col-md-5">
+                  <label class="f-label"
+                    >Complaint Number <span class="req">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="f-control"
+                    placeholder="e.g. PPCB/GRM/2025/00123"
+                    id="trackInput"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label class="f-label">Mobile / Email</label>
+                  <input
+                    type="text"
+                    class="f-control"
+                    placeholder="Verify identity"
+                  />
+                </div>
+                <div class="col-md-3">
+                  <button class="btn-full" onclick="doTrack()">
+                    <i class="bi bi-search"></i> Track Status
+                  </button>
+                </div>
+              </div>
+              <div id="trackResult" style="display: none">
+                <hr class="divider" />
+                <div class="track-result">
+                  <div
+                    class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3"
+                  >
+                    <div>
+                      <div
+                        style="
+                          font-size: 0.68rem;
+                          color: var(--text-muted);
+                          font-weight: 700;
+                          letter-spacing: 0.04em;
+                        "
+                      >
+                        COMPLAINT NO.
+                      </div>
+                      <div class="cid" style="font-size: 1.05rem">
+                        PPCB/GRM/2025/00247
+                      </div>
+                    </div>
+                    <span class="bs bs-progress">In Progress</span>
+                  </div>
+                  <div class="row g-3 mb-3">
+                    <div class="col-6 col-md-3">
+                      <div
+                        style="
+                          font-size: 0.65rem;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                          letter-spacing: 0.04em;
+                          color: var(--text-muted);
+                        "
+                      >
+                        Filed On
+                      </div>
+                      <div
+                        style="
+                          font-size: 0.82rem;
+                          font-weight: 700;
+                          margin-top: 3px;
+                        "
+                      >
+                        12 May 2025
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <div
+                        style="
+                          font-size: 0.65rem;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                          letter-spacing: 0.04em;
+                          color: var(--text-muted);
+                        "
+                      >
+                        Category
+                      </div>
+                      <div
+                        style="
+                          font-size: 0.82rem;
+                          font-weight: 700;
+                          margin-top: 3px;
+                        "
+                      >
+                        Air Pollution
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <div
+                        style="
+                          font-size: 0.65rem;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                          letter-spacing: 0.04em;
+                          color: var(--text-muted);
+                        "
+                      >
+                        Assigned To
+                      </div>
+                      <div
+                        style="
+                          font-size: 0.82rem;
+                          font-weight: 700;
+                          margin-top: 3px;
+                        "
+                      >
+                        RO – Ludhiana
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <div
+                        style="
+                          font-size: 0.65rem;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                          letter-spacing: 0.04em;
+                          color: var(--text-muted);
+                        "
+                      >
+                        Days Elapsed
+                      </div>
+                      <div
+                        style="
+                          font-size: 0.82rem;
+                          font-weight: 700;
+                          margin-top: 3px;
+                          color: var(--warning);
+                        "
+                      >
+                        24 days
+                      </div>
+                    </div>
+                  </div>
+                  <div class="trk-progress">
+                    <div class="trk-step done">
+                      <div class="trk-dot">
+                        <i class="bi bi-check" style="font-size: 0.7rem"></i>
+                      </div>
+                      <div class="trk-lbl">Complaint Assigned</div>
+                    </div>
+                    <div class="trk-step done">
+                      <div class="trk-dot">
+                        <i class="bi bi-check" style="font-size: 0.7rem"></i>
+                      </div>
+                      <div class="trk-lbl">Under Process</div>
+                    </div>
+                    <div class="trk-step done">
+                      <div class="trk-dot">
+                        <i class="bi bi-check" style="font-size: 0.7rem"></i>
+                      </div>
+                      <div class="trk-lbl">Closed</div>
+                    </div>
+                  </div>
+                  <div class="mt-3 text-center">
+                    <a href="citizen-tracking.html" class="btn-p"
+                      ><i class="bi bi-arrow-right me-1"></i> Full Tracking
+                      Details</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container-fluid">
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div
+              style="
+                font-size: 1.5rem;
+                font-weight: 800;
+                color: white;
+                margin-bottom: 8px;
+              "
+            >
+              PPCB GRM Portal
+            </div>
+            <div
+              style="
+                font-family: &quot;Instrument Serif&quot;, serif;
+                font-style: italic;
+                color: var(--accent-light);
+                margin-bottom: 12px;
+              "
+            >
+              Transparent. Accountable. Efficient.
+            </div>
+            <div style="font-size: 1rem; line-height: 1.8">
+              Punjab Pollution Control Board<br />Government of Punjab
+            </div>
+          </div>
+          <div class="col-6 col-md-2">
+            <div
+              style="
+                font-size: 1.2rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: rgba(255, 255, 255, 0.4);
+                margin-bottom: 14px;
+              "
+            >
+              Quick Links
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px">
+              <a
+                href="citizen-grievance-form.html"
+                style="
+                  font-size: 1rem;
+                  color: rgba(255, 255, 255, 0.55);
+                  text-decoration: none;
+                "
+                >File Complaint</a
+              >
+              <a
+                href="terms-conditions.html"
+                style="
+                  font-size: 1rem;
+                  color: rgba(255, 255, 255, 0.55);
+                  text-decoration: none;
+                "
+              >
+                Terms & Condtions</a
+              >
+              <a
+                href="privacy-policy.html"
+                style="
+                  font-size: 1rem;
+                  color: rgba(255, 255, 255, 0.55);
+                  text-decoration: none;
+                "
+              >
+                Privacy Policy</a
+              >
+              <a
+                href="#"
+                style="
+                  font-size: 1rem;
+                  color: rgba(255, 255, 255, 0.55);
+                  text-decoration: none;
+                "
+              >
+                Disclaimer</a
+              >
+            </div>
+          </div>
+          <div class="col-6 col-md-2">
+            <div
+              style="
+                font-size: 1.2rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: rgba(255, 255, 255, 0.4);
+                margin-bottom: 14px;
+              "
+            >
+              Help
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px">
+              <a
+                href="#"
+                style="
+                  font-size: 1rem;
+                  color: rgba(255, 255, 255, 0.55);
+                  text-decoration: none;
+                "
+                >FAQ</a
+              >
+              <a
+                href="#"
+                style="
+                  font-size: 1rem;
+                  color: rgba(255, 255, 255, 0.55);
+                  text-decoration: none;
+                "
+                >User Guide</a
+              >
+              <a
+                href="#"
+                style="
+                  font-size: 1rem;
+                  color: rgba(255, 255, 255, 0.55);
+                  text-decoration: none;
+                "
+                >RTI</a
+              >
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div
+              style="
+                font-size: 1.2rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: rgba(255, 255, 255, 0.4);
+                margin-bottom: 14px;
+              "
+            >
+              Contact
+            </div>
+            <div
+              style="
+                font-size: 1rem;
+                line-height: 2;
+                color: rgba(255, 255, 255, 0.55);
+              "
+            >
+              <div>
+                <i
+                  class="bi bi-telephone-fill me-2"
+                  style="color: var(--accent-light)"
+                ></i>
+                <a
+                  href="tel:9878950593"
+                  style="text-decoration: none; color: inherit"
+                >
+                  9878950593
+                </a>
+              </div>
+              <div>
+                <i
+                  class="bi bi-envelope-fill me-2"
+                  style="color: var(--accent-light)"
+                ></i>
+                <a
+                  href="mailto:ppcbcomplaintcell@gmail.com"
+                  style="text-decoration: none; color: inherit"
+                >
+                  ppcbcomplaintcell@gmail.com
+                </a>
+              </div>
+              <div>
+                <i
+                  class="bi bi-clock-fill me-2"
+                  style="color: var(--accent-light)"
+                ></i
+                >Mon–Fri, 10:00 AM – 5:00 PM
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr style="border-color: rgba(255, 255, 255, 0.1); margin: 24px 0" />
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.35);
+          "
+        >
+          <span
+            >© 2026 Punjab Pollution Control Board. All rights reserved.</span
+          >
+        </div>
+      </div>
+    </footer>
+
+    <!-- Accessibility Toolbar -->
+    <div
+      id="accessibilityToolbar"
+      class="accessibility-toolbar"
+      style="display: none"
+    >
+      <div class="accessibility-toolbar-inner">
+        <span class="accessibility-title">Accessibility Options</span>
+        <button
+          class="accessibility-close"
+          id="accessibilityCloseBtn"
+          title="Close"
+        >
+          &times;
         </button>
-        <button class="access-btn" id="toggleGrayscale" title="Toggle Grayscale">
-          <span style="font-weight:bold; font-size:30px">&#9724;</span><span>Grayscale </span>
-        </button>
+        <div class="accessibility-controls">
+          <button
+            class="access-btn"
+            id="increaseFont"
+            title="Increase Font Size"
+            style="font-size: 30px"
+          >
+            A+<span>Bigger Text</span>
+          </button>
+          <button
+            class="access-btn"
+            id="decreaseFont"
+            title="Decrease Font Size"
+            style="font-size: 30px"
+          >
+            A- <span>Smaller text</span>
+          </button>
+          <button
+            class="access-btn"
+            id="resetFont"
+            title="Reset Font Size"
+            style="font-size: 30px"
+          >
+            <img src="images/text-spacing.svg" /><span>Text Spacing </span>
+          </button>
 
-        <button class="access-btn" id="toggleGrayscale" title="Toggle Grayscale">
-          <span style="font-weight:bold; font-size:30px"><img src="images/speech.svg"></span><span>Text to
-            Speech </span>
-        </button>
+          <button
+            class="access-btn"
+            id=""
+            title="Reset Font Size"
+            style="font-size: 30px"
+          >
+            <img src="images/line-height.svg" /><span>Line Height</span>
+          </button>
+          <button
+            class="access-btn"
+            id=""
+            title="Reset Font Size"
+            style="font-size: 30px"
+          >
+            <img src="images/link-icon.svg" /><span>Highlight Links</span>
+          </button>
+          <button
+            class="access-btn"
+            id=""
+            title="Reset Font Size"
+            style="font-size: 30px"
+          >
+            <img style="width: 30px" src="images/df-icon.svg" /><span
+              >Dyslexia Friendly</span
+            >
+          </button>
+          <button
+            class="access-btn"
+            id=""
+            title="Reset Font Size"
+            style="font-size: 30px"
+          >
+            <img style="width: 30px" src="images/cursor.svg" /><span
+              >Cursor</span
+            >
+          </button>
 
+          <button
+            class="access-btn"
+            id="toggleHighContrast"
+            title="Toggle High Contrast"
+          >
+            <span style="font-weight: bold; font-size: 30px">&#9681;</span>
+            <span>High Contrast </span>
+          </button>
+          <button
+            class="access-btn"
+            id="toggleGrayscale"
+            title="Toggle Grayscale"
+          >
+            <span style="font-weight: bold; font-size: 30px">&#9724;</span
+            ><span>Grayscale </span>
+          </button>
+
+          <button
+            class="access-btn"
+            id="toggleGrayscale"
+            title="Toggle Grayscale"
+          >
+            <span style="font-weight: bold; font-size: 30px"
+              ><img src="images/speech.svg" /></span
+            ><span>Text to Speech </span>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- End Accessibility Toolbar -->
+    <!-- End Accessibility Toolbar -->
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const statsEl = document.querySelector(".stats-strip");
+      if (statsEl) {
+        const statsObs = new IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting) {
+              targets.forEach(([id, val, sfx, delay]) =>
+                animCount(id, val, sfx, delay),
+              );
+              statsObs.disconnect();
+            }
+          },
+          { threshold: 0.3 },
+        );
+        statsObs.observe(statsEl);
+      }
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
+      // Track
+      function doTrack() {
+        const v = document.getElementById("trackInput").value.trim();
+        if (v) document.getElementById("trackResult").style.display = "block";
+        else alert("Please enter a complaint number.");
+      }
 
-   
+      // process
 
-    const statsEl = document.querySelector('.stats-strip');
-    if (statsEl) {
-      const statsObs = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) {
-          targets.forEach(([id, val, sfx, delay]) => animCount(id, val, sfx, delay));
-          statsObs.disconnect();
-        }
-      }, { threshold: 0.3 });
-      statsObs.observe(statsEl);
-    }
-
-    // Track
-    function doTrack() {
-      const v = document.getElementById('trackInput').value.trim();
-      if (v) document.getElementById('trackResult').style.display = 'block';
-      else alert('Please enter a complaint number.');
-    }
-
-    // process
-
-    /* ═══════════════════════════════════════════
+      /* ═══════════════════════════════════════════
       ANIMATION SEQUENCE
    ═══════════════════════════════════════════ */
 
-    const SPINE_FULL = '84%';
+      const SPINE_FULL = "84%";
 
-    const SEQUENCE = [
-      // { what, id, delay }
-      { what: 'box', id: 'box1', delay: 200 },
-      { what: 'dot', id: 'dot1', delay: 420 },
-      { what: 'spine', id: 'sp1', delay: 520, val: SPINE_FULL },
-      { what: 'box', id: 'box2', delay: 640 },
-      { what: 'dot', id: 'dot2', delay: 860 },
-      { what: 'box', id: 'box3', delay: 1040 },
-      { what: 'dot', id: 'dot3', delay: 1260 },
-      { what: 'uturn', id: 'uturnPath', delay: 1380 },
-      // row2 right→left: step4 is rightmost
-      { what: 'box', id: 'box4', delay: 1600 },
-      { what: 'dot', id: 'dot4', delay: 1820 },
-      { what: 'spine', id: 'sp2', delay: 1900, val: SPINE_FULL },
-      { what: 'box', id: 'box5', delay: 2020 },
-      { what: 'dot', id: 'dot5', delay: 2240 },
-      { what: 'box', id: 'box6', delay: 2400 },
-      { what: 'dot', id: 'dot6', delay: 2620 },
-    ];
+      const SEQUENCE = [
+        // { what, id, delay }
+        { what: "box", id: "box1", delay: 200 },
+        { what: "dot", id: "dot1", delay: 420 },
+        { what: "spine", id: "sp1", delay: 520, val: SPINE_FULL },
+        { what: "box", id: "box2", delay: 640 },
+        { what: "dot", id: "dot2", delay: 860 },
+        { what: "box", id: "box3", delay: 1040 },
+        { what: "dot", id: "dot3", delay: 1260 },
+        { what: "uturn", id: "uturnPath", delay: 1380 },
+        // row2 right→left: step4 is rightmost
+        { what: "box", id: "box4", delay: 1600 },
+        { what: "dot", id: "dot4", delay: 1820 },
+        { what: "spine", id: "sp2", delay: 1900, val: SPINE_FULL },
+        { what: "box", id: "box5", delay: 2020 },
+        { what: "dot", id: "dot5", delay: 2240 },
+        { what: "box", id: "box6", delay: 2400 },
+        { what: "dot", id: "dot6", delay: 2620 },
+      ];
 
-    let done = 0;
-    const TOTAL = 6; // 6 boxes
+      let done = 0;
+      const TOTAL = 6; // 6 boxes
 
-    function updateProgress(n) {
-      const pct = Math.round(n / TOTAL * 100);
-      document.getElementById('pf').style.width = pct + '%';
-      document.getElementById('pp').textContent = pct + '%';
-    }
-
-    // Use IntersectionObserver to start when section scrolls into view
-    const tlo = document.querySelector('.tl-outer');
-    let started = false;
-
-    const startIO = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (!e.isIntersecting || started) return;
-        started = true;
-        runSequence();
-        startIO.unobserve(tlo);
-      });
-    }, { threshold: .15 });
-    startIO.observe(tlo);
-
-    function runSequence() {
-      SEQUENCE.forEach(item => {
-        setTimeout(() => {
-          const el = document.getElementById(item.id);
-          if (!el) return;
-
-          if (item.what === 'box') {
-            el.classList.add('in');
-            done++;
-            updateProgress(done);
-          }
-          else if (item.what === 'dot') {
-            el.classList.add('lit');
-          }
-          else if (item.what === 'spine') {
-            el.style.width = item.val;
-          }
-          else if (item.what === 'uturn') {
-            el.classList.add('drawn');
-          }
-        }, item.delay);
-      });
-    }
-
-    // Stagger dot hover glow
-    document.querySelectorAll('.step-dot').forEach(d => {
-      d.addEventListener('mouseenter', () => {
-        d.style.transform = 'translateY(0) scale(1.4)';
-      });
-      d.addEventListener('mouseleave', () => {
-        d.style.transform = '';
-      });
-    });
-
-    //accesibity
-    // Accessibility Toolbar Logic
-    document.getElementById('accessibilityBtn').addEventListener('click', function () {
-      document.getElementById('accessibilityToolbar').style.display = 'block';
-    });
-    document.getElementById('accessibilityCloseBtn').addEventListener('click', function () {
-      document.getElementById('accessibilityToolbar').style.display = 'none';
-    });
-
-    // Font size logic
-    var html = document.documentElement;
-    var defaultFontSize = 16;
-    var currentFontSize = defaultFontSize;
-    function setFontSize(size) {
-      html.style.fontSize = size + 'px';
-    }
-    document.getElementById('increaseFont').onclick = function () {
-      if (currentFontSize < 22) {
-        currentFontSize += 2;
-        setFontSize(currentFontSize);
+      function updateProgress(n) {
+        const pct = Math.round((n / TOTAL) * 100);
+        document.getElementById("pf").style.width = pct + "%";
+        document.getElementById("pp").textContent = pct + "%";
       }
-    };
-    document.getElementById('decreaseFont').onclick = function () {
-      if (currentFontSize > 12) {
-        currentFontSize -= 2;
-        setFontSize(currentFontSize);
-      }
-    };
-    document.getElementById('resetFont').onclick = function () {
-      currentFontSize = defaultFontSize;
-      setFontSize(currentFontSize);
-    };
 
-    // High contrast logic
-    document.getElementById('toggleHighContrast').onclick = function () {
-      document.body.classList.toggle('high-contrast');
-    };
+      // Use IntersectionObserver to start when section scrolls into view
+      const tlo = document.querySelector(".tl-outer");
+      let started = false;
 
-    // Grayscale logic
-    document.getElementById('toggleGrayscale').onclick = function () {
-      document.body.classList.toggle('grayscale');
-    };
+      const startIO = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting || started) return;
+            started = true;
+            runSequence();
+            startIO.unobserve(tlo);
+          });
+        },
+        { threshold: 0.15 },
+      );
+      startIO.observe(tlo);
 
-    document.querySelectorAll('.accessibility-controls .access-btn').forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        // If already active, remove active and feature
-        if (btn.classList.contains('active')) {
-          btn.classList.remove('active');
-          // Remove feature for each button
-          if (btn.id === 'increaseFont' || btn.id === 'decreaseFont' || btn.id === 'resetFont') {
-            // Reset font size
-            currentFontSize = defaultFontSize;
-            setFontSize(currentFontSize);
-          }
-          if (btn.id === 'toggleHighContrast') {
-            document.body.classList.remove('high-contrast');
-          }
-          if (btn.id === 'toggleGrayscale') {
-            document.body.classList.remove('grayscale');
-          }
-          return; // Stop further execution
-        }
-        // Otherwise, activate and apply feature
-        document.querySelectorAll('.accessibility-controls .access-btn').forEach(function (b) {
-          b.classList.remove('active');
+      function runSequence() {
+        SEQUENCE.forEach((item) => {
+          setTimeout(() => {
+            const el = document.getElementById(item.id);
+            if (!el) return;
+
+            if (item.what === "box") {
+              el.classList.add("in");
+              done++;
+              updateProgress(done);
+            } else if (item.what === "dot") {
+              el.classList.add("lit");
+            } else if (item.what === "spine") {
+              el.style.width = item.val;
+            } else if (item.what === "uturn") {
+              el.classList.add("drawn");
+            }
+          }, item.delay);
         });
-        btn.classList.add('active');
-        // Features already handled by other click handlers
+      }
+
+      // Stagger dot hover glow
+      document.querySelectorAll(".step-dot").forEach((d) => {
+        d.addEventListener("mouseenter", () => {
+          d.style.transform = "translateY(0) scale(1.4)";
+        });
+        d.addEventListener("mouseleave", () => {
+          d.style.transform = "";
+        });
       });
-    });
 
+      //accesibity
+      // Accessibility Toolbar Logic
+      document
+        .getElementById("accessibilityBtn")
+        .addEventListener("click", function () {
+          document.getElementById("accessibilityToolbar").style.display =
+            "block";
+        });
+      document
+        .getElementById("accessibilityCloseBtn")
+        .addEventListener("click", function () {
+          document.getElementById("accessibilityToolbar").style.display =
+            "none";
+        });
 
-  </script>
-  <script src="https://translation-plugin.bhashini.co.in/v2/website_translation_utility.js"
-    translation-language-list="en,hi,pa" data-pos-x="100" data-pos-y="100"></script>
+      // Font size logic
+      var html = document.documentElement;
+      var defaultFontSize = 16;
+      var currentFontSize = defaultFontSize;
+      function setFontSize(size) {
+        html.style.fontSize = size + "px";
+      }
+      document.getElementById("increaseFont").onclick = function () {
+        if (currentFontSize < 22) {
+          currentFontSize += 2;
+          setFontSize(currentFontSize);
+        }
+      };
+      document.getElementById("decreaseFont").onclick = function () {
+        if (currentFontSize > 12) {
+          currentFontSize -= 2;
+          setFontSize(currentFontSize);
+        }
+      };
+      document.getElementById("resetFont").onclick = function () {
+        currentFontSize = defaultFontSize;
+        setFontSize(currentFontSize);
+      };
 
-</body>
+      // High contrast logic
+      document.getElementById("toggleHighContrast").onclick = function () {
+        document.body.classList.toggle("high-contrast");
+      };
 
+      // Grayscale logic
+      document.getElementById("toggleGrayscale").onclick = function () {
+        document.body.classList.toggle("grayscale");
+      };
+
+      document
+        .querySelectorAll(".accessibility-controls .access-btn")
+        .forEach(function (btn) {
+          btn.addEventListener("click", function (e) {
+            // If already active, remove active and feature
+            if (btn.classList.contains("active")) {
+              btn.classList.remove("active");
+              // Remove feature for each button
+              if (
+                btn.id === "increaseFont" ||
+                btn.id === "decreaseFont" ||
+                btn.id === "resetFont"
+              ) {
+                // Reset font size
+                currentFontSize = defaultFontSize;
+                setFontSize(currentFontSize);
+              }
+              if (btn.id === "toggleHighContrast") {
+                document.body.classList.remove("high-contrast");
+              }
+              if (btn.id === "toggleGrayscale") {
+                document.body.classList.remove("grayscale");
+              }
+              return; // Stop further execution
+            }
+            // Otherwise, activate and apply feature
+            document
+              .querySelectorAll(".accessibility-controls .access-btn")
+              .forEach(function (b) {
+                b.classList.remove("active");
+              });
+            btn.classList.add("active");
+            // Features already handled by other click handlers
+          });
+        });
+    </script>
+    <!-- <script src="https://translation-plugin.bhashini.co.in/v2/website_translation_utility.js"
+    translation-language-list="en,hi,pa" data-pos-x="100" data-pos-y="100"></script> -->
+  </body>
 </html>
