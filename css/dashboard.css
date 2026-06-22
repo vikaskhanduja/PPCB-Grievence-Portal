@@ -621,130 +621,128 @@ thead th.fixed-col {
 
 /************cards KPI**********/
 
+/* Custom width for desktop */
+@media (min-width: 992px) {
+  .custom-kpi-col {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991px) {
+  .custom-kpi-col {
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .custom-kpi-col {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+/* KPI Card */
 .kpi-card {
-  background: white;
+  background: #fff;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 20px;
+  padding: 12px;
   position: relative;
   overflow: hidden;
-  transition: all 0.25s;
+  transition: all 0.25s ease;
   height: 100%;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px;
 }
+
 .kpi-card:hover {
+  transform: translateY(-3px);
   box-shadow: var(--shadow);
-  transform: translateY(-2px);
 }
+
 .kpi-card::after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 0;
+  width: 100%;
   height: 3px;
 }
+
 .kpi-primary::after {
   background: var(--primary);
 }
+
 .kpi-accent::after {
   background: var(--accent);
 }
+
 .kpi-success::after {
   background: var(--success);
 }
-.kpi-danger::after {
-  background: var(--danger);
-}
-.kpi-warning::after {
-  background: var(--warning);
-}
+
+/* Icon */
 .kpi-icon {
   width: 42px;
   height: 42px;
-  border-radius: var(--radius-sm);
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.1rem;
 }
+
 .ki-primary {
   background: linear-gradient(135deg, #deeafb, #b8d4f4);
   color: var(--primary);
 }
+
 .ki-accent {
   background: linear-gradient(135deg, #fde8c8, #fbd09a);
   color: var(--accent);
 }
+
 .ki-success {
   background: linear-gradient(135deg, #d4f5e2, #a8e8c2);
   color: var(--success);
 }
-.ki-danger {
-  background: linear-gradient(135deg, #fde8e8, #f8c0c0);
-  color: var(--danger);
-}
-.ki-warning {
-  background: linear-gradient(135deg, #fdf3d4, #f8e0a0);
-  color: var(--warning);
-}
+
+/* KPI Number */
 .kpi-num {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.7rem;
+  font-weight: 700;
   color: var(--text);
   line-height: 1;
 }
+
+/* KPI Label */
 .kpi-label {
-  font-size: 1rem;
+  margin-top: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
   color: var(--text-muted);
-  margin-top: 5px;
-  font-weight: 600;
-}
-.kpi-sub {
-  font-size: 0.8rem;
-  color: var(--text-light);
-  margin-top: 3px;
-}
-.kpi-change {
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 2px 7px;
-  border-radius: 100px;
-}
-.ch-up {
-  background: #d4f5e2;
-  color: var(--success);
-}
-.ch-down {
-  background: #fde8e8;
-  color: var(--danger);
+  min-height: 24px;
 }
 
-.data-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
+/* Change Badge */
+.kpi-change {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 50px;
 }
-.card-header-bar {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
+
+.ch-up {
+  background: #d4f5e2;
+  color: #0f9d58;
 }
-.card-title {
-  font-weight: 700;
-  font-size: 0.92rem;
-  color: var(--text);
-}
-.card-actions {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  flex-wrap: wrap;
+
+.ch-down {
+  background: #fde8e8;
+  color: #dc3545;
 }
 
 /*******chars**********/
