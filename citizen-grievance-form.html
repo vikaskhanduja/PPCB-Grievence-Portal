@@ -1,759 +1,1197 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PPCB GRM – File a Complaint</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
-  <link rel="stylesheet" href="css/shared.css">
-  <style>
-    .form-page {
-      min-height: 100vh;
-      background: var(--bg);
-      padding-bottom: 60px;
-    }
-
-    .form-head {
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-      padding: 36px 24px;
-      color: white;
-    }
-
-    .form-head h2 {
-      font-size: clamp(1.4rem, 4vw, 1.2rem);
-      margin-bottom: 5px;
-    }
-
-    .form-head p {
-      color: rgba(255, 255, 255, .7);
-      font-size: .9rem;
-      margin: 0;
-    }
-
-    .form-wrap {
-      max-width: 900px;
-      margin: -32px auto 0;
-      padding: 0 16px;
-    }
-
-    .step-nav {
-      background: var(--surface2);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-
-    .step-nav::-webkit-scrollbar {
-      display: none;
-    }
-
-    .step-tab {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 16px 20px;
-      font-size: .9rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      border-bottom: 3px solid transparent;
-      cursor: default;
-      white-space: normal;
-      flex: 1;
-      text-align: center;
-    }
-
-    .step-tab.active {
-      color: var(--primary);
-      border-bottom-color: var(--primary);
-    }
-
-    .step-tab.done {
-      color: var(--success);
-      border-bottom-color: var(--success);
-    }
-
-    .step-dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--border);
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: .62rem;
-      font-weight: 800;
-      flex-shrink: 0;
-    }
-
-    .step-tab.active .step-dot {
-      background: var(--primary);
-      color: white;
-    }
-
-    .step-tab.done .step-dot {
-      background: var(--success);
-      color: white;
-    }
-
-    .form-body {
-      padding: 28px 24px;
-    }
-
-    .form-section {
-      display: none;
-    }
-
-    .form-section.active {
-      display: block;
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .chip {
-      padding: 8px 20px;
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      font-size: .76rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all .2s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: white;
-    }
-
-    .chip:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .chip.sel {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: white;
-    }
-
-    .upload-zone {
-      border: 2px dashed var(--border);
-      border-radius: var(--radius);
-      padding: 36px 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: all .2s;
-      background: var(--surface2);
-    }
-
-    .upload-zone:hover {
-      border-color: var(--primary);
-      background: #e8f0fb;
-    }
-
-    .otp-row {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .otp-box {
-      width: 46px;
-      height: 50px;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: 700;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      color: var(--text);
-    }
-
-    .otp-box:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(10, 79, 143, .1);
-      outline: none;
-    }
-
-    .review-block {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-    }
-
-    .success-wrap {
-      padding: 20px 16px;
-      max-width: 600px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .success-icon {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, #d4f5e2, #a8e8c2);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.4rem;
-      margin: 0 auto 20px;
-    }
-
-    .comp-num {
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-      color: white;
-      padding: 12px 30px;
-      border-radius: var(--radius-sm);
-      font-size: 1.3rem;
-      font-weight: 800;
-      letter-spacing: .06em;
-      display: inline-block;
-      margin: 14px 0;
-      font-family: 'Instrument Serif', serif;
-    }
-
-    .next-step-item {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      padding: 12px 14px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      align-items: center;
-    }
-
-    .ns-icon {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: .85rem;
-    }
-
-    @media (max-width: 768px) {
-      .step-tab {
-        padding: 12px 8px;
-        font-size: 0.75rem;
-        gap: 4px;
-      }
-
-      .step-dot {
-        width: 18px;
-        height: 18px;
-        font-size: 0.55rem;
-      }
-
-      .form-body {
-        padding: 20px 16px;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PPCB GRM – File a Complaint</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+    />
+    <link rel="stylesheet" href="css/shared.css" />
+    <style>
+      .form-page {
+        min-height: 100vh;
+        background: var(--bg);
+        padding-bottom: 60px;
       }
 
       .form-head {
-        padding: 28px 20px;
-      }
-
-      .chip {
-        padding: 6px 14px;
-        font-size: 0.7rem;
-      }
-
-      .otp-box {
-        width: 42px;
-        height: 46px;
-        font-size: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .step-tab {
-        padding: 10px 4px;
-        font-size: 0.7rem;
-        gap: 2px;
-      }
-
-      .step-tab span:last-child {
-        display: none;
-      }
-
-      .step-dot {
-        width: 16px;
-        height: 16px;
-        font-size: 0.5rem;
-      }
-
-      .form-body {
-        padding: 16px 12px;
-      }
-
-      .form-head {
-        padding: 20px 16px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-dark),
+          var(--primary)
+        );
+        padding: 36px 24px;
+        color: white;
       }
 
       .form-head h2 {
-        font-size: clamp(1.2rem, 3.5vw, 1.3rem);
+        font-size: clamp(1.4rem, 4vw, 1.2rem);
+        margin-bottom: 5px;
+      }
+
+      .form-head p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+        margin: 0;
       }
 
       .form-wrap {
-        padding: 0 12px;
-        margin: -24px auto 0;
+        max-width: 1180px;
+        margin: -32px auto 0;
+        padding: 0 16px;
+      }
+
+      .step-nav {
+        background: var(--surface2);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .step-nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .step-tab {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 16px 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        border-bottom: 3px solid transparent;
+        cursor: default;
+        white-space: normal;
+        flex: 1;
+        text-align: center;
+      }
+
+      .step-tab.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+      }
+
+      .step-tab.done {
+        color: var(--success);
+        border-bottom-color: var(--success);
+      }
+
+      .step-dot {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--border);
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.62rem;
+        font-weight: 800;
+        flex-shrink: 0;
+      }
+
+      .step-tab.active .step-dot {
+        background: var(--primary);
+        color: white;
+      }
+
+      .step-tab.done .step-dot {
+        background: var(--success);
+        color: white;
+      }
+
+      .form-body {
+        padding: 28px 24px;
+      }
+
+      .form-section {
+        display: none;
+      }
+
+      .form-section.active {
+        display: block;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
       }
 
       .chip {
-        padding: 6px 12px;
-        font-size: 0.65rem;
+        padding: 8px 20px;
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        font-size: 0.76rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: white;
       }
 
-      .otp-box {
-        width: 38px;
-        height: 42px;
-        font-size: 0.9rem;
+      .chip:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .chip.sel {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: white;
       }
 
       .upload-zone {
-        padding: 24px 14px;
+        border: 2px dashed var(--border);
+        border-radius: var(--radius);
+        padding: 36px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: var(--surface2);
+      }
+
+      .upload-zone:hover {
+        border-color: var(--primary);
+        background: #e8f0fb;
+      }
+
+      .otp-row {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .otp-box {
+        width: 46px;
+        height: 50px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-sm);
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 700;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        color: var(--text);
+      }
+
+      .otp-box:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(10, 79, 143, 0.1);
+        outline: none;
+      }
+
+      .review-block {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 18px 20px;
+      }
+
+      .success-wrap {
+        padding: 20px 16px;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
       }
 
       .success-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 1.8rem;
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #d4f5e2, #a8e8c2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.4rem;
+        margin: 0 auto 20px;
       }
 
       .comp-num {
-        padding: 10px 24px;
-        font-size: 1.1rem;
+        background: linear-gradient(
+          135deg,
+          var(--primary-dark),
+          var(--primary)
+        );
+        color: white;
+        padding: 12px 30px;
+        border-radius: var(--radius-sm);
+        font-size: 1.3rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        display: inline-block;
+        margin: 14px 0;
+        font-family: "Instrument Serif", serif;
       }
 
       .next-step-item {
-        padding: 10px 12px;
-        gap: 10px;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 12px 14px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        align-items: center;
       }
 
       .ns-icon {
-        width: 26px;
-        height: 26px;
-        font-size: 0.75rem;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 0.85rem;
       }
-    }
-  </style>
-</head>
 
-<body class="form-page">
+      @media (max-width: 768px) {
+        .step-tab {
+          padding: 12px 8px;
+          font-size: 0.75rem;
+          gap: 4px;
+        }
 
-  <!-- HEADER -->
-  <header class="pub-header">
-    <div class="topbar d-none d-md-flex">
-      <span><i class="bi bi-telephone-fill me-1"></i>Helpline: 9878950593 &nbsp;|&nbsp; <i class="bi bi-envelope-fill me-1"></i>ppcbcomplaintcell@gmail.com</span>
-      <span class="d-flex">Government of Punjab&nbsp;|&nbsp;
-        <li style="list-style-type: none; text-decoration: none; color: #fff;">
-          <a href="javascript:void(0)" id="accessibilityBtn" style="color: #fff; text-decoration: none;">
-            <span><i class="bi bi-universal-access"></i></span> Accessibility
-            Option
-          </a>
-        </li>
-      </span>
-    </div>
-    <div class="mainbar">
-      <div class="brand-logo">
-        <div class="logo-emblem"><img src="images/logo.png" width="60" /></div>
-        <div class="brand-text">
-          <h1>PPCB – File a Complaint</h1>
-          <p>Grievance Redressal Mechanism &nbsp;|&nbsp; Punjab</p>
-        </div>
+        .step-dot {
+          width: 18px;
+          height: 18px;
+          font-size: 0.55rem;
+        }
+
+        .form-body {
+          padding: 20px 16px;
+        }
+
+        .form-head {
+          padding: 28px 20px;
+        }
+
+        .chip {
+          padding: 6px 14px;
+          font-size: 0.7rem;
+        }
+
+        .otp-box {
+          width: 42px;
+          height: 46px;
+          font-size: 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .step-tab {
+          padding: 10px 4px;
+          font-size: 0.7rem;
+          gap: 2px;
+        }
+
+        .step-tab span:last-child {
+          display: none;
+        }
+
+        .step-dot {
+          width: 16px;
+          height: 16px;
+          font-size: 0.5rem;
+        }
+
+        .form-body {
+          padding: 16px 12px;
+        }
+
+        .form-head {
+          padding: 20px 16px;
+        }
+
+        .form-head h2 {
+          font-size: clamp(1.2rem, 3.5vw, 1.3rem);
+        }
+
+        .form-wrap {
+          padding: 0 12px;
+          margin: -24px auto 0;
+        }
+
+        .chip {
+          padding: 6px 12px;
+          font-size: 0.65rem;
+        }
+
+        .otp-box {
+          width: 38px;
+          height: 42px;
+          font-size: 0.9rem;
+        }
+
+        .upload-zone {
+          padding: 24px 14px;
+        }
+
+        .success-icon {
+          width: 60px;
+          height: 60px;
+          font-size: 1.8rem;
+        }
+
+        .comp-num {
+          padding: 10px 24px;
+          font-size: 1.1rem;
+        }
+
+        .next-step-item {
+          padding: 10px 12px;
+          gap: 10px;
+        }
+
+        .ns-icon {
+          width: 26px;
+          height: 26px;
+          font-size: 0.75rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="form-page">
+    <!-- HEADER -->
+    <header class="pub-header">
+      <div class="topbar d-none d-md-flex">
+        <span
+          ><i class="bi bi-telephone-fill me-1"></i>Helpline: 9878950593
+          &nbsp;|&nbsp;
+          <i class="bi bi-envelope-fill me-1"></i
+          >ppcbcomplaintcell@gmail.com</span
+        >
+        <span class="d-flex"
+          >Government of Punjab&nbsp;|&nbsp;
+          <li style="list-style-type: none; text-decoration: none; color: #fff">
+            <a
+              href="javascript:void(0)"
+              id="accessibilityBtn"
+              style="color: #fff; text-decoration: none"
+            >
+              <span><i class="bi bi-universal-access"></i></span> Accessibility
+              Option
+            </a>
+          </li>
+        </span>
       </div>
-      <div class="header-nav">
-        <a href="index.html" class="hn-btn hn-outline"><i class="bi bi-house-fill"></i><span class="hide-xs">
-            Home</span></a>
-        <a href="citizen-tracking.html" class="hn-btn hn-outline"><i class="bi bi-search"></i><span class="hide-xs">
-            Track</span></a>
-        <a href="tel:9878950593" class="hn-btn hn-solid"><i class="bi bi-telephone-fill"></i><span class="hide-xs">
-            Helpline</span></a>
-      </div>
-    </div>
-  </header>
-
-  <!-- FORM HEADER -->
-  <div class="form-head">
-    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
-      <div>
-        <h2><i class="bi bi-pencil-square me-2"></i>Citizen Grievance Portal</h2>
-        <p>All complaints are registered, acknowledged, and tracked. You'll receive SMS & Email confirmation.</p>
-      </div>
-      <div style="text-align:right;" class="d-none d-md-block">
-        <div style="font-size:.68rem;color:rgba(255,255,255,.5);margin-bottom:3px;">Helpline (Mon–Fri)</div>
-        <div style="font-size:1.1rem;font-weight:700;">+91 9878950593</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FORM CARD -->
-  <div class="form-wrap">
-    <div id="formCard" class="data-card" style="box-shadow:var(--shadow-lg);">
-      <!-- Step nav -->
-      <nav class="step-nav">
-        <div class="step-tab active" id="tab1"><span class="step-dot">1</span><span>Complainant / Complaint</span></div>
-        <div class="step-tab" id="tab2"><span class="step-dot">2</span><span>Verify OTP</span></div>
-        <div class="step-tab" id="tab3"><span class="step-dot">3</span><span>Review & Submit</span></div>
-      </nav>
-
-      <!-- Progress bar -->
-      <div style="height:4px;background:var(--border);">
-        <div id="progressBar" style="height:100%;width:33.33%;transition:width .4s;">
-        </div>
-      </div>
-
-      <div class="form-body">
-
-        <!-- STEP 1: Complainant Info -->
-        <div class="form-section active" id="fs1">
-
-          <!-- Individual or Group Selection -->
-          <div class="row g-3 mb-3" style="padding-bottom:10px;border-bottom:1px solid var(--border);">
-
-            <div class="col-12">
-              <label class="f-label">Complainant Type <span class="req">*</span></label>
-            </div>
-
-            <div class="col-12">
-              <div class="d-flex gap-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="complaintType2" id="typeIndividual2"
-                    value="individual" checked onchange="toggleComplaintType2('individual')">
-                  <label class="form-check-label" for="typeIndividual2">
-                    Individual
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="complaintType2" id="typeGroup2" value="group"
-                    onchange="toggleComplaintType2('group')">
-                  <label class="form-check-label" for="typeGroup2">
-                    RWA/ Society/ Association/ CSO/ Other (Group of Individuals)
-                  </label>
-                </div>
-              </div>
-            </div>
-
+      <div class="mainbar">
+        <div class="brand-logo">
+          <div class="logo-emblem">
+            <img src="images/logo.png" width="60" />
           </div>
-
-          <div class="g-3">
-            <!-- INDIVIDUAL COMPLAINANT FIELDS -->
-            <div id="individualCP" class="row g-3 px-0">
-              <div class="col-md-6">
-                <label class="f-label">Complainant Name <span class="req">*</span></label>
-                <input type="text" class="f-control" placeholder="As per official records" id="cp_Name">
-              </div>
-
-              <div class="col-md-6">
-                  <label class="f-label">Complainant Contact No. <span class="req">*</span></label>
-                  <div style="display:flex; gap:8px;">
-                    <!-- Country Code -->
-                    <input type="text"
-                          value="+91"
-                          class="f-control"
-                          style="max-width:70px;"
-                          readonly>
-                    <!-- Mobile Number -->
-                    <input type="tel"
-                          class="f-control"
-                          id="cp_Mobile"
-                          placeholder="XXXXX XXXXX"
-                          maxlength="10">
-                  </div>
-                  <p class="f-hint">OTP will be sent to verify in the next step</p>
-              </div>
-
-              
-              <div class="col-md-6 mb-3 ">
-                <label class="f-label">Complainant's Occupation</label>
-                <input type="text" class="f-control" placeholder="Occupation" id="cp_Occupation">
-              </div>
-
-               <div class="col-md-6 mb-3">
-                 <label class="f-label">Source of Pollution (Industry’s Name, if applicable)</label>
-                 <input type="text" class="f-control" placeholder="Name of factory, plant or establishment">
-              </div>
-           </div>
-
-            <!-- GROUP COMPLAINANT FIELDS -->
-            <div id="groupCP" class="row g-3" style="display:none;">
-
-              <div class="col-md-6">
-                <label class="f-label">RWA/ Society/ Association/ CSO/ Other (Group Type) <span
-                    class="req">*</span></label>
-                <select class="f-select" id="cp_GroupType">
-                  <option value="">-- Select Group Type --</option>
-                  <option>Residents Welfare Association (RWA)</option>
-                  <option>Society</option>
-                  <option>Association</option>
-                  <option>Civil Society Organization (CSO)</option>
-                  <option>Other (Group of Individuals)</option>
-                </select>
-              </div>
-
-              <div class="col-md-6">
-                <label class="f-label">Name of the Nodal Officer <span class="req">*</span></label>
-                <input type="text" class="f-control" placeholder="Name of Nodal Officer" id="cp_NodalName">
-              </div>
-
-              <div class="col-md-6">
-                    <label class="f-label">
-                      Contact Number of the Nodal Officer <span class="req">*</span>
-                    </label>
-
-                    <div style="display:flex; gap:8px;">
-                      <!-- Country Code -->
-                      <input type="text"
-                            value="+91"
-                            class="f-control"
-                            style="max-width:70px;"
-                            readonly>
-
-                      <!-- Mobile Number -->
-                      <input type="tel"
-                            class="f-control"
-                            id="cp_NodalContact"
-                            placeholder="XXXXX XXXXX"
-                            maxlength="10">
-                    </div>
-              </div>
-
-              <div class="col-md-6 mb-3">
-                 <label class="f-label">Source of Pollution (Industry’s Name, if applicable)</label>
-                 <input type="text" class="f-control" placeholder="Name of factory, plant or establishment">
-              </div>
-              <!-- <div class="col-md-6">
-                <label class="f-label">Address of RWA/ Society/ Association/ CSO/ Group</label>
-                <textarea class="f-control" rows="2" placeholder="House No., Street, Village/City, PIN Code, District"
-                  id="cp_GroupAddress"></textarea>
-              </div> -->
-
-            </div>
-
-
-            <div class="col-md-12 mb-3">
-              <label class="f-label">Exact Location / Address of Pollution Source <span class="req">*</span></label>
-              <input type="text" class="f-control" placeholder="Village, Ward, Street, Landmark, District, PIN Code">
-            </div>
-
-             <div class="row mb-2">
-               <div class="col-md-6">
-                 <label class="f-label">District <span class="req">*</span></label>
-                  <div class="d-flex align-items-center">
-                    <select class="f-select" id="cp_District">
-                      <option value="">-- Select District --</option>
-                      <option>Amritsar</option>
-                      <option>Ludhiana</option>
-                      <option>Jalandhar</option>
-                      <option>Patiala</option>
-                      <option>Bathinda</option>
-                      <option>Mohali (SAS Nagar)</option>
-                      <option>Gurdaspur</option>
-                      <option>Hoshiarpur</option>
-                      <option>Moga</option>
-                      <option>Firozpur</option>
-                      <option>Faridkot</option>
-                      <option>Sangrur</option>
-                      <option value="other">Other</option>
-                    </select>
-                     <button class="btn btn-success ms-2 btn-p"
-                            style="height: 40px;"
-                            onclick="autoSelectDistrict()">
-                        <i class="bi bi-geo-alt-fill me-1"></i> Auto fetch
-                    </button>
-                  </div>
-               </div>
-              <!-- Hidden input -->
-              <div class="col-md-6" id="otherDistrictDiv" style="display:none;">
-                <label class="f-label">Enter District</label>
-                <input type="text" id="otherDistrict" class="f-control" placeholder="As per official records">
-              </div>
-              <div class="col-md-6">
-                  <label class="f-label">Pin Code</label>
-                  <input type="text" class="f-control" placeholder="PIN Code" id="cp_PinCode">
-              </div>
-             </div>
-
-
-            <div class="col-12 mt-2">
-              <label class="f-label">Detailed Description <span class="req">*</span></label>
-              <textarea class="f-control" rows="5" id="cDesc"
-                placeholder="Describe: nature of pollution, its impact on environment and health, affected population, any previous complaints made and action taken (minimum 50 words)…"
-                oninput="updateDescWordCount(this)"></textarea>
-              <div class="d-flex justify-content-between mt-1">
-                <p class="f-hint">Be specific about harm caused, affected areas, and any earlier actions. (Max 500
-                  words)</p>
-                <span style="font-size:.7rem;color:var(--text-muted);" id="wordCnt">0/500 words</span>
-              </div>
-            </div>
-
-            <div class="col-12 mt-3">
-              <label class="f-label">Upload Supporting Evidence</label>
-              <div class="upload-zone" onclick="document.getElementById('fileInp').click()">
-                <div style="font-size:2rem;color:var(--text-light);margin-bottom:8px;"><i
-                    class="bi bi-cloud-arrow-up-fill"></i></div>
-                <div style="font-weight:700;font-size:.88rem;margin-bottom:4px;">Click to upload or drag & drop</div>
-                <div style="font-size:.8rem;color:var(--text-muted);">Photos, videos, documents (Max 10 MB each, up to 5
-                  files)</div>
-                <div style="font-size:.7rem;color:var(--text-light);margin-top:6px;">Supported: JPG, PNG, PDF, DOC ,
-                  Video
-                </div>
-              </div>
-              <input type="file" id="fileInp" style="display:none;" multiple accept="image/*,video/*,.pdf,.doc,.docx"
-                onchange="showFiles(this)">
-              <div id="fileList" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;"></div>
-            </div>
-
-            <!-- <div class="row">
-              <div class="col-md-6">
-                    <label class="f-label">Latitude</label>
-                    <input type="text" class="f-control" id="latitude" placeholder="e.g. 28.6139">
-                </div>
-  
-                <div class="col-md-6">
-                    <label class="f-label">Longitude</label>
-                    <input type="text" class="f-control" id="longitude" placeholder="e.g. 77.2090">
-                </div>
-            </div> -->
-
-          </div>
-
-          <div class="d-flex justify-content-end mt-5">
-            <button class="btn-p" style="padding:10px 26px;font-size:.85rem;" onclick="goStep(2)">Next &nbsp;<i
-                class="bi bi-arrow-right"></i></button>
+          <div class="brand-text">
+            <h1>PPCB – File a Complaint</h1>
+            <p>Grievance Redressal Mechanism &nbsp;|&nbsp; Punjab</p>
           </div>
         </div>
-
-        <!-- STEP 2: Verify OTP -->
-        <div class="form-section" id="fs2">
-          <div class="text-center py-3">
-            <div
-              style="width:64px;height:64px;background:linear-gradient(135deg,#deeafb,#b8d4f4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 18px;">
-              🔐</div>
-            <h6 class="fw-800 mb-2">Verify Your Identity</h6>
-            <p style="font-size:.84rem;color:var(--text-muted);max-width:380px;margin:0 auto 28px;">A 6-digit OTP has
-              been sent to your registered mobile number or email address.</p>
-            <div class="otp-row mb-4">
-              <input type="text" maxlength="1" class="otp-box" oninput="otpNext(this,0)">
-              <input type="text" maxlength="1" class="otp-box" oninput="otpNext(this,1)">
-              <input type="text" maxlength="1" class="otp-box" oninput="otpNext(this,2)">
-              <input type="text" maxlength="1" class="otp-box" oninput="otpNext(this,3)">
-              <input type="text" maxlength="1" class="otp-box" oninput="otpNext(this,4)">
-              <input type="text" maxlength="1" class="otp-box" oninput="otpNext(this,5)">
-            </div>
-            <p style="font-size:.8rem;color:var(--text-muted);">Didn't receive?
-              <a href="#" id="resendLink" onclick="startResend(event)"
-                style="color:var(--primary);font-weight:600;">Resend OTP</a>
-              <span id="resendTimer" style="color:var(--text-muted);font-size:.78rem;"></span>
-            </p>
-          </div>
-          <div class="d-flex justify-content-between mt-3">
-            <button class="btn-o" onclick="goStep(1)"><i class="bi bi-arrow-left"></i> Back</button>
-            <button class="btn-p" style="padding:10px 26px;font-size:.85rem;" onclick="goStep(3)">Verify &nbsp;<i
-                class="bi bi-arrow-right"></i></button>
-          </div>
+        <div class="header-nav">
+          <a href="index.html" class="hn-btn hn-outline"
+            ><i class="bi bi-house-fill"></i
+            ><span class="hide-xs"> Home</span></a
+          >
+          <a href="citizen-tracking.html" class="hn-btn hn-outline"
+            ><i class="bi bi-search"></i><span class="hide-xs"> Track</span></a
+          >
+          <a href="tel:9878950593" class="hn-btn hn-solid"
+            ><i class="bi bi-telephone-fill"></i
+            ><span class="hide-xs"> Helpline</span></a
+          >
         </div>
+      </div>
+    </header>
 
-        <!-- STEP 3: Review & Submit -->
-        <div class="form-section" id="fs3">
-          <h6 class="fw-800 mb-1">Review & Submit</h6>
-          <p style="font-size:.8rem;color:var(--text-muted);margin-bottom:22px;">Please review all details before final
-            submission.</p>
-          <div class="review-block mb-3">
-            <div
-              style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:14px;">
-              Complaint Summary</div>
-            <div class="row g-3">
-              <div class="col-6 col-md-4">
-                <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);">
-                  Complainant</div>
-                <div id="rv-name" style="font-size:.85rem;font-weight:700;margin-top:3px;">—</div>
-              </div>
-              <div class="col-6 col-md-4">
-                <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);">District
-                </div>
-                <div id="rv-dist" style="font-size:.85rem;font-weight:700;margin-top:3px;">—</div>
-              </div>
-              <div class="col-6 col-md-4">
-                <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);">Category
-                </div>
-                <div id="rv-cat" style="font-size:.85rem;font-weight:700;margin-top:3px;">—</div>
-              </div>
-              <div class="col-6 col-md-4">
-                <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);">Source
-                </div>
-                <div style="font-size:.85rem;font-weight:700;margin-top:3px;" id="rv-src">Online Portal</div>
-              </div>
-              <div class="col-6 col-md-4">
-                <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);">Mobile
-                  Verified</div>
-                <div style="font-size:.85rem;font-weight:700;color:var(--success);margin-top:3px;">✓ Verified</div>
-              </div>
-              <div class="col-6 col-md-4">
-                <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);">Evidence
-                </div>
-                <div id="rv-files" style="font-size:.85rem;font-weight:700;margin-top:3px;">0 files</div>
-              </div>
-            </div>
-          </div>
+    <!-- FORM HEADER -->
+    <div class="form-head">
+      <div
+        class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3"
+      >
+        <div>
+          <h2>
+            <i class="bi bi-pencil-square me-2"></i>Citizen Grievance Portal
+          </h2>
+          <p>
+            All complaints are registered, acknowledged, and tracked. You'll
+            receive SMS & Email confirmation.
+          </p>
+        </div>
+        <div style="text-align: right" class="d-none d-md-block">
           <div
-            style="background:#fff8e8;border:1px solid #f0d080;border-radius:var(--radius-sm);padding:13px 16px;font-size:.8rem;color:#a07000;margin-bottom:18px;">
-            <i class="bi bi-info-circle-fill me-2"></i>
-            By submitting, you declare that the information provided is true to the best of your knowledge. False
-            complaints may attract action under applicable laws.
+            style="
+              font-size: 0.68rem;
+              color: rgba(255, 255, 255, 0.5);
+              margin-bottom: 3px;
+            "
+          >
+            Helpline (Mon–Fri)
           </div>
-          <div class="d-flex align-items-start gap-2 mb-4">
-            <input type="checkbox" id="declareCb"
-              style="width:16px;height:16px;accent-color:var(--primary);margin-top:2px;flex-shrink:0;">
-              <label for="declareCb" style="font-size:.82rem;cursor:pointer;">I agree to the <strong>Terms of
-                Service</strong> and confirm that all information submitted is genuine.</label>
+          <div style="font-size: 1.1rem; font-weight: 700">+91 9878950593</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM CARD -->
+    <div class="form-wrap">
+      <div id="formCard" class="data-card" style="box-shadow: var(--shadow-lg)">
+        <!-- Step nav -->
+        <nav class="step-nav">
+          <div class="step-tab active" id="tab1">
+            <span class="step-dot">1</span><span>Complainant / Complaint</span>
           </div>
-          <div class="d-flex justify-content-between flex-wrap gap-2">
-            <button class="btn-o" onclick="goStep(2)"><i class="bi bi-arrow-left"></i> Back</button>
-            <button class="btn-full" style="width:auto;padding:11px 30px;" onclick="submitComplaint()"><i
-                class="bi bi-send-fill me-1"></i> Submit Complaint</button>
+          <div class="step-tab" id="tab2">
+            <span class="step-dot">2</span><span>Verify OTP</span>
           </div>
+          <div class="step-tab" id="tab3">
+            <span class="step-dot">3</span><span>Review & Submit</span>
+          </div>
+        </nav>
+
+        <!-- Progress bar -->
+        <div style="height: 4px; background: var(--border)">
+          <div
+            id="progressBar"
+            style="height: 100%; width: 33.33%; transition: width 0.4s"
+          ></div>
         </div>
 
-      </div><!-- /form-body -->
-    </div><!-- /data-card -->
-
-    <!-- SUCCESS STATE -->
-    <div id="successState" style="display:none;padding-top:20px;">
-      <div class="data-card">
-        <div class="success-wrap py-5">
-          <div class="success-icon">✅</div>
-          <h4 class="fw-800 mb-2">Complaint Registered Successfully!</h4>
-          <p style="color:var(--text-muted);font-size:.88rem;max-width:460px;margin:0 auto 6px;">Your grievance has been
-            received. An acknowledgement has been sent to your mobile.</p>
-          <div class="comp-num" id="generatedNum">PPCB/GRM/2025/04828</div>
-          <p style="font-size:.78rem;color:var(--text-muted);margin-bottom:28px;">Save this number to track your
-            complaint status at any time</p>
-
-          <div style="max-width:460px;margin:0 auto 28px;text-align:left;display:flex;flex-direction:column;gap:10px;">
-            <div class="next-step-item">
-              <div class="ns-icon" style="background:#d4f5e2;color:var(--success);"><i class="bi bi-check2"></i></div>
-              <div>
-                <div style="font-weight:700;font-size:.82rem;">SMS Acknowledgement Sent</div>
-                <div style="font-size:.74rem;color:var(--text-muted);margin-top:2px;"></div>
+        <div class="form-body">
+          <!-- STEP 1: Complainant Info -->
+          <div class="form-section active" id="fs1">
+            <!-- Individual or Group Selection -->
+            <div
+              class="row g-3 mb-3"
+              style="
+                padding-bottom: 10px;
+                border-bottom: 1px solid var(--border);
+              "
+            >
+              <div class="col-12">
+                <label class="f-label"
+                  >Complainant Type <span class="req">*</span></label
+                >
+                <div class="d-flex gap-3 mt-2">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="complaintType2"
+                      id="typeIndividual2"
+                      value="individual"
+                      checked
+                      onchange="toggleComplaintType2('individual')"
+                    />
+                    <label class="form-check-label" for="typeIndividual2"
+                      >Individual</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="complaintType2"
+                      id="typeGroup2"
+                      value="group"
+                      onchange="toggleComplaintType2('group')"
+                    />
+                    <label class="form-check-label" for="typeGroup2">
+                      RWA/ Society/ Association/ CSO/ Other (Group of
+                      Individuals)
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
-            <!-- <div class="next-step-item">
+
+            <!-- Details Section -->
+            <div class="row g-3">
+              <div class="col-12">
+                <h2
+                  style="
+                    font-size: 1rem;
+                    font-weight: 600;
+                    background-color: #b8d4f4;
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: inline-block;
+                    margin-bottom: 0;
+                  "
+                >
+                  Complainant Details
+                </h2>
+              </div>
+
+              <!-- INDIVIDUAL COMPLAINANT FIELDS -->
+              <div id="individualCP" class="row g-3 px-0 m-0">
+                <div class="col-md-4">
+                  <label class="f-label"
+                    >Complainant Name <span class="req">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="f-control"
+                    placeholder="Please Enter Your Name"
+                    id="cp_Name"
+                  />
+                </div>
+
+                <div class="col-md-4">
+                  <label class="f-label"
+                    >Complainant Contact No. <span class="req">*</span></label
+                  >
+                  <div class="d-flex gap-2">
+                    <input
+                      type="text"
+                      value="+91"
+                      class="f-control"
+                      style="max-width: 70px"
+                      readonly
+                    />
+                    <input
+                      type="tel"
+                      class="f-control"
+                      id="cp_Mobile"
+                      placeholder="XXXXX XXXXX"
+                      maxlength="10"
+                    />
+                  </div>
+                  <p class="f-hint">
+                    OTP will be sent to verify in the next step
+                  </p>
+                </div>
+
+                <div class="col-md-4">
+                  <label class="f-label">Complainant's Occupation</label>
+                  <input
+                    type="text"
+                    class="f-control"
+                    placeholder="Enter Occupation"
+                    id="cp_Occupation"
+                  />
+                </div>
+              </div>
+
+              <!-- GROUP COMPLAINANT FIELDS -->
+              <div id="groupCP" class="row g-3 px-0 m-0" style="display: none">
+                <div class="col-md-4">
+                  <label class="f-label"
+                    >RWA/ Society/ Association/ CSO/ Other (Group Type)
+                    <span class="req">*</span></label
+                  >
+                  <select class="f-select" id="cp_GroupType">
+                    <option value="">-- Select Group Type --</option>
+                    <option>Residents Welfare Association (RWA)</option>
+                    <option>Society</option>
+                    <option>Association</option>
+                    <option>Civil Society Organization (CSO)</option>
+                    <option>Other (Group of Individuals)</option>
+                  </select>
+                </div>
+
+                <div class="col-md-4">
+                  <label class="f-label"
+                    >Name of the Represntative <span class="req">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="f-control"
+                    placeholder="Name of Nodal Officer"
+                    id="cp_NodalName"
+                  />
+                </div>
+
+                <div class="col-md-4">
+                  <label class="f-label"
+                    >Contact Number of the Nodal Officer
+                    <span class="req">*</span></label
+                  >
+                  <div class="d-flex gap-2">
+                    <input
+                      type="text"
+                      value="+91"
+                      class="f-control"
+                      style="max-width: 70px"
+                      readonly
+                    />
+                    <input
+                      type="tel"
+                      class="f-control"
+                      id="cp_NodalContact"
+                      placeholder="XXXXX XXXXX"
+                      maxlength="10"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <h2
+                  style="
+                    font-size: 1rem;
+                    font-weight: 600;
+                    background-color: #b8d4f4;
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: inline-block;
+                    min-width: 200px;
+                  "
+                >
+                  Grievance Details
+                </h2>
+              </div>
+
+              <div class="col-md-6">
+                <label class="f-label"
+                  >Source of Pollution (Industry’s Name, if applicable)</label
+                >
+                <input
+                  type="text"
+                  class="f-control"
+                  placeholder="Name of factory, plant or establishment"
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label class="f-label"
+                  >Exact Location / Address of Pollution Source
+                  <span class="req">*</span></label
+                >
+                <input
+                  type="text"
+                  class="f-control"
+                  placeholder="Village, Ward, Street, Landmark, District, PIN Code"
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label class="f-label"
+                  >District <span class="req">*</span></label
+                >
+                <div class="d-flex align-items-center gap-2">
+                  <select class="f-select" id="cp_District">
+                    <option value="">-- Select District --</option>
+                    <option>Amritsar</option>
+                    <option>Ludhiana</option>
+                    <option>Jalandhar</option>
+                    <option>Patiala</option>
+                    <option>Bathinda</option>
+                    <option>Mohali (SAS Nagar)</option>
+                    <option>Gurdaspur</option>
+                    <option>Hoshiarpur</option>
+                    <option>Moga</option>
+                    <option>Firozpur</option>
+                    <option>Faridkot</option>
+                    <option>Sangrur</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <button
+                    class="btn btn-success btn-p"
+                    style="height: 40px; white-space: nowrap"
+                    onclick="autoSelectDistrict()"
+                  >
+                    <i class="bi bi-geo-alt-fill me-1"></i> Auto fetch
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-md-6" id="otherDistrictDiv" style="display: none">
+                <label class="f-label">Enter District</label>
+                <input
+                  type="text"
+                  id="otherDistrict"
+                  class="f-control"
+                  placeholder="As per official records"
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label class="f-label">Tehsil</label>
+                <input
+                  type="text"
+                  class="f-control"
+                  placeholder="Enter Tehsil"
+                  id="cp_Tehsil"
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label class="f-label">Pin Code</label>
+                <input
+                  type="text"
+                  class="f-control"
+                  placeholder="PIN Code"
+                  id="cp_PinCode"
+                />
+              </div>
+
+              <div class="col-12">
+                <label class="f-label"
+                  >Detailed Description <span class="req">*</span></label
+                >
+                <textarea
+                  class="f-control"
+                  rows="5"
+                  id="cDesc"
+                  placeholder="Describe: nature of pollution, its impact on environment and health..."
+                  oninput="updateDescWordCount(this)"
+                ></textarea>
+                <div class="d-flex justify-content-between mt-1">
+                  <p class="f-hint">
+                    Max 500 words. Be specific about harm caused.
+                  </p>
+                  <span
+                    style="font-size: 0.7rem; color: var(--text-muted)"
+                    id="wordCnt"
+                    >0/500 words</span
+                  >
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label class="f-label">Upload Supporting Evidence</label>
+                <div
+                  class="upload-zone"
+                  onclick="document.getElementById('fileInp').click()"
+                >
+                  <div
+                    style="
+                      font-size: 2rem;
+                      color: var(--text-light);
+                      margin-bottom: 8px;
+                    "
+                  >
+                    <i class="bi bi-cloud-arrow-up-fill"></i>
+                  </div>
+                  <div
+                    style="
+                      font-weight: 700;
+                      font-size: 0.88rem;
+                      margin-bottom: 4px;
+                    "
+                  >
+                    Click to upload or drag & drop
+                  </div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted)">
+                    Max 10 MB each, up to 5 files
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.7rem;
+                      color: var(--text-light);
+                      margin-top: 6px;
+                    "
+                  >
+                    Supported: JPG, PNG, PDF, DOC, Video
+                  </div>
+                </div>
+                <input
+                  type="file"
+                  id="fileInp"
+                  style="display: none"
+                  multiple
+                  accept="image/*,video/*,.pdf,.doc,.docx"
+                  onchange="showFiles(this)"
+                />
+                <div id="fileList" class="mt-2 d-flex flex-wrap gap-2"></div>
+              </div>
+            </div>
+
+            <!-- Footer Action -->
+            <div class="d-flex justify-content-end mt-5">
+              <button
+                class="btn-p"
+                style="padding: 10px 26px; font-size: 0.85rem"
+                onclick="goStep(2)"
+              >
+                Next &nbsp;<i class="bi bi-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2: Verify OTP -->
+          <div class="form-section" id="fs2">
+            <div class="text-center py-3">
+              <div
+                style="
+                  width: 64px;
+                  height: 64px;
+                  background: linear-gradient(135deg, #deeafb, #b8d4f4);
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 1.8rem;
+                  margin: 0 auto 18px;
+                "
+              >
+                🔐
+              </div>
+              <h6 class="fw-800 mb-2">Verify Your Identity</h6>
+              <p
+                style="
+                  font-size: 0.84rem;
+                  color: var(--text-muted);
+                  max-width: 380px;
+                  margin: 0 auto 28px;
+                "
+              >
+                A 6-digit OTP has been sent to your registered mobile number or
+                email address.
+              </p>
+              <div class="otp-row mb-4">
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="otp-box"
+                  oninput="otpNext(this, 0)"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="otp-box"
+                  oninput="otpNext(this, 1)"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="otp-box"
+                  oninput="otpNext(this, 2)"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="otp-box"
+                  oninput="otpNext(this, 3)"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="otp-box"
+                  oninput="otpNext(this, 4)"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="otp-box"
+                  oninput="otpNext(this, 5)"
+                />
+              </div>
+              <p style="font-size: 0.8rem; color: var(--text-muted)">
+                Didn't receive?
+                <a
+                  href="#"
+                  id="resendLink"
+                  onclick="startResend(event)"
+                  style="color: var(--primary); font-weight: 600"
+                  >Resend OTP</a
+                >
+                <span
+                  id="resendTimer"
+                  style="color: var(--text-muted); font-size: 0.78rem"
+                ></span>
+              </p>
+            </div>
+            <div class="d-flex justify-content-between mt-3">
+              <button class="btn-o" onclick="goStep(1)">
+                <i class="bi bi-arrow-left"></i> Back
+              </button>
+              <button
+                class="btn-p"
+                style="padding: 10px 26px; font-size: 0.85rem"
+                onclick="goStep(3)"
+              >
+                Verify &nbsp;<i class="bi bi-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3: Review & Submit -->
+          <div class="form-section" id="fs3">
+            <h6 class="fw-800 mb-1">Review & Submit</h6>
+            <p
+              style="
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                margin-bottom: 22px;
+              "
+            >
+              Please review all details before final submission.
+            </p>
+            <div class="review-block mb-3">
+              <div
+                style="
+                  font-size: 0.7rem;
+                  font-weight: 700;
+                  text-transform: uppercase;
+                  letter-spacing: 0.05em;
+                  color: var(--text-muted);
+                  margin-bottom: 14px;
+                "
+              >
+                Complaint Summary
+              </div>
+              <div class="row g-3">
+                <div class="col-6 col-md-4">
+                  <div
+                    style="
+                      font-size: 0.65rem;
+                      font-weight: 700;
+                      text-transform: uppercase;
+                      color: var(--text-muted);
+                    "
+                  >
+                    Complainant
+                  </div>
+                  <div
+                    id="rv-name"
+                    style="
+                      font-size: 0.85rem;
+                      font-weight: 700;
+                      margin-top: 3px;
+                    "
+                  >
+                    —
+                  </div>
+                </div>
+                <div class="col-6 col-md-4">
+                  <div
+                    style="
+                      font-size: 0.65rem;
+                      font-weight: 700;
+                      text-transform: uppercase;
+                      color: var(--text-muted);
+                    "
+                  >
+                    District
+                  </div>
+                  <div
+                    id="rv-dist"
+                    style="
+                      font-size: 0.85rem;
+                      font-weight: 700;
+                      margin-top: 3px;
+                    "
+                  >
+                    —
+                  </div>
+                </div>
+                <div class="col-6 col-md-4">
+                  <div
+                    style="
+                      font-size: 0.65rem;
+                      font-weight: 700;
+                      text-transform: uppercase;
+                      color: var(--text-muted);
+                    "
+                  >
+                    Category
+                  </div>
+                  <div
+                    id="rv-cat"
+                    style="
+                      font-size: 0.85rem;
+                      font-weight: 700;
+                      margin-top: 3px;
+                    "
+                  >
+                    —
+                  </div>
+                </div>
+                <div class="col-6 col-md-4">
+                  <div
+                    style="
+                      font-size: 0.65rem;
+                      font-weight: 700;
+                      text-transform: uppercase;
+                      color: var(--text-muted);
+                    "
+                  >
+                    Source
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.85rem;
+                      font-weight: 700;
+                      margin-top: 3px;
+                    "
+                    id="rv-src"
+                  >
+                    Online Portal
+                  </div>
+                </div>
+                <div class="col-6 col-md-4">
+                  <div
+                    style="
+                      font-size: 0.65rem;
+                      font-weight: 700;
+                      text-transform: uppercase;
+                      color: var(--text-muted);
+                    "
+                  >
+                    Mobile Verified
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.85rem;
+                      font-weight: 700;
+                      color: var(--success);
+                      margin-top: 3px;
+                    "
+                  >
+                    ✓ Verified
+                  </div>
+                </div>
+                <div class="col-6 col-md-4">
+                  <div
+                    style="
+                      font-size: 0.65rem;
+                      font-weight: 700;
+                      text-transform: uppercase;
+                      color: var(--text-muted);
+                    "
+                  >
+                    Evidence
+                  </div>
+                  <div
+                    id="rv-files"
+                    style="
+                      font-size: 0.85rem;
+                      font-weight: 700;
+                      margin-top: 3px;
+                    "
+                  >
+                    0 files
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                background: #fff8e8;
+                border: 1px solid #f0d080;
+                border-radius: var(--radius-sm);
+                padding: 13px 16px;
+                font-size: 0.8rem;
+                color: #a07000;
+                margin-bottom: 18px;
+              "
+            >
+              <i class="bi bi-info-circle-fill me-2"></i>
+              By submitting, you declare that the information provided is true
+              to the best of your knowledge. False complaints may attract action
+              under applicable laws.
+            </div>
+            <div class="d-flex align-items-start gap-2 mb-4">
+              <input
+                type="checkbox"
+                id="declareCb"
+                style="
+                  width: 16px;
+                  height: 16px;
+                  accent-color: var(--primary);
+                  margin-top: 2px;
+                  flex-shrink: 0;
+                "
+              />
+              <label for="declareCb" style="font-size: 0.82rem; cursor: pointer"
+                >I agree to the <strong>Terms of Service</strong> and confirm
+                that all information submitted is genuine.</label
+              >
+            </div>
+            <div class="d-flex justify-content-between flex-wrap gap-2">
+              <button class="btn-o" onclick="goStep(2)">
+                <i class="bi bi-arrow-left"></i> Back
+              </button>
+              <button
+                class="btn-full"
+                style="width: auto; padding: 11px 30px"
+                onclick="submitComplaint()"
+              >
+                <i class="bi bi-send-fill me-1"></i> Submit Complaint
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- /form-body -->
+      </div>
+      <!-- /data-card -->
+
+      <!-- SUCCESS STATE -->
+      <div id="successState" style="display: none; padding-top: 20px">
+        <div class="data-card">
+          <div class="success-wrap py-5">
+            <div class="success-icon">✅</div>
+            <h4 class="fw-800 mb-2">Complaint Registered Successfully!</h4>
+            <p
+              style="
+                color: var(--text-muted);
+                font-size: 0.88rem;
+                max-width: 460px;
+                margin: 0 auto 6px;
+              "
+            >
+              Your grievance has been received. An acknowledgement has been sent
+              to your mobile.
+            </p>
+            <div class="comp-num" id="generatedNum">PPCB/GRM/2025/04828</div>
+            <p
+              style="
+                font-size: 0.78rem;
+                color: var(--text-muted);
+                margin-bottom: 28px;
+              "
+            >
+              Save this number to track your complaint status at any time
+            </p>
+
+            <div
+              style="
+                max-width: 460px;
+                margin: 0 auto 28px;
+                text-align: left;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+              "
+            >
+              <div class="next-step-item">
+                <div
+                  class="ns-icon"
+                  style="background: #d4f5e2; color: var(--success)"
+                >
+                  <i class="bi bi-check2"></i>
+                </div>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.82rem">
+                    SMS Acknowledgement Sent
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.74rem;
+                      color: var(--text-muted);
+                      margin-top: 2px;
+                    "
+                  ></div>
+                </div>
+              </div>
+              <!-- <div class="next-step-item">
               <div class="ns-icon" style="background:#deeafb;color:var(--primary);"><i class="bi bi-person-check"></i>
               </div>
               <div>
@@ -761,221 +1199,286 @@
                 <div style="font-size:.74rem;color:var(--text-muted);margin-top:2px;">Review within 2 working days</div>
               </div> 
             </div> -->
-            <div class="next-step-item">
-              <div class="ns-icon" style="background:#fdf3d4;color:var(--warning);"><i class="bi bi-clock"></i></div>
-              <div>
-                <div style="font-weight:700;font-size:.82rem;">Expected Resolution: 30 Working Days</div>
-                <div style="font-size:.74rem;color:var(--text-muted);margin-top:2px;"></div>
+              <div class="next-step-item">
+                <div
+                  class="ns-icon"
+                  style="background: #fdf3d4; color: var(--warning)"
+                >
+                  <i class="bi bi-clock"></i>
+                </div>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.82rem">
+                    Expected Resolution: 30 Working Days
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.74rem;
+                      color: var(--text-muted);
+                      margin-top: 2px;
+                    "
+                  ></div>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="d-flex gap-3 justify-content-center flex-wrap">
-            <a href="citizen-tracking.html" class="btn-p" style="padding:11px 24px;"><i class="bi bi-search me-1"></i>
-              Track
-              Complaint</a>
-            <a href="index.html" class="btn-o" style="padding:11px 24px;"><i class="bi bi-house me-1"></i> Back to
-              Home</a>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+              <a
+                href="citizen-tracking.html"
+                class="btn-p"
+                style="padding: 11px 24px"
+                ><i class="bi bi-search me-1"></i> Track Complaint</a
+              >
+              <a href="index.html" class="btn-o" style="padding: 11px 24px"
+                ><i class="bi bi-house me-1"></i> Back to Home</a
+              >
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div><!-- /form-wrap -->
+    <!-- /form-wrap -->
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    let curStep = 1;
-    const pcts = { 1: '33.33%', 2: '66.66%', 3: '100%' };
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      let curStep = 1;
+      const pcts = { 1: "33.33%", 2: "66.66%", 3: "100%" };
 
-    function goStep(n) {
-      // Remove active class from current step
-      document.getElementById('fs' + curStep).classList.remove('active');
-      const prev = document.getElementById('tab' + curStep);
-      prev.classList.remove('active');
+      function goStep(n) {
+        // Remove active class from current step
+        document.getElementById("fs" + curStep).classList.remove("active");
+        const prev = document.getElementById("tab" + curStep);
+        prev.classList.remove("active");
 
-      // If moving forward, mark previous step as done
-      // If moving backward, remove done state from future steps
-      if (n > curStep) {
-        prev.classList.add('done');
-        prev.querySelector('.step-dot').innerHTML = '<i class="bi bi-check2" style="font-size:.65rem;"></i>';
-      } else {
-        prev.classList.remove('done');
-        prev.querySelector('.step-dot').textContent = curStep;
-      }
-
-      // Remove done state from all tabs after the new current step
-      for (let i = n + 1; i <= 3; i++) {
-        const futureTab = document.getElementById('tab' + i);
-        if (futureTab) {
-          futureTab.classList.remove('done');
-          futureTab.querySelector('.step-dot').textContent = i;
-        }
-      }
-
-      curStep = n;
-      document.getElementById('fs' + n).classList.add('active');
-      const cur = document.getElementById('tab' + n);
-      cur.classList.add('active');
-      cur.classList.remove('done');
-      cur.querySelector('.step-dot').textContent = n;
-      document.getElementById('progressBar').style.width = pcts[n];
-
-      // Populate review on step 3
-      if (n === 3) {
-        document.getElementById('rv-name').textContent = document.getElementById('cName').value || '—';
-        document.getElementById('rv-dist').textContent = document.getElementById('cDistrict').value || '—';
-        document.getElementById('rv-cat').textContent = document.getElementById('cCategory').value || '—';
-        document.getElementById('rv-src').textContent = document.querySelector('#sourceChips .chip.sel')?.innerText.trim() || '—';
-        document.getElementById('rv-files').textContent = document.getElementById('fileInp').files.length + ' file(s)';
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function pickChip(el, groupId) {
-      document.querySelectorAll('#' + groupId + ' .chip').forEach(c => c.classList.remove('sel'));
-      el.classList.add('sel');
-    }
-
-    function sendOTP(btn) {
-      btn.innerHTML = '<i class="bi bi-check2"></i> Sent ✓';
-      btn.style.background = 'var(--success)';
-      setTimeout(() => { btn.innerHTML = '<i class="bi bi-send-fill"></i> Resend'; btn.style.background = ''; }, 30000);
-    }
-
-    function otpNext(inp, idx) {
-      const boxes = document.querySelectorAll('.otp-box');
-      if (inp.value && idx < 5) boxes[idx + 1].focus();
-    }
-
-    let resendTimeout;
-    function startResend(e) {
-      e.preventDefault();
-      document.getElementById('resendLink').style.pointerEvents = 'none';
-      let sec = 30;
-      document.getElementById('resendTimer').textContent = ' (' + sec + 's)';
-      resendTimeout = setInterval(() => {
-        sec--;
-        document.getElementById('resendTimer').textContent = ' (' + sec + 's)';
-        if (sec <= 0) {
-          clearInterval(resendTimeout);
-          document.getElementById('resendTimer').textContent = '';
-          document.getElementById('resendLink').style.pointerEvents = 'auto';
-        }
-      }, 1000);
-    }
-
-    function showFiles(inp) {
-      const list = document.getElementById('fileList');
-      list.innerHTML = '';
-      Array.from(inp.files).forEach(f => {
-        const chip = document.createElement('div');
-        chip.style.cssText = 'display:flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:.75rem;';
-        chip.innerHTML = '<i class="bi bi-file-earmark-fill" style="color:var(--primary);"></i>' + f.name + '<span style="color:var(--text-muted);">(' + Math.round(f.size / 1024) + 'KB)</span>';
-        list.appendChild(chip);
-      });
-    }
-
-    // Word counter for Complaint Subject (max 100 words)
-    function updateSubjectWordCount(el) {
-      const words = el.value.trim().split(/\s+/).filter(w => w).length;
-      document.getElementById('subjWordCnt').textContent = words + '/100 words';
-      document.getElementById('subjWordCnt').style.color = words > 100 ? 'var(--danger)' : (words > 80 ? 'var(--warning)' : 'var(--text-muted)');
-
-      // Prevent exceeding word limit
-      if (words > 100) {
-        const wordArray = el.value.trim().split(/\s+/).slice(0, 100);
-        el.value = wordArray.join(' ');
-        document.getElementById('subjWordCnt').textContent = '100/100 words';
-      }
-    }
-
-    function capitalizeWords(el) {
-      const words = el.value.split(' ');
-      const capitalized = words.map(word => {
-        if (word.length > 0) {
-          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-        }
-        return word;
-      }).join(' ');
-      el.value = capitalized;
-    }
-
-    // Word counter for Detailed Description (max 500 words)
-    function updateDescWordCount(el) {
-      const words = el.value.trim().split(/\s+/).filter(w => w).length;
-      document.getElementById('wordCnt').textContent = words + '/500 words';
-      document.getElementById('wordCnt').style.color = words < 50 ? 'var(--danger)' : (words > 500 ? 'var(--danger)' : (words > 450 ? 'var(--warning)' : 'var(--success)'));
-
-      // Prevent exceeding word limit
-      if (words > 500) {
-        const wordArray = el.value.trim().split(/\s+/).slice(0, 500);
-        el.value = wordArray.join(' ');
-        document.getElementById('wordCnt').textContent = '500/500 words';
-      }
-    }
-
-    // Word counter
-    document.getElementById('cDesc').addEventListener('input', function () {
-      const words = this.value.trim().split(/\s+/).filter(w => w).length;
-      document.getElementById('wordCnt').textContent = words + ' words';
-      document.getElementById('wordCnt').style.color = words < 50 ? 'var(--danger)' : 'var(--success)';
-    });
-
-    // Toggle Individual/Group complaint type in Step 2
-    function toggleComplaintType2(type) {
-      const individualFields = document.getElementById('individualCP');
-      const groupFields = document.getElementById('groupCP');
-
-      if (type === 'individual') {
-        individualFields.style.display = 'flex';
-        groupFields.style.display = 'none';
-      } else {
-        individualFields.style.display = 'none';
-        groupFields.style.display = 'flex';
-      }
-    }
-
-   function submitComplaint() {
-      // ✅ Step 1: Check checkbox first
-      if (!document.getElementById('declareCb').checked) {
-        alert('Please check the declaration checkbox to proceed.');
-        return;
-      }
-
-      // ✅ Step 2: Show confirmation popup
-      const confirmSubmit = confirm("Are you sure you want to submit the complaint?");
-
-      // ❌ If user clicks Cancel → stop
-      if (!confirmSubmit) {
-        return;
-    }
-
-
-  // ✅ Step 3: Proceed with submission
-  document.getElementById('formCard').style.display = 'none';
-  document.getElementById('successState').style.display = 'block';
-
-  // Generate random complaint number
-  const num = 'PPCB/GRM/2025/0' + (4828 + Math.floor(Math.random() * 10));
-  document.getElementById('generatedNum').textContent = num;
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-    
-
-    /********Distrct********/
-     document.getElementById("cp_District").addEventListener("change", function () {
-        const otherDiv = document.getElementById("otherDistrictDiv");
-
-        if (this.value === "other") {
-            otherDiv.style.display = "block";
+        // If moving forward, mark previous step as done
+        // If moving backward, remove done state from future steps
+        if (n > curStep) {
+          prev.classList.add("done");
+          prev.querySelector(".step-dot").innerHTML =
+            '<i class="bi bi-check2" style="font-size:.65rem;"></i>';
         } else {
-            otherDiv.style.display = "none";
+          prev.classList.remove("done");
+          prev.querySelector(".step-dot").textContent = curStep;
         }
-    });
 
-    function autoSelectDistrict() {
-    const select = document.getElementById("cp_District");
+        // Remove done state from all tabs after the new current step
+        for (let i = n + 1; i <= 3; i++) {
+          const futureTab = document.getElementById("tab" + i);
+          if (futureTab) {
+            futureTab.classList.remove("done");
+            futureTab.querySelector(".step-dot").textContent = i;
+          }
+        }
+
+        curStep = n;
+        document.getElementById("fs" + n).classList.add("active");
+        const cur = document.getElementById("tab" + n);
+        cur.classList.add("active");
+        cur.classList.remove("done");
+        cur.querySelector(".step-dot").textContent = n;
+        document.getElementById("progressBar").style.width = pcts[n];
+
+        // Populate review on step 3
+        if (n === 3) {
+          document.getElementById("rv-name").textContent =
+            document.getElementById("cName").value || "—";
+          document.getElementById("rv-dist").textContent =
+            document.getElementById("cDistrict").value || "—";
+          document.getElementById("rv-cat").textContent =
+            document.getElementById("cCategory").value || "—";
+          document.getElementById("rv-src").textContent =
+            document
+              .querySelector("#sourceChips .chip.sel")
+              ?.innerText.trim() || "—";
+          document.getElementById("rv-files").textContent =
+            document.getElementById("fileInp").files.length + " file(s)";
+        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function pickChip(el, groupId) {
+        document
+          .querySelectorAll("#" + groupId + " .chip")
+          .forEach((c) => c.classList.remove("sel"));
+        el.classList.add("sel");
+      }
+
+      function sendOTP(btn) {
+        btn.innerHTML = '<i class="bi bi-check2"></i> Sent ✓';
+        btn.style.background = "var(--success)";
+        setTimeout(() => {
+          btn.innerHTML = '<i class="bi bi-send-fill"></i> Resend';
+          btn.style.background = "";
+        }, 30000);
+      }
+
+      function otpNext(inp, idx) {
+        const boxes = document.querySelectorAll(".otp-box");
+        if (inp.value && idx < 5) boxes[idx + 1].focus();
+      }
+
+      let resendTimeout;
+      function startResend(e) {
+        e.preventDefault();
+        document.getElementById("resendLink").style.pointerEvents = "none";
+        let sec = 30;
+        document.getElementById("resendTimer").textContent = " (" + sec + "s)";
+        resendTimeout = setInterval(() => {
+          sec--;
+          document.getElementById("resendTimer").textContent =
+            " (" + sec + "s)";
+          if (sec <= 0) {
+            clearInterval(resendTimeout);
+            document.getElementById("resendTimer").textContent = "";
+            document.getElementById("resendLink").style.pointerEvents = "auto";
+          }
+        }, 1000);
+      }
+
+      function showFiles(inp) {
+        const list = document.getElementById("fileList");
+        list.innerHTML = "";
+        Array.from(inp.files).forEach((f) => {
+          const chip = document.createElement("div");
+          chip.style.cssText =
+            "display:flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:.75rem;";
+          chip.innerHTML =
+            '<i class="bi bi-file-earmark-fill" style="color:var(--primary);"></i>' +
+            f.name +
+            '<span style="color:var(--text-muted);">(' +
+            Math.round(f.size / 1024) +
+            "KB)</span>";
+          list.appendChild(chip);
+        });
+      }
+
+      // Word counter for Complaint Subject (max 100 words)
+      function updateSubjectWordCount(el) {
+        const words = el.value
+          .trim()
+          .split(/\s+/)
+          .filter((w) => w).length;
+        document.getElementById("subjWordCnt").textContent =
+          words + "/100 words";
+        document.getElementById("subjWordCnt").style.color =
+          words > 100
+            ? "var(--danger)"
+            : words > 80
+              ? "var(--warning)"
+              : "var(--text-muted)";
+
+        // Prevent exceeding word limit
+        if (words > 100) {
+          const wordArray = el.value.trim().split(/\s+/).slice(0, 100);
+          el.value = wordArray.join(" ");
+          document.getElementById("subjWordCnt").textContent = "100/100 words";
+        }
+      }
+
+      function capitalizeWords(el) {
+        const words = el.value.split(" ");
+        const capitalized = words
+          .map((word) => {
+            if (word.length > 0) {
+              return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+            }
+            return word;
+          })
+          .join(" ");
+        el.value = capitalized;
+      }
+
+      // Word counter for Detailed Description (max 500 words)
+      function updateDescWordCount(el) {
+        const words = el.value
+          .trim()
+          .split(/\s+/)
+          .filter((w) => w).length;
+        document.getElementById("wordCnt").textContent = words + "/500 words";
+        document.getElementById("wordCnt").style.color =
+          words < 50
+            ? "var(--danger)"
+            : words > 500
+              ? "var(--danger)"
+              : words > 450
+                ? "var(--warning)"
+                : "var(--success)";
+
+        // Prevent exceeding word limit
+        if (words > 500) {
+          const wordArray = el.value.trim().split(/\s+/).slice(0, 500);
+          el.value = wordArray.join(" ");
+          document.getElementById("wordCnt").textContent = "500/500 words";
+        }
+      }
+
+      // Word counter
+      document.getElementById("cDesc").addEventListener("input", function () {
+        const words = this.value
+          .trim()
+          .split(/\s+/)
+          .filter((w) => w).length;
+        document.getElementById("wordCnt").textContent = words + " words";
+        document.getElementById("wordCnt").style.color =
+          words < 50 ? "var(--danger)" : "var(--success)";
+      });
+
+      // Toggle Individual/Group complaint type in Step 2
+      function toggleComplaintType2(type) {
+        const individualFields = document.getElementById("individualCP");
+        const groupFields = document.getElementById("groupCP");
+
+        if (type === "individual") {
+          individualFields.style.display = "flex";
+          groupFields.style.display = "none";
+        } else {
+          individualFields.style.display = "none";
+          groupFields.style.display = "flex";
+        }
+      }
+
+      function submitComplaint() {
+        // ✅ Step 1: Check checkbox first
+        if (!document.getElementById("declareCb").checked) {
+          alert("Please check the declaration checkbox to proceed.");
+          return;
+        }
+
+        // ✅ Step 2: Show confirmation popup
+        const confirmSubmit = confirm(
+          "Are you sure you want to submit the complaint?",
+        );
+
+        // ❌ If user clicks Cancel → stop
+        if (!confirmSubmit) {
+          return;
+        }
+
+        // ✅ Step 3: Proceed with submission
+        document.getElementById("formCard").style.display = "none";
+        document.getElementById("successState").style.display = "block";
+
+        // Generate random complaint number
+        const num = "PPCB/GRM/2025/0" + (4828 + Math.floor(Math.random() * 10));
+        document.getElementById("generatedNum").textContent = num;
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      /********Distrct********/
+      document
+        .getElementById("cp_District")
+        .addEventListener("change", function () {
+          const otherDiv = document.getElementById("otherDistrictDiv");
+
+          if (this.value === "other") {
+            otherDiv.style.display = "block";
+          } else {
+            otherDiv.style.display = "none";
+          }
+        });
+
+      function autoSelectDistrict() {
+        const select = document.getElementById("cp_District");
 
         // ✅ Set to Patiala
         select.value = "Patiala";
@@ -985,10 +1488,7 @@
 
         // ✅ Optional: show message
         alert("Patiala auto-selected");
-    }
-
-
-  </script>
-</body>
-
+      }
+    </script>
+  </body>
 </html>
