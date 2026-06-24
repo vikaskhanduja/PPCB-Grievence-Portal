@@ -14,6 +14,10 @@
     />
     <link
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
     />
     <link rel="stylesheet" href="css/shared.css" />
@@ -366,6 +370,19 @@
           font-size: 0.75rem;
         }
       }
+
+      .main-button {
+        font-size: 1rem;
+        font-weight: 600;
+        background-color: #036b6b;
+        padding: 12px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        min-width: 200px;
+        color: #fff;
+      }
     </style>
   </head>
 
@@ -433,7 +450,7 @@
             receive SMS & Email confirmation.
           </p>
         </div>
-        <div style="text-align: right" class="d-none d-md-block">
+        <!-- <div style="text-align: right" class="d-none d-md-block">
           <div
             style="
               font-size: 0.68rem;
@@ -444,7 +461,7 @@
             Helpline (Mon–Fri)
           </div>
           <div style="font-size: 1.1rem; font-weight: 700">+91 9878950593</div>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -523,18 +540,8 @@
             <!-- Details Section -->
             <div class="row g-3">
               <div class="col-12">
-                <h2
-                  style="
-                    font-size: 1rem;
-                    font-weight: 600;
-                    background-color: #b8d4f4;
-                    padding: 12px;
-                    border-radius: 8px;
-                    display: inline-block;
-                    margin-bottom: 0;
-                  "
-                >
-                  Complainant Details
+                <h2 class="main-button">
+                  <i class="fa fa-user-circle"></i>&nbsp;Complainant Details
                 </h2>
               </div>
 
@@ -591,19 +598,40 @@
               <!-- GROUP COMPLAINANT FIELDS -->
               <div id="groupCP" class="row g-3 px-0 m-0" style="display: none">
                 <div class="col-md-4">
-                  <label class="f-label"
-                    >RWA/ Society/ Association/ CSO/ Other (Group Type)
-                    <span class="req">*</span></label
-                  >
-                  <select class="f-select" id="cp_GroupType">
-                    <option value="">-- Select Group Type --</option>
-                    <option>Residents Welfare Association (RWA)</option>
-                    <option>Society</option>
-                    <option>Association</option>
-                    <option>Civil Society Organization (CSO)</option>
-                    <option>Other (Group of Individuals)</option>
+                  <label class="f-label">Group Category</label>
+
+                  <select class="f-control" id="groupType">
+                    <option value="">Select Group Type</option>
+                    <option value="ngo">NGO</option>
+                    <option value="society">Society</option>
+                    <option value="association">Association</option>
+                    <option value="other">Other</option>
                   </select>
                 </div>
+
+                <!-- Hidden initially -->
+                <div class="col-md-4" id="groupNameDiv" style="display: none">
+                  <label class="f-label">Name of the Group</label>
+                  <input
+                    type="text"
+                    class="f-control"
+                    id="groupName"
+                    placeholder="Enter Name of the Group"
+                  />
+                </div>
+
+                <script>
+                  const groupType = document.getElementById("groupType");
+                  const groupNameDiv = document.getElementById("groupNameDiv");
+
+                  groupType.addEventListener("change", function () {
+                    if (this.value !== "") {
+                      groupNameDiv.style.display = "block";
+                    } else {
+                      groupNameDiv.style.display = "none";
+                    }
+                  });
+                </script>
 
                 <div class="col-md-4">
                   <label class="f-label"
@@ -612,7 +640,7 @@
                   <input
                     type="text"
                     class="f-control"
-                    placeholder="Name of Nodal Officer"
+                    placeholder="Name of Represntative"
                     id="cp_NodalName"
                   />
                 </div>
@@ -642,18 +670,9 @@
               </div>
 
               <div class="col-12">
-                <h2
-                  style="
-                    font-size: 1rem;
-                    font-weight: 600;
-                    background-color: #b8d4f4;
-                    padding: 12px;
-                    border-radius: 8px;
-                    display: inline-block;
-                    min-width: 200px;
-                  "
-                >
-                  Grievance Details
+                <h2 class="main-button">
+                  <i class="fa-solid fa-clipboard-list"></i>&nbsp;Grievance
+                  Details
                 </h2>
               </div>
 
@@ -670,8 +689,7 @@
 
               <div class="col-md-6">
                 <label class="f-label"
-                  >Exact Location / Address of Pollution Source
-                  <span class="req">*</span></label
+                  >Exact Location / Address of Pollution Source</label
                 >
                 <input
                   type="text"
