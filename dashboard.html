@@ -331,6 +331,7 @@
                           <th>Date</th>
                           <th>View</th>
                           <th>Action</th>
+                          <th>Officer Tracking</th>
                         </tr>
                       </thead>
 
@@ -380,6 +381,14 @@
                               <i class="fas fa-tasks me-1"></i> Process
                             </a>
                           </td>
+                          <td style="text-align: center;">
+                              <a
+                              href="officier_tracking-process.html"
+                              class="btn btn-sm"
+                              style="background-color: #0d7a55; color: #fff">
+                              <i class="fas fa-arrow-right"></i> 
+                            </a>
+                          </td>
                         </tr>
 
                         <tr>
@@ -427,6 +436,14 @@
                               <i class="fas fa-tasks me-1"></i> Process
                             </a>
                           </td>
+                          <td style="text-align: center;">
+                              <a
+                              href="officier_tracking-process.html"
+                              class="btn btn-sm"
+                              style="background-color: #0d7a55; color: #fff">
+                              <i class="fas fa-arrow-right"></i>
+                            </a>
+                          </td>
                         </tr>
 
                         <tr>
@@ -456,7 +473,7 @@
                           <td>Individual</td>
                           <td>12<sup>th</sup>-06-2026</td>
 
-                          <td>
+                          <td style="text-align: center;">
                             <button
                               class="btn btn-sm btn-info text-white"
                               data-bs-toggle="modal"
@@ -472,6 +489,14 @@
                               style="background-color: #0d7a55; color: #fff"
                             >
                               <i class="fas fa-tasks me-1"></i> Process
+                            </a>
+                          </td>
+                          <td style="text-align: center;">
+                              <a
+                              href="officier_tracking-process.html"
+                              class="btn btn-sm"
+                              style="background-color: #0d7a55; color: #fff">
+                              <i class="fas fa-arrow-right"></i> 
                             </a>
                           </td>
                         </tr>
@@ -519,6 +544,14 @@
                               style="background-color: #0d7a55; color: #fff"
                             >
                               <i class="fas fa-tasks me-1"></i> Process
+                            </a>
+                          </td>
+                          <td style="text-align: center;">
+                              <a
+                              href="officier_tracking-process.html"
+                              class="btn btn-sm"
+                              style="background-color: #0d7a55; color: #fff">
+                              <i class="fas fa-arrow-right"></i>
                             </a>
                           </td>
                         </tr>
@@ -618,10 +651,10 @@
               <!-- Assignment Section -->
               <div class="row g-3 section-block">
                 <!-- Buttons -->
-                <div class="col-12 mb-2 d-flex">
+                <div class="col-12 mb-2 d-flex gap-2">
                   <button
                     type="button"
-                    class="btn btn-primary me-2 w-50"
+                    class="btn btn-primary flex-fill"
                     onclick="showSDO()"
                   >
                     Assign to SDO
@@ -629,11 +662,20 @@
 
                   <button
                     type="button"
-                    class="btn btn-secondary w-50"
+                    class="btn btn-secondary flex-fill"
                     onclick="showRO()"
                   >
                     Forward to another RO Office
                   </button>
+
+                  <!-- <a
+                    href="officier_tracking-process.html"
+                    class="btn btn-success flex-fill"
+                    target="_blank"
+                    style="color: #fff"
+                  >
+                    Officer Tracking Details
+                  </a> -->
                 </div>
 
                 <!-- SDO Dropdown -->
@@ -650,17 +692,17 @@
                 </div>
 
                 <!-- RO Dropdown -->
-                <!-- <div class="col-md-12" id="roSection" style="display:none;">
-                                    <label for="assignRoOffice" class="f-label">
-                                        Assign to RO Office <span class="req">*</span>
-                                    </label>
-                                    <select class="form-select f-select" id="assignRoOffice">
-                                        <option value="">-- Select RO --</option>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
-                                        <option>Option 3</option>
-                                    </select>
-                                </div> -->
+                <div class="col-md-12" id="roSection" style="display: none">
+                  <label for="assignRoOffice" class="f-label">
+                    Assign to RO Office <span class="req">*</span>
+                  </label>
+                  <select class="form-select f-select" id="assignRoOffice">
+                    <option value="">-- Select RO --</option>
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                  </select>
+                </div>
               </div>
 
               <!-- Complaint Information -->
@@ -765,7 +807,7 @@
 
                   <div class="col-md-4">
                     <strong>Complaint Details:</strong>
-                    <p>ABC</p>
+                    <p>Discharge from Industry into open field near residential are</p>
                   </div>
                 </div>
               </div>

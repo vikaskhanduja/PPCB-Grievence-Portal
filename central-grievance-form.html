@@ -406,7 +406,7 @@
                         id="sourcePostOffice"
                       />
                       <label class="form-check-label" for="sourcePostOffice">
-                        Post Office
+                        Post
                       </label>
                     </div>
                   </div>
@@ -588,6 +588,16 @@
                 </div>
 
                 <div class="col-md-4">
+                  <label class="f-label"> Email ID </label>
+                  <input
+                    type="email"
+                    class="f-control"
+                    placeholder="Enter Email ID"
+                    id="indEmail"
+                  />
+                </div>
+
+                <div class="col-md-4">
                   <label class="f-label">Complainant Contact No.</label>
                   <div style="display: flex; gap: 8px">
                     <!-- Country Code -->
@@ -611,24 +621,34 @@
                 </div>
 
                 <div class="col-md-4" id="districtDiv">
-                  <label class="f-label"
-                    >District <span class="req">*</span></label
-                  >
+                  <label class="f-label">District </label>
                   <div class="d-flex align-items-center">
                     <select class="f-select" id="cp_District">
                       <option value="">-- Select District --</option>
                       <option>Amritsar</option>
-                      <option>Ludhiana</option>
-                      <option>Jalandhar</option>
-                      <option>Patiala</option>
+                      <option>Barnala</option>
                       <option>Bathinda</option>
-                      <option>Mohali (SAS Nagar)</option>
+                      <option>Faridkot</option>
+                      <option>Fatehgarh Sahib</option>
+                      <option>Fazilka</option>
+                      <option>Firozpur</option>
                       <option>Gurdaspur</option>
                       <option>Hoshiarpur</option>
+                      <option>Jalandhar</option>
+                      <option>Kapurthala</option>
+                      <option>Ludhiana</option>
+                      <option>Bathinda</option>
+                      <option>Malerkotla</option>
+                      <option>Mansa</option>
                       <option>Moga</option>
-                      <option>Firozpur</option>
-                      <option>Faridkot</option>
+                      <option>Pathankot</option>
+                      <option>Patiala</option>
+                      <option>Rupnagar</option>
+                      <option>Sahibzada Ajit Singh Nagar (Mohali)</option>
                       <option>Sangrur</option>
+                      <option>Shahid Bhagat Singh Nagar (Nawanshahr)</option>
+                      <option>Sri Muktsar Sahib</option>
+                      <option>Tarn Taran</option>
                       <option value="other">Other</option>
                     </select>
                     <!-- <button class="btn btn-success ms-2 btn-p"
@@ -645,7 +665,7 @@
                   id="otherDistrictDiv"
                   style="display: none"
                 >
-                  <label class="f-label">Enter District</label>
+                  <label class="f-label">Enter Area Name</label>
                   <input
                     type="text"
                     id="otherDistrict"
@@ -696,7 +716,7 @@
 
               <!-- GROUP FIELDS -->
               <div id="groupFields" class="row g-3" style="display: none">
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                   <label class="f-label"
                     >Group Type <span class="req">*</span></label
                   >
@@ -708,7 +728,44 @@
                     <option>Civil Society Organization (CSO)</option>
                     <option>Other</option>
                   </select>
+                </div> -->
+
+                <div class="col-md-6">
+                  <label class="f-label">Group Category</label>
+
+                  <select class="f-control" id="groupType">
+                    <option value="">Select Group Type</option>
+                    <option value="ngo">NGO</option>
+                    <option value="society">Society</option>
+                    <option value="association">Association</option>
+                    <option value="other">Other</option>
+                  </select>
                 </div>
+
+                <!-- Hidden initially -->
+                <div class="col-md-6" id="groupNameDiv" style="display: none">
+                  <label class="f-label">Name of the Group</label>
+                  <input
+                    type="text"
+                    class="f-control"
+                    id="groupName"
+                    placeholder="Enter Name of the Group"
+                  />
+                </div>
+
+                <script>
+                  const groupType = document.getElementById("groupType");
+                  const groupNameDiv = document.getElementById("groupNameDiv");
+
+                  groupType.addEventListener("change", function () {
+                    if (this.value !== "") {
+                      groupNameDiv.style.display = "block";
+                    } else {
+                      groupNameDiv.style.display = "none";
+                    }
+                  });
+                </script>
+
                 <div class="col-md-6">
                   <label class="f-label"
                     >Name of the Representative
@@ -721,6 +778,17 @@
                     id="respresentative"
                   />
                 </div>
+
+                <div class="col-md-6">
+                  <label class="f-label"> Email ID </label>
+                  <input
+                    type="email"
+                    class="f-control"
+                    placeholder="Enter Email ID"
+                    id="indEmail"
+                  />
+                </div>
+
                 <div class="col-md-6">
                   <label class="f-label"
                     >Contact Number of Representative
@@ -839,17 +907,29 @@
                 <select class="f-select" id="districtSelect">
                   <option value="">-- Select District --</option>
                   <option>Amritsar</option>
-                  <option>Ludhiana</option>
-                  <option>Jalandhar</option>
-                  <option>Patiala</option>
+                  <option>Barnala</option>
                   <option>Bathinda</option>
-                  <option>Mohali (SAS Nagar)</option>
+                  <option>Faridkot</option>
+                  <option>Fatehgarh Sahib</option>
+                  <option>Fazilka</option>
+                  <option>Firozpur</option>
                   <option>Gurdaspur</option>
                   <option>Hoshiarpur</option>
+                  <option>Jalandhar</option>
+                  <option>Kapurthala</option>
+                  <option>Ludhiana</option>
+                  <option>Bathinda</option>
+                  <option>Malerkotla</option>
+                  <option>Mansa</option>
                   <option>Moga</option>
-                  <option>Firozpur</option>
-                  <option>Faridkot</option>
+                  <option>Pathankot</option>
+                  <option>Patiala</option>
+                  <option>Rupnagar</option>
+                  <option>Sahibzada Ajit Singh Nagar (Mohali)</option>
                   <option>Sangrur</option>
+                  <option>Shahid Bhagat Singh Nagar (Nawanshahr)</option>
+                  <option>Sri Muktsar Sahib</option>
+                  <option>Tarn Taran</option>
                   <option value="other">Other</option>
                 </select>
               </div>
@@ -860,7 +940,7 @@
                 id="otherDistrictContainer"
                 style="display: none"
               >
-                <label class="f-label">Enter District</label>
+                <label class="f-label">Enter Area Name</label>
                 <input
                   type="text"
                   id="otherDistrict"
@@ -1462,7 +1542,7 @@
           "Enter Office details (e.g., diary number, office name, received by, file reference, remarks, etc.)",
 
         postoffice:
-          "Enter Post Office details (e.g., postal receipt number, sender name, post office name, dispatch date, remarks, etc.)",
+          "Enter Post details (e.g., postal receipt number, sender name, post name, dispatch date, remarks, etc.)",
       };
 
       sourceRadios.forEach((radio) => {
