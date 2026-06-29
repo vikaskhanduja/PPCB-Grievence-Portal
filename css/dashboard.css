@@ -582,7 +582,7 @@ thead th.fixed-col {
   max-height: 420px;
   overflow-y: auto;
   overflow-x: auto;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 /* Clean pagination spacing */
