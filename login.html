@@ -1,370 +1,399 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PPCB GRM – Officer Login</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PPCB GRM – Officer Login</title>
+    <!-- Bootstrap & Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
 
-  <!-- Bootstrap & Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
-    rel="stylesheet" />
+    <!-- Shared tokens (colors, radius, shadows, etc.) -->
+    <link href="css/shared.css" rel="stylesheet" />
 
-  <!-- Shared tokens (colors, radius, shadows, etc.) -->
-  <link href="css/shared.css" rel="stylesheet" />
-
-  <style>
-    /* === PAGE BACKDROP === */
-    .login-page {
-      min-height: 100vh;
-      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, #1a5ba0 100%);
-      position: relative;
-      overflow: hidden;
-      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif;
-      display: flex;
-      /* helps full-height centering */
-      align-items: center;
-    }
-
-    .login-page::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-
-    /* === LEFT PANEL (INFO) === */
-    .login-deco {
-      background: rgba(0, 0, 0, 0.15);
-      color: #fff;
-      border-radius: var(--radius);
-      padding: 40px;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .login-deco__icon {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      border-radius: 50px;
-      width: 80px;
-      background-color: #fff;
-    }
-
-    .login-deco__title {
-      font-size: 2rem;
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-
-    .login-deco__desc {
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.85);
-      line-height: 1.7;
-      max-width: 560px;
-    }
-
-    
-
-    /* === RIGHT PANEL (LOGIN CARD) === */
-    .login-card {
-      background: #fff;
-      border-radius: var(--radius);
-      padding: 16px 24px;
-      width: 100%;
-      box-shadow: var(--shadow-lg);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      position: relative;
-      z-index: 1;
-      /* optional */
-      margin-left: auto;
-      /* keep it snug to the right side of the container */
-    }
-
-    .login-emblem {
-      width: 64px;
-      height: 64px;
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      color: #fff;
-      margin: 0 auto 16px;
-      box-shadow: 0 8px 24px rgba(10, 79, 143, 0.35);
-    }
-
-    .login-title {
-      font-family: serif;
-      font-size: 1.6rem;
-      text-align: center;
-      margin-bottom: 4px;
-    }
-
-    .login-sub {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      text-align: center;
-      margin-bottom: 28px;
-    }
-
-    /* Role grid/buttons */
-    .role-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 7px;
-      margin-bottom: 22px;
-    }
-
-    .role-btn {
-      padding: 9px 8px;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s ease;
-      background: #fff;
-    }
-
-    .role-btn:hover,
-    .role-btn.active {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .role-btn.active {
-      background: #e8f0fb;
-    }
-
-    /* Inputs */
-    .f-label {
-      display: inline-block;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .req {
-      color: var(--danger, #c0392b);
-    }
-
-    .f-control {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 10px 12px;
-      font-size: 0.95rem;
-    }
-
-    .pw-wrap {
-      position: relative;
-    }
-
-    .pr-40 {
-      padding-right: 40px;
-    }
-
-    .pw-toggle {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text-muted);
-      font-size: 1rem;
-      padding: 0;
-    }
-
-    /* Remember + Forgot */
-    .remember-check {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 0.85rem;
-      cursor: pointer;
-    }
-
-    #rememberMe {
-      accent-color: var(--primary);
-    }
-
-    /* Buttons */
-    .login-btn {
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-      color: #fff;
-      padding: 13px 24px;
-      border-radius: var(--radius-sm);
-      font-size: 0.95rem;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .login-btn:hover {
-      box-shadow: 0 4px 16px rgba(10, 79, 143, 0.4);
-      transform: translateY(-1px);
-    }
-
-    /* Info + error */
-    .role-info {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-
-    .alert-inline {
-      margin-top: 12px;
-      border-radius: var(--radius-sm);
-      padding: 10px 14px;
-      font-size: 0.85rem;
-      text-align: center;
-    }
-
-    .alert-inline.error {
-      background: #fde8e8;
-      border: 1px solid #f8c0c0;
-      color: var(--danger);
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .back-link {
-      text-align: center;
-      margin-top: 20px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-    }
-
-    /* Forgot password modal */
-    .fp-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(10, 30, 60, 0.55);
-      backdrop-filter: blur(4px);
-      z-index: 500;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .fp-modal.open {
-      display: flex;
-    }
-
-    .fp-box {
-      background: #fff;
-      border-radius: var(--radius);
-      padding: 32px;
-      width: 100%;
-      max-width: 380px;
-      box-shadow: var(--shadow-lg);
-      text-align: center;
-    }
-
-    .fp-icon {
-      font-size: 2rem;
-      margin-bottom: 12px;
-    }
-
-    .fp-desc {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-
-    .btn-full {
-      width: 100%;
-      border: none;
-      border-radius: var(--radius-sm);
-      padding: 11px 14px;
-      background: var(--primary);
-      color: #fff;
-      font-weight: 700;
-    }
-
-    .btn-as-link {
-      background: none;
-      border: none;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      width: 100%;
-    }
-
-    /* Helpers */
-    .fw-800 {
-      font-weight: 800;
-    }
-
-    .ls-06 {
-      letter-spacing: .06em;
-    }
-
-    /* RESPONSIVE: stack on lg- */
-    @media (max-width: 991.98px) {
-      .login-deco {
-        margin-bottom: 16px;
+    <style>
+      /* === PAGE BACKDROP === */
+      .login-page {
+        min-height: 100vh;
+        background: linear-gradient(
+          135deg,
+          var(--primary-dark) 0%,
+          var(--primary) 60%,
+          #1a5ba0 100%
+        );
+        position: relative;
+        overflow: hidden;
+        font-family:
+          "Plus Jakarta Sans",
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          "Helvetica Neue",
+          Arial,
+          sans-serif;
+        display: flex;
+        /* helps full-height centering */
+        align-items: center;
       }
 
+      .login-page::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+
+      /* === LEFT PANEL (INFO) === */
+      .login-deco {
+        background: rgba(0, 0, 0, 0.15);
+        color: #fff;
+        border-radius: var(--radius);
+        padding: 40px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .login-deco__icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        border-radius: 50px;
+        width: 80px;
+        background-color: #fff;
+      }
+
+      .login-deco__title {
+        font-size: 2rem;
+        line-height: 1.2;
+        margin-bottom: 12px;
+      }
+
+      .login-deco__desc {
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.7;
+        max-width: 560px;
+      }
+
+      /* === RIGHT PANEL (LOGIN CARD) === */
       .login-card {
-        max-width: 600px;
-        margin-left: 0;
-        margin-right: 0;
+        background: #fff;
+        border-radius: var(--radius);
+        padding: 16px 24px;
+        width: 100%;
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+        /* optional */
+        margin-left: auto;
+        /* keep it snug to the right side of the container */
       }
-    }
 
-    /* RESPONSIVE: stack on lg- */
-    @media (max-width: 600px) {
-      .login-deco {
+      .login-emblem {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-dark),
+          var(--primary)
+        );
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: #fff;
+        margin: 0 auto 16px;
+        box-shadow: 0 8px 24px rgba(10, 79, 143, 0.35);
+      }
+
+      .login-title {
+        font-family: serif;
+        font-size: 1.6rem;
+        text-align: center;
+        margin-bottom: 4px;
+      }
+
+      .login-sub {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        text-align: center;
+        margin-bottom: 28px;
+      }
+
+      /* Role grid/buttons */
+      .role-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+        margin-bottom: 22px;
+      }
+
+      .role-btn {
+        padding: 9px 8px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-sm);
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.2s ease;
+        background: #fff;
+      }
+
+      .role-btn:hover,
+      .role-btn.active {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .role-btn.active {
+        background: #e8f0fb;
+      }
+
+      /* Inputs */
+      .f-label {
+        display: inline-block;
+        margin-bottom: 6px;
+        font-weight: 600;
+      }
+
+      .req {
+        color: var(--danger, #c0392b);
+      }
+
+      .f-control {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+        font-size: 0.95rem;
+      }
+
+      .pw-wrap {
+        position: relative;
+      }
+
+      .pr-40 {
+        padding-right: 40px;
+      }
+
+      .pw-toggle {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-muted);
+        font-size: 1rem;
+        padding: 0;
+      }
+
+      /* Remember + Forgot */
+      .remember-check {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 0.85rem;
+        cursor: pointer;
+      }
+
+      #rememberMe {
+        accent-color: var(--primary);
+      }
+
+      /* Buttons */
+      .login-btn {
+        background: linear-gradient(
+          135deg,
+          var(--primary-dark),
+          var(--primary)
+        );
+        color: #fff;
+        padding: 13px 24px;
+        border-radius: var(--radius-sm);
+        font-size: 0.95rem;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .login-btn:hover {
+        box-shadow: 0 4px 16px rgba(10, 79, 143, 0.4);
+        transform: translateY(-1px);
+      }
+
+      /* Info + error */
+      .role-info {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 12px 14px;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+      }
+
+      .alert-inline {
+        margin-top: 12px;
+        border-radius: var(--radius-sm);
+        padding: 10px 14px;
+        font-size: 0.85rem;
+        text-align: center;
+      }
+
+      .alert-inline.error {
+        background: #fde8e8;
+        border: 1px solid #f8c0c0;
+        color: var(--danger);
+      }
+
+      .hidden {
         display: none;
       }
-    }
-  </style>
-</head>
 
-<body>
-  <div class="login-page">
-    <div class="container-fluid position-relative">
-      <div class="row align-items-stretch py-4">
+      .back-link {
+        text-align: center;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+      }
 
-        <!-- LEFT: Decorative panel -->
-        <div class="col-lg-6 mb-4 mb-lg-0">
-          <aside class="login-deco h-100" aria-label="Portal Overview">
-            <div class="login-deco__icon" aria-hidden="true"><img src="images/logo.png" width="80" /></div>
-            <h1 class="login-deco__title">PPCB <em style="color: var(--warning);">Grievance</em><br />Redressal Portal
-            </h1>
-            <p class="login-deco__desc">
-              Secure access for PPCB officers, GRM Cell, and management to process and resolve environmental grievances.
-            </p>
+      /* Forgot password modal */
+      .fp-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 30, 60, 0.55);
+        backdrop-filter: blur(4px);
+        z-index: 500;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
 
-            <!-- <div class="login-deco__cards">
+      .fp-modal.open {
+        display: flex;
+      }
+
+      .fp-box {
+        background: #fff;
+        border-radius: var(--radius);
+        padding: 32px;
+        width: 100%;
+        max-width: 380px;
+        box-shadow: var(--shadow-lg);
+        text-align: center;
+      }
+
+      .fp-icon {
+        font-size: 2rem;
+        margin-bottom: 12px;
+      }
+
+      .fp-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+      }
+
+      .btn-full {
+        width: 100%;
+        border: none;
+        border-radius: var(--radius-sm);
+        padding: 11px 14px;
+        background: var(--primary);
+        color: #fff;
+        font-weight: 700;
+      }
+
+      .btn-as-link {
+        background: none;
+        border: none;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        width: 100%;
+      }
+
+      /* Helpers */
+      .fw-800 {
+        font-weight: 800;
+      }
+
+      .ls-06 {
+        letter-spacing: 0.06em;
+      }
+
+      /* RESPONSIVE: stack on lg- */
+      @media (max-width: 991.98px) {
+        .login-deco {
+          margin-bottom: 16px;
+        }
+
+        .login-card {
+          max-width: 600px;
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+
+      /* RESPONSIVE: stack on lg- */
+      @media (max-width: 600px) {
+        .login-deco {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="login-page">
+      <div class="container-fluid position-relative">
+        <div class="row align-items-stretch py-4 min-vh-100">
+          <!-- LEFT: Decorative panel -->
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <aside class="login-deco h-100" aria-label="Portal Overview">
+              <div class="login-deco__icon" aria-hidden="true">
+                <img src="images/logo.png" width="80" />
+              </div>
+              <h1 class="login-deco__title">
+                PPCB <em style="color: var(--warning)">Grievance</em
+                ><br />Redressal Portal
+              </h1>
+              <p class="login-deco__desc">
+                Secure access for PPCB officers, GRM Cell, and management to
+                process and resolve environmental grievances.
+              </p>
+
+              <!-- <div class="login-deco__cards">
               <section class="kpi-card" aria-label="Today's Pending">
                 <div class="kpi-card__label">Today's Pending</div>
                 <div class="kpi-card__value text-danger">915</div>
@@ -385,30 +414,47 @@
                 <div class="kpi-card__hint">Require immediate attention</div>
               </section>
             </div> -->
+            </aside>
+          </div>
 
-          </aside>
-        </div>
+          <!-- RIGHT: Login card -->
+          <div class="col-lg-6 d-flex">
+            <main class="login-card w-100" aria-labelledby="loginTitle">
+              <div class="login-emblem" aria-hidden="true">🔒</div>
+              <h2 id="loginTitle" class="login-title">Officer Login</h2>
+              <p class="login-sub">PPCB GRM Portal · Government of Punjab</p>
 
-        <!-- RIGHT: Login card -->
-        <div class="col-lg-6 d-flex">
-          <main class="login-card w-100" aria-labelledby="loginTitle">
-            <div class="login-emblem" aria-hidden="true">🔒</div>
-            <h2 id="loginTitle" class="login-title">Officer Login</h2>
-            <p class="login-sub">PPCB GRM Portal · Government of Punjab</p>
+              <!-- <div class="mb-2 small text-uppercase fw-bold text-muted ls-06">
+                Login As
+              </div> -->
 
-            <div class="mb-2 small text-uppercase fw-bold text-muted ls-06">Login As</div>
-
-            <div id="roleGrid" class="role-grid">
-              <button type="button" class="role-btn active" data-role="GRM Cell Admin">
-                <i class="bi bi-person-badge-fill d-block mb-1 fs-6" aria-hidden="true"></i> PPCB GRM Cell Login
-              </button>
-              <!-- <button type="button" class="role-btn" data-role="Ex-EN (Grievance)">
+              <div id="roleGrid" class="role-grid">
+                <!-- <button
+                  type="button"
+                  class="role-btn active"
+                  data-role="GRM Cell Admin"
+                >
+                  <i
+                    class="bi bi-person-badge-fill d-block mb-1 fs-6"
+                    aria-hidden="true"
+                  ></i>
+                  PPCB GRM Cell Login
+                </button> -->
+                <!-- <button type="button" class="role-btn" data-role="Ex-EN (Grievance)">
                 <i class="bi bi-person-check-fill d-block mb-1 fs-6" aria-hidden="true"></i> Citizen Login
               </button> -->
-              <button type="button" class="role-btn" data-role="Regional Officer">
-                <i class="bi bi-shield-check d-block mb-1 fs-6" aria-hidden="true"></i> HQ/Regional Officer Login
-              </button>
-              <!-- <button type="button" class="role-btn" data-role="SDO / ADO">
+                <!-- <button
+                  type="button"
+                  class="role-btn"
+                  data-role="Regional Officer"
+                >
+                  <i
+                    class="bi bi-shield-check d-block mb-1 fs-6"
+                    aria-hidden="true"
+                  ></i>
+                  HQ/Regional Officer Login
+                </button> -->
+                <!-- <button type="button" class="role-btn" data-role="SDO / ADO">
                 <i class="bi bi-geo-alt-fill d-block mb-1 fs-6" aria-hidden="true"></i> SDO / ADO
               </button>
               <button type="button" class="role-btn" data-role="Chief Env. Engineer">
@@ -417,171 +463,243 @@
               <button type="button" class="role-btn" data-role="Member Secretary">
                 <i class="bi bi-shield-fill d-block mb-1 fs-6" aria-hidden="true"></i> Member Secretary
               </button> -->
-            </div>
+              </div>
 
-            <!-- <div id="roleInfo" class="role-info">
+              <!-- <div id="roleInfo" class="role-info">
               <i class="bi bi-info-circle me-1" aria-hidden="true"></i>
               <strong>PPCB GRM Cell Login:</strong> Full access to register offline complaints, assign to Ex-EN, and
               manage
               workflow.
             </div> -->
 
-            <form id="loginForm" novalidate>
-              <div class="mb-3">
-                <label for="empId" class="f-label">Employee ID / Username <span class="req">*</span></label>
-                <input type="text" id="empId" class="f-control" placeholder="e.g. PPCB0001" value="PPCB0042"
-                  autocomplete="username" />
-              </div>
-
-              <div class="mb-3">
-                <label for="pwField" class="f-label">Password <span class="req">*</span></label>
-                <div class="pw-wrap">
-                  <input type="password" id="pwField" class="f-control pr-40" placeholder="Enter password"
-                    value="••••••••" autocomplete="current-password" />
-                  <button class="pw-toggle" type="button" id="pwToggleBtn" aria-label="Show password">
-                    <i class="bi bi-eye" aria-hidden="true"></i>
-                  </button>
+              <form id="loginForm" novalidate>
+                <div class="mb-3">
+                  <label for="empId" class="f-label"
+                    >Employee ID / Username <span class="req">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="empId"
+                    class="f-control"
+                    placeholder="e.g. PPCB0001"
+                    value="PPCB0042"
+                    autocomplete="username"
+                  />
                 </div>
-              </div>
 
-              <div class="d-flex justify-content-between align-items-center mb-4">
-                <label class="remember-check" for="rememberMe">
-                  <input type="checkbox" id="rememberMe" checked />
-                  <span>Remember me</span>
-                </label>
+                <div class="mb-3">
+                  <label for="pwField" class="f-label"
+                    >Password <span class="req">*</span></label
+                  >
+                  <div class="pw-wrap">
+                    <input
+                      type="password"
+                      id="pwField"
+                      class="f-control pr-40"
+                      placeholder="Enter password"
+                      value="••••••••"
+                      autocomplete="current-password"
+                    />
+                    <button
+                      class="pw-toggle"
+                      type="button"
+                      id="pwToggleBtn"
+                      aria-label="Show password"
+                    >
+                      <i class="bi bi-eye" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
 
-                <a href="#" id="fpOpen" class="link-primary fw-semibold text-decoration-none small">Forgot Password?</a>
-              </div>
+                <div
+                  class="d-flex justify-content-between align-items-center mb-4"
+                >
+                  <label class="remember-check" for="rememberMe">
+                    <input type="checkbox" id="rememberMe" checked />
+                    <span>Remember me</span>
+                  </label>
 
-              <a href="dashboard.html" style="text-decoration: none;" type="submit" class="login-btn">
-                <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
-                <span>Login to Dashboard</span>
-              </a>
+                  <a
+                    href="#"
+                    id="fpOpen"
+                    class="link-primary fw-semibold text-decoration-none small"
+                    >Forgot Password?</a
+                  >
+                </div>
 
-              <div id="loginError" class="alert-inline error hidden mt-3" role="alert">
-                <i class="bi bi-exclamation-circle-fill me-1" aria-hidden="true"></i>
-                Invalid credentials. Please try again.
-              </div>
-
-              <div class="back-link">
-                <a href="index.html" class="text-muted text-decoration-none small">
-                  <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>
-                  Back to Public Portal
+                <a
+                  href="dashboard.html"
+                  style="text-decoration: none"
+                  type="submit"
+                  class="login-btn"
+                >
+                  <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
+                  <span>Login to Dashboard</span>
                 </a>
-              </div>
-            </form>
-          </main>
+
+                <div
+                  id="loginError"
+                  class="alert-inline error hidden mt-3"
+                  role="alert"
+                >
+                  <i
+                    class="bi bi-exclamation-circle-fill me-1"
+                    aria-hidden="true"
+                  ></i>
+                  Invalid credentials. Please try again.
+                </div>
+
+                <div class="back-link">
+                  <a
+                    href="index.html"
+                    class="text-muted text-decoration-none small"
+                  >
+                    <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>
+                    Back to Public Portal
+                  </a>
+                </div>
+              </form>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div
+      class="fp-modal"
+      id="fpModal"
+      aria-hidden="true"
+      aria-label="Forgot Password dialog"
+    >
+      <div
+        class="fp-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="fpTitle"
+      >
+        <div class="fp-icon" aria-hidden="true">🔑</div>
+        <h6 id="fpTitle" class="fw-800 mb-1">Reset Password</h6>
+        <p class="fp-desc">
+          Enter your registered Employee ID or Email to receive reset
+          instructions.
+        </p>
+
+        <div class="mb-3">
+          <label for="fpField" class="f-label">Employee ID / Email</label>
+          <input
+            type="text"
+            id="fpField"
+            class="f-control"
+            placeholder="PPCB0001 or email@ppcb.gov.in"
+          />
         </div>
 
+        <button class="btn-full mb-3" id="fpSendBtn">
+          <i class="bi bi-send-fill me-1" aria-hidden="true"></i>
+          Send Reset Link
+        </button>
+
+        <button class="btn-as-link" id="fpCloseBtn" type="button">
+          Cancel
+        </button>
       </div>
     </div>
-  </div>
 
+    <!-- Bootstrap bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Forgot Password Modal -->
-  <div class="fp-modal" id="fpModal" aria-hidden="true" aria-label="Forgot Password dialog">
-    <div class="fp-box" role="dialog" aria-modal="true" aria-labelledby="fpTitle">
-      <div class="fp-icon" aria-hidden="true">🔑</div>
-      <h6 id="fpTitle" class="fw-800 mb-1">Reset Password</h6>
-      <p class="fp-desc">Enter your registered Employee ID or Email to receive reset instructions.</p>
+    <!-- Page script -->
+    <script>
+      (function () {
+        const roleDescriptions = {
+          "GRM Cell Admin":
+            "Full access to register offline complaints, assign to Ex-EN, and manage workflow.",
+          "Ex-EN (Grievance)":
+            "Scrutiny queue, jurisdiction review, allocation to Regional Officers.",
+          "Regional Officer":
+            "Assign complaints to SDOs, monitor field inspections, review ATRs.",
+          // 'SDO / ADO': 'Field inspection reports, regulatory actions, compliance follow-up.',
+          // 'Chief Env. Engineer': 'First appeal authority. Full case history access and decision recording.',
+          // 'Member Secretary': 'Second appeal authority. Final resolution and escalation oversight.'
+        };
 
-      <div class="mb-3">
-        <label for="fpField" class="f-label">Employee ID / Email</label>
-        <input type="text" id="fpField" class="f-control" placeholder="PPCB0001 or email@ppcb.gov.in" />
-      </div>
+        // Role picker (event delegation)
+        const roleGrid = document.getElementById("roleGrid");
+        const roleInfo = document.getElementById("roleInfo");
+        roleGrid.addEventListener("click", (e) => {
+          const btn = e.target.closest(".role-btn");
+          if (!btn) return;
+          const role = btn.dataset.role;
+          roleGrid
+            .querySelectorAll(".role-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          roleInfo.innerHTML =
+            '<i class="bi bi-info-circle me-1" aria-hidden="true"></i> <strong>' +
+            role +
+            ":</strong> " +
+            roleDescriptions[role];
+        });
 
-      <button class="btn-full mb-3" id="fpSendBtn">
-        <i class="bi bi-send-fill me-1" aria-hidden="true"></i>
-        Send Reset Link
-      </button>
+        // Password toggle
+        const pwField = document.getElementById("pwField");
+        const pwToggleBtn = document.getElementById("pwToggleBtn");
+        pwToggleBtn.addEventListener("click", () => {
+          const isHidden = pwField.type === "password";
+          pwField.type = isHidden ? "text" : "password";
+          pwToggleBtn.setAttribute(
+            "aria-label",
+            isHidden ? "Hide password" : "Show password",
+          );
+          pwToggleBtn.querySelector("i").className = isHidden
+            ? "bi bi-eye-slash"
+            : "bi bi-eye";
+        });
 
-      <button class="btn-as-link" id="fpCloseBtn" type="button">Cancel</button>
-    </div>
-  </div>
+        // Login submission
+        const loginForm = document.getElementById("loginForm");
+        const loginError = document.getElementById("loginError");
+        loginForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const id = document.getElementById("empId").value.trim();
+          const pw = pwField.value.trim();
+          if (!id || !pw) {
+            loginError.classList.remove("hidden");
+            return;
+          }
+          loginError.classList.add("hidden");
+          // Navigate to dashboard (demo)
+          window.location.href = "page-not-found.html";
+        });
 
-  <!-- Bootstrap bundle -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        // Forgot password
+        const fpModal = document.getElementById("fpModal");
+        const fpOpen = document.getElementById("fpOpen");
+        const fpCloseBtn = document.getElementById("fpCloseBtn");
 
-  <!-- Page script -->
-  <script>
-    (function () {
-      const roleDescriptions = {
-        'GRM Cell Admin': 'Full access to register offline complaints, assign to Ex-EN, and manage workflow.',
-        'Ex-EN (Grievance)': 'Scrutiny queue, jurisdiction review, allocation to Regional Officers.',
-        'Regional Officer': 'Assign complaints to SDOs, monitor field inspections, review ATRs.',
-        // 'SDO / ADO': 'Field inspection reports, regulatory actions, compliance follow-up.',
-        // 'Chief Env. Engineer': 'First appeal authority. Full case history access and decision recording.',
-        // 'Member Secretary': 'Second appeal authority. Final resolution and escalation oversight.'
-      };
+        const openFP = (e) => {
+          e && e.preventDefault();
+          fpModal.classList.add("open");
+          fpModal.setAttribute("aria-hidden", "false");
+        };
+        const closeFP = () => {
+          fpModal.classList.remove("open");
+          fpModal.setAttribute("aria-hidden", "true");
+        };
 
-      // Role picker (event delegation)
-      const roleGrid = document.getElementById('roleGrid');
-      const roleInfo = document.getElementById('roleInfo');
-      roleGrid.addEventListener('click', (e) => {
-        const btn = e.target.closest('.role-btn');
-        if (!btn) return;
-        const role = btn.dataset.role;
-        roleGrid.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        roleInfo.innerHTML =
-          '<i class="bi bi-info-circle me-1" aria-hidden="true"></i> <strong>' +
-          role +
-          ':</strong> ' +
-          roleDescriptions[role];
-      });
+        if (fpOpen) fpOpen.addEventListener("click", openFP);
+        fpCloseBtn.addEventListener("click", closeFP);
+        fpModal.addEventListener("click", (e) => {
+          if (e.target === fpModal) closeFP();
+        });
 
-      // Password toggle
-      const pwField = document.getElementById('pwField');
-      const pwToggleBtn = document.getElementById('pwToggleBtn');
-      pwToggleBtn.addEventListener('click', () => {
-        const isHidden = pwField.type === 'password';
-        pwField.type = isHidden ? 'text' : 'password';
-        pwToggleBtn.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
-        pwToggleBtn.querySelector('i').className = isHidden ? 'bi bi-eye-slash' : 'bi bi-eye';
-      });
-
-      // Login submission
-      const loginForm = document.getElementById('loginForm');
-      const loginError = document.getElementById('loginError');
-      loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const id = document.getElementById('empId').value.trim();
-        const pw = pwField.value.trim();
-        if (!id || !pw) {
-          loginError.classList.remove('hidden');
-          return;
-        }
-        loginError.classList.add('hidden');
-        // Navigate to dashboard (demo)
-        window.location.href = 'page-not-found.html';
-      });
-
-      // Forgot password
-      const fpModal = document.getElementById('fpModal');
-      const fpOpen = document.getElementById('fpOpen');
-      const fpCloseBtn = document.getElementById('fpCloseBtn');
-
-      const openFP = (e) => {
-        e && e.preventDefault();
-        fpModal.classList.add('open');
-        fpModal.setAttribute('aria-hidden', 'false');
-      };
-      const closeFP = () => {
-        fpModal.classList.remove('open');
-        fpModal.setAttribute('aria-hidden', 'true');
-      };
-
-      if (fpOpen) fpOpen.addEventListener('click', openFP);
-      fpCloseBtn.addEventListener('click', closeFP);
-      fpModal.addEventListener('click', (e) => { if (e.target === fpModal) closeFP(); });
-
-      // Send reset (demo)
-      document.getElementById('fpSendBtn').addEventListener('click', () => {
-        // Implement your API call here…
-        closeFP();
-      });
-    })();
-  </script>
-</body>
-
+        // Send reset (demo)
+        document.getElementById("fpSendBtn").addEventListener("click", () => {
+          // Implement your API call here…
+          closeFP();
+        });
+      })();
+    </script>
+  </body>
 </html>
