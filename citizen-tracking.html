@@ -394,6 +394,115 @@
       </div>
     </div>
 
+
+    <div class="detail-section">
+    <div>
+         <div class="ds-head">
+          <div class="ds-title"><i class="bi bi-clipboard2-data-fill" style="color:var(--primary);"></i> Online Complaint Status</div>
+        </div>
+
+        <div class="card-body p-3">
+            <p class="text-danger">
+                <strong>Note:</strong> Fields marked with * are mandatory.
+            </p>
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle">
+                    <tbody>
+                    <tr>
+                        <th>Grievance Number</th>
+                        <td>PPCB/22/00208</td>
+                    </tr>
+
+                    <tr>
+                        <th>Name</th>
+                        <td>Vikas Khanduja</td>
+                    </tr>
+
+                    <tr>
+                        <th>Received Date</th>
+                        <td>05/08/2022</td>
+                    </tr>
+
+                    <tr>
+                        <th>Public Authority</th>
+                        <td>CPWD Project Region Delhi</td>
+                    </tr>
+
+                    <tr>
+                        <th>Status</th>
+                        <td>
+                            <span class="badge bg-success">
+                                REQUEST DISPOSED OF
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Date of Action</th>
+                        <td>06/09/2022</td>
+                    </tr>
+
+                    <tr>
+                        <th>Reply - Disposed</th>
+                        <td>
+                            <a href="#">View Document</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Your RTI application has been forwarded to multiple CPIOs</th>
+                        <td>
+                            <a href="#">Click here to view details</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Your RTI application has been forwarded to multiple Public Authorities</th>
+                        <td>
+                            <a href="#">Click here to view details</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Nodal Officer Details</th>
+                        <td>
+                            <button class="btn btn-primary btn-sm">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Telephone Number</th>
+                        <td>011-20861170</td>
+                    </tr>
+
+                    <tr>
+                        <th>Email ID</th>
+                        <td>delce-tlqad[at]cpwd[dot]gov[dot]in</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-primary btn-custom me-2">
+                    Print Grievance Report
+                </button>
+
+                <button class="btn btn-secondary btn-custom me-2">
+                    Print Status
+                </button>
+
+                <button class="btn btn-dark btn-custom">
+                    Go Back
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
     <!-- EMPTY STATE -->
     <div id="emptyState" class="detail-section" style="display:none;">
       <div class="empty-state">
@@ -415,6 +524,7 @@
             Overview</div>
           <span class="bs bs-progress" id="statusBadge">In Progress</span>
         </div>
+
         <div class="ds-body">
           <div class="row g-3 mb-4">
             <div class="col-6 col-md-3">
@@ -493,25 +603,25 @@
                 <div class="yb yy" onclick="setOrigSatisfied(true)" id="origSatY">YES – Satisfied</div>
                 <div class="yb yn_" onclick="setOrigSatisfied(false)" id="origSatN">NO – Not Satisfied</div>
               </div>
-  
+
               <!-- If NO – reason + activate appeal -->
               <div id="origNoBlock" style="display:none;">
                 <div class="d-flex">
                   <h6 id="appealTitle">Do you want to Apply For the 1st Appeal</h6> &nbsp; : &nbsp;
-  
+
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="appealOption" value="yes"
                       onchange="handleAppealOption(true)">
                     <label class="form-check-label">Yes</label>
                   </div>&nbsp;&nbsp;
-  
+
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="appealOption" value="no"
                       onchange="handleAppealOption(false)">
                     <label class="form-check-label">No</label>
                   </div>
                 </div>
-  
+
                 <div id="appealDetails" style="display:none;">
                   <div class="row g-3">
                     <div class="col-8">
@@ -522,7 +632,7 @@
                         <span class="wcb" id="origReasonWC">0 / 500</span>
                       </div>
                     </div>
-  
+
                     <div class="col-4">
                       <label class="fl">Upload Document</label>
                       <div class="upz" onclick="document.getElementById('origATR').click()">
@@ -535,10 +645,10 @@
                     </div>
                   </div>
                 </div>
-  
+
               </div>
-  
-  
+
+
               <!-- ✅ HISTORY WILL SHOW HERE -->
               <div id="appealHistory" class="mt-3"></div>
               <div class="row g-3">
@@ -552,8 +662,8 @@
               </div>
             </div>
           </div>
-  
-  
+
+
           <!-- Feedback (only shown if disposed) -->
           <div class="detail-section" id="feedbackSection" style="display:none;">
             <div class="ds-head">
@@ -574,7 +684,7 @@
               <button class="btn-p w-100"><i class="bi bi-send-fill me-1"></i> Submit Feedback</button>
             </div>
           </div>
-  
+
         </div><!-- /col -->
       </div><!-- /row -->
     </div>

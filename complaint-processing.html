@@ -1626,32 +1626,25 @@
               Officer's Complaint Summary of Complaint
             </h6>
             <p class="fh mb-3">
-              Write a concise, factual overview. This appears in all reports and
-              escalation alerts.
+              Be factual and objective. This summary is used in all escalation
+              and ATR communications.
             </p>
-            <div class="wcw">
+            <div class="wcw mb-2">
               <textarea
                 class="fc"
                 id="sumTxt"
                 rows="6"
-                placeholder="Describe: nature of pollution, source unit name, exact location, immediate environmental / health impact, and key observations made during review… (max 150 words)"
+                placeholder="Add Description"
                 oninput="wc(this, 'sumWC', 150)"
               ></textarea>
               <span class="wcb" id="sumWC">0 / 150</span>
             </div>
-            <p class="fh mt-2">
-              <i class="bi bi-info-circle me-1"></i>Be factual and objective.
-              This summary is used in all escalation and ATR communications.
-            </p>
 
-            <h6 class="fw-bold mb-3" style="font-size: 0.8rem">
-              Industry Details & Pollution Classification
-            </h6>
             <div class="row g-3 mb-3">
               <div class="col-12">
                 <label class="fl"
                   >Industry / Unit Name & Type <span class="req">*</span
-                  ><span class="hn">(PPCB colour classification)</span></label
+                  ><span class="hn">(CPCB colour classification)</span></label
                 >
                 <div class="cat-chips" id="catChips">
                   <div class="cc cc-17" onclick="pickCat(this)">
@@ -2367,23 +2360,17 @@
                 </script>
 
                 <div class="col-12">
-                  <label class="fl"
-                    >Officer's Field Comments / Observations</label
-                  >
+                  <label class="fl">Any Additional Remarks</label>
                   <div class="wcw">
                     <textarea
                       class="fc"
                       id="visitComments"
                       rows="4"
-                      placeholder="Describe observations: compliance status, nature of pollution observed, equipment/infrastructure, interaction with unit management, immediate risk assessment… (max 300 words)"
+                      placeholder="Write Description"
                       oninput="wc(this, 'visitWC', 300)"
                     ></textarea>
                     <span class="wcb" id="visitWC">0 / 300</span>
                   </div>
-                  <p class="fh mt-1">
-                    <i class="bi bi-pencil-fill me-1"></i>These comments form
-                    the basis for regulatory action. Be specific and objective.
-                  </p>
                 </div>
               </div>
             </div>

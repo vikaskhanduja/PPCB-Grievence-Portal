@@ -371,17 +371,42 @@
         }
       }
 
-      .main-button {
-        font-size: 1rem;
-        font-weight: 600;
-        background-color: #036b6b;
-        padding: 12px;
-        border-radius: 8px;
-        display: inline-flex;
+      /******heading********/
+
+      .section-header {
+        display: flex;
         align-items: center;
-        gap: 2px;
-        min-width: 200px;
+        gap: 8px;
+        /* margin: 30px 0 22px; */
+        padding-bottom: 8px;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .section-badge {
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        background: linear-gradient(135deg, #0d7774, #11998e);
         color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 25px rgba(17, 153, 142, 0.25);
+      }
+
+      .section-content h4 {
+        margin: 0;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #036b6b;
+        letter-spacing: 0.7;
+        text-transform: uppercase;
+      }
+
+      .section-content p {
+        margin: 6px 0 0;
+        color: #6c757d;
+        font-size: 15px;
       }
     </style>
   </head>
@@ -539,10 +564,14 @@
 
             <!-- Details Section -->
             <div class="row g-3">
-              <div class="col-12">
-                <h2 class="main-button">
-                  <i class="fa fa-user-circle"></i>&nbsp;Complaint’s Details
-                </h2>
+              <div class="section-header">
+                <div class="section-badge">
+                  <i class="fa fa-user-circle"></i>
+                </div>
+
+                <div class="section-content">
+                  <h4>Complaint's Details</h4>
+                </div>
               </div>
 
               <!-- INDIVIDUAL COMPLAINANT FIELDS -->
@@ -670,10 +699,14 @@
               </div>
 
               <div class="col-12">
-                <h2 class="main-button">
-                  <i class="fa-solid fa-clipboard-list"></i>&nbsp;Grievance
-                  Details
-                </h2>
+                <div class="section-header">
+                  <div class="section-badge">
+                    <i class="fa fa-user-circle"></i>
+                  </div>
+                  <div class="section-content">
+                    <h4>Grievance Detials</h4>
+                  </div>
+                </div>
               </div>
 
               <div class="col-md-6">
