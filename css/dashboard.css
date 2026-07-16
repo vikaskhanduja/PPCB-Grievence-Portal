@@ -1099,3 +1099,202 @@ thead th.fixed-col {
 .wf-connector.done {
   background: var(--SUC);
 }
+
+/*************overlay**********/
+
+/* ===========================
+   Logout Popup Overlay
+=========================== */
+
+.logout-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+
+  display: none; /* Hidden by default */
+
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+
+  background: rgba(7, 55, 99, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  animation: lo-fade-in 0.18s ease;
+}
+
+/* Show Popup */
+
+.logout-overlay.show {
+  display: flex;
+}
+
+/* ===========================
+   Logout Card
+=========================== */
+
+.logout-card {
+  width: 100%;
+  max-width: 420px;
+
+  background: #fff;
+  border-radius: 16px;
+
+  padding: 2rem 2.25rem 1.75rem;
+
+  text-align: center;
+
+  animation: lo-slide-up 0.25s ease;
+
+  box-shadow:
+    0 24px 64px rgba(7, 55, 99, 0.22),
+    0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* ===========================
+   Icon
+=========================== */
+
+.logout-icon-wrap {
+  width: 64px;
+  height: 64px;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #073763, #0b7a75);
+
+  color: #fff;
+
+  font-size: 26px;
+
+  box-shadow: 0 6px 20px rgba(3, 107, 107, 0.35);
+}
+
+/* ===========================
+   Heading
+=========================== */
+
+.logout-title {
+  margin-bottom: 8px;
+
+  color: #1a2332;
+
+  font-size: 20px;
+
+  font-weight: 700;
+}
+
+.logout-msg {
+  color: #6b7280;
+
+  font-size: 15px;
+
+  line-height: 1.6;
+
+  margin-bottom: 25px;
+}
+
+/* ===========================
+   Buttons
+=========================== */
+
+.logout-actions {
+  display: flex;
+
+  gap: 12px;
+}
+
+/* Cancel */
+
+.logout-btn-cancel {
+  flex: 1;
+
+  border: 1px solid #d6dce5;
+
+  background: #f7f9fc;
+
+  color: #555;
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.logout-btn-cancel:hover {
+  background: #eceff4;
+}
+
+/* Logout */
+
+.logout-btn-confirm {
+  flex: 1;
+
+  border: none;
+
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+
+  color: #fff;
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3);
+}
+
+.logout-btn-confirm:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 20px rgba(192, 57, 43, 0.35);
+}
+
+/* ===========================
+   Animations
+=========================== */
+
+@keyframes lo-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lo-slide-up {
+  from {
+    opacity: 0;
+
+    transform: translateY(20px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+}

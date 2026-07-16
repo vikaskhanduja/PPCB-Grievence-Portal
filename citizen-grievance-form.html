@@ -396,10 +396,10 @@
 
       .section-content h4 {
         margin: 0;
-        font-size: 0.8rem;
+        font-size: 0.63rem;
         font-weight: 700;
         color: #036b6b;
-        letter-spacing: 0.7;
+        letter-spacing: 0.7px;
         text-transform: uppercase;
       }
 
@@ -626,7 +626,7 @@
 
               <!-- GROUP COMPLAINANT FIELDS -->
               <div id="groupCP" class="row g-3 px-0 m-0" style="display: none">
-                <div class="col-md-4">
+                <div class="col-md-12">
                   <label class="f-label">Group Category</label>
 
                   <select class="f-control" id="groupType">
@@ -696,6 +696,18 @@
                     />
                   </div>
                 </div>
+
+                <div class="col-md-4">
+                  <label class="f-label"
+                    >Complainant's Occupation <span class="req">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="f-control"
+                    placeholder="Enter Occupation"
+                    id="cp_NodalName"
+                  />
+                </div>
               </div>
 
               <div class="col-12">
@@ -710,9 +722,7 @@
               </div>
 
               <div class="col-md-6">
-                <label class="f-label"
-                  >Source of Pollution (Industry’s Name, if applicable)</label
-                >
+                <label class="f-label">Source of Pollution</label>
                 <input
                   type="text"
                   class="f-control"
@@ -812,7 +822,7 @@
                   class="f-control"
                   rows="5"
                   id="cDesc"
-                  placeholder="Describe: nature of pollution, its impact on environment and health..."
+                  placeholder="Describe: nature of pollution, its impact on environment and health, affected population or any previous complaints made."
                   oninput="updateDescWordCount(this)"
                 ></textarea>
                 <div class="d-flex justify-content-between mt-1">
