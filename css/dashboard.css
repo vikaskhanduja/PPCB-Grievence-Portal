@@ -23,6 +23,26 @@
   --success: #0d7a55;
   --danger: #c0392b;
   --warning: #d4920a;
+  --P: #0a4f8f;
+  --PD: #073763;
+  --PL: #1a6fc4;
+  --ACC: #e8820c;
+  --ACL: #f9a940;
+  --SUC: #0d7a55;
+  --DAN: #c0392b;
+  --WAR: #d4920a;
+  --PUR: #6b3fa0;
+  --bg: #eef2f9;
+  --sur: #ffffff;
+  --s2: #f7f9fc;
+  --bdr: #d0dbe8;
+  --txt: #1a2332;
+  --mut: #5a6a7e;
+  --lit: #8899aa;
+  --r: 12px;
+  --rs: 8px;
+  --sh: 0 4px 20px rgba(10, 79, 143, 0.1);
+  --shl: 0 8px 48px rgba(10, 79, 143, 0.16);
 }
 
 body {
@@ -986,4 +1006,96 @@ thead th.fixed-col {
 
 #viewComplaintModal .section-block {
   margin-bottom: 1.5rem;
+}
+
+/***********workflow Css************/
+
+.workflow-bar {
+  background: white;
+  border: 1px solid var(--bdr);
+  border-radius: var(--r);
+  padding: 14px 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--sh);
+}
+.wf-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mut);
+  margin-bottom: 12px;
+}
+.wf-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+}
+.wf-step {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 80px;
+}
+.wf-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+  flex: 1;
+}
+.wf-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  border: 2px solid var(--bdr);
+  background: white;
+  color: var(--lit);
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+.wf-dot.done {
+  background: var(--SUC);
+  border-color: var(--SUC);
+  color: white;
+}
+.wf-dot.current {
+  background: var(--WAR);
+  border-color: var(--WAR);
+  color: white;
+  box-shadow: 0 0 0 5px rgba(212, 146, 10, 0.2);
+}
+.wf-dot.waiting {
+  background: white;
+  border-color: var(--bdr);
+  color: var(--lit);
+}
+.wf-lbl {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--mut);
+  line-height: 1.3;
+}
+.wf-dot.done + .wf-lbl {
+  color: var(--SUC);
+}
+.wf-dot.current + .wf-lbl {
+  color: var(--WAR);
+  font-weight: 700;
+}
+.wf-connector {
+  flex: 1;
+  height: 2px;
+  background: var(--bdr);
+  min-width: 20px;
+}
+.wf-connector.done {
+  background: var(--SUC);
 }

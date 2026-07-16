@@ -14,6 +14,11 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
     />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
     <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
@@ -556,6 +561,58 @@
                           </td> -->
                         </tr>
 
+                        <tr>
+                          <td class="fixed-col">4</td>
+                          <td>Abhishek Kumar</td>
+                          <td>
+                            <span
+                              style="
+                                display: inline-block;
+                                padding: 3px 10px;
+                                border-radius: 20px;
+                                border: 1.5px solid rgb(134, 239, 172);
+                                font-weight: 600;
+                                font-size: 0.75rem;
+                                white-space: nowrap;
+                              "
+                              >GRV-1234567890123</span
+                            >
+                          </td>
+                          <td>
+                            <span
+                              class="badge"
+                              style="
+                                background-color: rgba(192, 57, 43, 0.3);
+                                color: #f08080;
+                              "
+                              >Appeal</span
+                            >
+                          </td>
+                          <td>Group</td>
+                          <td>13<sup>th</sup>-06-2026</td>
+
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-sm btn-info text-white"
+                              data-bs-toggle="modal"
+                              data-bs-target="#appealModal"
+                            >
+                              <i class="fas fa-eye"></i>
+                            </button>
+                          </td>
+
+                          <td>
+                            <a
+                              href="first-appeal.html"
+                              class="btn btn-sm"
+                              style="background-color: #0d7a55; color: #fff"
+                            >
+                              <i class="fas fa-tasks me-1"></i> Process
+                            </a>
+                          </td>
+                        </tr>
+
                         <!-- Add more rows as needed -->
                       </tbody>
                     </table>
@@ -652,13 +709,13 @@
               <div class="row g-3 section-block">
                 <!-- Buttons -->
                 <div class="col-12 mb-2 d-flex gap-2">
-                  <!-- <button
+                  <button
                     type="button"
                     class="btn btn-primary flex-fill"
                     onclick="showSDO()"
                   >
                     Assign to SDO
-                  </button> -->
+                  </button>
 
                   <button
                     type="button"
@@ -841,6 +898,111 @@
               >
                 <i class="fas fa-paper-plane"></i> Forward
               </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="modal fade"
+        id="appealModal"
+        tabindex="-1"
+        aria-labelledby="appealModalLabel"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+        >
+          <div class="modal-content shadow">
+            <div
+              class="modal-header text-white"
+              style="background-color: #0d7a55"
+            >
+              <h5 class="modal-title" id="appealModalLabel">
+                <i class="fas fa-file-alt me-2"></i>
+                Appeal Workflow Progress
+              </h5>
+
+              <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <div class="modal-body">
+              <!-- Complaint Details Here -->
+
+              <div class="workflow-bar">
+                <div class="wf-steps">
+                  <div class="wf-step">
+                    <div class="wf-node">
+                      <div class="wf-dot done">
+                        <i class="bi bi-check-lg"></i>
+                      </div>
+                      <div class="wf-lbl">Citizen Files<br />Complaint</div>
+                    </div>
+                    <div class="wf-connector done"></div>
+                  </div>
+                  <div class="wf-step">
+                    <div class="wf-node">
+                      <div class="wf-dot done">
+                        <i class="bi bi-check-lg"></i>
+                      </div>
+                      <div class="wf-lbl">RO Processes<br />Complaint</div>
+                    </div>
+                    <div class="wf-connector done"></div>
+                  </div>
+                  <div class="wf-step">
+                    <div class="wf-node">
+                      <div class="wf-dot done">
+                        <i class="bi bi-check-lg"></i>
+                      </div>
+                      <div class="wf-lbl">Citizen Files<br />First Appeal</div>
+                    </div>
+                    <div class="wf-connector done"></div>
+                  </div>
+                  <div class="wf-step">
+                    <div class="wf-node">
+                      <div class="wf-dot current">
+                        <i class="bi bi-person-badge-fill"></i>
+                      </div>
+                      <div class="wf-lbl">
+                        <strong>SEE Reviews</strong><br />&amp; Forwards
+                      </div>
+                    </div>
+                    <div class="wf-connector"></div>
+                  </div>
+
+                  <div class="wf-step">
+                    <div class="wf-node">
+                      <div class="wf-dot waiting">6</div>
+                      <div class="wf-lbl">Revised ATR<br />to Citizen</div>
+                    </div>
+                    <div class="wf-connector"></div>
+                  </div>
+                  <div class="wf-node">
+                    <div class="wf-dot waiting">7</div>
+                    <div class="wf-lbl">Closure</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info text-white">
+                <i class="fas fa-paper-plane me-1"></i>
+                Forward
+              </button>
+
               <button
                 type="button"
                 class="btn btn-secondary"
@@ -1308,7 +1470,7 @@
             "RO Faridkot",
             "HQ-3",
             "ZO-1 Patiala",
-            "CEE Jalandhar",
+            "SEE Jalandhar",
             "ZO-2 Ludhiana",
             "ZO-1 Ludhiana",
             "HQ-2",
@@ -1417,7 +1579,7 @@
           categories: [
             "HO-3",
             "RO-4 Ludhiana",
-            "CEE Bathinda",
+            "SEE Bathinda",
             "ZO-1 Ludhiana",
             "EE Air Lab",
             "HQ-3",
@@ -1430,14 +1592,14 @@
             "RO-4 Ludhiana",
             "RO-1 Ludhiana",
             "RO-2 Jalandhar",
-            "CVO CEE Ludhiana",
+            "CVO SEE Ludhiana",
             "ZO-1 Patiala",
             "RO Hoshiarpur",
             "RO Fatehgarh Sahib",
             "RO Tarn Taran",
             "ZO-2 Patiala",
             "RO Mohali",
-            "CEE Ludhiana",
+            "SEE Ludhiana",
             "RO Sangrur",
             "ZO-1 Patiala",
             "RO Amritsar",

@@ -1,1118 +1,1285 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PPCB GRM Portal – Home</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
-  <link rel="stylesheet" href="css/shared.css">
-  <style>
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, #1a5ba0 100%);
-      padding: 64px 24px 80px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: rgba(232, 130, 12, .18);
-      border: 1px solid rgba(232, 130, 12, .4);
-      color: var(--accent-light);
-      padding: 5px 14px;
-      border-radius: 100px;
-      font-size: .72rem;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-
-    .hero-title {
-      font-size: clamp(1.8rem, 5vw, 2.4rem);
-      color: white;
-      line-height: 1.2;
-      margin-bottom: 16px;
-    }
-
-    .hero-title em {
-      color: var(--accent-light);
-      font-style: italic;
-    }
-
-    .hero-sub {
-      font-size: 1rem;
-      color: rgba(255, 255, 255, .7);
-      line-height: 1.8;
-      margin-bottom: 36px;
-      max-width: 540px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn-hp {
-      background: var(--accent);
-      color: white;
-      padding: 13px 28px;
-      border-radius: var(--radius-sm);
-      font-weight: 700;
-      font-size: .88rem;
-      border: none;
-      cursor: pointer;
-      transition: all .2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 16px rgba(232, 130, 12, .4);
-      text-decoration: none;
-    }
-
-    .btn-hp:hover {
-      background: var(--accent-light);
-      transform: translateY(-2px);
-      color: white;
-    }
-
-    .btn-hs {
-      background: rgba(255, 255, 255, .1);
-      color: white;
-      padding: 13px 28px;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      font-size: .88rem;
-      border: 1px solid rgba(255, 255, 255, .25);
-      cursor: pointer;
-      transition: all .2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-    }
-
-    .btn-hs:hover {
-      background: rgba(255, 255, 255, .18);
-      color: white;
-    }
-
-    /* Hero image panel */
-    .hero-panel {
-      background: rgba(255, 255, 255, .07);
-      border: 1px solid rgba(255, 255, 255, .15);
-      border-radius: var(--radius);
-      padding: 24px;
-      backdrop-filter: blur(8px);
-    }
-
-    .hp-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 14px;
-      background: rgba(255, 255, 255, .08);
-      border-radius: var(--radius-sm);
-      margin-bottom: 8px;
-      border-left: 3px solid var(--accent);
-      width: 100%;
-    }
-
-    .hp-row:last-child {
-      margin-bottom: 0;
-    }
-
-    .hp-id {
-      font-family: 'Instrument Serif', serif;
-      font-size: .88rem;
-      color: white;
-      font-weight: 700;
-    }
-
-    .hp-cat {
-      font-size: .7rem;
-      color: rgba(255, 255, 255, .6);
-      margin-top: 1px;
-    }
-
-    .hp-bs {
-      padding: 3px 8px;
-      border-radius: 100px;
-      font-size: .65rem;
-      font-weight: 700;
-    }
-
-    .hp-progress {
-      background: rgba(26, 111, 196, .3);
-      color: #90c8f8;
-    }
-
-    .hp-new {
-      background: rgba(10, 79, 143, .3);
-      color: #90b8f0;
-    }
-
-    .hp-disposed {
-      background: rgba(13, 122, 85, .3);
-      color: #7ae0b8;
-    }
-
-    /* Stats */
-
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-num {
-      font-size: clamp(1.4rem, 3vw, 1.9rem);
-      font-weight: 500;
-      color: #fff;
-    }
-
-    .stat-lbl {
-      font-size: .8rem;
-      color: #fff;
-      letter-spacing: .04em;
-      margin-top: 2px;
-      font-weight: 500;
-    }
-
-    /* Section */
-    .section {
-      padding: 40px 24px;
-    }
-
-    .sec-label {
-      font-size: 1.4rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .sec-title {
-      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-      color: var(--primary-dark);
-      line-height: 1.2;
-    }
-
-    .sec-sub {
-      color: var(--text-muted);
-      font-size: .88rem;
-      margin-top: 8px;
-    }
-
-    /* Feature card */
-    .feat-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px 20px;
-      height: 100%;
-      transition: all .3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .feat-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .3s;
-    }
-
-    .feat-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
-      border-color: transparent;
-    }
-
-    .feat-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .feat-icon {
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, #e8f0fb, #d0e4f7);
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      color: var(--primary);
-      margin-bottom: 14px;
-    }
-
-    .feat-card h5 {
-      font-weight: 700;
-      font-size: 1rem;
-      margin-bottom: 6px;
-    }
-
-    .feat-card p {
-      font-size: .9rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      margin: 0;
-    }
-
-    /************** Process steps ****************/
-
-    .sec {
-      padding: 52px 32px 40px;
-      margin: 0 auto;
-    }
-
-    .sec-eye {
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
-      font-size: 1.4rem;
-      font-weight: 700;
-    }
-
-    .sec-title {
-      color: var(--navy);
-      margin-bottom: 6px;
-      font-size: clamp(1.6rem, 3.5vw, 2.3rem);
-    }
-
-    .sec-sub {
-      color: var(--mut);
-      font-size: .8rem;
-    }
-
-    .tl-outer {
-      margin-top: 48px;
-      position: relative;
-    }
-
-    /* ── ROWS ── */
-    .tl-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      position: relative;
-      gap: 0;
-    }
-
-    /* ── DOTTED SPINE behind each row ── */
-    .tl-row::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 8%;
-      right: 8%;
-      height: 0;
-      border-top: 2.5px dashed var(--bdr);
-      z-index: 0;
-    }
-
-    /* Row 1 spine grows from left; filled by JS */
-    .spine {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 8%;
-      height: 0;
-      width: 0;
-      border-top: 2.5px dashed;
-      z-index: 1;
-      border-radius: 0;
-      transition: width 1.2s cubic-bezier(.4, 0, .2, 1);
-    }
-
-    .spine-1 {
-      border-color: var(--c2);
-    }
-
-    .spine-2 {
-      border-color: var(--c5);
-    }
-
-    /* ── U-TURN CONNECTOR ── */
-    .uturn {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 0 8%;
-      height: 72px;
-      position: relative;
-    }
-
-    .uturn-svg {
-      position: absolute;
-      right: 8%;
-      width: 56px;
-      height: 72px;
-      overflow: visible;
-    }
-
-    .uturn-path {
-      fill: none;
-      stroke: var(--bdr);
-      stroke-width: 2.5;
-      stroke-dasharray: 5 4;
-      stroke-dashoffset: 200;
-      transition: stroke-dashoffset 0.8s ease 1.2s;
-    }
-
-    .uturn-path.drawn {
-      stroke-dashoffset: 0;
-    }
-
-    /* ── STEP CELL ── */
-    .step {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 12px;
-      position: relative;
-      z-index: 2;
-    }
-
-    /* ── CONNECTOR DOT on spine ── */
-    .step-dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 5;
-      background: var(--wh);
-      border: 2.5px solid var(--bdr);
-      transition: all .4s ease;
-      opacity: 0;
-    }
-
-    /* row 1 dots above centre line */
-    .row1 .step-dot {
-      top: calc(50%);
-      margin-top: 0;
-    }
-
-    /* row 2 dots below centre line */
-    .row2 .step-dot {
-      top: calc(50%);
-    }
-
-    .step-dot.lit {
-      opacity: 1;
-      border-color: currentColor;
-      background: currentColor;
-      box-shadow: 0 0 0 4px rgba(255, 255, 255, .8), 0 0 0 6px currentColor;
-      transform: translate(-50%, -50%) scale(1.1);
-    }
-
-    /* ── BOX ── */
-    .box {
-      background: var(--wh);
-      border: 2px dashed var(--bdr);
-      border-radius: 18px;
-      padding: 20px 18px 16px;
-      width: 100%;
-      position: relative;
-      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
-      cursor: default;
-      /* entrance animation */
-      opacity: 0;
-      transform: translateY(22px) scale(.96);
-      min-height: 250px;
-    }
-
-    .box.in {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      transition: opacity .55s ease, transform .55s cubic-bezier(.34, 1.2, .64, 1),
-        box-shadow .28s, border-color .28s;
-    }
-
-    .box:hover {
-      transform: translateY(-5px) !important;
-      box-shadow: 0 12px 36px rgba(10, 79, 143, .13);
-    }
-
-    /* hover changes dashed border to solid accent */
-    .box:hover {
-      border-style: solid;
-    }
-
-    /* box top accent bar */
-    .box-bar {
-      position: absolute;
-      top: 0;
-      left: 16px;
-      right: 16px;
-      height: 3px;
-      border-radius: 0 0 4px 4px;
-    }
-
-    /* icon */
-    .box-icon-wrap {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 19px;
-      margin-bottom: 12px;
-      position: relative;
-    }
-
-    /* number badge */
-    .box-num {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--navy);
-      color: white;
-      font-size: .56rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid var(--wh);
-    }
-
-    .box-title {
-      color: var(--navy);
-      margin-bottom: 7px;
-      font-size: .9rem;
-      font-weight: 700;
-      line-height: 1.3;
-
-    }
-
-    .box-text {
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.65;
-    }
-
-    /* tat tag */
-    .box-tat {
-      position: absolute;
-      /* ✅ move it out of flow */
-      top: 24px;
-      /* ✅ distance from top */
-      right: 12px;
-      /* ✅ align to right */
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 4px 10px;
-      border-radius: 100px;
-      font-size: .6rem;
-      font-weight: 700;
-      z-index: 3;
-      /* ✅ stays above content */
-    }
-
-    /* row1 box: label below */
-    .row1 .step {
-      flex-direction: column;
-    }
-
-    .row1 .step .step-dot {
-      order: 2;
-      margin: 0;
-      position: relative;
-      top: auto;
-      left: auto;
-      transform: none;
-      margin-top: -7px;
-      margin-bottom: -7px;
-      z-index: 5;
-    }
-
-    .row1 .step .box {
-      order: 1;
-    }
-
-    /* row2 box: dot top, box below */
-    .row2 .step {
-      flex-direction: column;
-    }
-
-    .row2 .step .step-dot {
-      order: 1;
-      position: relative;
-      top: auto;
-      left: auto;
-      transform: none;
-      margin-bottom: -7px;
-      z-index: 5;
-    }
-
-    .row2 .step .box {
-      order: 2;
-    }
-
-    /* row1 dots sit between box and spine  */
-    /* row2 dots sit between spine and box  */
-
-    /* ── STEP-SPECIFIC COLOURS ── */
-    .s1 .box {
-      border-color: #b8e6d4;
-    }
-
-    .s1 .box:hover {
-      border-color: var(--c1);
-    }
-
-    .s1 .box-bar {
-      background: var(--c1);
-    }
-
-    .s1 .box-icon-wrap {
-      background: var(--c1l);
-      color: var(--c1);
-    }
-
-    .s1 .box-tat {
-      background: var(--c1l);
-      color: var(--c1);
-    }
-
-    .s1 .step-dot {
-      color: var(--c1);
-    }
-
-    .s2 .box {
-      border-color: #b8d4f0;
-    }
-
-    .s2 .box:hover {
-      border-color: var(--c2);
-    }
-
-    .s2 .box-bar {
-      background: var(--c2);
-    }
-
-    .s2 .box-icon-wrap {
-      background: var(--c2l);
-      color: var(--c2);
-    }
-
-    .s2 .box-tat {
-      background: var(--c2l);
-      color: var(--c2);
-    }
-
-    .s2 .step-dot {
-      color: var(--c2);
-    }
-
-    .s3 .box {
-      border-color: #d8b8f5;
-    }
-
-    .s3 .box:hover {
-      border-color: var(--c3);
-    }
-
-    .s3 .box-bar {
-      background: var(--c3);
-    }
-
-    .s3 .box-icon-wrap {
-      background: var(--c3l);
-      color: var(--c3);
-    }
-
-    .s3 .box-tat {
-      background: var(--c3l);
-      color: var(--c3);
-    }
-
-    .s3 .step-dot {
-      color: var(--c3);
-    }
-
-    .s4 .box {
-      border-color: #f5b8b5;
-    }
-
-    .s4 .box:hover {
-      border-color: var(--c4);
-    }
-
-    .s4 .box-bar {
-      background: var(--c4);
-    }
-
-    .s4 .box-icon-wrap {
-      background: var(--c4l);
-      color: var(--c4);
-    }
-
-    .s4 .box-tat {
-      background: var(--c4l);
-      color: var(--c4);
-    }
-
-    .s4 .step-dot {
-      color: var(--c4);
-    }
-
-    .s5 .box {
-      border-color: #f5dfb0;
-    }
-
-    .s5 .box:hover {
-      border-color: var(--c5);
-    }
-
-    .s5 .box-bar {
-      background: var(--c5);
-    }
-
-    .s5 .box-icon-wrap {
-      background: var(--c5l);
-      color: var(--c5);
-    }
-
-    .s5 .box-tat {
-      background: var(--c5l);
-      color: var(--c5);
-    }
-
-    .s5 .step-dot {
-      color: var(--c5);
-    }
-
-    .s6 .box {
-      border-color: #b0def0;
-    }
-
-    .s6 .box:hover {
-      border-color: var(--c6);
-    }
-
-    .s6 .box-bar {
-      background: var(--c6);
-    }
-
-    .s6 .box-icon-wrap {
-      background: var(--c6l);
-      color: var(--c6);
-    }
-
-    .s6 .box-tat {
-      background: var(--c6l);
-      color: var(--c6);
-    }
-
-    .s6 .step-dot {
-      color: var(--c6);
-    }
-
-    /* ── PROGRESS BAR ── */
-    .prog-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 44px;
-    }
-
-    .prog-track {
-      width: min(420px, 100%);
-      height: 5px;
-      background: var(--bdr);
-      border-radius: 100px;
-      overflow: hidden;
-    }
-
-    .prog-fill {
-      height: 100%;
-      width: 0%;
-      border-radius: 100px;
-      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c5), var(--c6));
-      transition: width 1.6s cubic-bezier(.4, 0, .2, 1);
-    }
-
-    .prog-pct {
-      font-size: .7rem;
-      font-weight: 800;
-      color: var(--c2);
-      min-width: 36px;
-    }
-
-    /* ── LEGEND ── */
-    .legend {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 40px;
-    }
-
-    .leg {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: .7rem;
-      font-weight: 600;
-      color: var(--mut);
-    }
-
-    .leg-d {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-
-
-    /* ─── MOBILE ─── */
-    @media(max-width:767px) {
-      .tl-row {
-        grid-template-columns: 1fr;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PPCB GRM Portal – Home</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+    />
+    <link rel="stylesheet" href="css/shared.css" />
+    <style>
+      /* ── HERO ── */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--primary-dark) 0%,
+          var(--primary) 60%,
+          #1a5ba0 100%
+        );
+        padding: 64px 24px 80px;
+        position: relative;
+        overflow: hidden;
       }
 
-      .tl-row::before,
-      .spine {
-        display: none;
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       }
 
-      .uturn {
-        display: none;
+      .hero-content {
+        position: relative;
+        z-index: 1;
       }
 
-      .step {
-        flex-direction: row !important;
-        gap: 14px;
-        padding: 0 0 16px;
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(232, 130, 12, 0.18);
+        border: 1px solid rgba(232, 130, 12, 0.4);
+        color: var(--accent-light);
+        padding: 5px 14px;
+        border-radius: 100px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        margin-bottom: 20px;
       }
 
-      .row1 .step .step-dot,
-      .row2 .step .step-dot {
-        display: none;
+      .hero-title {
+        font-size: clamp(1.8rem, 5vw, 2.4rem);
+        color: white;
+        line-height: 1.2;
+        margin-bottom: 16px;
       }
 
-      .row1 .step .box,
-      .row2 .step .box {
-        flex: 1;
+      .hero-title em {
+        color: var(--accent-light);
+        font-style: italic;
       }
+
+      .hero-sub {
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.8;
+        margin-bottom: 36px;
+        max-width: 540px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .btn-hp {
+        background: var(--accent);
+        color: white;
+        padding: 13px 28px;
+        border-radius: var(--radius-sm);
+        font-weight: 700;
+        font-size: 0.88rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 16px rgba(232, 130, 12, 0.4);
+        text-decoration: none;
+      }
+
+      .btn-hp:hover {
+        background: var(--accent-light);
+        transform: translateY(-2px);
+        color: white;
+      }
+
+      .btn-hs {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        padding: 13px 28px;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.88rem;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        cursor: pointer;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+
+      .btn-hs:hover {
+        background: rgba(255, 255, 255, 0.18);
+        color: white;
+      }
+
+      /* Hero image panel */
+      .hero-panel {
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: var(--radius);
+        padding: 24px;
+        backdrop-filter: blur(8px);
+      }
+
+      .hp-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 14px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: var(--radius-sm);
+        margin-bottom: 8px;
+        border-left: 3px solid var(--accent);
+        width: 100%;
+      }
+
+      .hp-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .hp-id {
+        font-family: "Instrument Serif", serif;
+        font-size: 0.88rem;
+        color: white;
+        font-weight: 700;
+      }
+
+      .hp-cat {
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 1px;
+      }
+
+      .hp-bs {
+        padding: 3px 8px;
+        border-radius: 100px;
+        font-size: 0.65rem;
+        font-weight: 700;
+      }
+
+      .hp-progress {
+        background: rgba(26, 111, 196, 0.3);
+        color: #90c8f8;
+      }
+
+      .hp-new {
+        background: rgba(10, 79, 143, 0.3);
+        color: #90b8f0;
+      }
+
+      .hp-disposed {
+        background: rgba(13, 122, 85, 0.3);
+        color: #7ae0b8;
+      }
+
+      /* Stats */
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-num {
+        font-size: clamp(1.4rem, 3vw, 1.9rem);
+        font-weight: 500;
+        color: #fff;
+      }
+
+      .stat-lbl {
+        font-size: 0.8rem;
+        color: #fff;
+        letter-spacing: 0.04em;
+        margin-top: 2px;
+        font-weight: 500;
+      }
+
+      /* Section */
+      .section {
+        padding: 40px 24px;
+      }
+
+      .sec-label {
+        font-size: 1.4rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .sec-title {
+        font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+        color: var(--primary-dark);
+        line-height: 1.2;
+      }
+
+      .sec-sub {
+        color: var(--text-muted);
+        font-size: 0.88rem;
+        margin-top: 8px;
+      }
+
+      /* Feature card */
+      .feat-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px 20px;
+        height: 100%;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feat-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s;
+      }
+
+      .feat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow);
+        border-color: transparent;
+      }
+
+      .feat-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .feat-icon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, #e8f0fb, #d0e4f7);
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        color: var(--primary);
+        margin-bottom: 14px;
+      }
+
+      .feat-card h5 {
+        font-weight: 700;
+        font-size: 1rem;
+        margin-bottom: 6px;
+      }
+
+      .feat-card p {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+        margin: 0;
+      }
+
+      /************** Process steps ****************/
 
       .sec {
-        padding: 36px 16px 48px;
+        padding: 52px 32px 40px;
+        margin: 0 auto;
       }
-    }
 
-    @media(max-width:540px) {
+      .sec-eye {
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+        font-size: 1.4rem;
+        font-weight: 700;
+      }
+
+      .sec-title {
+        color: var(--navy);
+        margin-bottom: 6px;
+        font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+      }
+
+      .sec-sub {
+        color: var(--mut);
+        font-size: 0.8rem;
+      }
+
+      .tl-outer {
+        margin-top: 48px;
+        position: relative;
+      }
+
+      /* ── ROWS ── */
+      .tl-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        position: relative;
+        gap: 0;
+      }
+
+      /* ── DOTTED SPINE behind each row ── */
+      .tl-row::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 8%;
+        right: 8%;
+        height: 0;
+        border-top: 2.5px dashed var(--bdr);
+        z-index: 0;
+      }
+
+      /* Row 1 spine grows from left; filled by JS */
+      .spine {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 8%;
+        height: 0;
+        width: 0;
+        border-top: 2.5px dashed;
+        z-index: 1;
+        border-radius: 0;
+        transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .spine-1 {
+        border-color: var(--c2);
+      }
+
+      .spine-2 {
+        border-color: var(--c5);
+      }
+
+      /* ── U-TURN CONNECTOR ── */
+      .uturn {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0 8%;
+        height: 72px;
+        position: relative;
+      }
+
+      .uturn-svg {
+        position: absolute;
+        right: 8%;
+        width: 56px;
+        height: 72px;
+        overflow: visible;
+      }
+
+      .uturn-path {
+        fill: none;
+        stroke: var(--bdr);
+        stroke-width: 2.5;
+        stroke-dasharray: 5 4;
+        stroke-dashoffset: 200;
+        transition: stroke-dashoffset 0.8s ease 1.2s;
+      }
+
+      .uturn-path.drawn {
+        stroke-dashoffset: 0;
+      }
+
+      /* ── STEP CELL ── */
+      .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 12px;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* ── CONNECTOR DOT on spine ── */
+      .step-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 5;
+        background: var(--wh);
+        border: 2.5px solid var(--bdr);
+        transition: all 0.4s ease;
+        opacity: 0;
+      }
+
+      /* row 1 dots above centre line */
+      .row1 .step-dot {
+        top: calc(50%);
+        margin-top: 0;
+      }
+
+      /* row 2 dots below centre line */
+      .row2 .step-dot {
+        top: calc(50%);
+      }
+
+      .step-dot.lit {
+        opacity: 1;
+        border-color: currentColor;
+        background: currentColor;
+        box-shadow:
+          0 0 0 4px rgba(255, 255, 255, 0.8),
+          0 0 0 6px currentColor;
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+
+      /* ── BOX ── */
       .box {
-        padding: 16px 14px 13px;
+        background: var(--wh);
+        border: 2px dashed var(--bdr);
+        border-radius: 18px;
+        padding: 20px 18px 16px;
+        width: 100%;
+        position: relative;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease,
+          border-color 0.3s ease;
+        cursor: default;
+        /* entrance animation */
+        opacity: 0;
+        transform: translateY(22px) scale(0.96);
+        min-height: 250px;
+      }
+
+      .box.in {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        transition:
+          opacity 0.55s ease,
+          transform 0.55s cubic-bezier(0.34, 1.2, 0.64, 1),
+          box-shadow 0.28s,
+          border-color 0.28s;
+      }
+
+      .box:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: 0 12px 36px rgba(10, 79, 143, 0.13);
+      }
+
+      /* hover changes dashed border to solid accent */
+      .box:hover {
+        border-style: solid;
+      }
+
+      /* box top accent bar */
+      .box-bar {
+        position: absolute;
+        top: 0;
+        left: 16px;
+        right: 16px;
+        height: 3px;
+        border-radius: 0 0 4px 4px;
+      }
+
+      /* icon */
+      .box-icon-wrap {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 19px;
+        margin-bottom: 12px;
+        position: relative;
+      }
+
+      /* number badge */
+      .box-num {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--navy);
+        color: white;
+        font-size: 0.56rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid var(--wh);
       }
 
       .box-title {
-        font-size: .8rem;
+        color: var(--navy);
+        margin-bottom: 7px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        line-height: 1.3;
       }
 
       .box-text {
-        font-size: .68rem;
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.65;
       }
-    }
 
+      /* tat tag */
+      .box-tat {
+        position: absolute;
+        /* ✅ move it out of flow */
+        top: 24px;
+        /* ✅ distance from top */
+        right: 12px;
+        /* ✅ align to right */
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        border-radius: 100px;
+        font-size: 0.6rem;
+        font-weight: 700;
+        z-index: 3;
+        /* ✅ stays above content */
+      }
 
-    /* Track section */
-    .track-section {
-      padding: 60px 24px;
-      background: linear-gradient(135deg, #e8f0fb 0%, #f0f4f9 100%);
-    }
+      /* row1 box: label below */
+      .row1 .step {
+        flex-direction: column;
+      }
 
-    .track-card {
-      background: white;
-      border-radius: var(--radius);
-      padding: 32px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-    }
+      .row1 .step .step-dot {
+        order: 2;
+        margin: 0;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin-top: -7px;
+        margin-bottom: -7px;
+        z-index: 5;
+      }
 
-    /* Track result */
-    .track-result {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-top: 18px;
-    }
+      .row1 .step .box {
+        order: 1;
+      }
 
-    .trk-progress {
-      display: flex;
-      gap: 0;
-      margin: 20px 0;
-      overflow-x: auto;
-      padding-bottom: 4px;
-    }
+      /* row2 box: dot top, box below */
+      .row2 .step {
+        flex-direction: column;
+      }
 
-    .trk-step {
-      flex: 1;
-      text-align: center;
-      position: relative;
-      min-width: 70px;
-    }
+      .row2 .step .step-dot {
+        order: 1;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin-bottom: -7px;
+        z-index: 5;
+      }
 
-    .trk-step::before {
-      content: '';
-      position: absolute;
-      top: 12px;
-      left: 50%;
-      right: -50%;
-      height: 2px;
-      background: var(--border);
-      z-index: 0;
-    }
+      .row2 .step .box {
+        order: 2;
+      }
 
-    .trk-step:last-child::before {
-      display: none;
-    }
+      /* row1 dots sit between box and spine  */
+      /* row2 dots sit between spine and box  */
 
-    .trk-dot {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--border);
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: .65rem;
-      font-weight: 700;
-      margin: 0 auto 6px;
-      position: relative;
-      z-index: 1;
-      border: 2px solid white;
-    }
+      /* ── STEP-SPECIFIC COLOURS ── */
+      .s1 .box {
+        border-color: #b8e6d4;
+      }
 
-    .trk-step.done .trk-dot {
-      background: var(--success);
-      color: white;
-    }
+      .s1 .box:hover {
+        border-color: var(--c1);
+      }
 
-    .trk-step.done::before {
-      background: var(--success);
-    }
+      .s1 .box-bar {
+        background: var(--c1);
+      }
 
-    .trk-step.curr .trk-dot {
-      background: var(--primary);
-      color: white;
-      box-shadow: 0 0 0 3px rgba(10, 79, 143, .2);
-    }
+      .s1 .box-icon-wrap {
+        background: var(--c1l);
+        color: var(--c1);
+      }
 
-    .trk-lbl {
-      font-size: .62rem;
-      color: var(--text-muted);
-      font-weight: 500;
-      line-height: 1.3;
-    }
+      .s1 .box-tat {
+        background: var(--c1l);
+        color: var(--c1);
+      }
 
-    .trk-step.done .trk-lbl,
-    .trk-step.curr .trk-lbl {
-      color: var(--text);
-      font-weight: 600;
-    }
+      .s1 .step-dot {
+        color: var(--c1);
+      }
 
-    /* Footer */
-    footer {
-      background: var(--primary-dark);
-      color: rgba(255, 255, 255, .65);
-      padding: 28px 24px;
-    }
+      .s2 .box {
+        border-color: #b8d4f0;
+      }
 
-    /* bhashini plugin overrides */
-    .bhashini-dropdown {
-      position: fixed;
-      z-index: 1000;
-      bottom: 0 !important;
-    }
+      .s2 .box:hover {
+        border-color: var(--c2);
+      }
 
-    .bhashini-dropdown-btn {
-      display: flex;
-      background-color: #1a6fc4 !important;
-    }
-  </style>
-</head>
+      .s2 .box-bar {
+        background: var(--c2);
+      }
 
-<body>
-  <!-- <div class="bhashini-plugin-container"></div> -->
-  <!-- HEADER -->
-  <header class="pub-header mb-3">
-    <div class="topbar d-none d-md-flex">
-      <span><i class="bi bi-telephone-fill me-1"></i>Helpline: 1800-XXX-XXXX &nbsp;|&nbsp; <i
-          class="bi bi-envelope-fill me-1"></i>grm@ppcb.gov.in</span>
-      <span>Government of Punjab &nbsp;|&nbsp; Last Updated: 05 Jun 2025</span>
-    </div>
-    <div class="mainbar">
-      <div class="brand-logo">
-        <div class="logo-emblem"><img src="images/logo.png" width="60" /></div>
-        <div class="brand-text">
-          <h1>PPCB – Grievance Redressal Mechanism</h1>
-          <p>Punjab Pollution Control Board &nbsp;|&nbsp; Government of Punjab</p>
-        </div>
+      .s2 .box-icon-wrap {
+        background: var(--c2l);
+        color: var(--c2);
+      }
+
+      .s2 .box-tat {
+        background: var(--c2l);
+        color: var(--c2);
+      }
+
+      .s2 .step-dot {
+        color: var(--c2);
+      }
+
+      .s3 .box {
+        border-color: #d8b8f5;
+      }
+
+      .s3 .box:hover {
+        border-color: var(--c3);
+      }
+
+      .s3 .box-bar {
+        background: var(--c3);
+      }
+
+      .s3 .box-icon-wrap {
+        background: var(--c3l);
+        color: var(--c3);
+      }
+
+      .s3 .box-tat {
+        background: var(--c3l);
+        color: var(--c3);
+      }
+
+      .s3 .step-dot {
+        color: var(--c3);
+      }
+
+      .s4 .box {
+        border-color: #f5b8b5;
+      }
+
+      .s4 .box:hover {
+        border-color: var(--c4);
+      }
+
+      .s4 .box-bar {
+        background: var(--c4);
+      }
+
+      .s4 .box-icon-wrap {
+        background: var(--c4l);
+        color: var(--c4);
+      }
+
+      .s4 .box-tat {
+        background: var(--c4l);
+        color: var(--c4);
+      }
+
+      .s4 .step-dot {
+        color: var(--c4);
+      }
+
+      .s5 .box {
+        border-color: #f5dfb0;
+      }
+
+      .s5 .box:hover {
+        border-color: var(--c5);
+      }
+
+      .s5 .box-bar {
+        background: var(--c5);
+      }
+
+      .s5 .box-icon-wrap {
+        background: var(--c5l);
+        color: var(--c5);
+      }
+
+      .s5 .box-tat {
+        background: var(--c5l);
+        color: var(--c5);
+      }
+
+      .s5 .step-dot {
+        color: var(--c5);
+      }
+
+      .s6 .box {
+        border-color: #b0def0;
+      }
+
+      .s6 .box:hover {
+        border-color: var(--c6);
+      }
+
+      .s6 .box-bar {
+        background: var(--c6);
+      }
+
+      .s6 .box-icon-wrap {
+        background: var(--c6l);
+        color: var(--c6);
+      }
+
+      .s6 .box-tat {
+        background: var(--c6l);
+        color: var(--c6);
+      }
+
+      .s6 .step-dot {
+        color: var(--c6);
+      }
+
+      /* ── PROGRESS BAR ── */
+      .prog-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 44px;
+      }
+
+      .prog-track {
+        width: min(420px, 100%);
+        height: 5px;
+        background: var(--bdr);
+        border-radius: 100px;
+        overflow: hidden;
+      }
+
+      .prog-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: 100px;
+        background: linear-gradient(
+          90deg,
+          var(--c1),
+          var(--c2),
+          var(--c3),
+          var(--c5),
+          var(--c6)
+        );
+        transition: width 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .prog-pct {
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: var(--c2);
+        min-width: 36px;
+      }
+
+      /* ── LEGEND ── */
+      .legend {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 40px;
+      }
+
+      .leg {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--mut);
+      }
+
+      .leg-d {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+
+      /* ─── MOBILE ─── */
+      @media (max-width: 767px) {
+        .tl-row {
+          grid-template-columns: 1fr;
+        }
+
+        .tl-row::before,
+        .spine {
+          display: none;
+        }
+
+        .uturn {
+          display: none;
+        }
+
+        .step {
+          flex-direction: row !important;
+          gap: 14px;
+          padding: 0 0 16px;
+        }
+
+        .row1 .step .step-dot,
+        .row2 .step .step-dot {
+          display: none;
+        }
+
+        .row1 .step .box,
+        .row2 .step .box {
+          flex: 1;
+        }
+
+        .sec {
+          padding: 36px 16px 48px;
+        }
+      }
+
+      @media (max-width: 540px) {
+        .box {
+          padding: 16px 14px 13px;
+        }
+
+        .box-title {
+          font-size: 0.8rem;
+        }
+
+        .box-text {
+          font-size: 0.68rem;
+        }
+      }
+
+      /* Track section */
+      .track-section {
+        padding: 60px 24px;
+        background: linear-gradient(135deg, #e8f0fb 0%, #f0f4f9 100%);
+      }
+
+      .track-card {
+        background: white;
+        border-radius: var(--radius);
+        padding: 32px;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+      }
+
+      /* Track result */
+      .track-result {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px;
+        margin-top: 18px;
+      }
+
+      .trk-progress {
+        display: flex;
+        gap: 0;
+        margin: 20px 0;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .trk-step {
+        flex: 1;
+        text-align: center;
+        position: relative;
+        min-width: 70px;
+      }
+
+      .trk-step::before {
+        content: "";
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        right: -50%;
+        height: 2px;
+        background: var(--border);
+        z-index: 0;
+      }
+
+      .trk-step:last-child::before {
+        display: none;
+      }
+
+      .trk-dot {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--border);
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.65rem;
+        font-weight: 700;
+        margin: 0 auto 6px;
+        position: relative;
+        z-index: 1;
+        border: 2px solid white;
+      }
+
+      .trk-step.done .trk-dot {
+        background: var(--success);
+        color: white;
+      }
+
+      .trk-step.done::before {
+        background: var(--success);
+      }
+
+      .trk-step.curr .trk-dot {
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 0 0 3px rgba(10, 79, 143, 0.2);
+      }
+
+      .trk-lbl {
+        font-size: 0.62rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        line-height: 1.3;
+      }
+
+      .trk-step.done .trk-lbl,
+      .trk-step.curr .trk-lbl {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--primary-dark);
+        color: rgba(255, 255, 255, 0.65);
+        padding: 28px 24px;
+      }
+
+      /* bhashini plugin overrides */
+      .bhashini-dropdown {
+        position: fixed;
+        z-index: 1000;
+        bottom: 0 !important;
+      }
+
+      .bhashini-dropdown-btn {
+        display: flex;
+        background-color: #1a6fc4 !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- <div class="bhashini-plugin-container"></div> -->
+    <!-- HEADER -->
+    <header class="pub-header mb-3">
+      <div class="topbar d-none d-md-flex">
+        <span
+          ><i class="bi bi-telephone-fill me-1"></i>Helpline: 1800-XXX-XXXX
+          &nbsp;|&nbsp;
+          <i class="bi bi-envelope-fill me-1"></i>grm@ppcb.gov.in</span
+        >
+        <span
+          >Government of Punjab &nbsp;|&nbsp; Last Updated: 05 Jun 2025</span
+        >
       </div>
-      <div class="header-nav">
-        <a href="index.html" class="hn-btn hn-outline"><span
-            class="hide-xs">Home</span></a>
-       
-      </div>
-    </div>
-  </header>
-
-  <main class="container">
-    <div class="card p-4 border-0">
-      <h4 class="mb-3">Terms & Conditions</h4>
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-        standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride
-        Printing Library, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type
-        sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing
-        software including versions of Lorem Ipsum
-      </p>
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-        standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride
-        Printing Library, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type
-        sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing
-        software including versions of Lorem Ipsum
-      </p>
-
-      <hr>
-
-      <h5 class="mt-3">Key Highlights</h5>
-      <ul>
-        <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry</li>
-        <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry</li>
-        <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry</li>
-        <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry</li>
-        <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry</li>
-      </ul>
-
-      <hr>
-      <h5 class="mt-3">Important Instructions</h5>
-      <ol>
-        <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</li>
-        <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</li>
-        <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</li>
-        <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</li>
-      </ol>
-
-       <hr>
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-        standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride
-        Printing Library, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type
-        sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing
-        software including versions of Lorem Ipsum
-      </p>
-
-    </div>
-
-  </main>
-
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container-fluid">
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div style="font-size:1.5rem;font-weight:800;color:white;margin-bottom:8px;">PPCB GRM Portal</div>
-          <div
-            style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent-light);margin-bottom:12px;">
-            Transparent. Accountable. Timely.</div>
-          <div style="font-size:1rem;line-height:1.8;">Punjab Pollution Control Board<br>Government of Punjab</div>
-        </div>
-        <div class="col-6 col-md-2">
-          <div
-            style="font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
-            Quick Links</div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <a href="citizen-grievance-form.html"
-              style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">File
-              Complaint</a>
-            <a href="#" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">
-              Terms & Condtions</a>
-            <a href="#" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">
-              Privacy Policy</a>
-            <a href="#" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">
-              Disclaimer</a>
+      <div class="mainbar">
+        <div class="brand-logo">
+          <div class="logo-emblem">
+            <img src="images/logo.png" width="60" />
+          </div>
+          <div class="brand-text">
+            <h1>PPCB – Grievance Redressal Mechanism</h1>
+            <p>
+              Punjab Pollution Control Board &nbsp;|&nbsp; Government of Punjab
+            </p>
           </div>
         </div>
-        <div class="col-6 col-md-2">
-          <div
-            style="font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
-            Help</div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <a href="#" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">FAQ</a>
-            <a href="#" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">User Guide</a>
-            <a href="#" style="font-size:1rem;color:rgba(255,255,255,.55);text-decoration:none;">RTI</a>
-          </div>
+        <div class="header-nav">
+          <a href="index.html" class="hn-btn hn-outline"
+            ><span class="hide-xs">Home</span></a
+          >
         </div>
-        <div class="col-md-4">
-          <div
-            style="font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px;">
-            Contact</div>
-          <div style="font-size:1rem;line-height:2;color:rgba(255,255,255,.55);">
-            <div><i class="bi bi-telephone-fill me-2" style="color:var(--accent-light);"></i>1800-XXX-XXXX (Toll Free)
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="card p-4 border-0">
+        <h4 class="mb-3 text-center">Terms & Conditions</h4>
+        <p>
+          This website is owned by and its content is updated and maintained by
+          Punjab Pollution Control Board. Though all efforts have been made to
+          ensure the accuracy of the content on this website, the same should
+          not be construed as a statement of law or used for any legal purposes.
+          In case of any ambiguity or doubts, users are advised to verify/check
+          with the Punjab Pollution Control Board, Head Office, Patiala, and/or
+          other legitimate source(s) and to obtain appropriate professional
+          advice.
+        </p>
+        <p>
+          Under no circumstances will the Punjab Pollution Control Board be
+          liable for any expense, loss, or damage, including, without
+          limitation, indirect or consequential loss or damage, or any expense,
+          loss, or damage whatsoever arising from use, or loss of use, of data
+          arising out of or in connection with the use of this website.
+        </p>
+
+        <p>
+          These terms and conditions shall be governed by and construed in
+          accordance with the Indian laws. Any dispute arising under these terms
+          and conditions shall be subject to the jurisdiction of the courts of
+          India.
+        </p>
+        <p>
+          The information posted on this website could include hypertext links
+          or pointers to information created and maintained by non-government /
+          private organizations. Punjab Pollution Control Board is providing
+          these links and pointers solely for your information and convenience.
+          When you select a link to an outside website, you are leaving the
+          Punjab Pollution Control Board website and are subject to the privacy
+          and security policies of the owners/sponsors of the outside website.
+          The Punjab Pollution Control Board does not guarantee the availability
+          of such linked pages at all times. The Punjab Pollution Control Board
+          cannot authorize the use of copyrighted materials contained in linked
+          websites. Users are advised to request such authorization from the
+          owner of the linked website. The Punjab Pollution Control Board does
+          not guarantee that linked websites comply with Indian government web
+          guidelines. PP
+        </p>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container-fluid">
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div
+              style="
+                font-size: 1.5rem;
+                font-weight: 800;
+                color: white;
+                margin-bottom: 8px;
+              "
+            >
+              PPCB GRM Portal
             </div>
-            <div><i class="bi bi-envelope-fill me-2" style="color:var(--accent-light);"></i>grm@ppcb.gov.in</div>
-            <div><i class="bi bi-clock-fill me-2" style="color:var(--accent-light);"></i>Mon–Fri, 10:00 AM – 5:00 PM
+            <div
+              style="
+                font-family: &quot;Instrument Serif&quot;, serif;
+                font-style: italic;
+                color: var(--accent-light);
+                margin-bottom: 12px;
+                font-size: 1.2rem;
+              "
+            >
+              Transparent. Accountable. Efficient.
+            </div>
+            <div style="font-size: 1rem; line-height: 1.8">
+              Punjab Pollution Control Board<br />Government of Punjab
+            </div>
+          </div>
+
+          <div class="col-6 col-md-2">
+            <div
+              style="
+                font-size: 1.2rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: rgba(255, 255, 255, 0.4);
+                margin-bottom: 14px;
+              "
+            >
+              Quick Links
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px">
+              <a
+                href="citizen-grievance-form.html"
+                style="
+                  font-size: 1rem;
+                  color: rgba(255, 255, 255, 0.55);
+                  text-decoration: none;
+                "
+                >File Complaint</a
+              >
+              <a
+                href="citizen-tracking.html"
+                style="
+                  font-size: 1rem;
+                  color: rgba(255, 255, 255, 0.55);
+                  text-decoration: none;
+                "
+              >
+                Track Status</a
+              >
+              <a
+                href="login.html"
+                style="
+                  font-size: 1rem;
+                  color: rgba(255, 255, 255, 0.55);
+                  text-decoration: none;
+                "
+              >
+                Officer Login</a
+              >
+            </div>
+          </div>
+          <div class="col-6 col-md-2">
+            <div
+              style="
+                font-size: 1.2rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: rgba(255, 255, 255, 0.4);
+                margin-bottom: 14px;
+              "
+            >
+              Help
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px">
+              <a
+                href="terms-conditions.html"
+                style="
+                  font-size: 1rem;
+                  color: rgba(255, 255, 255, 0.55);
+                  text-decoration: none;
+                "
+                >Terms & Condtions</a
+              >
+              <a
+                href="privacy-policy.html"
+                style="
+                  font-size: 1rem;
+                  color: rgba(255, 255, 255, 0.55);
+                  text-decoration: none;
+                "
+                >Privacy Policy</a
+              >
+              <a
+                href="faq.html"
+                style="
+                  font-size: 1rem;
+                  color: rgba(255, 255, 255, 0.55);
+                  text-decoration: none;
+                "
+                >FAQ</a
+              >
+              <a
+                href="disclaimer.html"
+                style="
+                  font-size: 1rem;
+                  color: rgba(255, 255, 255, 0.55);
+                  text-decoration: none;
+                "
+                >Disclaimer</a
+              >
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div
+              style="
+                font-size: 1.2rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: rgba(255, 255, 255, 0.4);
+                margin-bottom: 14px;
+              "
+            >
+              Contact
+            </div>
+            <div
+              style="
+                font-size: 1rem;
+                line-height: 2;
+                color: rgba(255, 255, 255, 0.55);
+              "
+            >
+              <div>
+                <i
+                  class="bi bi-telephone-fill me-2"
+                  style="color: var(--accent-light)"
+                ></i>
+                <a
+                  href="tel:9878950593"
+                  style="text-decoration: none; color: inherit"
+                >
+                  +91-9878950593
+                </a>
+              </div>
+              <div>
+                <i
+                  class="bi bi-envelope-fill me-2"
+                  style="color: var(--accent-light)"
+                ></i>
+                <a
+                  href="mailto:ppcbcomplaintcell@gmail.com"
+                  style="text-decoration: none; color: inherit"
+                >
+                  ppcbcomplaintcell@gmail.com
+                </a>
+              </div>
+              <div>
+                <i
+                  class="bi bi-clock-fill me-2"
+                  style="color: var(--accent-light)"
+                ></i
+                >Mon–Fri, 10:00 AM – 5:00 PM
+              </div>
             </div>
           </div>
         </div>
+        <hr style="border-color: rgba(255, 255, 255, 0.1); margin: 24px 0" />
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.35);
+          "
+        >
+          <span
+            >© 2026 Punjab Pollution Control Board. All rights reserved.</span
+          >
+        </div>
       </div>
-      <hr style="border-color:rgba(255,255,255,.1);margin:24px 0;">
-      <div
-        style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:1rem;color:rgba(255,255,255,.35);">
-        <span>© 2026 Punjab Pollution Control Board. All rights reserved.</span>
+    </footer>
 
-      </div>
-    </div>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://translation-plugin.bhashini.co.in/v2/website_translation_utility.js"
-    translation-language-list="en,hi,pa" data-pos-x="100" data-pos-y="100"></script>
-
-</body>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+      src="https://translation-plugin.bhashini.co.in/v2/website_translation_utility.js"
+      translation-language-list="en,hi,pa"
+      data-pos-x="100"
+      data-pos-y="100"
+    ></script>
+  </body>
 </html>
