@@ -1583,6 +1583,92 @@
     width: 1px;
     height: 40px;
     background: rgba(255, 255, 255, .12);
+  }
+
+  .custom-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-modal.show {
+    display: flex;
+    animation: fadeIn .3s ease;
+}
+
+.modal-content-box {
+    width: 520px;
+    max-width: 90%;
+    background: #fff;
+    border-radius: 18px;
+    padding: 35px 30px 30px;
+    text-align: center;
+    position: relative;
+    animation: scaleIn .3s ease;
+}
+
+.modal-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #073763, #0b7a75);
+    color: #fff;
+    border-radius: 50%;
+    margin: 0px auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    box-shadow: 0 8px 20px rgba(11,114,133,.3);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn-cancel,
+.btn-confirm {
+    flex: 1;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background: #f1f3f5;
+}
+
+.btn-confirm {
+    background: #198754;
+    color: #fff;
+}
+
+.btn-confirm:hover {
+    background: #157347;
+}
+
+@keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+@keyframes scaleIn {
+    from {
+        opacity:0;
+        transform: scale(.8);
+    }
+    to {
+        opacity:1;
+        transform: scale(1);
+    }
 }
   </style>
 </head>
@@ -1795,6 +1881,7 @@
             </div>
 
             <div class="sec-h"><i class="bi bi-person-circle"></i> Complainant Details</div>
+
             <div class="row g-3 mb-4">
               <div class="col-md-4">
                 <div class="info-box"><strong>Complainant Type</strong>Individual</div>
@@ -2004,6 +2091,7 @@
             <div class="sec-h">
               <i class="bi bi-file-earmark-check-fill"></i> Action Taken Report (ATR) by RO
             </div>
+            
             <div class="row g-3 mb-4">
               <div class="col-md-4">
                 <div class="info-box"><strong>ATR Submission Date</strong>18 Jun 2025</div>
@@ -2078,40 +2166,36 @@
 
            <div class="col-md-12 mt-2">
                 <h6 class="fw-bold mb-1" style="font-size: 0.8rem">
-                  Whether you can assign and fill it yourself
+                    Whether you can assign and fill it yourself
                 </h6>
-                <select class="fsel" id="assignOff" onchange="autoAssign()" fdprocessedid="26wtlh">
-                  <option value="">-- Select Inspecting Officer --</option>
-                  <option>RO Amritsar</option>
-                  <option>RO Batala</option>
-                  <option>RO Bathinda</option>
-                  <option>RO Barnala</option>
-                  <option>RO Faridkot</option>
-                  <option>RO Fatehgarh Sahib</option>
-                  <option>RO Hoshiarpur</option>
-                  <option>RO Jalandhar-1</option>
-                  <option>RO Jalandhar-2</option>
-                  <option>RO Ludhiana-1</option>
-                  <option>RO Ludhiana-2</option>
-                  <option>RO Ludhiana-3</option>
-                  <option>RO Ludhiana-4</option>
-                  <option>RO Mohali</option>
-                  <option>RO Muktsar Sahib</option>
-                  <option>RO Patiala</option>
-                  <option>RO Ropar / Rupnagar</option>
-                  <option>RO Sangrur</option>
-                  <option>RO Tarn Taran</option>
+
+                <select class="fsel" id="assignOff" onchange="toggleSubmitButton()">
+                    <option value="">-- Select Inspecting Officer --</option>
+                    <option>RO Amritsar</option>
+                    <option>RO Batala</option>
+                    <option>RO Bathinda</option>
+                    <option>RO Barnala</option>
+                    <option>RO Faridkot</option>
+                    <option>RO Fatehgarh Sahib</option>
+                    <option>RO Hoshiarpur</option>
+                    <option>RO Jalandhar-1</option>
+                    <option>RO Jalandhar-2</option>
+                    <option>RO Ludhiana-1</option>
+                    <option>RO Ludhiana-2</option>
+                    <option>RO Ludhiana-3</option>
+                    <option>RO Ludhiana-4</option>
+                    <option>RO Mohali</option>
+                    <option>RO Muktsar Sahib</option>
+                    <option>RO Patiala</option>
+                    <option>RO Ropar / Rupnagar</option>
+                    <option>RO Sangrur</option>
+                    <option>RO Tarn Taran</option>
                 </select>
 
-                <div class="auto-badge" id="assignBadge" style="display: none">
-                  <i class="bi bi-calendar-check-fill"></i>
-                  <span>Auto-assigned on: <strong id="assignDT"></strong></span>
+                <div class="d-flex align-items-center justify-content-end mt-3">
+                    <button class="bp submit-btn" id="submitBtn"  onclick="openConfirmModal()" style="display: none;" >Submit</button>
                 </div>
             </div>
-
-           <div class="d-flex align-items-center justify-content-end mt-3">
-              <button class="bp" id="">Submit</button>
-          </div>
 
           </div>
         </div>
@@ -2976,7 +3060,7 @@
   <div class="tstack" id="tstack"></div>
 
   <!-- Submit Confirmation Modal -->
-  <div class="modal fade" id="submitModal" tabindex="-1">
+  <!-- <div class="modal fade" id="submitModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -2998,7 +3082,28 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+
+    <div id="confirmModal" class="custom-modal">
+        <div class="modal-content-box">
+            <div class="modal-icon">
+                <i class="bi bi-arrow-right-circle-fill"></i>
+            </div>
+            <h3>Confirm Forward</h3>
+            <p>
+                Are you sure Want to Forward to RO Officer?
+            </p>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeConfirmModal()">
+                    Cancel
+                </button>
+                <button class="btn-confirm" onclick="forwardToRO()">
+                    Yes, Forward
+                </button>
+            </div>
+        </div>
+    </div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
@@ -3138,17 +3243,17 @@
       modal.show();
     }
 
-    function confirmSubmit() {
-      // close modal first
-      const modalEl = document.getElementById("submitModal");
-      const modalInstance = bootstrap.Modal.getInstance(modalEl);
-      modalInstance.hide();
+    // function confirmSubmit() {
+    //   // close modal first
+    //   const modalEl = document.getElementById("submitModal");
+    //   const modalInstance = bootstrap.Modal.getInstance(modalEl);
+    //   modalInstance.hide();
 
-      // call your actual save function
-      saveAll();
+    //   // call your actual save function
+    //   saveAll();
 
-      toast("Application submitted successfully", "success");
-    }
+    //   toast("Application submitted successfully", "success");
+    // }
 
     /* ══════════════════════════════════════
           FORM HELPERS  (minimal JS)
@@ -3185,6 +3290,17 @@
         "success",
       );
     }
+
+    function toggleSubmitButton() {
+    const dropdown = document.getElementById("assignOff");
+    const submitBtn = document.getElementById("submitBtn");
+
+    if (dropdown.value !== "") {
+        submitBtn.style.display = "inline-block";
+    } else {
+        submitBtn.style.display = "none";
+    }
+}
 
     function setAlert(dId, aId, tId, label) {
       const dv = document.getElementById(dId)?.value;
@@ -3331,6 +3447,19 @@
       document.getElementById("pendNum").textContent = d;
       document.getElementById("pendNum2").textContent = d;
     })();
+
+
+    function openConfirmModal() {
+          document.getElementById("confirmModal").classList.add("show");
+      }
+
+      function closeConfirmModal() {
+          document.getElementById("confirmModal").classList.remove("show");
+      }
+
+      function forwardToRO() {
+          window.location.href = "dashboard.html";
+      }
 
     /* INIT */
     goTo(0);

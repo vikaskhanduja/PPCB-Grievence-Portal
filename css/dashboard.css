@@ -1215,23 +1215,14 @@ thead th.fixed-col {
 
 .logout-btn-cancel {
   flex: 1;
-
   border: 1px solid #d6dce5;
-
   background: #f7f9fc;
-
   color: #555;
-
   padding: 12px;
-
   border-radius: 8px;
-
   font-size: 15px;
-
   font-weight: 600;
-
   cursor: pointer;
-
   transition: 0.3s;
 }
 
@@ -1243,25 +1234,15 @@ thead th.fixed-col {
 
 .logout-btn-confirm {
   flex: 1;
-
   border: none;
-
   background: linear-gradient(135deg, #c0392b, #e74c3c);
-
   color: #fff;
-
   padding: 12px;
-
   border-radius: 8px;
-
   font-size: 15px;
-
   font-weight: 600;
-
   cursor: pointer;
-
   transition: 0.3s;
-
   box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3);
 }
 
