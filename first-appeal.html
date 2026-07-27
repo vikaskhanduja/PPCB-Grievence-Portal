@@ -1670,6 +1670,36 @@
         transform: scale(1);
     }
 }
+
+.success-toast {
+   position: fixed;
+    top: 95px;
+    right: 20px;
+    background: #fff;
+    color: green;
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+    z-index: 99999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%);
+    transition: all .4s ease;
+    border-left: 4px solid green !important;
+}
+
+.success-toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.success-toast i {
+    font-size: 16px;
+}
   </style>
 </head>
 
@@ -3059,6 +3089,11 @@
   <!-- TOAST -->
   <div class="tstack" id="tstack"></div>
 
+  <div id="successToast" class="success-toast">
+    <i class="bi bi-check-circle-fill"></i>
+    <span>Complaint has been forwarded successfully to the RO Officer.</span>
+</div>
+
   <!-- Submit Confirmation Modal -->
   <!-- <div class="modal fade" id="submitModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -3450,17 +3485,35 @@
     })();
 
 
-    function openConfirmModal() {
-          document.getElementById("confirmModal").classList.add("show");
-      }
+    // Open Confirmation Modal
+function openConfirmModal() {
+    document.getElementById("confirmModal").classList.add("show");
+}
 
-      function closeConfirmModal() {
-          document.getElementById("confirmModal").classList.remove("show");
-      }
+// Close Confirmation Modal
+function closeConfirmModal() {
+    document.getElementById("confirmModal").classList.remove("show");
+}
 
-      function forwardToRO() {
-          window.location.href = "dashboard.html";
-      }
+// Forward Complaint
+function forwardToRO() {
+
+    // Close Modal
+    closeConfirmModal();
+
+    // Show Toast
+    const toast = document.getElementById("successToast");
+
+    toast.classList.add("show");
+
+    // Redirect after 2 seconds
+    setTimeout(function () {
+
+        window.location.href = "dashboard.html";
+
+    },2000);
+
+}
 
     /* INIT */
     goTo(0);
