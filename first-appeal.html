@@ -1590,30 +1590,7 @@
       font-size: .88rem;
     }
 
-    /* Source attribution badges on section headings */
-    .src-badge {
-      font-size: .62rem;
-      font-weight: 700;
-      padding: 2px 10px;
-      border-radius: 100px;
-      margin-left: 6px;
-      border: 1px solid transparent;
-      text-transform: none;
-      letter-spacing: 0;
-    }
-
-    .src-badge-citizen {
-      color: var(--SUC);
-      background: #d4f5e2;
-      border-color: #a8e8c2;
-    }
-
-    .src-badge-ro {
-      color: var(--P);
-      background: #e8f0fb;
-      border-color: #b8d4f4;
-    }
-
+  
     /* Doc item */
     .doc-row {
       display: flex;
@@ -2032,30 +2009,21 @@
         <!-- STEP 0 : Complaint Summary -->
         <div class="vstep-panel active" id="vsp0">
           <div class="sp-body">
-            <div class="hl-info mb-3" style="font-size:.74rem;">
-              <i class="bi bi-eye-fill me-1"></i>
-              <strong>Read-Only View</strong> — This is the original complaint as submitted by the citizen. No editing
-              is allowed.
-              <span class="ro-badge"><i class="bi bi-lock-fill"></i> Read Only</span>
-            </div>
+            
 
-            <div class="sec-h"><i class="bi bi-person-circle"></i> Complainant Details
-              <span class="src-badge src-badge-citizen">Provided by Complainant</span>
-            </div>
+            <div class="sec-h"><i class="bi bi-person-circle"></i> Complainant Details</div>
 
             <div class="row g-3 mb-4">
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <div class="info-box"><strong>Complainant Type</strong>Individual</div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <div class="info-box"><strong>Name</strong>Sukhbir Singh</div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <div class="info-box"><strong>Mobile No.</strong>+91 98760 12345</div>
               </div>
-              <div class="col-md-6">
-                <div class="info-box"><strong>Email</strong>sukhbir.singh@email.com</div>
-              </div>
+              
               <div class="col-md-6">
                 <div class="info-box"><strong>Occupation</strong>Farmer</div>
               </div>
@@ -2101,9 +2069,8 @@
               <div class="doc-dl"><i class="bi bi-download"></i></div>
             </div>
 
-            <div class="sec-h">
+            <div class="sec-h mt-3">
               <i class="bi bi-exclamation-triangle-fill"></i> Grievance Details
-              <span class="src-badge src-badge-ro">Filled by Regional Office</span>
             </div>
 
             <div class="row g-3 mb-4">
@@ -2200,21 +2167,16 @@
             </div>
 
             <div class="row g-3 mb-4">
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <div class="info-box"><strong>Assigned RO</strong>Er. P.K. Sharma</div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <div class="info-box">
                   <strong>RO Region / Office</strong>Ludhiana Regional Office
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="info-box"><strong>Date of Assignment</strong>05 Jun 2025</div>
-              </div>
               <div class="col-md-6">
-                <div class="info-box">
-                  <strong>Complaint Category</strong>Water Pollution (Industrial)
-                </div>
+                <div class="info-box"><strong>Date of Assignment</strong>05 Jun 2025</div>
               </div>
               <div class="col-md-6">
                 <div class="info-box">
