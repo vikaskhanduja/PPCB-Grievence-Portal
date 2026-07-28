@@ -1056,6 +1056,116 @@
       display: block;
     }
 
+    /* Compliance blocks auto-greyed when no matching order was issued */
+    .cb-disabled {
+      opacity: 0.5;
+      background: #f5f5f5;
+    }
+
+    .cb-disabled .cb-hd {
+      cursor: not-allowed;
+      pointer-events: none;
+      background: #f5f5f5;
+    }
+
+    .cb-na-note {
+      font-size: 0.66rem;
+      color: var(--mut);
+      font-style: italic;
+      padding: 0 15px 11px;
+      margin-top: -8px;
+    }
+
+    /* Orders section — edit / lock bar (editable until disposal) */
+    .order-lock-bar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #fff8e6;
+      border: 1.5px solid #f0d880;
+      border-radius: var(--r);
+      padding: 11px 16px;
+      margin-bottom: 14px;
+      font-size: 0.76rem;
+      color: #8a6000;
+      flex-wrap: wrap;
+    }
+
+    .order-edit-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      color: var(--mut);
+      background: var(--s2);
+      border: 1px solid var(--bdr);
+      border-radius: var(--rs);
+      padding: 8px 12px;
+      margin-bottom: 14px;
+    }
+
+    /* e-Office style modification / audit trail */
+    .audit-trail {
+      border: 1.5px solid var(--bdr);
+      border-radius: var(--r);
+      background: white;
+      margin-top: 18px;
+      overflow: hidden;
+    }
+
+    .audit-trail-hd {
+      padding: 10px 15px;
+      font-weight: 800;
+      font-size: 0.79rem;
+      background: var(--s2);
+      border-bottom: 1px solid var(--bdr);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .audit-trail-hd i {
+      color: var(--P);
+    }
+
+    .audit-trail-hint {
+      font-weight: 400;
+      color: var(--mut);
+      font-size: 0.66rem;
+    }
+
+    .audit-log {
+      max-height: 230px;
+      overflow-y: auto;
+      padding: 6px 15px;
+    }
+
+    .audit-entry {
+      display: flex;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--bdr);
+      font-size: 0.73rem;
+    }
+
+    .audit-entry:last-child {
+      border-bottom: none;
+    }
+
+    .audit-time {
+      color: var(--mut);
+      white-space: nowrap;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .audit-empty {
+      color: var(--lit);
+      font-size: 0.73rem;
+      padding: 10px 0;
+    }
+
     .chv {
       color: var(--mut);
       transition: transform 0.2s;
@@ -1480,6 +1590,30 @@
       font-size: .88rem;
     }
 
+    /* Source attribution badges on section headings */
+    .src-badge {
+      font-size: .62rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 100px;
+      margin-left: 6px;
+      border: 1px solid transparent;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .src-badge-citizen {
+      color: var(--SUC);
+      background: #d4f5e2;
+      border-color: #a8e8c2;
+    }
+
+    .src-badge-ro {
+      color: var(--P);
+      background: #e8f0fb;
+      border-color: #b8d4f4;
+    }
+
     /* Doc item */
     .doc-row {
       display: flex;
@@ -1826,15 +1960,10 @@
     ══════════════════════════════════════ -->
     <div class="mob-tabs" id="mobTabs" style="display: none">
       <button class="mob-tab active" onclick="goTo(0)">1.Summary</button>
-      <!-- <button class="mob-tab" onclick="goTo(1)">2.Industry</button>
-              <button class="mob-tab" onclick="goTo(2)">3.Grievance</button> -->
-      <button class="mob-tab" onclick="goTo(3)">4.Visit</button>
-      <button class="mob-tab" onclick="goTo(4)">5.Action</button>
-      <button class="mob-tab" onclick="goTo(5)">6.Orders</button>
-      <button class="mob-tab" onclick="goTo(6)">7.Compliance</button>
-      <button class="mob-tab" onclick="goTo(7)">8.ATR</button>
-      <!-- <button class="mob-tab" onclick="goTo(8)">9.Appeal 1</button>
-              <button class="mob-tab" onclick="goTo(9)">10.Appeal 2</button> -->
+      <button class="mob-tab" onclick="goTo(1)">2.Action</button>
+      <button class="mob-tab" onclick="goTo(2)">3.Orders</button>
+      <button class="mob-tab" onclick="goTo(3)">4.Compliance</button>
+      <button class="mob-tab" onclick="goTo(4)">5.ATR</button>
     </div>
 
     <!-- ══════════════════════════════════════
@@ -1874,7 +2003,7 @@
           <div class="rp-bar-bg">
             <div class="rp-bar-fill" id="rpFill" style="width: 0%"></div>
           </div>
-          <div class="rp-text" id="rpText">0 of 6 completed</div>
+          <div class="rp-text" id="rpText">0 of 5 completed</div>
         </div>
       </aside>
 
@@ -1910,7 +2039,9 @@
               <span class="ro-badge"><i class="bi bi-lock-fill"></i> Read Only</span>
             </div>
 
-            <div class="sec-h"><i class="bi bi-person-circle"></i> Complainant Details</div>
+            <div class="sec-h"><i class="bi bi-person-circle"></i> Complainant Details
+              <span class="src-badge src-badge-citizen">Provided by Complainant</span>
+            </div>
 
             <div class="row g-3 mb-4">
               <div class="col-md-4">
@@ -1942,7 +2073,37 @@
             </div>
 
             <div class="sec-h">
+              <i class="bi bi-paperclip"></i> Evidence Submitted by Citizen
+              <span class="src-badge src-badge-citizen">Provided by Complainant</span>
+            </div>
+            <div class="doc-row">
+              <div class="doc-ico img"><i class="bi bi-image-fill"></i></div>
+              <div>
+                <div class="doc-name">effluent_photo_01.jpg</div>
+                <div class="doc-meta">Photo · 2.1 MB · Submitted on 03 Jun 2025</div>
+              </div>
+              <div class="doc-dl"><i class="bi bi-download"></i></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-ico vid"><i class="bi bi-camera-video-fill"></i></div>
+              <div>
+                <div class="doc-name">nala_video_evidence.mp4</div>
+                <div class="doc-meta">Video · 8.6 MB · Submitted on 03 Jun 2025</div>
+              </div>
+              <div class="doc-dl"><i class="bi bi-download"></i></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-ico pdf"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+              <div>
+                <div class="doc-name">villagers_complaint_letter.pdf</div>
+                <div class="doc-meta">PDF · 0.9 MB · Submitted on 03 Jun 2025</div>
+              </div>
+              <div class="doc-dl"><i class="bi bi-download"></i></div>
+            </div>
+
+            <div class="sec-h">
               <i class="bi bi-exclamation-triangle-fill"></i> Grievance Details
+              <span class="src-badge src-badge-ro">Filled by Regional Office</span>
             </div>
 
             <div class="row g-3 mb-4">
@@ -2027,33 +2188,6 @@
 
             </div>
 
-            <div class="sec-h">
-              <i class="bi bi-paperclip"></i> Evidence Submitted by Citizen
-            </div>
-            <div class="doc-row">
-              <div class="doc-ico img"><i class="bi bi-image-fill"></i></div>
-              <div>
-                <div class="doc-name">effluent_photo_01.jpg</div>
-                <div class="doc-meta">Photo · 2.1 MB · Submitted on 03 Jun 2025</div>
-              </div>
-              <div class="doc-dl"><i class="bi bi-download"></i></div>
-            </div>
-            <div class="doc-row">
-              <div class="doc-ico vid"><i class="bi bi-camera-video-fill"></i></div>
-              <div>
-                <div class="doc-name">nala_video_evidence.mp4</div>
-                <div class="doc-meta">Video · 8.6 MB · Submitted on 03 Jun 2025</div>
-              </div>
-              <div class="doc-dl"><i class="bi bi-download"></i></div>
-            </div>
-            <div class="doc-row">
-              <div class="doc-ico pdf"><i class="bi bi-file-earmark-pdf-fill"></i></div>
-              <div>
-                <div class="doc-name">villagers_complaint_letter.pdf</div>
-                <div class="doc-meta">PDF · 0.9 MB · Submitted on 03 Jun 2025</div>
-              </div>
-              <div class="doc-dl"><i class="bi bi-download"></i></div>
-            </div>
             <div class="vm-left my-3 vstep-meta">
               <div>
                 <div class="vm-title" id="vmTitle">RO Processing History</div>
@@ -2548,8 +2682,19 @@
           <h6 class="fw-bold mb-1" style="font-size: 0.88rem">Orders</h6>
           <p class="fh mb-4">
             Check all applicable orders. Each block expands for amounts, dates
-            and documents.
+            and documents. Whatever is checked here decides which fields open up
+            in the next Compliance step.
           </p>
+
+          <div class="order-lock-bar" id="orderLockBar">
+            <div><i class="bi bi-lock-fill me-1"></i><span id="orderLockMsg"></span></div>
+            <button type="button" class="bo" id="btnEditOrders" onclick="toggleOrderEdit()">Edit Orders</button>
+          </div>
+          <div class="order-edit-note" id="orderEditNote">
+            <i class="bi bi-info-circle-fill"></i>
+            Orders remain editable at any time until the complaint is disposed (marked "Complainant Satisfied"). Every
+            change is captured below in the Modification / Audit Trail.
+          </div>
 
           <!-- Bank Guarantee -->
           <!-- <div class="cb">
@@ -2634,7 +2779,7 @@
           <div class="cb">
             <div class="cb-hd" onclick="toggleCB(this, 'oth_b')">
               <input type="checkbox" id="cb_oth" onclick="event.stopPropagation()"
-                onchange="openCBBody('oth_b', this)" />
+                onchange="openCBBody('oth_b', this); syncCompliance();" />
               <label for="cb_oth" class="cb-lbl"><i class="bi bi-geo-alt-fill me-2" style="color: var(--mut)"></i>Follow
                 Up Visit Required for Compliance Check</label>
               <i class="bi bi-chevron-down chv"></i>
@@ -2653,7 +2798,7 @@
           <div class="cb">
             <div class="cb-hd" onclick="toggleCB(this, 'scnord_b')">
               <input type="checkbox" id="cb_scnord" onclick="event.stopPropagation()"
-                onchange="openCBBody('scnord_b', this)" />
+                onchange="openCBBody('scnord_b', this); syncCompliance();" />
               <label for="cb_scnord" class="cb-lbl"><i class="bi bi-file-earmark-exclamation me-2"
                   style="color: var(--WAR)"></i>Other Order</label>
               <i class="bi bi-chevron-down chv"></i>
@@ -2704,7 +2849,7 @@
           <div class="cb">
             <div class="cb-hd" onclick="toggleCB(this, 'seal_b')">
               <input type="checkbox" id="cb_seal" onclick="event.stopPropagation()"
-                onchange="openCBBody('seal_b', this)" />
+                onchange="openCBBody('seal_b', this); syncCompliance();" />
               <label for="cb_seal" class="cb-lbl"><i class="bi bi-slash-circle me-2"
                   style="color: var(--DAN)"></i>Closure / Sealing Order</label>
               <i class="bi bi-chevron-down chv"></i>
@@ -2750,6 +2895,16 @@
           </div>
 
           <div id="finalOL" class="mt-2"></div>
+
+          <div class="audit-trail">
+            <div class="audit-trail-hd">
+              <i class="bi bi-journal-text"></i> Modification / Audit Trail
+              <span class="audit-trail-hint">(every change to Orders &amp; Compliance is logged, e-Office style)</span>
+            </div>
+            <div class="audit-log">
+              <div class="audit-empty">No modifications recorded yet.</div>
+            </div>
+          </div>
         </div>
 
         <!-- STEP 3 : COMPLIANCE -->
@@ -2763,7 +2918,7 @@
           </p>
 
           <!-- Other Order Compliance -->
-          <div class="cb">
+          <div class="cb" id="cbwrap_othc">
             <div class="cb-hd" onclick="toggleCB(this, 'othc_b')">
               <input type="checkbox" id="cb_othc" onclick="event.stopPropagation()"
                 onchange="openCBBody('othc_b', this)" />
@@ -2771,6 +2926,8 @@
                   style="color: var(--mut)"></i>Follow Up Visit</label>
               <i class="bi bi-chevron-down chv"></i>
             </div>
+            <div class="cb-na-note" id="na_othc" style="display:none;"><i class="bi bi-slash-circle me-1"></i>Not
+              applicable — "Follow Up Visit Required" was not checked in Orders.</div>
             <div class="cb-body" id="othc_b">
               <div class="row g-3">
                 <div class="col-md-4">
@@ -2832,7 +2989,7 @@
           </div>
 
           <!-- BG Compliance -->
-          <div class="cb">
+          <div class="cb" id="cbwrap_bgc">
             <div class="cb-hd" onclick="toggleCB(this, 'bgc_b')">
               <input type="checkbox" id="cb_bgc" onclick="event.stopPropagation()"
                 onchange="openCBBody('bgc_b', this)" />
@@ -2840,6 +2997,8 @@
                 Orders</label>
               <i class="bi bi-chevron-down chv"></i>
             </div>
+            <div class="cb-na-note" id="na_bgc" style="display:none;"><i class="bi bi-slash-circle me-1"></i>Not
+              applicable — "Other Order" was not checked in Orders.</div>
             <div class="cb-body" id="bgc_b">
               <div class="row g-3">
                 <div class="col-md-4">
@@ -2899,7 +3058,7 @@
           </div>
 
 
-          <div class="cb">
+          <div class="cb" id="cbwrap_seal2">
   <div class="cb-hd" onclick="toggleCB(this, 'seal_b2')">
     <input
       type="checkbox"
@@ -2915,6 +3074,9 @@
 
     <i class="bi bi-chevron-down chv"></i>
   </div>
+
+  <div class="cb-na-note" id="na_seal2" style="display:none;"><i class="bi bi-slash-circle me-1"></i>Not applicable —
+    "Closure / Sealing Order" was not checked in Orders.</div>
 
   <div class="cb-body" id="seal_b2">
     <div class="warn-box mb-3">
@@ -2993,24 +3155,21 @@
             <p style="font-size: 0.68rem;">Upload Final Order PDF · Max 20 MB</p>
           </div>
 
+          <div class="audit-trail">
+            <div class="audit-trail-hd">
+              <i class="bi bi-journal-text"></i> Modification / Audit Trail
+              <span class="audit-trail-hint">(every change to Orders &amp; Compliance is logged, e-Office style)</span>
+            </div>
+            <div class="audit-log">
+              <div class="audit-empty">No modifications recorded yet.</div>
+            </div>
+          </div>
 
         </div>
 
         <!-- STEP 4 : ATR & DISPOSAL -->
         <div class="vstep-panel" id="vsp7">
-          <div class="col-12 mb-2">
-          <label>
-              <input type="checkbox" id="isSocialMedia" />
-              This is a Social Media Complaint
-          </label>
-
-          </div>
           <div class="atr-box">
-            <div id="socialAtrSection" style="display: none">
-              <label class="fl">Social Media ATR</label>
-              <textarea class="fc" rows="3" placeholder="Write response for social media platform..."></textarea>
-            </div>
-
             <div class="atr-title">
               <i class="bi bi-file-earmark-check-fill"></i>Action Taken Report
               (ATR) to Complainant
@@ -3055,7 +3214,7 @@
             </button>
           </div>
           <div class="d-flex align-items-center gap-2 flex-wrap">
-            <span id="stepCtr" style="font-size: 0.72rem; color: var(--mut)">Step 1 of 6</span>
+            <span id="stepCtr" style="font-size: 0.72rem; color: var(--mut)">Step 1 of 5</span>
             <button class="bo" onclick="saveDraft()">
               <i class="bi bi-floppy me-1"></i>Save Draft
             </button>
@@ -3146,7 +3305,7 @@
     /* ══════════════════════════════════════
           CONFIG
         ══════════════════════════════════════ */
-    const TOTAL = 7;
+    const TOTAL = 5;
     const META = [
       {
         t: "Complaint History",
@@ -3412,6 +3571,7 @@
       if (p.dataset.s === "Resolved") p.classList.add("sp-done");
       document.getElementById("curStat").textContent = p.dataset.s;
       toast("Status: " + p.dataset.s, "success");
+      updateOrderLock();
     }
 
     function showFiles(inp, lid) {
@@ -3515,17 +3675,188 @@ function forwardToRO() {
 
 }
 
+    /* ══════════════════════════════════════
+          ORDERS → COMPLIANCE LINKAGE  (Feedback #4)
+          Only compliance fields for orders actually
+          checked in Step 2 stay active; the rest are
+          greyed out / disabled.
+        ══════════════════════════════════════ */
+    const ORDER_COMPLIANCE_MAP = [
+      { order: "cb_oth", compliance: "cb_othc", wrap: "cbwrap_othc", body: "othc_b", na: "na_othc" },
+      { order: "cb_scnord", compliance: "cb_bgc", wrap: "cbwrap_bgc", body: "bgc_b", na: "na_bgc" },
+      { order: "cb_seal", compliance: "cb_seal2", wrap: "cbwrap_seal2", body: "seal_b2", na: "na_seal2" },
+    ];
+
+    function syncCompliance() {
+      let anyChecked = false;
+      ORDER_COMPLIANCE_MAP.forEach((m) => {
+        const orderEl = document.getElementById(m.order);
+        const complianceEl = document.getElementById(m.compliance);
+        const wrapEl = document.getElementById(m.wrap);
+        const bodyEl = document.getElementById(m.body);
+        const naEl = document.getElementById(m.na);
+        if (!orderEl || !complianceEl || !wrapEl) return;
+        const orderChecked = orderEl.checked;
+        if (orderChecked) anyChecked = true;
+
+        wrapEl.classList.toggle("cb-disabled", !orderChecked);
+        complianceEl.disabled = !orderChecked;
+        if (naEl) naEl.style.display = orderChecked ? "none" : "block";
+
+        if (!orderChecked) {
+          complianceEl.checked = false;
+          if (bodyEl) bodyEl.classList.remove("open");
+          const chv = wrapEl.querySelector(".chv");
+          if (chv) chv.style.transform = "";
+        }
+      });
+      const hint = document.getElementById("complianceHint");
+      if (hint) {
+        hint.style.display = anyChecked ? "none" : "flex";
+      }
+    }
+
+    /* ══════════════════════════════════════
+          ORDERS — ALWAYS EDITABLE UNTIL DISPOSAL
+          (Feedback #5) with explicit re-open control
+          once the case is disposed / resolved.
+        ══════════════════════════════════════ */
+    let ordersUnlocked = false;
+
+    function isDisposed() {
+      const active = document.querySelector("#statPills .sp.on");
+      return !!active && active.dataset.s === "Resolved";
+    }
+
+    function updateOrderLock() {
+      const disposed = isDisposed();
+      const locked = disposed && !ordersUnlocked;
+      const orderPanel = document.getElementById("vsp5");
+      if (orderPanel) {
+        orderPanel
+          .querySelectorAll("input, select, textarea, button.btn-success")
+          .forEach((f) => {
+            if (f.id === "btnEditOrders") return;
+            f.disabled = locked;
+          });
+        orderPanel.querySelectorAll(".cb-hd").forEach((h) => {
+          h.style.pointerEvents = locked ? "none" : "";
+          h.style.opacity = locked ? "0.6" : "";
+        });
+      }
+      const bar = document.getElementById("orderLockBar");
+      const note = document.getElementById("orderEditNote");
+      const msg = document.getElementById("orderLockMsg");
+      const btn = document.getElementById("btnEditOrders");
+      if (bar) bar.style.display = disposed ? "flex" : "none";
+      if (note) note.style.display = disposed ? "none" : "flex";
+      if (msg) {
+        msg.textContent = locked
+          ? "This complaint is disposed. Orders are locked — click Edit Orders to revisit or modify, if required."
+          : "Orders reopened for editing after disposal. Remember to lock again once done — this is logged below.";
+      }
+      if (btn) btn.textContent = locked ? "Edit Orders" : "Lock Orders";
+    }
+
+    function toggleOrderEdit() {
+      if (isDisposed() && !ordersUnlocked) {
+        const reason = prompt(
+          "Reason for reopening Orders after disposal (required):",
+          "",
+        );
+        if (!reason) return;
+        ordersUnlocked = true;
+        logAudit(
+          "Orders",
+          'Reopened for editing after disposal — reason: "' + reason + '"',
+        );
+      } else if (isDisposed() && ordersUnlocked) {
+        ordersUnlocked = false;
+        logAudit("Orders", "Locked again after post-disposal edit");
+      }
+      updateOrderLock();
+    }
+
+    /* ══════════════════════════════════════
+          e-OFFICE STYLE MODIFICATION / AUDIT TRAIL
+          (Feedback #6) — every field change inside
+          Orders & Compliance is timestamped & listed.
+        ══════════════════════════════════════ */
+    const auditLog = [];
+
+    function fieldLabelFor(el) {
+      const wrap = el.closest(
+        '[class*="col-"]',
+      );
+      if (wrap) {
+        const lbl = wrap.querySelector("label.fl");
+        if (lbl) return lbl.textContent.replace("*", "").trim();
+      }
+      const cbLbl = el.closest(".cb")?.querySelector(".cb-lbl");
+      if (el.type === "checkbox" && cbLbl) return cbLbl.textContent.trim();
+      return el.getAttribute("placeholder") || el.id || el.name || "field";
+    }
+
+    function logAudit(section, msg) {
+      const entry = {
+        t: new Date().toLocaleString("en-IN", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        section: section,
+        msg: msg,
+      };
+      auditLog.unshift(entry);
+      renderAudit();
+    }
+
+    function renderAudit() {
+      document.querySelectorAll(".audit-log").forEach((box) => {
+        if (!auditLog.length) {
+          box.innerHTML =
+            '<div class="audit-empty">No modifications recorded yet.</div>';
+          return;
+        }
+        box.innerHTML = auditLog
+          .map(
+            (e) => `
+            <div class="audit-entry">
+              <div class="audit-time">${e.t}</div>
+              <div><strong>${e.section}</strong> — ${e.msg}</div>
+            </div>`,
+          )
+          .join("");
+      });
+    }
+
+    function attachAuditListeners(containerId, sectionName) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.querySelectorAll("input, select, textarea").forEach((el) => {
+        if (el.type === "file") return;
+        if (el.id === "btnEditOrders") return;
+        el.addEventListener("change", () => {
+          const label = fieldLabelFor(el);
+          let val = el.value;
+          if (el.type === "checkbox") val = el.checked ? "checked" : "unchecked";
+          if (val && val.length > 45) val = val.slice(0, 45) + "…";
+          logAudit(
+            sectionName,
+            `"${label}" updated` + (val ? " → " + val : ""),
+          );
+        });
+      });
+    }
+
     /* INIT */
     goTo(0);
-
-    // document
-    //   .getElementById("isSocialMedia")
-    //   .addEventListener("change", function () {
-    //     document.getElementById("socialAtrSection").style.display = this
-    //       .checked
-    //       ? "block"
-    //       : "none";
-    //   });
+    syncCompliance();
+    updateOrderLock();
+    attachAuditListeners("vsp5", "Orders");
+    attachAuditListeners("vsp6", "Compliance");
   </script>
 </body>
 
