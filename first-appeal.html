@@ -1571,6 +1571,30 @@
       color: var(--SUC);
     }
 
+    /* Source attribution badges on section headings */
+    .src-badge {
+      font-size: .62rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 100px;
+      margin-left: 6px;
+      border: 1px solid transparent;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .src-badge-citizen {
+      color: var(--SUC);
+      background: #d4f5e2;
+      border-color: #a8e8c2;
+    }
+
+    .src-badge-ro {
+      color: var(--P);
+      background: #e8f0fb;
+      border-color: #b8d4f4;
+    }
+
 
     /* Section heading */
     .sec-h {
@@ -2009,9 +2033,9 @@
         <!-- STEP 0 : Complaint Summary -->
         <div class="vstep-panel active" id="vsp0">
           <div class="sp-body">
+            <div class="sec-h"><i class="bi bi-person-circle"></i> Complainant Details 
+              <span class="src-badge src-badge-citizen">Provided by Complainant</span></div>
             
-
-            <div class="sec-h"><i class="bi bi-person-circle"></i> Complainant Details</div>
 
             <div class="row g-3 mb-4">
               <div class="col-md-6">
@@ -2042,7 +2066,6 @@
 
             <div class="sec-h">
               <i class="bi bi-paperclip"></i> Evidence Submitted by Citizen
-              <span class="src-badge src-badge-citizen">Provided by Complainant</span>
             </div>
             <div class="doc-row">
               <div class="doc-ico img"><i class="bi bi-image-fill"></i></div>
@@ -2069,8 +2092,9 @@
               <div class="doc-dl"><i class="bi bi-download"></i></div>
             </div>
 
-            <div class="sec-h mt-3">
+            <div class="sec-h mt-4">
               <i class="bi bi-exclamation-triangle-fill"></i> Grievance Details
+              <span class="src-badge src-badge-ro">Filled by Regional Office</span>
             </div>
 
             <div class="row g-3 mb-4">
