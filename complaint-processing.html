@@ -1408,6 +1408,54 @@
           padding: 12px 10px 100px;
         }
       }
+
+      /* Query Module — evidence checkbox chips */
+      .evidence-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .evidence-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 12px;
+        border: 1px solid var(--bdr);
+        border-radius: var(--rs);
+        background: var(--sur);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        min-width: 246px;
+      }
+
+      .evidence-item:hover {
+        border-color: var(--P);
+        background: #f5f9ff;
+      }
+
+      .evidence-item input {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+
+      .evidence-item i {
+        color: var(--P);
+        font-size: 18px;
+      }
+
+      .evidence-item span {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--txt);
+      }
+
+      /* Highlight selected option */
+      .evidence-item:has(input:checked) {
+        background: #eef6ff;
+        border-color: var(--P);
+      }
     </style>
   </head>
 
@@ -1489,6 +1537,17 @@
             Pollution (Industrial)
           </div>
         </div>
+
+        <div class="query-module">
+          <button
+            class="bp"
+            data-bs-toggle="modal"
+            data-bs-target="#raiseQueryModal"
+          >
+            <i class="bi bi-plus-lg"></i> Raise Query
+          </button>
+        </div>
+
         <div class="pend-pill">
           <div>
             <div class="pend-n" id="pendNum2">—</div>
@@ -1541,15 +1600,11 @@
   ══════════════════════════════════════ -->
       <div class="mob-tabs" id="mobTabs" style="display: none">
         <button class="mob-tab active" onclick="goTo(0)">1.Summary</button>
-        <!-- <button class="mob-tab" onclick="goTo(1)">2.Industry</button>
-            <button class="mob-tab" onclick="goTo(2)">3.Grievance</button> -->
-        <button class="mob-tab" onclick="goTo(3)">4.Visit</button>
-        <button class="mob-tab" onclick="goTo(4)">5.Action</button>
-        <button class="mob-tab" onclick="goTo(5)">6.Orders</button>
-        <button class="mob-tab" onclick="goTo(6)">7.Compliance</button>
-        <button class="mob-tab" onclick="goTo(7)">8.ATR</button>
-        <!-- <button class="mob-tab" onclick="goTo(8)">9.Appeal 1</button>
-            <button class="mob-tab" onclick="goTo(9)">10.Appeal 2</button> -->
+        <button class="mob-tab" onclick="goTo(1)">2.Visit</button>
+        <button class="mob-tab" onclick="goTo(2)">3.Action</button>
+        <button class="mob-tab" onclick="goTo(3)">4.Orders</button>
+        <button class="mob-tab" onclick="goTo(4)">5.Compliance</button>
+        <button class="mob-tab" onclick="goTo(5)">6.ATR</button>
       </div>
 
       <!-- ══════════════════════════════════════
@@ -2327,37 +2382,15 @@
                   <div class="col-md-4">
                     <button
                       type="button"
-                      class="btn btn-primary w-100"
+                      class="bo w-100"
+                      style="justify-content: center"
                       onclick="getLocation()"
                     >
-                      <i class="fa fa-map-marker"></i>
+                      <i class="bi bi-geo-alt-fill"></i>
                       Auto Fetch Location
                     </button>
                   </div>
                 </div>
-
-                <script>
-                  function getLocation() {
-                    if (navigator.geolocation) {
-                      navigator.geolocation.getCurrentPosition(
-                        function (position) {
-                          document.getElementById("latitude").value =
-                            position.coords.latitude;
-
-                          document.getElementById("longitude").value =
-                            position.coords.longitude;
-                        },
-                        function (error) {
-                          alert(
-                            "Unable to fetch location. Please allow location access.",
-                          );
-                        },
-                      );
-                    } else {
-                      alert("Geolocation is not supported by this browser.");
-                    }
-                  }
-                </script>
 
                 <div class="col-12">
                   <label class="fl">Any Additional Remarks</label>
@@ -2374,7 +2407,9 @@
                 </div>
               </div>
             </div>
-            <button class="btn btn-success">Add Another Visit</button>
+            <button class="bo">
+              <i class="bi bi-plus-lg me-1"></i>Add Another Visit
+            </button>
           </div>
 
           <!-- STEP 3 : ACTION TAKEN -->
@@ -2722,85 +2757,6 @@
               and documents.
             </p>
 
-            <!-- Bank Guarantee -->
-            <!-- <div class="cb">
-                        <div class="cb-hd" onclick="toggleCB(this,'bg_b')">
-                            <input type="checkbox" id="cb_bg" onclick="event.stopPropagation()"
-                                onchange="openCBBody('bg_b',this)">
-                            <label for="cb_bg" class="cb-lbl"><i class="bi bi-bank2 me-2"
-                                    style="color:var(--P);"></i>Bank Guarantee Ordered</label>
-                            <i class="bi bi-chevron-down chv"></i>
-                        </div>
-                        <div class="cb-body" id="bg_b">
-                            <div class="row g-3">
-                                <div class="col-md-4">
-                                    <label class="fl">Amount (₹)</label>
-                                    <input type="text" class="fc" placeholder="e.g. 500000">
-                                </div>
-                                <div class="col-md-4"><label class="fl">Date of Order</label><input type="date"
-                                        class="fc"></div>
-                                <div class="col-md-4">
-                                    <label class="fl">BG Document</label>
-                                    <div class="upz" style="padding:11px;"
-                                        onclick="document.getElementById('bgF').click()"><i class="bi bi-paperclip"
-                                            style="font-size:1rem;"></i>
-                                        <p style="font-size:.68rem;">Attach PDF</p>
-                                    </div>
-                                    <input type="file" id="bgF" accept=".pdf" style="display:none;"
-                                        onchange="showFiles(this,'bgFL')">
-                                    <div id="bgFL" class="mt-1"></div>
-                                </div>
-                                <div class="col-12"><label class="fl">Order Details / Remarks</label><textarea
-                                        class="fc" rows="2"
-                                        placeholder="Conditions, bank details, validity period…"></textarea></div>
-                            </div>
-                        </div>
-                    </div> -->
-
-            <!-- Environmental Compensation -->
-            <!-- <div class="cb">
-                        <div class="cb-hd" onclick="toggleCB(this,'ec_b')">
-                            <input type="checkbox" id="cb_ec" onclick="event.stopPropagation()"
-                                onchange="openCBBody('ec_b',this)">
-                            <label for="cb_ec" class="cb-lbl"><i class="bi bi-currency-rupee me-2"
-                                    style="color:var(--DAN);"></i>Environmental Compensation (EC) Imposed</label>
-                            <i class="bi bi-chevron-down chv"></i>
-                        </div>
-                        <div class="cb-body" id="ec_b">
-                            <div class="info-box mb-3"><i class="bi bi-info-circle-fill me-1"></i>EC data feeds into
-                                <strong>Report Extraction</strong> to track outstanding dues across all cases.
-                            </div>
-                            <div class="row g-3">
-                                <div class="col-md-4"><label class="fl">EC Amount (₹) <span
-                                            class="req">*</span></label><input type="text" class="fc"
-                                        placeholder="e.g. 200000"></div>
-                                <div class="col-md-4">
-                                    <label class="fl">Order Date</label>
-                                    <input type="date" class="fc">
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="fl">Deposit Date</label>
-                                    <input type="date" class="fc">
-                                </div>
-                                <div class="col-md-12">
-                                    <label class="fl">EC Order Document</label>
-                                    <div class="upz" style="padding:11px;"
-                                        onclick="document.getElementById('ecF').click()"><i class="bi bi-paperclip"
-                                            style="font-size:1rem;"></i>
-                                        <p style="font-size:.68rem;">Attach EC Order PDF</p>
-                                    </div>
-                                    <input type="file" id="ecF" accept=".pdf" style="display:none;"
-                                        onchange="showFiles(this,'ecFL')">
-                                    <div id="ecFL" class="mt-1"></div>
-                                </div>
-                                <div class="col-12"><label class="fl">EC Order Grounds</label><textarea class="fc"
-                                        rows="2"
-                                        placeholder="Grounds for EC, environmental damage, calculation method…"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-
             <!-- Follow up Required -->
             <div class="cb">
               <div class="cb-hd" onclick="toggleCB(this, 'oth_b')">
@@ -2826,18 +2782,6 @@
                       >Scheduled Visit Date <span class="req">*</span></label
                     ><input class="fc" type="date" value="" />
                   </div>
-                  <!-- <div class="col-md-4"><label class="fl">Whether Visit Occurred</label>
-                                    <div class="yn">
-                                        <div class="yb yy">YES</div>
-                                        <div class="yb yn_">NO</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4"><label class="fl">Actual Visit Date</label><input class="fc"
-                                        type="date" value=""></div>
-                                <div class="col-12"><label class="fl">Visit Findings / Compliance
-                                        Observations</label><textarea class="fc" rows="3"
-                                        placeholder="Compliance status, measures implemented, remaining violations…"></textarea>
-                                </div> -->
                 </div>
               </div>
             </div>
@@ -2995,7 +2939,9 @@
                   </div>
                 </div>
                 <br />
-                <button class="btn btn-success">Add Another Order</button>
+                <button class="bo">
+                  <i class="bi bi-plus-lg me-1"></i>Add Another Order
+                </button>
               </div>
             </div>
 
@@ -3066,23 +3012,7 @@
                     <label class="fl"
                       >Verified on Date <span class="req">*</span></label
                     >
-                    <input
-                      type="date"
-                      class="fc"
-                      id="othcD"
-                      onchange="
-                        setAlert(
-                          'othcD',
-                          'othcAl',
-                          'othcAlTxt',
-                          'Order compliance due',
-                        )
-                      "
-                    />
-                    <div class="ach" id="othcAl" style="display: none">
-                      <i class="bi bi-bell-fill"></i
-                      ><span id="othcAlTxt"></span>
-                    </div>
+                    <input type="date" class="fc" id="othcVerD" />
                   </div>
                   <div class="col-md-12">
                     <label class="fl">Whether Compliance Verified</label>
@@ -3171,22 +3101,7 @@
                     <label class="fl"
                       >Order Complied On Date<span class="req">*</span></label
                     >
-                    <input
-                      type="date"
-                      class="fc"
-                      id="bgcD"
-                      onchange="
-                        setAlert(
-                          'bgcD',
-                          'bgcAl',
-                          'bgcAlTxt',
-                          'Bank Guarantee submission due',
-                        )
-                      "
-                    />
-                    <div class="ach" id="bgcAl" style="display: none">
-                      <i class="bi bi-bell-fill"></i><span id="bgcAlTxt"></span>
-                    </div>
+                    <input type="date" class="fc" id="bgcVerD" />
                   </div>
 
                   <div class="col-md-6">
@@ -3194,19 +3109,19 @@
                     <div
                       class="upz"
                       style="padding: 11px"
-                      onclick="document.getElementById('othcF').click()"
+                      onclick="document.getElementById('bgcF').click()"
                     >
                       <i class="bi bi-paperclip" style="font-size: 1rem"></i>
                       <p style="font-size: 0.68rem">Attach PDF</p>
                     </div>
                     <input
                       type="file"
-                      id="othcF"
+                      id="bgcF"
                       accept=".pdf"
                       style="display: none"
-                      onchange="showFiles(this, 'othcFL')"
+                      onchange="showFiles(this, 'bgcFL')"
                     />
-                    <div id="othcFL" class="mt-1"></div>
+                    <div id="bgcFL" class="mt-1"></div>
                   </div>
 
                   <div class="col-6">
@@ -3221,52 +3136,7 @@
               </div>
             </div>
 
-            <!-- EC Compliance -->
-            <!-- <div class="cb">
-                        <div class="cb-hd" onclick="toggleCB(this,'ecc_b')">
-                            <input type="checkbox" id="cb_ecc" onclick="event.stopPropagation()"
-                                onchange="openCBBody('ecc_b',this)">
-                            <label for="cb_ecc" class="cb-lbl"><i class="bi bi-currency-rupee me-2"
-                                    style="color:var(--DAN);"></i>Environmental Compensation — Compliance Status</label>
-                            <i class="bi bi-chevron-down chv"></i>
-                        </div>
-                        <div class="cb-body" id="ecc_b">
-                            <div class="info-box mb-3"><i class="bi bi-info-circle-fill me-1"></i>EC compliance data is
-                                used in <strong>Report Extraction</strong> to track outstanding dues.</div>
-                            <div class="row g-3">
-                                <div class="col-md-4">
-                                    <label class="fl">Date of Compliance Due <span class="req">*</span></label>
-                                    <input type="date" class="fc" id="eccD"
-                                        onchange="setAlert('eccD','eccAl','eccAlTxt','EC payment due')">
-                                    <div class="ach" id="eccAl" style="display:none;"><i
-                                            class="bi bi-bell-fill"></i><span id="eccAlTxt"></span></div>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="fl">Whether EC Submitted <span class="req">*</span></label>
-                                    <div class="yn">
-                                        <div class="yb yy"
-                                            onclick="setYN(this);document.getElementById('ecPartRow').style.display='none'">
-                                            YES</div>
-                                        <div class="yb yn_"
-                                            onclick="setYN(this);document.getElementById('ecPartRow').style.display='none'">
-                                            NO</div>
-                                        <div class="yb yp"
-                                            onclick="setYN(this);document.getElementById('ecPartRow').style.display='block'">
-                                            Partial</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4"><label class="fl">Date of Submission</label><input class="fc"
-                                        type="date" value=""></div>
-                                <div class="col-md-4" id="ecPartRow" style="display:none;"><label class="fl">Amount Paid
-                                        So Far (₹)</label><input type="number" class="fc"
-                                        placeholder="Amount received till date"></div>
-                                <div class="col-12"><label class="fl">EC Compliance Remarks</label><textarea class="fc"
-                                        rows="2"
-                                        placeholder="Payment mode, transaction reference, any pending dues…"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
+            <!-- EC Compliance removed — see 1st Appeal / Orders module for EC tracking -->
           </div>
 
           <!-- STEP 6 : ATR & DISPOSAL -->
@@ -3278,7 +3148,6 @@
                   This is a Social Media Complaint
                 </label>
               </div>
-
               <div id="socialAtrSection" style="display: none">
                 <label class="fl">Social Media ATR</label>
                 <textarea
@@ -3287,7 +3156,6 @@
                   placeholder="Write response for social media platform..."
                 ></textarea>
               </div>
-
               <div class="atr-title">
                 <i class="bi bi-file-earmark-check-fill"></i>Action Taken Report
                 (ATR) to Complainant
@@ -3407,20 +3275,133 @@
           </div>
 
           <div class="modal-footer">
+            <button class="bo" data-bs-dismiss="modal">Cancel</button>
+            <button class="bp" onclick="confirmSubmit()">
+              <i class="bi bi-check-circle-fill me-1"></i>Yes, Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-------Modal box for Query Module----->
+    <!-- Raise Query Modal -->
+    <div class="modal fade" id="raiseQueryModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content shadow border-0 rounded-4">
+          <!-- Header -->
+          <div
+            class="modal-header text-white"
+            style="
+              background: linear-gradient(
+                135deg,
+                #073763 0%,
+                #036b6b 60%,
+                #1a6fc4 100%
+              );
+            "
+          >
+            <div>
+              <h5 class="mb-1">
+                <i class="bi bi-question-circle me-2"></i>
+                Raise a Query
+              </h5>
+              <small class="opacity-75">
+                PPCB/GRM/2025/04821 &nbsp; • &nbsp; Sukhbir Singh
+              </small>
+            </div>
+
             <button
               type="button"
-              class="btn btn-secondary"
+              class="btn-close btn-close-white"
               data-bs-dismiss="modal"
-            >
-              Cancel
+            ></button>
+          </div>
+
+          <!-- Body -->
+          <div class="modal-body">
+            <!-- Query Description -->
+            <div class="mb-4">
+              <label class="fl"
+                >Query Description <span class="req">*</span></label
+              >
+              <textarea
+                class="fc"
+                rows="3"
+                placeholder="Enter the clarification or additional information required from the complainant..."
+              ></textarea>
+            </div>
+
+            <!-- Evidence Required -->
+            <div class="mb-3">
+              <label class="fl">What should the complainant provide?</label>
+
+              <div class="evidence-row">
+                <label class="evidence-item">
+                  <input type="checkbox" />
+                  <i class="bi bi-file-earmark-pdf-fill"></i>
+                  <span>Supporting Document</span>
+                </label>
+
+                <label class="evidence-item">
+                  <input type="checkbox" />
+                  <i class="bi bi-image-fill"></i>
+                  <span>Photograph</span>
+                </label>
+
+                <label class="evidence-item">
+                  <input type="checkbox" />
+                  <i class="bi bi-camera-video-fill"></i>
+                  <span>Video</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button class="bo" data-bs-dismiss="modal">Cancel</button>
+            <button class="bp" onclick="openConfirmQuery()">
+              <i class="bi bi-send-fill me-1"></i>
+              Raise Query
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-------------confirmation message-------------->
+    <div class="modal fade" id="confirmQueryModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="bi bi-question-circle-fill text-warning me-2"></i>
+              Confirm Query
+            </h5>
+
             <button
               type="button"
-              class="btn btn-primary"
-              onclick="confirmSubmit()"
-            >
-              Yes, Submit
-            </button>
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <div class="modal-body text-center">
+            <i
+              class="bi bi-chat-left-dots-fill text-warning"
+              style="font-size: 55px"
+            ></i>
+            <h5 class="mt-3">Raise this Query?</h5>
+            <p class="text-muted mb-0">
+              Are you sure you want to raise this query? The complainant will
+              receive an SMS/Email notification.
+            </p>
+          </div>
+
+          <div class="modal-footer justify-content-end">
+            <button class="bo" data-bs-dismiss="modal">Cancel</button>
+            <button class="bp" onclick="submitQuery()">Yes, Raise Query</button>
           </div>
         </div>
       </div>
@@ -3442,8 +3423,6 @@
           b: "Summary",
           i: "bi-file-text-fill",
         },
-        // { t: 'Industry Category', s: 'Industry & unit details · pollution category', b: 'Industry', i: 'bi-tags-fill' },
-        // { t: 'Grievance Category', s: 'Primary & additional categories', b: 'Grievance', i: 'bi-list-check' },
         {
           t: "Visit Details",
           s: "Assign · visit · comments · media",
@@ -3474,8 +3453,6 @@
           b: "ATR",
           i: "bi-file-earmark-check-fill",
         },
-        // { t: '1st Appeal (CEE)', s: 'Chief Environmental Engineer review', b: 'Appeal 1', i: 'bi-arrow-up-circle-fill' },
-        // { t: '2nd Appeal (MS)', s: 'Member Secretary · final decision', b: 'Appeal 2', i: 'bi-arrow-up-square-fill' },
       ];
       let cur = 0;
       const done = new Set();
@@ -3591,6 +3568,24 @@
       /* ══════════════════════════════════════
            FORM HELPERS  (minimal JS)
         ══════════════════════════════════════ */
+      function getLocation() {
+        if (!navigator.geolocation) {
+          alert("Geolocation is not supported by this browser.");
+          return;
+        }
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            document.getElementById("latitude").value =
+              position.coords.latitude;
+            document.getElementById("longitude").value =
+              position.coords.longitude;
+          },
+          function () {
+            alert("Unable to fetch location. Please allow location access.");
+          },
+        );
+      }
+
       function wc(el, id, max) {
         const w = el.value.trim() ? el.value.trim().split(/\s+/).length : 0;
         const b = document.getElementById(id);
@@ -3781,6 +3776,32 @@
             ? "block"
             : "none";
         });
+
+      /***********query module**********/
+
+      function openConfirmQuery() {
+        // Close Raise Query Modal
+        bootstrap.Modal.getInstance(
+          document.getElementById("raiseQueryModal"),
+        ).hide();
+
+        // Open Confirmation Modal
+        new bootstrap.Modal(
+          document.getElementById("confirmQueryModal"),
+        ).show();
+      }
+
+      function submitQuery() {
+        bootstrap.Modal.getInstance(
+          document.getElementById("confirmQueryModal"),
+        ).hide();
+
+        // Show Success Toast
+        toast("Application sent successfully", "success");
+        // Your API Call Here
+        // Example
+        // window.location.href = "dashboard.html";
+      }
     </script>
   </body>
 </html>
