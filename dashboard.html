@@ -89,6 +89,12 @@
             </a>
           </li>
 
+          <!-- <li class="nav-item">
+            <a class="nav-link" onclick="switchPage('query-status', this)">
+              <i class="fas fa-user-circle"></i> <span>Query Status</span>
+            </a>
+          </li> -->
+
           <!-- <li class="nav-item mt-3 mb-1 nav-section-label">
                     <span class="text-uppercase text-muted fw-bold ps-3" style="font-size: 0.75rem;">GRIEVANCES</span>
                 </li> -->
@@ -1200,129 +1206,124 @@
         </div>
       </div>
 
-      <!-- PAGE 3: raise query -->
-      <div id="query" class="page-section">
-        <div class="row mb-4">
-          <div class="col-12">
-            <div class="card profile-box border-0 rounded-3 overflow-hidden">
-              <!-- CARD HEADER -->
-              <div class="card-header header-card text-white py-3">
-                <h5 class="mb-0">
-                  <i class="fas fa-calendar-alt me-2"></i>Raise Query
-                </h5>
-              </div>
+      <!------------page-4:Query Dashboard-------->
 
-              <!-- BODY -->
-              <div class="card-body">
-                <div class="row g-4 align-items-center">
-                  <div class="col-12">
-                    <div class="table-scroll">
-                      <table
-                        class="table table-hover align-middle text-center mb-0"
-                      >
-                        <thead class="table-dark">
-                          <tr>
-                            <th class="fixed-col">SR No</th>
-                            <th>Complaint Name</th>
-                            <th>View</th>
-                          </tr>
-                        </thead>
+      <div class="page-section" id="query-status">
+        <h3>Query Status</h3>
+        <p>Track the status and progress of the complaint in real-time</p>
 
-                        <tbody>
-                          <tr>
-                            <td class="fixed-col">1</td>
-                            <td>Rohit Sharma</td>
-
-                            <td>
-                              <button
-                                class="btn btn-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#raiseQueryModal"
-                              >
-                                View More
-                              </button>
-                            </td>
-                            <!-- Add more rows as needed -->
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-                <!--------pagination---------->
-                <div
-                  class="d-flex justify-content-between align-items-center mt-4"
-                >
-                  <div class="text-muted small">
-                    Showing <strong>1</strong> to <strong>10</strong> of
-                    <strong>56</strong> entries
-                  </div>
-
-                  <nav aria-label="Table pagination">
-                    <ul class="pagination pagination-clean mb-0">
-                      <li class="page-item disabled">
-                        <a class="page-link" href="#">
-                          <i class="fas fa-chevron-left"></i>
-                        </a>
-                      </li>
-
-                      <li class="page-item active"></li>
-
-                      <li class="page-item">
-                        <a class="page-link" href="#">1</a>
-                      </li>
-
-                      <li class="page-item">
-                        <a class="page-link" href="#">2</a>
-                      </li>
-
-                      <li class="page-item">
-                        <a class="page-link" href="#">3</a>
-                      </li>
-
-                      <li class="page-item">
-                        <a class="page-link" href="#">
-                          <i class="fas fa-chevron-right"></i>
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
-                <!---------------------->
-              </div>
+        <div class="col-12">
+          <div class="card profile-box border-0 rounded-3 overflow-hidden">
+            <!-- CARD HEADER -->
+            <div
+              class="card-header header-card text-white py-3 d-flex justify-content-between align-items-center"
+            >
+              <h5 class="mb-0">
+                <i class="fas fa-calendar-alt me-2"></i>
+                Query Status
+              </h5>
             </div>
-          </div>
 
-          <!-- ================= RAISE QUERY MODAL ================= -->
-          <div class="modal fade" id="raiseQueryModal">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Raise Query</h5>
-                  <button class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+            <!-- BODY -->
+            <div class="card-body p-4">
+              <div class="row g-4 align-items-center">
+                <div class="col-12">
+                  <div class="table-scroll">
+                    <table class="table table-hover align-middle mb-0">
+                      <thead class="table-dark">
+                        <tr>
+                          <th class="fixed-col">SR No</th>
+                          <th>Query No</th>
+                          <th>Query Subject</th>
+                          <th>Raised On</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
 
-                <div class="modal-body">
-                  <textarea
-                    id="queryText"
-                    class="form-control"
-                    placeholder="Enter query"
-                  ></textarea>
-                  <div class="alert alert-warning mt-3">
-                    Respond within <b>5 days</b>
+                      <tbody>
+                        <tr>
+                          <td class="fixed-col">1</td>
+                          <td>
+                            <span
+                              style="
+                                display: inline-block;
+                                padding: 3px 10px;
+                                border-radius: 20px;
+                                border: 1.5px solid rgb(134, 239, 172);
+                                font-weight: 600;
+                                font-size: 0.75rem;
+                                white-space: nowrap;
+                              "
+                              >QRY001</span
+                            >
+                          </td>
+                          <td>
+                            <span
+                              class="badge"
+                              style="background-color: #d4f5e2; color: #0d7a55"
+                              >Inspection Status</span
+                            >
+                          </td>
+                          <td>02 Aug 2026</td>
+                          <td>🟠 Under Review</td>
+                          <td>
+                            <button
+                              class="btn btn-sm btn-info text-white"
+                              data-bs-toggle="modal"
+                              data-bs-target="#viewComplaintModal"
+                            >
+                              <i class="fas fa-eye"></i>
+                            </button>
+                          </td>
+                        </tr>
+
+                        <!-- Add more rows as needed -->
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-success"
-                    onclick="submitQuery()"
-                  >
-                    Submit
-                  </button>
-                </div>
               </div>
+              <!--------pagination---------->
+              <div
+                class="d-flex justify-content-between align-items-center mt-4"
+              >
+                <div class="text-muted small">
+                  Showing <strong>1</strong> to <strong>10</strong> of
+                  <strong>56</strong> entries
+                </div>
+
+                <nav aria-label="Table pagination">
+                  <ul class="pagination pagination-clean mb-0">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#">
+                        <i class="fas fa-chevron-left"></i>
+                      </a>
+                    </li>
+
+                    <li class="page-item active"></li>
+
+                    <li class="page-item">
+                      <a class="page-link" href="#">1</a>
+                    </li>
+
+                    <li class="page-item">
+                      <a class="page-link" href="#">2</a>
+                    </li>
+
+                    <li class="page-item">
+                      <a class="page-link" href="#">3</a>
+                    </li>
+
+                    <li class="page-item">
+                      <a class="page-link" href="#">
+                        <i class="fas fa-chevron-right"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+              <!---------------------->
             </div>
           </div>
         </div>

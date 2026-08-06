@@ -1456,6 +1456,23 @@
         background: #eef6ff;
         border-color: var(--P);
       }
+
+      .query-button {
+        background: #e8820c;
+        color: white;
+        padding: 7px 16px;
+        border-radius: 6px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        letter-spacing: 0.02em;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
     </style>
   </head>
 
@@ -1477,7 +1494,17 @@
             </div>
           </div>
         </div>
+
         <div class="d-flex align-items-center gap-2 flex-wrap">
+          <div class="query-module">
+            <button
+              class="query-button"
+              data-bs-toggle="modal"
+              data-bs-target="#raiseQueryModal"
+            >
+              <i class="bi bi-plus-lg"></i> Raise Query
+            </button>
+          </div>
           <a
             href="dashboard.html"
             style="
@@ -1536,16 +1563,6 @@
             2025 &nbsp;·&nbsp; <i class="bi bi-tag-fill me-1"></i>Water
             Pollution (Industrial)
           </div>
-        </div>
-
-        <div class="query-module">
-          <button
-            class="bp"
-            data-bs-toggle="modal"
-            data-bs-target="#raiseQueryModal"
-          >
-            <i class="bi bi-plus-lg"></i> Raise Query
-          </button>
         </div>
 
         <div class="pend-pill">
@@ -3245,7 +3262,7 @@
     <!-- SAVE BAR -->
     <div class="save-bar">
       <div class="save-hint">
-        Last saved: <span id="lastSaved">Not saved yet</span>
+        <!-- Last saved: <span id="lastSaved">Not saved yet</span> -->
       </div>
       <div class="d-flex gap-2 flex-wrap">
         <button class="bo" onclick="saveDraft()">
@@ -3366,6 +3383,66 @@
               Raise Query
             </button>
           </div>
+
+          <!-- Query History -->
+          <div class="p-3">
+            <label class="fl mb-2">Previous Query Timeline</label>
+
+            <div class="card border rounded-3 shadow-sm">
+              <div class="card-body">
+                <!-- Timeline -->
+                <div class="d-flex">
+                  <div class="me-3 text-center">
+                    <div
+                      class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center"
+                      style="width: 40px; height: 40px"
+                    >
+                      <i class="bi bi-question-circle"></i>
+                    </div>
+                    <div
+                      style="
+                        width: 2px;
+                        height: 60%;
+                        background: #dee2e6;
+                        margin: auto;
+                      "
+                    ></div>
+                  </div>
+
+                  <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between">
+                      <h6 class="mb-1">Query Raised</h6>
+                      <small class="text-muted"> 06 Aug 2026 | 10:30 AM </small>
+                    </div>
+
+                    <p class="mb-2 text-muted">
+                      Please upload a clear photograph of the discharge point
+                      and attach the latest inspection report for verification.
+                    </p>
+
+                    <div class="d-flex gap-2 flex-wrap">
+                      <a href="#" class="btn btn-sm btn-light border">
+                        <i class="bi bi-file-earmark-pdf text-danger"></i>
+                        Inspection_Report.pdf
+                      </a>
+
+                      <a href="#" class="btn btn-sm btn-light border">
+                        <i class="bi bi-image text-success"></i>
+                        discharge_photo.jpg
+                      </a>
+                    </div>
+
+                    <div class="mt-3">
+                      <span class="badge bg-warning text-dark">
+                        Awaiting Citizen Response
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!----------------->
         </div>
       </div>
     </div>
