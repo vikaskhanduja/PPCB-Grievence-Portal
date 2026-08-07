@@ -782,9 +782,10 @@ thead th.fixed-col {
 }
 
 .nav-pills .nav-link.active {
-  background: #1d3557;
+  background: linear-gradient(90deg, var(--P), var(--PL));
   color: #fff;
-  font-weight: 600;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(26, 111, 196, 0.3);
 }
 
 /* TAGS */

@@ -300,7 +300,7 @@
         </div>
         <!------------------------>
 
-        <div class="col-12">
+        <div class="col-12 mb-4">
           <div class="card profile-box border-0 rounded-3 overflow-hidden">
             <!-- CARD HEADER -->
             <div
@@ -687,6 +687,437 @@
                 </nav>
               </div>
               <!---------------------->
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-4">
+          <div class="col-12">
+            <div class="card profile-box border-0 rounded-3 overflow-hidden">
+              <!-- CARD HEADER -->
+              <div class="card-header header-card text-white py-3">
+                <h5 class="mb-0">
+                  <i class="fas fa-calendar-alt me-2"></i>Monthly Trends
+                </h5>
+              </div>
+
+              <!-- BODY -->
+              <div class="card-body p-4">
+                <!-- ✅ TOP TABS -->
+                <div class="top-nav">
+                  <ul class="nav nav-pills" id="tabs">
+                    <li class="nav-item">
+                      <button
+                        class="nav-link active"
+                        data-bs-toggle="pill"
+                        data-bs-target="#overview"
+                      >
+                        Overview
+                      </button>
+                    </li>
+                    <li class="nav-item">
+                      <button
+                        class="nav-link"
+                        data-bs-toggle="pill"
+                        data-bs-target="#pendency"
+                      >
+                        Pendency
+                      </button>
+                    </li>
+                    <li class="nav-item">
+                      <button
+                        class="nav-link"
+                        data-bs-toggle="pill"
+                        data-bs-target="#pollution"
+                      >
+                        Pollution
+                      </button>
+                    </li>
+                    <li class="nav-item">
+                      <button
+                        class="nav-link"
+                        data-bs-toggle="pill"
+                        data-bs-target="#grievancestats"
+                      >
+                        Grievance Category
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+                <!-- ✅ TAB CONTENT -->
+                <div class="tab-content">
+                  <!-- ✅ OVERVIEW TAB -->
+                  <div class="tab-pane fade show active" id="overview">
+                    <div class="row mt-6 my-3">
+                      <div class="col-md-6">
+                        <div
+                          class="card p-3 border-0"
+                          style="
+                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+                            border-radius: 12px;
+                          "
+                        >
+                          <div class="card-header">
+                            Action Taken Report
+                            <!-- <span class="badge badge-tag tag-blue">DONUT</span> -->
+                          </div>
+                          <!-- <div id="donutChart"></div> -->
+                          <div id="atrDonutChart"></div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div
+                          class="card p-3 border-0"
+                          style="
+                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+                            border-radius: 12px;
+                          "
+                        >
+                          <div class="card-header">
+                            Satisfaction Analysis
+                            <!-- <span class="badge badge-tag tag-orange">RADIAL</span> -->
+                          </div>
+                          <!-- <div id="radialChart"></div> -->
+                          <div id="satisfactionChart"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mt-6">
+                      <div class="col-md-6">
+                        <div
+                          class="card p-3 h-100 border-0"
+                          style="
+                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+                            border-radius: 12px;
+                          "
+                        >
+                          <div class="card-header">
+                            Gender Profile
+                            <span class="badge badge-tag tag-purple">PIE</span>
+                          </div>
+                          <div id="pieChart"></div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div
+                          class="card p-3 h-100 border-0"
+                          style="
+                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+                            border-radius: 12px;
+                          "
+                        >
+                          <div class="card-header">
+                            Pollution Types
+                            <span class="badge badge-tag tag-green">BAR</span>
+                          </div>
+                          <div id="barChart"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- ROW 1 -->
+                    <div class="row mt-3 mb-3">
+                      <div class="col-md-12">
+                        <div
+                          class="card p-3 border-0"
+                          style="
+                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+                            border-radius: 12px;
+                          "
+                        >
+                          <div class="card-header">
+                            District Wise Grievance Categories
+                            <!-- <span class="badge badge-tag tag-green">AREA</span> -->
+                          </div>
+                          <div id="chart"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ✅ PENDENCY TAB -->
+                  <div class="tab-pane fade" id="pendency">
+                    <div class="row g-3">
+                      <!-- Pendency Ageing -->
+                      <div class="col-md-6 col-xl-6 col-12 mt-5">
+                        <div
+                          class="card-box"
+                          style="
+                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+                            border-radius: 12px;
+                          "
+                        >
+                          <div class="card-header-custom">
+                            <span>Pendency Ageing</span>
+                            <span class="active-text">915 active</span>
+                          </div>
+
+                          <div class="row-item">
+                            <div class="d-flex align-items-center">
+                              <div class="dot green"></div>
+                              <span>&lt; 30 Days</span>
+                            </div>
+                            <div class="progress w-50">
+                              <div
+                                class="progress-bar green"
+                                style="width: 70%"
+                              ></div>
+                            </div>
+                            <span class="value">592</span>
+                          </div>
+
+                          <div class="row-item">
+                            <div class="d-flex align-items-center">
+                              <div class="dot yellow"></div>
+                              <span>30–60 Days</span>
+                            </div>
+                            <div class="progress w-50">
+                              <div
+                                class="progress-bar yellow"
+                                style="width: 30%"
+                              ></div>
+                            </div>
+                            <span class="value">181</span>
+                          </div>
+
+                          <div class="row-item">
+                            <div class="d-flex align-items-center">
+                              <div class="dot orange"></div>
+                              <span>60–90 Days</span>
+                            </div>
+                            <div class="progress w-50">
+                              <div
+                                class="progress-bar orange"
+                                style="width: 20%"
+                              ></div>
+                            </div>
+                            <span class="value">92</span>
+                          </div>
+
+                          <div class="row-item">
+                            <div class="d-flex align-items-center">
+                              <div class="dot red"></div>
+                              <span>&gt; 90 Days</span>
+                            </div>
+                            <div class="progress w-50">
+                              <div
+                                class="progress-bar red"
+                                style="width: 10%"
+                              ></div>
+                            </div>
+                            <span class="value">50</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Office-wise Pending -->
+                      <div class="col-md-6 col-xl-6 col-12 mt-5">
+                        <div
+                          class="card-box"
+                          style="
+                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+                            border-radius: 12px;
+                          "
+                        >
+                          <div class="card-header-custom">
+                            Office-wise Pending
+                          </div>
+
+                          <div class="category-item">
+                            <div class="category-head">
+                              <span>Ludhiana Zone</span>
+                              <span class="text-orange">285</span>
+                            </div>
+                            <div class="progress">
+                              <div
+                                class="progress-bar orange"
+                                style="width: 85%"
+                              ></div>
+                            </div>
+                          </div>
+
+                          <div class="category-item">
+                            <div class="category-head">
+                              <span>Amritsar Zone</span>
+                              <span class="text-orange">210</span>
+                            </div>
+                            <div class="progress">
+                              <div
+                                class="progress-bar orange"
+                                style="width: 70%"
+                              ></div>
+                            </div>
+                          </div>
+
+                          <div class="category-item">
+                            <div class="category-head">
+                              <span>Jalandhar Zone</span>
+                              <span class="text-orange">195</span>
+                            </div>
+                            <div class="progress">
+                              <div
+                                class="progress-bar orange"
+                                style="width: 65%"
+                              ></div>
+                            </div>
+                          </div>
+
+                          <div class="category-item">
+                            <div class="category-head">
+                              <span>Patiala Zone</span>
+                              <span class="text-orange">142</span>
+                            </div>
+                            <div class="progress">
+                              <div
+                                class="progress-bar orange"
+                                style="width: 50%"
+                              ></div>
+                            </div>
+                          </div>
+
+                          <div class="category-item">
+                            <div class="category-head">
+                              <span>Mohali Zone</span>
+                              <span class="text-orange">83</span>
+                            </div>
+                            <div class="progress">
+                              <div
+                                class="progress-bar orange"
+                                style="width: 30%"
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!------office-wise-pendency----->
+                      <div class="col-md-12">
+                        <div
+                          class="card p-3 h-100 border-0"
+                          style="
+                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+                            border-radius: 12px;
+                          "
+                        >
+                          <div class="card-header">
+                            Office wise Pendency
+                            <!-- <span class="badge badge-tag tag-purple">PIE</span> -->
+                          </div>
+                          <div class="chart-wrapper">
+                            <div id="stackedChart"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ✅ POLLUTION TAB -->
+                  <div class="tab-pane fade" id="pollution">
+                    <!-- By Category -->
+                    <div class="col-md-6 col-xl-6 col-12 mt-5">
+                      <div
+                        class="card-box"
+                        style="
+                          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+                          border-radius: 12px;
+                        "
+                      >
+                        <div class="card-header-custom">By Category</div>
+
+                        <div class="category-item">
+                          <div class="category-head">
+                            <span>Water Pollution</span>
+                            <span class="text-green">1840</span>
+                          </div>
+                          <div class="progress">
+                            <div
+                              class="progress-bar light-green"
+                              style="width: 80%"
+                            ></div>
+                          </div>
+                        </div>
+
+                        <div class="category-item">
+                          <div class="category-head">
+                            <span>Air Pollution</span>
+                            <span class="text-green">1210</span>
+                          </div>
+                          <div class="progress">
+                            <div
+                              class="progress-bar green"
+                              style="width: 60%"
+                            ></div>
+                          </div>
+                        </div>
+
+                        <div class="category-item">
+                          <div class="category-head">
+                            <span>Solid Waste</span>
+                            <span class="text-green">820</span>
+                          </div>
+                          <div class="progress">
+                            <div
+                              class="progress-bar green"
+                              style="width: 45%"
+                            ></div>
+                          </div>
+                        </div>
+
+                        <div class="category-item">
+                          <div class="category-head">
+                            <span>Noise Pollution</span>
+                            <span class="text-green">540</span>
+                          </div>
+                          <div class="progress">
+                            <div
+                              class="progress-bar green"
+                              style="width: 30%"
+                            ></div>
+                          </div>
+                        </div>
+
+                        <div class="category-item">
+                          <div class="category-head">
+                            <span>Hazardous</span>
+                            <span class="text-green">420</span>
+                          </div>
+                          <div class="progress">
+                            <div
+                              class="progress-bar green"
+                              style="width: 25%"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!------------------->
+
+                  <!-- ✅ GRIEVANCE TAB -->
+                  <div class="tab-pane fade" id="grievancestats">
+                    <!-- By Category -->
+                    <div class="row mt-3 mb-3">
+                      <div class="col-md-12">
+                        <div
+                          class="card p-3 border-0"
+                          style="
+                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+                            border-radius: 12px;
+                          "
+                        >
+                          <div class="card-header">
+                            PPCB Grievance Categories
+                            <!-- <span class="badge badge-tag tag-green">AREA</span> -->
+                          </div>
+                          <div id="grievanceChart"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
