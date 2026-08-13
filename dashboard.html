@@ -3,134 +3,1068 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PPCB Admin Portal</title>
-    <!-- Bootstrap 5 CSS -->
+    <title>PPCB Admin Portal — GRM Dashboard</title>
+
+    <!-- Bootstrap 5 (layout/grid/modals/tabs) -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- FontAwesome Icons -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      rel="stylesheet"
-    />
-
+    <!-- Bootstrap Icons (single icon system) -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-    <!-- Google Fonts -->
+    <!-- Typography -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="css/dashboard.css" />
-
+    <!-- Excel export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-    <!-- ✅ ApexCharts -->
+    <!-- Charts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <style>
+      /* ══════════════════════════════════════════════════════════
+     DESIGN TOKENS
+  ══════════════════════════════════════════════════════════ */
+      :root {
+        --primary-color-new: #036b6b;
+        --P: #0a4f8f;
+        --PD: #073763;
+        --PL: #1a6fc4;
+        --ACC: #e8820c;
+        --ACL: #f7a83e;
+        --SUC: #0d7a55;
+        --SUCL: #12a374;
+        --DAN: #c0392b;
+        --WAR: #d4920a;
+        --INFO: #2f8fd6;
+        --PUR: #6b3fa0;
+        --TEAL: #0f9b8e;
+        --GOLD: #c99a1e;
+        --IND: #5b4fd6;
+        --bg: #eef2f7;
+        --sur: #ffffff;
+        --s2: #f7f9fc;
+        --bdr: #e3e9f1;
+        --txt: #1a2332;
+        --mut: #5c6b7e;
+        --lit: #94a3b5;
+        --r: 16px;
+        --rs: 10px;
+        --rp: 100px;
+        --shadow: 0 4px 18px rgba(10, 40, 80, 0.06);
+        --shadow-lg: 0 14px 40px rgba(10, 40, 80, 0.14);
+        --sbw: 250px;
+        --sbw-collapsed: 78px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--txt);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.92rem;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        text-decoration: none;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #c7d3e0;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #aab8ca;
+      }
+
+      /* SIDEBAR */
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: var(--sbw);
+        z-index: 1040;
+        background: #ffffff;
+        border-right: 1px solid var(--bdr);
+        display: flex;
+        flex-direction: column;
+        transition:
+          width 0.25s ease,
+          transform 0.25s ease;
+        box-shadow: 4px 0 24px rgba(10, 40, 80, 0.08);
+      }
+      body.sb-toggled .sidebar {
+        width: var(--sbw-collapsed);
+      }
+      body.sb-toggled .brand-logo span,
+      body.sb-toggled .nav-link span {
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+      }
+      body.sb-toggled .sidebar-toggle-btn i {
+        transform: rotate(180deg);
+      }
+      .sidebar-toggle-btn {
+        position: absolute;
+        top: 26px;
+        right: -13px;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--P);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+        z-index: 5;
+        font-size: 0.7rem;
+        transition: transform 0.25s ease;
+      }
+      .sidebar-header {
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--bdr);
+      }
+      .brand-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--PD);
+        font-weight: 800;
+        font-size: 1.05rem;
+        white-space: nowrap;
+      }
+      .brand-logo img {
+        width: 50px;
+        height: 50px;
+        border-radius: 8px;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+      .brand-logo span {
+        transition: opacity 0.2s ease;
+      }
+      .sidebar-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 14px 12px;
+      }
+      .sidebar .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 14px;
+        border-radius: 10px;
+        color: var(--mut);
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        white-space: nowrap;
+        overflow: hidden;
+        margin-bottom: 4px;
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .sidebar .nav-link i {
+        width: 18px;
+        text-align: center;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+      .sidebar .nav-link span {
+        transition: opacity 0.2s ease;
+      }
+      .sidebar .nav-link:hover {
+        background: var(--s2);
+        color: var(--P);
+      }
+      .sidebar .nav-link.active {
+        background: linear-gradient(
+          135deg,
+          #073763 0%,
+          var(--primary-color-new) 60%,
+          #1a6fc4 100%
+        );
+        color: #fff;
+        box-shadow: 0 4px 14px rgba(26, 111, 196, 0.35);
+      }
+
+      /* TOPBAR */
+      .navbar-custom {
+        margin-left: var(--sbw);
+        background: linear-gradient(
+          135deg,
+          #073763 0%,
+          var(--primary-color-new) 60%,
+          #1a6fc4 100%
+        );
+        height: 64px;
+        box-shadow: 0 3px 14px rgba(10, 40, 80, 0.14);
+        z-index: 1030;
+        transition: margin-left 0.25s ease;
+      }
+      body.sb-toggled .navbar-custom {
+        margin-left: var(--sbw-collapsed);
+      }
+      .navbar-custom .dropdown-toggle::after {
+        color: #fff;
+      }
+      .navbar-custom .dropdown-menu {
+        border-radius: 12px;
+        border: 1px solid var(--bdr);
+        box-shadow: var(--shadow-lg);
+        overflow: hidden;
+      }
+
+      /* LAYOUT */
+      .main-content {
+        margin-left: var(--sbw);
+        padding: 88px 26px 40px;
+        transition: margin-left 0.25s ease;
+        min-height: 100vh;
+      }
+      body.sb-toggled .main-content {
+        margin-left: var(--sbw-collapsed);
+      }
+      .page-section {
+        display: none;
+      }
+      .page-section.active-section {
+        display: block;
+        animation: fadeIn 0.25s ease;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      h3.page-title {
+        font-weight: 800;
+        color: var(--PD);
+        margin-bottom: 4px;
+      }
+      .page-sub {
+        color: var(--mut);
+        font-size: 0.82rem;
+        margin-bottom: 20px;
+      }
+
+      /* KPI CARDS */
+      .kpi-card {
+        background: var(--sur);
+        border: 1px solid var(--bdr);
+        border-radius: var(--r);
+        padding: 18px 18px 16px;
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+        transition:
+          transform 0.22s cubic-bezier(0.2, 0.8, 0.3, 1),
+          box-shadow 0.22s ease,
+          border-color 0.22s ease;
+      }
+      .kpi-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--kpi-accent, var(--P)),
+          var(--kpi-accent2, var(--PL))
+        );
+      }
+      .kpi-card::after {
+        content: "";
+        position: absolute;
+        top: -30px;
+        right: -30px;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          var(--kpi-accent, var(--P)) 0%,
+          transparent 70%
+        );
+        opacity: 0.08;
+        transition:
+          opacity 0.22s ease,
+          transform 0.22s ease;
+      }
+      .kpi-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 16px 36px var(--kpi-shadow, rgba(10, 79, 143, 0.22));
+        border-color: transparent;
+      }
+      .kpi-card:hover::after {
+        opacity: 0.16;
+        transform: scale(1.15);
+      }
+      .kpi-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+      }
+      .kpi-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.12rem;
+        color: #fff;
+        background: linear-gradient(
+          135deg,
+          var(--kpi-accent, var(--P)),
+          var(--kpi-accent2, var(--PL))
+        );
+        box-shadow: 0 6px 16px var(--kpi-shadow, rgba(10, 79, 143, 0.3));
+        transition: transform 0.22s ease;
+      }
+      .kpi-card:hover .kpi-icon {
+        transform: scale(1.08) rotate(-4deg);
+      }
+      .kpi-trend {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 0.68rem;
+        font-weight: 800;
+        padding: 3px 8px;
+        border-radius: var(--rp);
+      }
+      .kpi-trend.up {
+        color: var(--SUC);
+        background: #e3f6ee;
+      }
+      .kpi-trend.down {
+        color: var(--DAN);
+        background: #fdeceb;
+      }
+      .kpi-num {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: var(--PD);
+        line-height: 1.1;
+        margin-top: 12px;
+        position: relative;
+        z-index: 1;
+      }
+      .kpi-label {
+        font-size: 0.72rem;
+        color: var(--mut);
+        font-weight: 700;
+        margin-top: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        position: relative;
+        z-index: 1;
+      }
+      .kpi-sub {
+        font-size: 0.66rem;
+        color: var(--lit);
+        font-weight: 600;
+        margin-top: 6px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* PANELS */
+      .panel {
+        background: var(--sur);
+        border: 1px solid var(--bdr);
+        border-radius: var(--r);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      .panel-header {
+        background: linear-gradient(
+          135deg,
+          #073763 0%,
+          var(--primary-color-new) 60%,
+          #1a6fc4 100%
+        );
+        color: #fff;
+        padding: 15px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .panel-header h5 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+      .panel-body {
+        padding: 22px;
+      }
+
+      /* TABLE TOOLBAR (search / filter / sort / date range) */
+      .table-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: flex-end;
+        margin-bottom: 18px;
+        padding: 14px;
+        background: var(--s2);
+        border: 1px solid var(--bdr);
+        border-radius: var(--rs);
+      }
+      .tb-field {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .tb-field label {
+        font-size: 0.66rem;
+        font-weight: 800;
+        color: var(--mut);
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+      .tb-field .form-control,
+      .tb-field .form-select {
+        font-size: 0.8rem;
+        border-radius: 9px;
+        border-color: var(--bdr);
+        padding: 7px 11px;
+      }
+      .tb-field .form-control:focus,
+      .tb-field .form-select:focus {
+        border-color: var(--PL);
+        box-shadow: 0 0 0 3px rgba(26, 111, 196, 0.12);
+      }
+      .tb-search {
+        min-width: 200px;
+        flex: 1;
+      }
+      .tb-reset {
+        background: #fff;
+        border: 1.5px solid var(--bdr);
+        color: var(--mut);
+        font-weight: 700;
+        font-size: 0.78rem;
+        border-radius: 9px;
+        padding: 7px 14px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+      }
+      .tb-reset:hover {
+        border-color: var(--DAN);
+        color: var(--DAN);
+      }
+      .th-sort {
+        cursor: pointer;
+        user-select: none;
+      }
+      .th-sort .bi {
+        margin-left: 5px;
+        font-size: 0.68rem;
+        opacity: 0.6;
+      }
+      .th-sort.active .bi {
+        opacity: 1;
+      }
+      .status-badge {
+        padding: 4px 11px;
+        border-radius: var(--rp);
+        font-weight: 700;
+        font-size: 0.7rem;
+        white-space: nowrap;
+      }
+      .status-pending {
+        background: #fff3e0;
+        color: var(--ACC);
+      }
+      .status-process {
+        background: #e3edfb;
+        color: var(--PL);
+      }
+      .status-resolved {
+        background: #e3f6ee;
+        color: var(--SUC);
+      }
+      .status-forwarded {
+        background: #ede9fe;
+        color: #5b21b6;
+      }
+      .empty-row td {
+        text-align: center;
+        padding: 34px 10px;
+        color: var(--lit);
+        font-weight: 600;
+      }
+
+      .table-scroll {
+        overflow-x: auto;
+      }
+      table.table {
+        font-size: 0.82rem;
+      }
+      table.table thead th {
+        background: #000;
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        border: none;
+        padding: 12px 14px;
+        white-space: nowrap;
+      }
+      table.table tbody td {
+        padding: 12px 14px;
+        vertical-align: middle;
+        border-color: var(--bdr);
+      }
+      table.table tbody tr:hover {
+        background: var(--s2);
+      }
+      .fixed-col {
+        font-weight: 700;
+        color: var(--mut);
+      }
+      .pill-badge {
+        display: inline-block;
+        padding: 3px 12px;
+        border-radius: var(--rp);
+        font-weight: 700;
+        font-size: 0.72rem;
+        white-space: nowrap;
+        border: 1.5px solid var(--SUCL);
+        color: var(--SUC);
+        background: #e6f7f0;
+      }
+      .type-badge {
+        padding: 4px 11px;
+        border-radius: var(--rp);
+        font-weight: 700;
+        font-size: 0.7rem;
+      }
+      .type-grievance {
+        background: #d4f5e2;
+        color: var(--SUC);
+      }
+      .type-appeal1 {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .type-appeal2 {
+        background: #ede9fe;
+        color: #5b21b6;
+      }
+      .btn-view {
+        background: var(--INFO);
+        color: #fff;
+        border: none;
+      }
+      .btn-view:hover {
+        background: #2678b8;
+        color: #fff;
+      }
+      .btn-process {
+        background: var(--SUC);
+        color: #fff;
+        border: none;
+        font-weight: 600;
+      }
+      .btn-process:hover {
+        background: #0a6746;
+        color: #fff;
+      }
+      .pagination-clean .page-link {
+        border: none;
+        color: var(--mut);
+        font-weight: 600;
+        border-radius: 8px;
+        margin: 0 2px;
+      }
+      .pagination-clean .page-item.active .page-link {
+        background: var(--P);
+        color: #fff;
+      }
+      .pagination-clean .page-item.disabled .page-link {
+        background: transparent;
+      }
+
+      /* CHART / STAT CARDS */
+      .chart-card {
+        background: var(--sur);
+        border: 1px solid var(--bdr);
+        border-radius: var(--rs);
+        padding: 18px;
+        height: 100%;
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      .chart-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--PD), var(--P), var(--PL));
+      }
+      .chart-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* ApexCharts export/download toolbar — themed to match the dashboard */
+      .apexcharts-toolbar {
+        gap: 2px !important;
+      }
+      .apexcharts-menu-icon,
+      .apexcharts-menu-icon svg {
+        opacity: 0.6;
+        transition: opacity 0.15s ease;
+      }
+      .apexcharts-menu-icon:hover,
+      .apexcharts-menu-icon:hover svg {
+        opacity: 1;
+      }
+      .apexcharts-menu {
+        border-radius: 10px !important;
+        border: 1px solid var(--bdr) !important;
+        box-shadow: var(--shadow-lg) !important;
+        overflow: hidden;
+        padding: 4px !important;
+        min-width: 150px;
+      }
+      .apexcharts-menu-item {
+        font-family: "Plus Jakarta Sans", sans-serif !important;
+        font-size: 0.76rem !important;
+        font-weight: 600;
+        padding: 8px 12px !important;
+        border-radius: 7px;
+      }
+      .apexcharts-menu-item:hover {
+        background: var(--s2) !important;
+        color: var(--P) !important;
+      }
+      .chart-card .card-header {
+        background: transparent;
+        border: none;
+        padding: 0 0 14px;
+        font-weight: 800;
+        font-size: 0.86rem;
+        color: var(--PD);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .chart-card .card-header small {
+        font-weight: 600;
+        color: var(--lit);
+        font-size: 0.68rem;
+      }
+      .chart-wrapper {
+        min-height: 260px;
+      }
+      .card-box {
+        background: var(--sur);
+        border: 1px solid var(--bdr);
+        border-radius: var(--rs);
+        padding: 18px;
+        box-shadow: var(--shadow);
+        height: 100%;
+      }
+      .card-header-custom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 800;
+        font-size: 0.88rem;
+        color: var(--PD);
+        margin-bottom: 14px;
+      }
+      .row-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 9px 0;
+        border-bottom: 1px dashed var(--bdr);
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .row-item:last-child {
+        border-bottom: none;
+      }
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 3px;
+        margin-right: 9px;
+        flex-shrink: 0;
+      }
+      .dot.green,
+      .progress-bar.green {
+        background: var(--SUC);
+      }
+      .dot.yellow,
+      .progress-bar.yellow {
+        background: var(--WAR);
+      }
+      .dot.orange,
+      .progress-bar.orange {
+        background: var(--ACC);
+      }
+      .dot.red,
+      .progress-bar.red {
+        background: var(--DAN);
+      }
+      .row-item .value {
+        font-weight: 800;
+        color: var(--PD);
+        min-width: 34px;
+        text-align: right;
+      }
+      .progress {
+        height: 7px;
+        border-radius: var(--rp);
+        background: var(--s2);
+        overflow: hidden;
+      }
+      .progress-bar {
+        border-radius: var(--rp);
+      }
+
+      /* WORKFLOW STEPPER */
+      .workflow-bar {
+        overflow-x: auto;
+        padding: 10px 4px 18px;
+      }
+      .wf-steps {
+        display: flex;
+        align-items: flex-start;
+        min-width: 640px;
+      }
+      .wf-step {
+        display: flex;
+        align-items: center;
+        flex: 1;
+      }
+      .wf-node {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 110px;
+        flex-shrink: 0;
+      }
+      .wf-dot {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 0.9rem;
+        background: var(--s2);
+        border: 2px solid var(--bdr);
+        color: var(--lit);
+        margin-bottom: 8px;
+      }
+      .wf-dot.done {
+        background: var(--SUC);
+        border-color: var(--SUC);
+        color: #fff;
+      }
+      .wf-dot.current {
+        background: var(--ACC);
+        border-color: var(--ACC);
+        color: #fff;
+        box-shadow: 0 0 0 5px rgba(232, 130, 12, 0.18);
+      }
+      .wf-dot.waiting {
+        background: var(--sur);
+        border-color: var(--bdr);
+        color: var(--lit);
+      }
+      .wf-lbl {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--mut);
+        line-height: 1.3;
+      }
+      .wf-connector {
+        height: 2px;
+        background: var(--bdr);
+        flex: 1;
+        margin-top: 20px;
+      }
+      .wf-connector.done {
+        background: var(--SUC);
+      }
+
+      /* ACCORDION */
+      .acc-item {
+        background: var(--sur);
+        border: 1px solid var(--bdr);
+        border-radius: var(--rs);
+        margin-bottom: 12px;
+        overflow: hidden;
+      }
+      .acc-btn {
+        width: 100%;
+        background: var(--s2);
+        border: none;
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: var(--PD);
+        cursor: pointer;
+      }
+      .acc-btn i.bi-chevron-down {
+        transition: transform 0.2s ease;
+      }
+      .acc-item.active .acc-btn i.bi-chevron-down {
+        transform: rotate(180deg);
+      }
+      .acc-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+      .acc-item.active .acc-content {
+        max-height: 2000px;
+      }
+      .info-tile {
+        background: var(--s2);
+        border-radius: var(--rs);
+        padding: 12px 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .info-tile .icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--PD), var(--P));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        flex-shrink: 0;
+      }
+
+      /* LOGOUT OVERLAY */
+      .logout-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(7, 20, 40, 0.55);
+        backdrop-filter: blur(3px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+      }
+      .logout-overlay.show {
+        display: flex;
+        animation: fadeIn 0.2s ease;
+      }
+      .logout-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 32px 28px;
+        width: 360px;
+        max-width: 92vw;
+        text-align: center;
+        box-shadow: var(--shadow-lg);
+      }
+      .logout-icon-wrap {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: #fdecea;
+        color: var(--DAN);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        margin: 0 auto 14px;
+      }
+      .logout-title {
+        font-weight: 800;
+        color: var(--PD);
+      }
+      .logout-msg {
+        font-size: 0.82rem;
+        color: var(--mut);
+      }
+      .logout-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .logout-btn-cancel,
+      .logout-btn-confirm {
+        flex: 1;
+        border: none;
+        border-radius: 10px;
+        padding: 10px;
+        font-weight: 700;
+        font-size: 0.82rem;
+        cursor: pointer;
+      }
+      .logout-btn-cancel {
+        background: var(--s2);
+        color: var(--mut);
+        border: 1px solid var(--bdr);
+      }
+      .logout-btn-confirm {
+        background: var(--DAN);
+        color: #fff;
+      }
+      .logout-btn-confirm:hover {
+        background: #a5301f;
+      }
+
+      /* MODALS */
+      .modal-content {
+        border-radius: 16px;
+        border: none;
+        overflow: hidden;
+      }
+      .modal-header {
+        background: var(--SUC);
+      }
+      .section-block {
+        margin-bottom: 20px;
+      }
+      .section-title {
+        font-weight: 800;
+        color: var(--PD);
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+      }
+      .f-label {
+        font-weight: 700;
+        font-size: 0.78rem;
+        color: var(--txt);
+        margin-bottom: 6px;
+        display: block;
+      }
+      .req {
+        color: var(--DAN);
+      }
+
+      @media (max-width: 767.98px) {
+        .sidebar {
+          transform: translateX(-100%);
+          width: var(--sbw);
+        }
+        body.sb-mobile-open .sidebar {
+          transform: translateX(0);
+        }
+        .sidebar-toggle-btn {
+          display: none;
+        }
+        .navbar-custom,
+        .main-content {
+          margin-left: 0 !important;
+        }
+        .kpi-num {
+          font-size: 1.35rem;
+        }
+      }
+    </style>
   </head>
 
   <body>
-    <!-- === SIDEBAR === -->
+    <!-- SIDEBAR -->
     <nav class="sidebar" id="sidebar">
-      <!-- Floating Toggle Button (Now inside sidebar container to move with it) -->
       <div class="sidebar-toggle-btn" id="desktopToggle">
-        <i class="fas fa-chevron-left"></i>
+        <i class="bi bi-chevron-left"></i>
       </div>
-
-      <!-- Brand Header -->
       <div class="sidebar-header">
         <a href="#" class="brand-logo">
           <img
             src="images/logo.png"
-            alt="Logo"
-            style="width: 60px; height: auto"
+            alt="PPCB Logo"
+            onerror="this.style.display = 'none'"
           />
           <span>PPCB</span>
         </a>
       </div>
-
-      <!-- Menu Content -->
       <div class="sidebar-content">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" onclick="switchPage('dashboard', this)">
-              <i class="fas fa-th-large"></i> <span>Dashboard</span>
-            </a>
-          </li>
-
-          <!-- <li class="nav-item mt-3 mb-1 nav-section-label">
-                    <span class="text-uppercase text-muted fw-bold ps-3" style="font-size: 0.75rem;">MAIN</span>
-                </li> -->
-
-          <!-- <li class="nav-item">
-            <a class="nav-link" onclick="switchPage('grievance', this)">
-              <i class="fas fa-th-large"></i> <span>Grievance Table</span>
-            </a>
-          </li> -->
-
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="central-grievance-form.html"
-              onclick="switchPage('settings', this)"
+            <a class="nav-link active" onclick="switchPage('dashboard', this)"
+              ><i class="bi bi-grid-fill"></i><span>Dashboard</span></a
             >
-              <i class="fas fa-file-pen"></i>
-              <span>Mannual Grievance</span>
-            </a>
           </li>
-
           <li class="nav-item">
-            <a class="nav-link" href="officier_tracking-process.html">
-              <i class="fas fa-user-shield"></i> <span>Officier Tracking</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" onclick="switchPage('employees', this)">
-              <i class="fas fa-user-circle"></i> <span>My Profile</span>
-            </a>
-          </li>
-
-          <!-- <li class="nav-item">
-            <a class="nav-link" onclick="switchPage('query-status', this)">
-              <i class="fas fa-user-circle"></i> <span>Query Status</span>
-            </a>
-          </li> -->
-
-          <!-- <li class="nav-item mt-3 mb-1 nav-section-label">
-                    <span class="text-uppercase text-muted fw-bold ps-3" style="font-size: 0.75rem;">GRIEVANCES</span>
-                </li> -->
-
-          <!-- <li class="nav-item mt-3 mb-1 nav-section-label">
-            <span
-              class="text-uppercase text-muted fw-bold ps-3"
-              style="font-size: 0.75rem"
-              >Query</span
+            <a class="nav-link" onclick="switchPage('analytics', this)"
+              ><i class="bi bi-bar-chart-line-fill"></i
+              ><span>Analytics</span></a
             >
-          </li> -->
-
-          <!-- <li class="nav-item">
-            <a class="nav-link" onclick="switchPage('query', this)">
-              <i class="fas fa-th-large"></i> <span>Raise Query</span>
-            </a>
-          </li> -->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="central-grievance-form.html"
+              ><i class="bi bi-pencil-square"></i
+              ><span>Manual Grievance</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="switchPage('employees', this)"
+              ><i class="bi bi-person-circle"></i><span>My Profile</span></a
+            >
+          </li>
         </ul>
       </div>
     </nav>
 
-    <!-- === NAVBAR === -->
+    <!-- TOPBAR -->
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
       <div class="container-fluid px-4">
-        <!-- Mobile Toggle -->
         <button
-          class="btn btn-link text-dark d-md-none me-2 p-0"
+          class="btn btn-link text-white d-md-none me-2 p-0"
           id="mobileToggle"
         >
-          <i class="fas fa-bars fa-lg"></i>
+          <i class="bi bi-list fs-3"></i>
         </button>
         <div class="d-flex flex-column">
           <span
@@ -138,22 +1072,16 @@
               font-size: 0.95rem;
               color: #fff;
               font-weight: 700;
-              line-height: 1.5em;
+              line-height: 1.4;
             "
+            >GRM Dashboard</span
           >
-            GRM Dashboard
-          </span>
-
-          <span style="font-size: 0.7rem; color: #fff; line-height: 1.2">
-            Punjab Pollution Control Board
-          </span>
+          <span style="font-size: 0.7rem; color: rgba(255, 255, 255, 0.75)"
+            >Punjab Pollution Control Board</span
+          >
         </div>
-
-        <!-- Search / Title -->
-
         <div class="collapse navbar-collapse justify-content-end">
           <ul class="navbar-nav align-items-center">
-            <!-- Profile Dropdown -->
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle d-flex align-items-center"
@@ -161,44 +1089,32 @@
                 role="button"
                 data-bs-toggle="dropdown"
               >
-                <!-- Name + Role -->
                 <div
-                  class="d-flex flex-column align-items-end me-2 d-none d-sm-block"
+                  class="d-flex flex-column align-items-end me-2 d-none d-sm-flex"
                 >
-                  <span class="" style="font-size: 0.9rem; color: #fff"
+                  <span style="font-size: 0.88rem; color: #fff"
                     >Member Secretary</span
                   >
-                  <small class="" style="font-size: 0.75rem; color: #fff"
+                  <small
+                    style="font-size: 0.72rem; color: rgba(255, 255, 255, 0.75)"
                     >(Admin)</small
                   >
                 </div>
-
-                <!-- Profile Circle -->
                 <div
-                  class="bg-light rounded-circle d-flex align-items-center justify-content-center fw-bold"
-                  style="
-                    width: 38px;
-                    height: 38px;
-                    border: 2px solid white;
-                    box-shadow: 0 0 0 1px #e0e0e0;
-                    color: #fff;
-                  "
+                  class="bg-light rounded-circle d-flex align-items-center justify-content-center fw-bold text-primary"
+                  style="width: 38px; height: 38px; border: 2px solid #fff"
                 >
                   MS
                 </div>
               </a>
-
-              <!-- Dropdown Menu -->
               <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item" href="#">Dashboard</a></li>
                 <li><a class="dropdown-item" href="#">Complaint Sources</a></li>
+                <li><hr class="dropdown-divider" /></li>
                 <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li>
-                  <a class="dropdown-item text-danger" href="#" id="logoutBtn">
-                    Logout
-                  </a>
+                  <a class="dropdown-item text-danger" href="#" id="logoutBtn"
+                    >Logout</a
+                  >
                 </li>
               </ul>
             </li>
@@ -207,1430 +1123,458 @@
       </div>
     </nav>
 
-    <!-- === MAIN CONTENT === -->
     <main class="main-content">
-      <!-- PAGE 1: DASHBOARD -->
+      <!-- ═══════ PAGE: DASHBOARD (table only — charts moved to Analytics) ═══════ -->
       <div id="dashboard" class="page-section active-section">
-        <div class="row g-3 mb-4 kpi-row">
-          <!-- KPI 1 -->
-          <div class="col-6 col-md-4 custom-kpi-col">
-            <div class="kpi-card kpi-primary">
-              <div
-                class="d-flex justify-content-between align-items-start mb-3"
-              >
-                <div class="kpi-icon ki-primary">
-                  <i class="fa fa-list-alt"></i>
+        <h3 class="page-title">Dashboard</h3>
+        <p class="page-sub">
+          Recent grievances and appeals received across Punjab
+        </p>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h5><i class="bi bi-calendar3"></i>Grievance / Appeal Received</h5>
+          </div>
+          <div class="panel-body">
+            <!-- FILTER TOOLBAR -->
+            <div class="table-toolbar">
+              <div class="tb-field tb-search">
+                <label for="fSearch">Search</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="fSearch"
+                  placeholder="Name or grievance number…"
+                />
+              </div>
+              <div class="tb-field">
+                <label for="fType">Type</label>
+                <select class="form-select" id="fType">
+                  <option value="all">All Types</option>
+                  <option value="grievance">Grievance</option>
+                  <option value="appeal1">Appeal-1</option>
+                  <option value="appeal2">Appeal-2</option>
+                </select>
+              </div>
+              <div class="tb-field">
+                <label for="fStatus">Status</label>
+                <select class="form-select" id="fStatus">
+                  <option value="all">All Status</option>
+                  <option value="pending">Pending</option>
+                  <option value="process">Under Process</option>
+                  <option value="forwarded">Forwarded</option>
+                  <option value="resolved">Resolved</option>
+                </select>
+              </div>
+              <div class="tb-field">
+                <label for="fFrom">From Date</label>
+                <input type="date" class="form-control" id="fFrom" />
+              </div>
+              <div class="tb-field">
+                <label for="fTo">To Date</label>
+                <input type="date" class="form-control" id="fTo" />
+              </div>
+              <button type="button" class="tb-reset" id="fReset">
+                <i class="bi bi-arrow-counterclockwise"></i>Reset
+              </button>
+            </div>
+
+            <div class="table-scroll">
+              <table class="table table-hover align-middle mb-0">
+                <thead>
+                  <tr>
+                    <th class="fixed-col">Sr No</th>
+                    <th class="th-sort" data-sort="name">
+                      Complainant Name <i class="bi bi-arrow-down-up"></i>
+                    </th>
+                    <th class="th-sort" data-sort="no">
+                      Grievance Number <i class="bi bi-arrow-down-up"></i>
+                    </th>
+                    <th>Grievance Type</th>
+                    <th>Filed By</th>
+                    <th>Status</th>
+                    <th class="th-sort" data-sort="date">
+                      Date <i class="bi bi-arrow-down-up"></i>
+                    </th>
+                    <th>View</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="grievanceTableBody"></tbody>
+              </table>
+            </div>
+
+            <div
+              class="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-2"
+            >
+              <div class="text-muted small" id="tableSummary"></div>
+              <nav aria-label="Table pagination">
+                <ul
+                  class="pagination pagination-clean mb-0"
+                  id="tablePagination"
+                ></ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════ PAGE: ANALYTICS (NEW — all KPIs + charts live here) ═══════ -->
+      <div id="analytics" class="page-section">
+        <h3 class="page-title">Analytics</h3>
+        <p class="page-sub">
+          Grievance performance overview — Punjab Pollution Control Board
+        </p>
+
+        <!-- 9 KPI CARDS -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-md-4 col-xl-3">
+            <div
+              class="kpi-card"
+              style="
+                --kpi-accent: var(--P);
+                --kpi-accent2: var(--PL);
+                --kpi-shadow: rgba(10, 79, 143, 0.3);
+              "
+            >
+              <div class="kpi-top">
+                <div class="kpi-icon">
+                  <i class="bi bi-clipboard2-data-fill"></i>
                 </div>
+                <span class="kpi-trend up"
+                  ><i class="bi bi-arrow-up-short"></i>8.4%</span
+                >
               </div>
               <div class="kpi-num">224</div>
               <div class="kpi-label">Total Grievance</div>
+              <div class="kpi-sub">vs last month</div>
             </div>
           </div>
-          <!-- KPI 2 -->
-          <div class="col-6 col-md-4 custom-kpi-col">
-            <div class="kpi-card kpi-accent">
-              <div
-                class="d-flex justify-content-between align-items-start mb-3"
-              >
-                <div class="kpi-icon ki-primary">
-                  <i class="fa fa-clock"></i>
-                </div>
+          <div class="col-6 col-md-4 col-xl-3">
+            <div
+              class="kpi-card"
+              style="
+                --kpi-accent: var(--ACC);
+                --kpi-accent2: var(--ACL);
+                --kpi-shadow: rgba(232, 130, 12, 0.3);
+              "
+            >
+              <div class="kpi-top">
+                <div class="kpi-icon"><i class="bi bi-clock-fill"></i></div>
+                <span class="kpi-trend down"
+                  ><i class="bi bi-arrow-down-short"></i>5.2%</span
+                >
               </div>
               <div class="kpi-num">9</div>
               <div class="kpi-label">Visit Pending</div>
+              <div class="kpi-sub">vs last month</div>
             </div>
           </div>
-
-          <!-- KPI 3 -->
-          <div class="col-6 col-md-4 custom-kpi-col">
-            <div class="kpi-card kpi-success">
-              <div
-                class="d-flex justify-content-between align-items-start mb-3"
-              >
-                <div class="kpi-icon ki-success">
-                  <i class="fa fa-check-circle"></i>
+          <div class="col-6 col-md-4 col-xl-3">
+            <div
+              class="kpi-card"
+              style="
+                --kpi-accent: var(--SUC);
+                --kpi-accent2: var(--SUCL);
+                --kpi-shadow: rgba(13, 122, 85, 0.3);
+              "
+            >
+              <div class="kpi-top">
+                <div class="kpi-icon">
+                  <i class="bi bi-check-circle-fill"></i>
                 </div>
-                <!-- <span class="kpi-change ch-up">+8%</span> -->
+                <span class="kpi-trend up"
+                  ><i class="bi bi-arrow-up-short"></i>12.1%</span
+                >
               </div>
               <div class="kpi-num">18</div>
               <div class="kpi-label">Notice Issued</div>
+              <div class="kpi-sub">vs last month</div>
             </div>
           </div>
-
-          <!-- KPI 4 -->
-          <div class="col-6 col-md-4 custom-kpi-col">
-            <div class="kpi-card kpi-primary">
-              <div
-                class="d-flex justify-content-between align-items-start mb-3"
-              >
-                <div class="kpi-icon ki-accent">
-                  <i class="fa fa-hourglass-half"></i>
+          <div class="col-6 col-md-4 col-xl-3">
+            <div
+              class="kpi-card"
+              style="
+                --kpi-accent: var(--PUR);
+                --kpi-accent2: #9163c9;
+                --kpi-shadow: rgba(107, 63, 160, 0.3);
+              "
+            >
+              <div class="kpi-top">
+                <div class="kpi-icon">
+                  <i class="bi bi-hourglass-split"></i>
                 </div>
-                <!-- <span class="kpi-change ch-down">+3</span> -->
+                <span class="kpi-trend down"
+                  ><i class="bi bi-arrow-down-short"></i>3.8%</span
+                >
               </div>
               <div class="kpi-num">13</div>
               <div class="kpi-label">Personal Hearing Pending</div>
+              <div class="kpi-sub">vs last month</div>
             </div>
           </div>
-
-          <!-- KPI 5 -->
-          <div class="col-6 col-md-4 custom-kpi-col">
-            <div class="kpi-card kpi-accent">
-              <div
-                class="d-flex justify-content-between align-items-start mb-3"
-              >
-                <div class="kpi-icon ki-primary">
-                  <i class="fa fa-clock"></i>
-                </div>
+          <div class="col-6 col-md-4 col-xl-3">
+            <div
+              class="kpi-card"
+              style="
+                --kpi-accent: var(--INFO);
+                --kpi-accent2: #5fb0e8;
+                --kpi-shadow: rgba(47, 143, 214, 0.3);
+              "
+            >
+              <div class="kpi-top">
+                <div class="kpi-icon"><i class="bi bi-arrow-repeat"></i></div>
+                <span class="kpi-trend up"
+                  ><i class="bi bi-arrow-up-short"></i>4.6%</span
+                >
               </div>
               <div class="kpi-num">169</div>
               <div class="kpi-label">Under Process</div>
+              <div class="kpi-sub">vs last month</div>
             </div>
           </div>
-
-          <!-- KPI 6 -->
-          <div class="col-6 col-md-4 custom-kpi-col">
-            <div class="kpi-card kpi-success">
-              <div
-                class="d-flex justify-content-between align-items-start mb-3"
-              >
-                <div class="kpi-icon ki-primary">
-                  <i class="fa fa-folder-open"></i>
-                </div>
-                <!-- <span class="kpi-change ch-up">+12%</span> -->
+          <div class="col-6 col-md-4 col-xl-3">
+            <div
+              class="kpi-card"
+              style="
+                --kpi-accent: var(--TEAL);
+                --kpi-accent2: #3dbdae;
+                --kpi-shadow: rgba(15, 155, 142, 0.3);
+              "
+            >
+              <div class="kpi-top">
+                <div class="kpi-icon"><i class="bi bi-folder2-open"></i></div>
+                <span class="kpi-trend down"
+                  ><i class="bi bi-arrow-down-short"></i>6.0%</span
+                >
               </div>
               <div class="kpi-num">15</div>
               <div class="kpi-label">Decision Compliance Pending</div>
+              <div class="kpi-sub">vs last month</div>
             </div>
           </div>
-        </div>
-        <!------------------------>
-
-        <div class="col-12 mb-4">
-          <div class="card profile-box border-0 rounded-3 overflow-hidden">
-            <!-- CARD HEADER -->
+          <div class="col-6 col-md-4 col-xl-3">
             <div
-              class="card-header header-card text-white py-3 d-flex justify-content-between align-items-center"
+              class="kpi-card"
+              style="
+                --kpi-accent: var(--GOLD);
+                --kpi-accent2: #e8bc4a;
+                --kpi-shadow: rgba(201, 154, 30, 0.3);
+              "
             >
-              <h5 class="mb-0">
-                <i class="fas fa-calendar-alt me-2"></i>
-                Grievance / Appeal Received
-              </h5>
-
-              <div style="max-width: 280px; width: 100%">
-                <div class="input-group">
-                  <span class="input-group-text">
-                    <i class="fas fa-search"></i>
-                  </span>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search..."
-                    id="searchGrievance"
-                  />
+              <div class="kpi-top">
+                <div class="kpi-icon">
+                  <i class="bi bi-arrow-up-circle-fill"></i>
                 </div>
+                <span class="kpi-trend up"
+                  ><i class="bi bi-arrow-up-short"></i>9.3%</span
+                >
               </div>
-            </div>
-
-            <!-- BODY -->
-            <div class="card-body p-4">
-              <div class="row g-4 align-items-center">
-                <div class="col-12">
-                  <div class="table-scroll">
-                    <table class="table table-hover align-middle mb-0">
-                      <thead class="table-dark">
-                        <tr>
-                          <th class="fixed-col">SR No</th>
-                          <th>Complainant Name</th>
-                          <th>Grievance Number</th>
-                          <th>Grievance Type</th>
-                          <th>Filed By</th>
-                          <th>Date</th>
-                          <th>View</th>
-                          <th>Action</th>
-                          <!-- <th>Officer Tracking</th> -->
-                        </tr>
-                      </thead>
-
-                      <tbody>
-                        <tr>
-                          <td class="fixed-col">1</td>
-                          <td>Vikas Khanduja</td>
-                          <td>
-                            <span
-                              style="
-                                display: inline-block;
-                                padding: 3px 10px;
-                                border-radius: 20px;
-                                border: 1.5px solid rgb(134, 239, 172);
-                                font-weight: 600;
-                                font-size: 0.75rem;
-                                white-space: nowrap;
-                              "
-                              >GRV-1234567890123</span
-                            >
-                          </td>
-                          <td>
-                            <span
-                              class="badge"
-                              style="background-color: #d4f5e2; color: #0d7a55"
-                              >Grievance</span
-                            >
-                          </td>
-                          <td>Individual</td>
-                          <td>10<sup>th</sup>-06-2026</td>
-
-                          <td>
-                            <button
-                              class="btn btn-sm btn-info text-white"
-                              data-bs-toggle="modal"
-                              data-bs-target="#viewComplaintModal"
-                            >
-                              <i class="fas fa-eye"></i>
-                            </button>
-                          </td>
-                          <td>
-                            <a
-                              href="complaint-processing.html"
-                              class="btn btn-sm"
-                              style="background-color: #0d7a55; color: #fff"
-                            >
-                              <i class="fas fa-tasks me-1"></i> Process
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="fixed-col">2</td>
-                          <td>Aditya Arya</td>
-                          <td>
-                            <span
-                              style="
-                                display: inline-block;
-                                padding: 3px 10px;
-                                border-radius: 20px;
-                                border: 1.5px solid rgb(134, 239, 172);
-                                font-weight: 600;
-                                font-size: 0.75rem;
-                                white-space: nowrap;
-                              "
-                              >GRV-0987654321234</span
-                            >
-                          </td>
-                          <td>
-                            <span
-                              class="badge"
-                              style="background-color: #d4f5e2; color: #0d7a55"
-                              >Grievance</span
-                            >
-                          </td>
-                          <td>Individual</td>
-                          <td>11<sup>th</sup>-06-2026</td>
-
-                          <td>
-                            <button
-                              class="btn btn-sm btn-info text-white"
-                              data-bs-toggle="modal"
-                              data-bs-target="#viewComplaintModal"
-                            >
-                              <i class="fas fa-eye"></i>
-                            </button>
-                          </td>
-                          <td>
-                            <a
-                              href="complaint-processing.html"
-                              class="btn btn-sm"
-                              style="background-color: #0d7a55; color: #fff"
-                            >
-                              <i class="fas fa-tasks me-1"></i> Process
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="fixed-col">3</td>
-                          <td>Arjun Sareen</td>
-                          <td>
-                            <span
-                              style="
-                                display: inline-block;
-                                padding: 3px 10px;
-                                border-radius: 20px;
-                                border: 1.5px solid rgb(134, 239, 172);
-                                font-weight: 600;
-                                font-size: 0.75rem;
-                                white-space: nowrap;
-                              "
-                              >GRV-1234567890987</span
-                            >
-                          </td>
-                          <td>
-                            <span
-                              class="badge"
-                              style="background-color: #d4f5e2; color: #0d7a55"
-                              >Grievance</span
-                            >
-                          </td>
-                          <td>Individual</td>
-                          <td>12<sup>th</sup>-06-2026</td>
-
-                          <td>
-                            <button
-                              class="btn btn-sm btn-info text-white"
-                              data-bs-toggle="modal"
-                              data-bs-target="#viewComplaintModal"
-                            >
-                              <i class="fas fa-eye"></i>
-                            </button>
-                          </td>
-                          <td>
-                            <a
-                              href="complaint-processing.html"
-                              class="btn btn-sm"
-                              style="background-color: #0d7a55; color: #fff"
-                            >
-                              <i class="fas fa-tasks me-1"></i> Process
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="fixed-col">4</td>
-                          <td>Abhishek Kumar</td>
-                          <td>
-                            <span
-                              style="
-                                display: inline-block;
-                                padding: 3px 10px;
-                                border-radius: 20px;
-                                border: 1.5px solid rgb(134, 239, 172);
-                                font-weight: 600;
-                                font-size: 0.75rem;
-                                white-space: nowrap;
-                              "
-                              >GRV-1234567890123</span
-                            >
-                          </td>
-                          <td>
-                            <span
-                              class="badge"
-                              style="background-color: #d4f5e2; color: #0d7a55"
-                              >Grievance</span
-                            >
-                          </td>
-                          <td>Group</td>
-                          <td>13<sup>th</sup>-06-2026</td>
-
-                          <td>
-                            <button
-                              class="btn btn-sm btn-info text-white"
-                              data-bs-toggle="modal"
-                              data-bs-target="#viewComplaintModal"
-                            >
-                              <i class="fas fa-eye"></i>
-                            </button>
-                          </td>
-                          <td>
-                            <a
-                              href="complaint-processing.html"
-                              class="btn btn-sm"
-                              style="background-color: #0d7a55; color: #fff"
-                            >
-                              <i class="fas fa-tasks me-1"></i> Process
-                            </a>
-                          </td>
-                          <!-- <td style="text-align: center;">
-                              <a
-                              href="officier_tracking-process.html"
-                              class="btn btn-sm"
-                              style="background-color: #0d7a55; color: #fff">
-                              <i class="fas fa-arrow-right"></i>
-                            </a>
-                          </td> -->
-                        </tr>
-
-                        <tr>
-                          <td class="fixed-col">4</td>
-                          <td>Abhishek Kumar</td>
-                          <td>
-                            <span
-                              style="
-                                display: inline-block;
-                                padding: 3px 10px;
-                                border-radius: 20px;
-                                border: 1.5px solid rgb(134, 239, 172);
-                                font-weight: 600;
-                                font-size: 0.75rem;
-                                white-space: nowrap;
-                              "
-                              >GRV-1234567890123</span
-                            >
-                          </td>
-                          <td>
-                            <span
-                              class="badge"
-                              style="background-color: #fef3c7; color: #92400e"
-                              >Appeal-1</span
-                            >
-                          </td>
-                          <td>Group</td>
-                          <td>13<sup>th</sup>-06-2026</td>
-
-                          <td>
-                            <button
-                              type="button"
-                              class="btn btn-sm btn-info text-white"
-                              data-bs-toggle="modal"
-                              data-bs-target="#appealModal"
-                            >
-                              <i class="fas fa-eye"></i>
-                            </button>
-                          </td>
-
-                          <td>
-                            <a
-                              href="first-appeal.html"
-                              class="btn btn-sm"
-                              style="background-color: #0d7a55; color: #fff"
-                            >
-                              <i class="fas fa-tasks me-1"></i> Process
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="fixed-col">4</td>
-                          <td>Abhishek Kumar</td>
-                          <td>
-                            <span
-                              style="
-                                display: inline-block;
-                                padding: 3px 10px;
-                                border-radius: 20px;
-                                border: 1.5px solid rgb(134, 239, 172);
-                                font-weight: 600;
-                                font-size: 0.75rem;
-                                white-space: nowrap;
-                              "
-                              >GRV-1234567890123</span
-                            >
-                          </td>
-                          <td>
-                            <span
-                              class="badge"
-                              style="background-color: #ede9fe; color: #5b21b6"
-                              >Appeal-2</span
-                            >
-                          </td>
-                          <td>Group</td>
-                          <td>13<sup>th</sup>-06-2026</td>
-
-                          <td>
-                            <button
-                              type="button"
-                              class="btn btn-sm btn-info text-white"
-                              data-bs-toggle="modal"
-                              data-bs-target="#appealModal"
-                            >
-                              <i class="fas fa-eye"></i>
-                            </button>
-                          </td>
-
-                          <td>
-                            <a
-                              href="second-appeal.html"
-                              class="btn btn-sm"
-                              style="background-color: #0d7a55; color: #fff"
-                            >
-                              <i class="fas fa-tasks me-1"></i> Process
-                            </a>
-                          </td>
-                        </tr>
-
-                        <!-- Add more rows as needed -->
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              <!--------pagination---------->
-              <div
-                class="d-flex justify-content-between align-items-center mt-4"
-              >
-                <div class="text-muted small">
-                  Showing <strong>1</strong> to <strong>10</strong> of
-                  <strong>56</strong> entries
-                </div>
-
-                <nav aria-label="Table pagination">
-                  <ul class="pagination pagination-clean mb-0">
-                    <li class="page-item disabled">
-                      <a class="page-link" href="#">
-                        <i class="fas fa-chevron-left"></i>
-                      </a>
-                    </li>
-
-                    <li class="page-item active"></li>
-
-                    <li class="page-item">
-                      <a class="page-link" href="#">1</a>
-                    </li>
-
-                    <li class="page-item">
-                      <a class="page-link" href="#">2</a>
-                    </li>
-
-                    <li class="page-item">
-                      <a class="page-link" href="#">3</a>
-                    </li>
-
-                    <li class="page-item">
-                      <a class="page-link" href="#">
-                        <i class="fas fa-chevron-right"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-              <!---------------------->
+              <div class="kpi-num">34</div>
+              <div class="kpi-label">Appeal 1</div>
+              <div class="kpi-sub">vs last month</div>
             </div>
           </div>
-        </div>
-
-        <div class="row g-3 mb-4">
-          <div class="col-12">
-            <div class="card profile-box border-0 rounded-3 overflow-hidden">
-              <!-- CARD HEADER -->
-              <div class="card-header header-card text-white py-3">
-                <h5 class="mb-0">
-                  <i class="fas fa-calendar-alt me-2"></i>Monthly Trends
-                </h5>
-              </div>
-
-              <!-- BODY -->
-              <div class="card-body p-4">
-                <!-- ✅ TOP TABS -->
-                <div class="top-nav">
-                  <ul class="nav nav-pills" id="tabs">
-                    <li class="nav-item">
-                      <button
-                        class="nav-link active"
-                        data-bs-toggle="pill"
-                        data-bs-target="#overview"
-                      >
-                        Overview
-                      </button>
-                    </li>
-                    <li class="nav-item">
-                      <button
-                        class="nav-link"
-                        data-bs-toggle="pill"
-                        data-bs-target="#pendency"
-                      >
-                        Pendency
-                      </button>
-                    </li>
-                    <li class="nav-item">
-                      <button
-                        class="nav-link"
-                        data-bs-toggle="pill"
-                        data-bs-target="#pollution"
-                      >
-                        Pollution
-                      </button>
-                    </li>
-                    <li class="nav-item">
-                      <button
-                        class="nav-link"
-                        data-bs-toggle="pill"
-                        data-bs-target="#grievancestats"
-                      >
-                        Grievance Category
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-                <!-- ✅ TAB CONTENT -->
-                <div class="tab-content">
-                  <!-- ✅ OVERVIEW TAB -->
-                  <div class="tab-pane fade show active" id="overview">
-                    <div class="row mt-6 my-3">
-                      <div class="col-md-6">
-                        <div
-                          class="card p-3 border-0"
-                          style="
-                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-                            border-radius: 12px;
-                          "
-                        >
-                          <div class="card-header">
-                            Action Taken Report
-                            <!-- <span class="badge badge-tag tag-blue">DONUT</span> -->
-                          </div>
-                          <!-- <div id="donutChart"></div> -->
-                          <div id="atrDonutChart"></div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div
-                          class="card p-3 border-0"
-                          style="
-                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-                            border-radius: 12px;
-                          "
-                        >
-                          <div class="card-header">
-                            Satisfaction Analysis
-                            <!-- <span class="badge badge-tag tag-orange">RADIAL</span> -->
-                          </div>
-                          <!-- <div id="radialChart"></div> -->
-                          <div id="satisfactionChart"></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row mt-6">
-                      <div class="col-md-6">
-                        <div
-                          class="card p-3 h-100 border-0"
-                          style="
-                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-                            border-radius: 12px;
-                          "
-                        >
-                          <div class="card-header">
-                            Gender Profile
-                            <span class="badge badge-tag tag-purple">PIE</span>
-                          </div>
-                          <div id="pieChart"></div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div
-                          class="card p-3 h-100 border-0"
-                          style="
-                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-                            border-radius: 12px;
-                          "
-                        >
-                          <div class="card-header">
-                            Pollution Types
-                            <span class="badge badge-tag tag-green">BAR</span>
-                          </div>
-                          <div id="barChart"></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- ROW 1 -->
-                    <div class="row mt-3 mb-3">
-                      <div class="col-md-12">
-                        <div
-                          class="card p-3 border-0"
-                          style="
-                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-                            border-radius: 12px;
-                          "
-                        >
-                          <div class="card-header">
-                            District Wise Grievance Categories
-                            <!-- <span class="badge badge-tag tag-green">AREA</span> -->
-                          </div>
-                          <div id="chart"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- ✅ PENDENCY TAB -->
-                  <div class="tab-pane fade" id="pendency">
-                    <div class="row g-3">
-                      <!-- Pendency Ageing -->
-                      <div class="col-md-6 col-xl-6 col-12 mt-5">
-                        <div
-                          class="card-box"
-                          style="
-                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-                            border-radius: 12px;
-                          "
-                        >
-                          <div class="card-header-custom">
-                            <span>Pendency Ageing</span>
-                            <span class="active-text">915 active</span>
-                          </div>
-
-                          <div class="row-item">
-                            <div class="d-flex align-items-center">
-                              <div class="dot green"></div>
-                              <span>&lt; 30 Days</span>
-                            </div>
-                            <div class="progress w-50">
-                              <div
-                                class="progress-bar green"
-                                style="width: 70%"
-                              ></div>
-                            </div>
-                            <span class="value">592</span>
-                          </div>
-
-                          <div class="row-item">
-                            <div class="d-flex align-items-center">
-                              <div class="dot yellow"></div>
-                              <span>30–60 Days</span>
-                            </div>
-                            <div class="progress w-50">
-                              <div
-                                class="progress-bar yellow"
-                                style="width: 30%"
-                              ></div>
-                            </div>
-                            <span class="value">181</span>
-                          </div>
-
-                          <div class="row-item">
-                            <div class="d-flex align-items-center">
-                              <div class="dot orange"></div>
-                              <span>60–90 Days</span>
-                            </div>
-                            <div class="progress w-50">
-                              <div
-                                class="progress-bar orange"
-                                style="width: 20%"
-                              ></div>
-                            </div>
-                            <span class="value">92</span>
-                          </div>
-
-                          <div class="row-item">
-                            <div class="d-flex align-items-center">
-                              <div class="dot red"></div>
-                              <span>&gt; 90 Days</span>
-                            </div>
-                            <div class="progress w-50">
-                              <div
-                                class="progress-bar red"
-                                style="width: 10%"
-                              ></div>
-                            </div>
-                            <span class="value">50</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Office-wise Pending -->
-                      <div class="col-md-6 col-xl-6 col-12 mt-5">
-                        <div
-                          class="card-box"
-                          style="
-                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-                            border-radius: 12px;
-                          "
-                        >
-                          <div class="card-header-custom">
-                            Office-wise Pending
-                          </div>
-
-                          <div class="category-item">
-                            <div class="category-head">
-                              <span>Ludhiana Zone</span>
-                              <span class="text-orange">285</span>
-                            </div>
-                            <div class="progress">
-                              <div
-                                class="progress-bar orange"
-                                style="width: 85%"
-                              ></div>
-                            </div>
-                          </div>
-
-                          <div class="category-item">
-                            <div class="category-head">
-                              <span>Amritsar Zone</span>
-                              <span class="text-orange">210</span>
-                            </div>
-                            <div class="progress">
-                              <div
-                                class="progress-bar orange"
-                                style="width: 70%"
-                              ></div>
-                            </div>
-                          </div>
-
-                          <div class="category-item">
-                            <div class="category-head">
-                              <span>Jalandhar Zone</span>
-                              <span class="text-orange">195</span>
-                            </div>
-                            <div class="progress">
-                              <div
-                                class="progress-bar orange"
-                                style="width: 65%"
-                              ></div>
-                            </div>
-                          </div>
-
-                          <div class="category-item">
-                            <div class="category-head">
-                              <span>Patiala Zone</span>
-                              <span class="text-orange">142</span>
-                            </div>
-                            <div class="progress">
-                              <div
-                                class="progress-bar orange"
-                                style="width: 50%"
-                              ></div>
-                            </div>
-                          </div>
-
-                          <div class="category-item">
-                            <div class="category-head">
-                              <span>Mohali Zone</span>
-                              <span class="text-orange">83</span>
-                            </div>
-                            <div class="progress">
-                              <div
-                                class="progress-bar orange"
-                                style="width: 30%"
-                              ></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!------office-wise-pendency----->
-                      <div class="col-md-12">
-                        <div
-                          class="card p-3 h-100 border-0"
-                          style="
-                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-                            border-radius: 12px;
-                          "
-                        >
-                          <div class="card-header">
-                            Office wise Pendency
-                            <!-- <span class="badge badge-tag tag-purple">PIE</span> -->
-                          </div>
-                          <div class="chart-wrapper">
-                            <div id="stackedChart"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- ✅ POLLUTION TAB -->
-                  <div class="tab-pane fade" id="pollution">
-                    <!-- By Category -->
-                    <div class="col-md-6 col-xl-6 col-12 mt-5">
-                      <div
-                        class="card-box"
-                        style="
-                          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-                          border-radius: 12px;
-                        "
-                      >
-                        <div class="card-header-custom">By Category</div>
-
-                        <div class="category-item">
-                          <div class="category-head">
-                            <span>Water Pollution</span>
-                            <span class="text-green">1840</span>
-                          </div>
-                          <div class="progress">
-                            <div
-                              class="progress-bar light-green"
-                              style="width: 80%"
-                            ></div>
-                          </div>
-                        </div>
-
-                        <div class="category-item">
-                          <div class="category-head">
-                            <span>Air Pollution</span>
-                            <span class="text-green">1210</span>
-                          </div>
-                          <div class="progress">
-                            <div
-                              class="progress-bar green"
-                              style="width: 60%"
-                            ></div>
-                          </div>
-                        </div>
-
-                        <div class="category-item">
-                          <div class="category-head">
-                            <span>Solid Waste</span>
-                            <span class="text-green">820</span>
-                          </div>
-                          <div class="progress">
-                            <div
-                              class="progress-bar green"
-                              style="width: 45%"
-                            ></div>
-                          </div>
-                        </div>
-
-                        <div class="category-item">
-                          <div class="category-head">
-                            <span>Noise Pollution</span>
-                            <span class="text-green">540</span>
-                          </div>
-                          <div class="progress">
-                            <div
-                              class="progress-bar green"
-                              style="width: 30%"
-                            ></div>
-                          </div>
-                        </div>
-
-                        <div class="category-item">
-                          <div class="category-head">
-                            <span>Hazardous</span>
-                            <span class="text-green">420</span>
-                          </div>
-                          <div class="progress">
-                            <div
-                              class="progress-bar green"
-                              style="width: 25%"
-                            ></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!------------------->
-
-                  <!-- ✅ GRIEVANCE TAB -->
-                  <div class="tab-pane fade" id="grievancestats">
-                    <!-- By Category -->
-                    <div class="row mt-3 mb-3">
-                      <div class="col-md-12">
-                        <div
-                          class="card p-3 border-0"
-                          style="
-                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-                            border-radius: 12px;
-                          "
-                        >
-                          <div class="card-header">
-                            PPCB Grievance Categories
-                            <!-- <span class="badge badge-tag tag-green">AREA</span> -->
-                          </div>
-                          <div id="grievanceChart"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!------------------------>
-      </div>
-
-      <!-- PAGE 2: grivence -->
-      <div id="grievance" class="page-section">
-        <div class="row mb-4">
-          <div class="d-flex justify-content-end mb-4">
-            <a href="officier_tracking-process.html" class="btn-glow">
-              <i class="fa-solid fa-user-tie"></i> Officer Tracking Process
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="viewComplaintModal"
-        tabindex="-1"
-        aria-labelledby="viewComplaintModalLabel"
-        aria-hidden="true"
-      >
-        <div
-          class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
-        >
-          <div class="modal-content shadow">
+          <div class="col-6 col-md-4 col-xl-3">
             <div
-              class="modal-header text-white"
-              style="background-color: #0d7a55"
+              class="kpi-card"
+              style="
+                --kpi-accent: var(--IND);
+                --kpi-accent2: #8981e6;
+                --kpi-shadow: rgba(91, 79, 214, 0.3);
+              "
             >
-              <h5 class="modal-title" id="viewComplaintModalLabel">
-                <i class="fas fa-file-alt me-2"></i>Complaint Details
-              </h5>
-              <button
-                type="button"
-                class="btn-close btn-close-white"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-
-            <div class="modal-body">
-              <!-- Assignment Section -->
-              <div class="row g-3 section-block">
-                <!-- Buttons -->
-                <div class="col-12 mb-2 d-flex gap-2">
-                  <button
-                    type="button"
-                    class="btn btn-primary flex-fill"
-                    onclick="showSDO()"
-                  >
-                    Assign to SDO
-                  </button>
-
-                  <button
-                    type="button"
-                    class="btn btn-success flex-fill text-start"
-                    onclick="showRO()"
-                  >
-                    Forward to another RO Office
-                  </button>
-
-                  <!-- <a
-                    href="officier_tracking-process.html"
-                    class="btn btn-success flex-fill"
-                    target="_blank"
-                    style="color: #fff"
-                  >
-                    Officer Tracking Details
-                  </a> -->
+              <div class="kpi-top">
+                <div class="kpi-icon">
+                  <i class="bi bi-arrow-up-square-fill"></i>
                 </div>
-
-                <!-- SDO Dropdown -->
-                <div class="col-md-12" id="sdoSection" style="display: none">
-                  <label for="assignSdo" class="f-label">
-                    Assign to SDO <span class="req">*</span>
-                  </label>
-                  <select class="form-select f-select" id="assignSdo">
-                    <option value="">-- Select SDO --</option>
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                    <option>Option 3</option>
-                  </select>
-                </div>
-
-                <!-- RO Dropdown -->
-                <div class="col-md-12" id="roSection" style="display: none">
-                  <label for="assignRoOffice" class="f-label">
-                    Assign to RO Office <span class="req">*</span>
-                  </label>
-                  <select class="form-select f-select" id="assignRoOffice">
-                    <option value="">-- Select RO --</option>
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                    <option>Option 3</option>
-                  </select>
-                </div>
+                <span class="kpi-trend down"
+                  ><i class="bi bi-arrow-down-short"></i>2.1%</span
+                >
               </div>
-
-              <!-- Complaint Information -->
-              <div class="section-block">
-                <div class="col-12">
-                  <h5 class="section-title mb-1">
-                    <i class="fa fa-info-circle me-2"></i>Complaint Information
-                  </h5>
-                  <hr class="my-2" />
-                </div>
-
-                <div class="row g-3">
-                  <div class="col-md-4">
-                    <strong>Grievance No:</strong>
-                    <p>GRV-1781063822067</p>
-                  </div>
-
-                  <div class="col-md-4">
-                    <strong>Status:</strong>
-                    <p>Submitted</p>
-                  </div>
-
-                  <div class="col-md-4">
-                    <strong>Form Type:</strong>
-                    <p>CITIZEN</p>
-                  </div>
-
-                  <div class="col-md-4">
-                    <strong>Filled By:</strong>
-                    <p>Individual</p>
-                  </div>
-
-                  <div class="col-md-4">
-                    <strong>Pollution Types:</strong>
-                    <p>Air</p>
-                  </div>
-
-                  <div class="col-md-4">
-                    <strong>Complaint Subject:</strong>
-                    <p>XYZ</p>
-                  </div>
-
-                  <div class="col-12">
-                    <strong>Submitted:</strong>
-                    <p class="text-muted">10th June 2026 at 10:00 A.M</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Complainant Information -->
-              <div class="section-block">
-                <div class="col-12">
-                  <h5 class="section-title mb-1">
-                    <i class="fa fa-exclamation-circle me-2"></i>Complaint
-                    Information
-                  </h5>
-                  <hr class="my-2" />
-                </div>
-
-                <div class="row g-3">
-                  <div class="col-md-4">
-                    <strong>Complainant Name:</strong>
-                    <p>Vikas Khanduja</p>
-                  </div>
-
-                  <div class="col-md-4">
-                    <strong>Status:</strong>
-                    <p>Submitted</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Industry / Site Information -->
-              <div class="section-block">
-                <div class="col-12">
-                  <h5 class="section-title mb-1">
-                    <i class="fas fa-file-alt me-2"></i> Complaint Information
-                  </h5>
-                  <hr class="my-2" />
-                </div>
-
-                <div class="row g-3">
-                  <div class="col-md-4">
-                    <strong>Industry Name:</strong>
-                    <p>XYZ</p>
-                  </div>
-
-                  <div class="col-md-4">
-                    <strong>Site Address:</strong>
-                    <p>XYZ</p>
-                  </div>
-
-                  <div class="col-md-4">
-                    <strong>Site District:</strong>
-                    <p>Patiala</p>
-                  </div>
-
-                  <div class="col-md-4">
-                    <strong>Site Pincode:</strong>
-                    <p>122001</p>
-                  </div>
-
-                  <div class="col-md-4">
-                    <strong>Complaint Details:</strong>
-                    <p>
-                      Discharge from Industry into open field near residential
-                      are
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Attachment -->
-              <div class="section-block">
-                <div class="col-12">
-                  <h5 class="section-title mb-1">
-                    <i class="fas fa-paperclip me-2"></i>Attachment
-                  </h5>
-                  <hr class="my-2" />
-                </div>
-
-                <div class="row g-3">
-                  <div class="col-md-4">
-                    <p>Img-123456789-abcdefghi</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-info"
-                data-bs-dismiss="modal"
-                style="color: #fff"
-              >
-                <i class="fas fa-paper-plane"></i> Forward
-              </button>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
+              <div class="kpi-num">12</div>
+              <div class="kpi-label">Appeal 2</div>
+              <div class="kpi-sub">vs last month</div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div
-        class="modal fade"
-        id="appealModal"
-        tabindex="-1"
-        aria-labelledby="appealModalLabel"
-        aria-hidden="true"
-      >
-        <div
-          class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
-        >
-          <div class="modal-content shadow">
+          <div class="col-6 col-md-4 col-xl-3">
             <div
-              class="modal-header text-white"
-              style="background-color: #0d7a55"
+              class="kpi-card"
+              style="
+                --kpi-accent: var(--SUCL);
+                --kpi-accent2: #3ecb9a;
+                --kpi-shadow: rgba(18, 163, 116, 0.3);
+              "
             >
-              <h5 class="modal-title" id="appealModalLabel">
-                <i class="fas fa-file-alt me-2"></i>
-                Appeal Workflow Progress
-              </h5>
-
-              <button
-                type="button"
-                class="btn-close btn-close-white"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-
-            <div class="modal-body">
-              <!-- Complaint Details Here -->
-
-              <div class="workflow-bar">
-                <div class="wf-steps">
-                  <div class="wf-step">
-                    <div class="wf-node">
-                      <div class="wf-dot done">
-                        <i class="bi bi-check-lg"></i>
-                      </div>
-                      <div class="wf-lbl">Citizen Files<br />Complaint</div>
-                    </div>
-                    <div class="wf-connector done"></div>
-                  </div>
-                  <div class="wf-step">
-                    <div class="wf-node">
-                      <div class="wf-dot done">
-                        <i class="bi bi-check-lg"></i>
-                      </div>
-                      <div class="wf-lbl">RO Processes<br />Complaint</div>
-                    </div>
-                    <div class="wf-connector done"></div>
-                  </div>
-                  <div class="wf-step">
-                    <div class="wf-node">
-                      <div class="wf-dot done">
-                        <i class="bi bi-check-lg"></i>
-                      </div>
-                      <div class="wf-lbl">Citizen Files<br />First Appeal</div>
-                    </div>
-                    <div class="wf-connector done"></div>
-                  </div>
-                  <div class="wf-step">
-                    <div class="wf-node">
-                      <div class="wf-dot current">
-                        <i class="bi bi-person-badge-fill"></i>
-                      </div>
-                      <div class="wf-lbl">
-                        <strong>SEE Reviews</strong><br />&amp; Forwards
-                      </div>
-                    </div>
-                    <div class="wf-connector"></div>
-                  </div>
-
-                  <div class="wf-step">
-                    <div class="wf-node">
-                      <div class="wf-dot waiting">6</div>
-                      <div class="wf-lbl">Revised ATR<br />to Citizen</div>
-                    </div>
-                    <div class="wf-connector"></div>
-                  </div>
-                  <div class="wf-node">
-                    <div class="wf-dot waiting">7</div>
-                    <div class="wf-lbl">Closure</div>
-                  </div>
+              <div class="kpi-top">
+                <div class="kpi-icon">
+                  <i class="bi bi-patch-check-fill"></i>
                 </div>
+                <span class="kpi-trend up"
+                  ><i class="bi bi-arrow-up-short"></i>14.7%</span
+                >
               </div>
+              <div class="kpi-num">187</div>
+              <div class="kpi-label">Resolved</div>
+              <div class="kpi-sub">vs last month</div>
             </div>
+          </div>
+        </div>
 
-            <div class="modal-footer">
-              <button type="button" class="btn btn-info text-white">
-                <i class="fas fa-paper-plane me-1"></i>
-                Forward
-              </button>
+        <!-- CHARTS -->
+        <div class="row g-3 mb-3">
+          <div class="col-lg-6">
+            <div class="chart-card">
+              <div class="card-header">
+                District Wise Grievance <small>Top districts by volume</small>
+              </div>
+              <div class="chart-wrapper" id="districtChart"></div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="chart-card">
+              <div class="card-header">
+                Total Grievance — Monthly Trend <small>Jan – Dec 2026</small>
+              </div>
+              <div class="chart-wrapper" id="totalTrendChart"></div>
+            </div>
+          </div>
+        </div>
 
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
+        <div class="row g-3 mb-3">
+          <div class="col-lg-6">
+            <div class="chart-card">
+              <div class="card-header">
+                Grievance Heat Map <small>District × Month intensity</small>
+              </div>
+              <div class="chart-wrapper" id="heatmapChart"></div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="chart-card">
+              <div class="card-header">
+                Grievance Categories <small>Top 12 categories</small>
+              </div>
+              <div class="chart-wrapper" id="grievanceChart"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-lg-6">
+            <div class="chart-card">
+              <div class="card-header">Pollution Categories</div>
+              <div class="chart-wrapper" id="pollutionChart"></div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="chart-card">
+              <div class="card-header">
+                Source of Complaint <small>How citizens reach us</small>
+              </div>
+              <div class="chart-wrapper" id="sourceChart"></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- PAGE 3: EMPLOYEES -->
+      <!-- ═══════ PAGE: MY PROFILE ═══════ -->
       <div id="employees" class="page-section">
-        <h3>My Profile</h3>
-        <div class="custom-accordion mb-4">
-          <div class="acc-item">
+        <h3 class="page-title">My Profile</h3>
+        <p class="page-sub">Your account details and role information</p>
+        <div class="custom-accordion">
+          <div class="acc-item active">
             <button class="acc-btn">
               <span
-                ><i class="fas fa-user-circle me-2"></i> Profile
+                ><i class="bi bi-person-circle me-2"></i>Profile
                 Information</span
-              >
-              <i class="fas fa-chevron-down"></i>
+              ><i class="bi bi-chevron-down"></i>
             </button>
             <div class="acc-content">
-              <!-- Entire profile section (same as before) -->
-              <div class="row mb-4 mt-3">
-                <div class="col-12">
-                  <div
-                    class="card profile-box border-0 rounded-3 overflow-hidden"
-                  >
-                    <div class="card-body">
-                      <div class="row g-4 align-items-center">
-                        <!-- Profile image -->
-                        <div class="col-md-3 text-center">
-                          <div class="p-2">
-                            <img
-                              src="Images/images.png"
-                              class="rounded-circle border shadow-sm"
-                              style="
-                                width: 140px;
-                                height: 140px;
-                                object-fit: cover;
-                              "
-                            />
+              <div class="panel-body">
+                <div class="row g-4 align-items-center">
+                  <div class="col-md-3 text-center">
+                    <img
+                      src="images/profile-placeholder.png"
+                      onerror="this.style.display = 'none'"
+                      class="rounded-circle border shadow-sm mb-2"
+                      style="width: 140px; height: 140px; object-fit: cover"
+                    />
+                    <h6 class="fw-bold mb-0">Member Secretary</h6>
+                    <small class="text-muted">Head Office</small>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <div class="info-tile">
+                          <div class="icon">
+                            <i class="bi bi-person-vcard-fill"></i>
                           </div>
-                          <h6 class="fw-bold mt-2 mb-0">Member Secretary</h6>
-                          <small class="text-muted">Head Office</small>
+                          <div>
+                            <small class="text-muted d-block"
+                              >Employee Code</small
+                            >
+                            <h6 class="fw-bold mb-0">EMP1245</h6>
+                          </div>
                         </div>
-
-                        <!-- Profile details.. -->
-                        <div class="col-md-9">
-                          <div class="row gy-4">
-                            <!-- Single Info Box -->
-                            <div class="col-md-6">
-                              <div
-                                class="p-2 bg-light rounded-3 shadow-sm d-flex align-items-center gap-3"
-                              >
-                                <div
-                                  class="icon header-card text-white rounded-circle p-3"
-                                >
-                                  <i class="fas fa-id-card"></i>
-                                </div>
-                                <div>
-                                  <small class="text-muted d-block"
-                                    >Employee Code</small
-                                  >
-                                  <h6 class="fw-bold mb-0">EMP1245</h6>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="col-md-6">
-                              <div
-                                class="p-2 bg-light rounded-3 shadow-sm d-flex align-items-center gap-3"
-                              >
-                                <div
-                                  class="icon header-card text-white rounded-circle p-3"
-                                >
-                                  <i class="fas fa-envelope"></i>
-                                </div>
-                                <div>
-                                  <small class="text-muted d-block"
-                                    >Email</small
-                                  >
-                                  <h6 class="fw-bold mb-0">ms@office.gov.in</h6>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="col-md-6">
-                              <div
-                                class="p-2 bg-light rounded-3 shadow-sm d-flex align-items-center gap-3"
-                              >
-                                <div
-                                  class="icon header-card text-white rounded-circle p-3"
-                                >
-                                  <i class="fas fa-calendar"></i>
-                                </div>
-                                <div>
-                                  <small class="text-muted d-block"
-                                    >Date of Birth</small
-                                  >
-                                  <h6 class="fw-bold mb-0">12-08-2000</h6>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="col-md-6">
-                              <div
-                                class="p-2 bg-light rounded-3 shadow-sm d-flex align-items-center gap-3"
-                              >
-                                <div
-                                  class="icon header-card text-white rounded-circle p-3"
-                                >
-                                  <i class="fas fa-phone"></i>
-                                </div>
-                                <div>
-                                  <small class="text-muted d-block"
-                                    >Mobile Number</small
-                                  >
-                                  <h6 class="fw-bold mb-0">8386328797</h6>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="col-md-6">
-                              <div
-                                class="p-2 bg-light rounded-3 shadow-sm d-flex align-items-center gap-3"
-                              >
-                                <div
-                                  class="icon header-card text-white rounded-circle p-3"
-                                >
-                                  <i class="fas fa-building"></i>
-                                </div>
-                                <div>
-                                  <small class="text-muted d-block"
-                                    >Office</small
-                                  >
-                                  <h6 class="fw-bold mb-0">
-                                    Head Office Bhopal
-                                  </h6>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="col-md-6">
-                              <div
-                                class="p-2 bg-light rounded-3 shadow-sm d-flex align-items-center gap-3"
-                              >
-                                <div
-                                  class="icon header-card text-white rounded-circle p-3"
-                                >
-                                  <i class="fas fa-layer-group"></i>
-                                </div>
-                                <div>
-                                  <small class="text-muted d-block"
-                                    >Section</small
-                                  >
-                                  <h6 class="fw-bold mb-0">Administration</h6>
-                                </div>
-                              </div>
-                            </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="info-tile">
+                          <div class="icon">
+                            <i class="bi bi-envelope-fill"></i>
+                          </div>
+                          <div>
+                            <small class="text-muted d-block">Email</small>
+                            <h6 class="fw-bold mb-0">ms@office.gov.in</h6>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="info-tile">
+                          <div class="icon">
+                            <i class="bi bi-calendar-fill"></i>
+                          </div>
+                          <div>
+                            <small class="text-muted d-block"
+                              >Date of Birth</small
+                            >
+                            <h6 class="fw-bold mb-0">12-08-2000</h6>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="info-tile">
+                          <div class="icon">
+                            <i class="bi bi-telephone-fill"></i>
+                          </div>
+                          <div>
+                            <small class="text-muted d-block"
+                              >Mobile Number</small
+                            >
+                            <h6 class="fw-bold mb-0">83863 28797</h6>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="info-tile">
+                          <div class="icon">
+                            <i class="bi bi-building-fill"></i>
+                          </div>
+                          <div>
+                            <small class="text-muted d-block">Office</small>
+                            <h6 class="fw-bold mb-0">Head Office, Punjab</h6>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="info-tile">
+                          <div class="icon">
+                            <i class="bi bi-diagram-3-fill"></i>
+                          </div>
+                          <div>
+                            <small class="text-muted d-block">Section</small>
+                            <h6 class="fw-bold mb-0">Administration</h6>
                           </div>
                         </div>
                       </div>
@@ -1638,951 +1582,1164 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!------------page-4:Query Dashboard-------->
-
-      <div class="page-section" id="query-status">
-        <h3>Query Status</h3>
-        <p>Track the status and progress of the complaint in real-time</p>
-
-        <div class="col-12">
-          <div class="card profile-box border-0 rounded-3 overflow-hidden">
-            <!-- CARD HEADER -->
-            <div
-              class="card-header header-card text-white py-3 d-flex justify-content-between align-items-center"
-            >
-              <h5 class="mb-0">
-                <i class="fas fa-calendar-alt me-2"></i>
-                Query Status
-              </h5>
-            </div>
-
-            <!-- BODY -->
-            <div class="card-body p-4">
-              <div class="row g-4 align-items-center">
-                <div class="col-12">
-                  <div class="table-scroll">
-                    <table class="table table-hover align-middle mb-0">
-                      <thead class="table-dark">
-                        <tr>
-                          <th class="fixed-col">SR No</th>
-                          <th>Query No</th>
-                          <th>Query Subject</th>
-                          <th>Raised On</th>
-                          <th>Status</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-
-                      <tbody>
-                        <tr>
-                          <td class="fixed-col">1</td>
-                          <td>
-                            <span
-                              style="
-                                display: inline-block;
-                                padding: 3px 10px;
-                                border-radius: 20px;
-                                border: 1.5px solid rgb(134, 239, 172);
-                                font-weight: 600;
-                                font-size: 0.75rem;
-                                white-space: nowrap;
-                              "
-                              >QRY001</span
-                            >
-                          </td>
-                          <td>
-                            <span
-                              class="badge"
-                              style="background-color: #d4f5e2; color: #0d7a55"
-                              >Inspection Status</span
-                            >
-                          </td>
-                          <td>02 Aug 2026</td>
-                          <td>🟠 Under Review</td>
-                          <td>
-                            <button
-                              class="btn btn-sm btn-info text-white"
-                              data-bs-toggle="modal"
-                              data-bs-target="#viewComplaintModal"
-                            >
-                              <i class="fas fa-eye"></i>
-                            </button>
-                          </td>
-                        </tr>
-
-                        <!-- Add more rows as needed -->
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              <!--------pagination---------->
-              <div
-                class="d-flex justify-content-between align-items-center mt-4"
-              >
-                <div class="text-muted small">
-                  Showing <strong>1</strong> to <strong>10</strong> of
-                  <strong>56</strong> entries
-                </div>
-
-                <nav aria-label="Table pagination">
-                  <ul class="pagination pagination-clean mb-0">
-                    <li class="page-item disabled">
-                      <a class="page-link" href="#">
-                        <i class="fas fa-chevron-left"></i>
-                      </a>
-                    </li>
-
-                    <li class="page-item active"></li>
-
-                    <li class="page-item">
-                      <a class="page-link" href="#">1</a>
-                    </li>
-
-                    <li class="page-item">
-                      <a class="page-link" href="#">2</a>
-                    </li>
-
-                    <li class="page-item">
-                      <a class="page-link" href="#">3</a>
-                    </li>
-
-                    <li class="page-item">
-                      <a class="page-link" href="#">
-                        <i class="fas fa-chevron-right"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-              <!---------------------->
             </div>
           </div>
         </div>
       </div>
     </main>
 
+    <!-- MODAL: VIEW COMPLAINT -->
+    <div
+      class="modal fade"
+      id="viewComplaintModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content shadow">
+          <div class="modal-header text-white">
+            <h5 class="modal-title">
+              <i class="bi bi-file-earmark-text-fill me-2"></i>Complaint Details
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3 section-block">
+              <div class="col-12 mb-2 d-flex gap-2 flex-wrap">
+                <button
+                  type="button"
+                  class="btn btn-primary flex-fill"
+                  onclick="showAssignSection('sdo')"
+                >
+                  Assign to SDO
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-success flex-fill"
+                  onclick="showAssignSection('ro')"
+                >
+                  Forward to another RO Office
+                </button>
+              </div>
+              <div class="col-md-12" id="sdoSection" style="display: none">
+                <label for="assignSdo" class="f-label"
+                  >Assign to SDO <span class="req">*</span></label
+                >
+                <select class="form-select" id="assignSdo">
+                  <option value="">-- Select SDO --</option>
+                  <option>Option 1</option>
+                  <option>Option 2</option>
+                  <option>Option 3</option>
+                </select>
+              </div>
+              <div class="col-md-12" id="roSection" style="display: none">
+                <label for="assignRoOffice" class="f-label"
+                  >Assign to RO Office <span class="req">*</span></label
+                >
+                <select class="form-select" id="assignRoOffice">
+                  <option value="">-- Select RO --</option>
+                  <option>Option 1</option>
+                  <option>Option 2</option>
+                  <option>Option 3</option>
+                </select>
+              </div>
+            </div>
+            <div class="section-block">
+              <h5 class="section-title mb-1">
+                <i class="bi bi-info-circle-fill me-2"></i>Complaint Information
+              </h5>
+              <hr class="my-2" />
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <strong>Grievance No:</strong>
+                  <p class="mb-0">GRV-1781063822067</p>
+                </div>
+                <div class="col-md-4">
+                  <strong>Status:</strong>
+                  <p class="mb-0">Submitted</p>
+                </div>
+                <div class="col-md-4">
+                  <strong>Form Type:</strong>
+                  <p class="mb-0">Citizen</p>
+                </div>
+                <div class="col-md-4">
+                  <strong>Filed By:</strong>
+                  <p class="mb-0">Individual</p>
+                </div>
+                <div class="col-md-4">
+                  <strong>Pollution Types:</strong>
+                  <p class="mb-0">Air</p>
+                </div>
+                <div class="col-md-4">
+                  <strong>Complaint Subject:</strong>
+                  <p class="mb-0">XYZ</p>
+                </div>
+                <div class="col-12">
+                  <strong>Submitted:</strong>
+                  <p class="text-muted mb-0">10th June 2026 at 10:00 A.M</p>
+                </div>
+              </div>
+            </div>
+            <div class="section-block">
+              <h5 class="section-title mb-1">
+                <i class="bi bi-exclamation-circle-fill me-2"></i>Complainant
+                Information
+              </h5>
+              <hr class="my-2" />
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <strong>Complainant Name:</strong>
+                  <p class="mb-0">Vikas Khanduja</p>
+                </div>
+                <div class="col-md-4">
+                  <strong>Status:</strong>
+                  <p class="mb-0">Submitted</p>
+                </div>
+              </div>
+            </div>
+            <div class="section-block">
+              <h5 class="section-title mb-1">
+                <i class="bi bi-file-earmark-text-fill me-2"></i>Industry / Site
+                Information
+              </h5>
+              <hr class="my-2" />
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <strong>Industry Name:</strong>
+                  <p class="mb-0">XYZ</p>
+                </div>
+                <div class="col-md-4">
+                  <strong>Site Address:</strong>
+                  <p class="mb-0">XYZ</p>
+                </div>
+                <div class="col-md-4">
+                  <strong>Site District:</strong>
+                  <p class="mb-0">Patiala</p>
+                </div>
+                <div class="col-md-4">
+                  <strong>Site Pincode:</strong>
+                  <p class="mb-0">122001</p>
+                </div>
+                <div class="col-md-8">
+                  <strong>Complaint Details:</strong>
+                  <p class="mb-0">
+                    Discharge from industry into open field near residential
+                    area.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="section-block mb-0">
+              <h5 class="section-title mb-1">
+                <i class="bi bi-paperclip me-2"></i>Attachment
+              </h5>
+              <hr class="my-2" />
+              <p class="mb-0">Img-123456789-abcdefghi</p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-view">
+              <i class="bi bi-send-fill me-1"></i>Forward
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: APPEAL WORKFLOW -->
+    <div class="modal fade" id="appealModal" tabindex="-1" aria-hidden="true">
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content shadow">
+          <div class="modal-header text-white">
+            <h5 class="modal-title">
+              <i class="bi bi-file-earmark-text-fill me-2"></i>Appeal Workflow
+              Progress
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="workflow-bar">
+              <div class="wf-steps">
+                <div class="wf-step">
+                  <div class="wf-node">
+                    <div class="wf-dot done">
+                      <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div class="wf-lbl">Citizen Files<br />Complaint</div>
+                  </div>
+                  <div class="wf-connector done"></div>
+                </div>
+                <div class="wf-step">
+                  <div class="wf-node">
+                    <div class="wf-dot done">
+                      <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div class="wf-lbl">RO Processes<br />Complaint</div>
+                  </div>
+                  <div class="wf-connector done"></div>
+                </div>
+                <div class="wf-step">
+                  <div class="wf-node">
+                    <div class="wf-dot done">
+                      <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div class="wf-lbl">Citizen Files<br />First Appeal</div>
+                  </div>
+                  <div class="wf-connector done"></div>
+                </div>
+                <div class="wf-step">
+                  <div class="wf-node">
+                    <div class="wf-dot current">
+                      <i class="bi bi-person-badge-fill"></i>
+                    </div>
+                    <div class="wf-lbl">
+                      <strong>SEE Reviews</strong><br />&amp; Forwards
+                    </div>
+                  </div>
+                  <div class="wf-connector"></div>
+                </div>
+                <div class="wf-step">
+                  <div class="wf-node">
+                    <div class="wf-dot waiting">6</div>
+                    <div class="wf-lbl">Revised ATR<br />to Citizen</div>
+                  </div>
+                  <div class="wf-connector"></div>
+                </div>
+                <div class="wf-node">
+                  <div class="wf-dot waiting">7</div>
+                  <div class="wf-lbl">Closure</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-view">
+              <i class="bi bi-send-fill me-1"></i>Forward
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOGOUT CONFIRMATION -->
     <div class="logout-overlay" id="logoutOverlay">
       <div class="logout-card">
         <div class="logout-icon-wrap">
-          <i class="fas fa-sign-out-alt"></i>
+          <i class="bi bi-box-arrow-right"></i>
         </div>
-
         <h5 class="logout-title">Confirm Logout</h5>
-
         <p class="logout-msg">
           Are you sure you want to log out of your PPCB account?
         </p>
-
         <div class="logout-actions">
           <button class="logout-btn-cancel" id="cancelLogout">Cancel</button>
-
           <button class="logout-btn-confirm" id="confirmLogout">
-            <i class="fas fa-sign-out-alt me-2"></i>
-            Yes, Logout
+            <i class="bi bi-box-arrow-right me-1"></i>Yes, Logout
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- === LOGIC === -->
-
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const logoutBtn = document.getElementById("logoutBtn");
-        const logoutOverlay = document.getElementById("logoutOverlay");
-        const cancelBtn = document.getElementById("cancelLogout");
-        const confirmBtn = document.getElementById("confirmLogout");
+      /* ══════════════════════════════════════════════════════════
+     APPLICATION SCRIPT
+  ══════════════════════════════════════════════════════════ */
+      (function () {
+        "use strict";
 
-        // Open Logout Popup
-        logoutBtn.addEventListener("click", function (e) {
-          e.preventDefault();
-          logoutOverlay.classList.add("show");
-        });
+        /* 1. SAMPLE TABLE DATA (single source of truth — swap for an API later) */
+        const GRIEVANCE_ROWS = [
+          {
+            sr: 1,
+            name: "Vikas Khanduja",
+            no: "GRV-1234567890123",
+            type: "grievance",
+            filedBy: "Individual",
+            status: "process",
+            date: "2026-06-10",
+            modal: "viewComplaintModal",
+            action: "complaint-processing.html",
+          },
+          {
+            sr: 2,
+            name: "Aditya Arya",
+            no: "GRV-0987654321234",
+            type: "grievance",
+            filedBy: "Individual",
+            status: "pending",
+            date: "2026-06-11",
+            modal: "viewComplaintModal",
+            action: "complaint-processing.html",
+          },
+          {
+            sr: 3,
+            name: "Arjun Sareen",
+            no: "GRV-1234567890987",
+            type: "grievance",
+            filedBy: "Group",
+            status: "resolved",
+            date: "2026-06-13",
+            modal: "viewComplaintModal",
+            action: "complaint-processing.html",
+          },
+          {
+            sr: 4,
+            name: "Abhishek Kumar",
+            no: "GRV-1234567890124",
+            type: "appeal1",
+            filedBy: "Group",
+            status: "forwarded",
+            date: "2026-06-13",
+            modal: "appealModal",
+            action: "first-appeal.html",
+          },
+          {
+            sr: 5,
+            name: "Abhishek Kumar",
+            no: "GRV-1234567890125",
+            type: "appeal2",
+            filedBy: "Group",
+            status: "process",
+            date: "2026-06-14",
+            modal: "appealModal",
+            action: "second-appeal.html",
+          },
+          {
+            sr: 6,
+            name: "Simran Kaur",
+            no: "GRV-1234567891001",
+            type: "grievance",
+            filedBy: "Individual",
+            status: "resolved",
+            date: "2026-06-15",
+            modal: "viewComplaintModal",
+            action: "complaint-processing.html",
+          },
+          {
+            sr: 7,
+            name: "Manpreet Singh",
+            no: "GRV-1234567891002",
+            type: "grievance",
+            filedBy: "Individual",
+            status: "pending",
+            date: "2026-06-17",
+            modal: "viewComplaintModal",
+            action: "complaint-processing.html",
+          },
+          {
+            sr: 8,
+            name: "Rohit Verma",
+            no: "GRV-1234567891003",
+            type: "appeal1",
+            filedBy: "Individual",
+            status: "process",
+            date: "2026-06-18",
+            modal: "appealModal",
+            action: "first-appeal.html",
+          },
+          {
+            sr: 9,
+            name: "Priya Sharma",
+            no: "GRV-1234567891004",
+            type: "grievance",
+            filedBy: "Group",
+            status: "forwarded",
+            date: "2026-06-20",
+            modal: "viewComplaintModal",
+            action: "complaint-processing.html",
+          },
+          {
+            sr: 10,
+            name: "Harpreet Singh",
+            no: "GRV-1234567891005",
+            type: "grievance",
+            filedBy: "Individual",
+            status: "resolved",
+            date: "2026-06-21",
+            modal: "viewComplaintModal",
+            action: "complaint-processing.html",
+          },
+          {
+            sr: 11,
+            name: "Neha Kapoor",
+            no: "GRV-1234567891006",
+            type: "appeal2",
+            filedBy: "Individual",
+            status: "pending",
+            date: "2026-06-23",
+            modal: "appealModal",
+            action: "second-appeal.html",
+          },
+          {
+            sr: 12,
+            name: "Gurpreet Kaur",
+            no: "GRV-1234567891007",
+            type: "grievance",
+            filedBy: "Group",
+            status: "process",
+            date: "2026-06-24",
+            modal: "viewComplaintModal",
+            action: "complaint-processing.html",
+          },
+          {
+            sr: 13,
+            name: "Karan Mehta",
+            no: "GRV-1234567891008",
+            type: "grievance",
+            filedBy: "Individual",
+            status: "resolved",
+            date: "2026-06-26",
+            modal: "viewComplaintModal",
+            action: "complaint-processing.html",
+          },
+          {
+            sr: 14,
+            name: "Jasleen Bhatia",
+            no: "GRV-1234567891009",
+            type: "appeal1",
+            filedBy: "Individual",
+            status: "forwarded",
+            date: "2026-06-27",
+            modal: "appealModal",
+            action: "first-appeal.html",
+          },
+        ];
 
-        // Cancel Logout
-        cancelBtn.addEventListener("click", function () {
-          logoutOverlay.classList.remove("show");
-        });
+        const TYPE_LABEL = {
+          grievance: ["type-grievance", "Grievance"],
+          appeal1: ["type-appeal1", "Appeal-1"],
+          appeal2: ["type-appeal2", "Appeal-2"],
+        };
+        const STATUS_LABEL = {
+          pending: ["status-pending", "Pending"],
+          process: ["status-process", "Under Process"],
+          forwarded: ["status-forwarded", "Forwarded"],
+          resolved: ["status-resolved", "Resolved"],
+        };
 
-        // Confirm Logout
-        confirmBtn.addEventListener("click", function () {
-          // Optional
-          localStorage.clear();
-          sessionStorage.clear();
+        /* Table state: filters + sort + pagination */
+        const tableState = {
+          search: "",
+          type: "all",
+          status: "all",
+          from: "",
+          to: "",
+          sortKey: null,
+          sortDir: 1,
+          page: 1,
+          pageSize: 5,
+        };
 
-          window.location.href = "login.html";
-        });
-
-        // Close popup when clicking outside
-        logoutOverlay.addEventListener("click", function (e) {
-          if (e.target === logoutOverlay) {
-            logoutOverlay.classList.remove("show");
-          }
-        });
-      });
-    </script>
-    <script>
-      // 1. Desktop Toggle Logic
-      const desktopToggle = document.getElementById("desktopToggle");
-
-      if (desktopToggle) {
-        desktopToggle.addEventListener("click", function () {
-          document.body.classList.toggle("sb-toggled");
-        });
-      }
-
-      // 2. Mobile Toggle Logic
-      const mobileToggle = document.getElementById("mobileToggle");
-      if (mobileToggle) {
-        mobileToggle.addEventListener("click", function (e) {
-          e.stopPropagation(); // Prevent immediate closing
-          document.body.classList.toggle("sb-mobile-open");
-        });
-      }
-
-      // Close mobile sidebar when clicking outside
-      document.addEventListener("click", function (event) {
-        const sidebar = document.getElementById("sidebar");
-        const isClickInside =
-          sidebar.contains(event.target) || mobileToggle.contains(event.target);
-
-        if (
-          !isClickInside &&
-          document.body.classList.contains("sb-mobile-open")
-        ) {
-          document.body.classList.remove("sb-mobile-open");
+        function fmtDate(iso) {
+          const [y, m, d] = iso.split("-");
+          return `${d}-${m}-${y}`;
         }
-      });
 
-      // 3. Page Switching Logic
-      function switchPage(pageId, element) {
-        // Hide all sections
-        const sections = document.querySelectorAll(".page-section");
-        sections.forEach((s) => s.classList.remove("active-section"));
-
-        // Show target
-        const target = document.getElementById(pageId);
-        if (target) target.classList.add("active-section");
-
-        // Update Nav State
-        const links = document.querySelectorAll(".sidebar .nav-link");
-        links.forEach((l) => l.classList.remove("active"));
-        element.classList.add("active");
-
-        // Close mobile sidebar if open
-        if (window.innerWidth < 768) {
-          document.body.classList.remove("sb-mobile-open");
-        }
-
-        // Scroll top
-        window.scrollTo(0, 0);
-      }
-    </script>
-
-    <script>
-      const accordionItems = document.querySelectorAll(".acc-item");
-
-      accordionItems.forEach((item) => {
-        const btn = item.querySelector(".acc-btn");
-
-        btn.addEventListener("click", () => {
-          // CLOSE other items
-          accordionItems.forEach((other) => {
-            if (other !== item) other.classList.remove("active");
+        function getFilteredRows() {
+          let rows = GRIEVANCE_ROWS.filter((r) => {
+            const q = tableState.search.trim().toLowerCase();
+            if (
+              q &&
+              !(
+                r.name.toLowerCase().includes(q) ||
+                r.no.toLowerCase().includes(q)
+              )
+            )
+              return false;
+            if (tableState.type !== "all" && r.type !== tableState.type)
+              return false;
+            if (tableState.status !== "all" && r.status !== tableState.status)
+              return false;
+            if (tableState.from && r.date < tableState.from) return false;
+            if (tableState.to && r.date > tableState.to) return false;
+            return true;
           });
 
-          // TOGGLE current item
-          item.classList.toggle("active");
-        });
-      });
+          if (tableState.sortKey) {
+            rows = rows.slice().sort((a, b) => {
+              const av = a[tableState.sortKey],
+                bv = b[tableState.sortKey];
+              return av < bv
+                ? -tableState.sortDir
+                : av > bv
+                  ? tableState.sortDir
+                  : 0;
+            });
+          }
+          return rows;
+        }
 
-      // ✅ LINE CHART
-      var options = {
-        series: [
-          {
-            name: "Assigned Count",
-            data: [
-              308, 166, 118, 101, 100, 96, 85, 79, 77, 66, 60, 56, 52, 49, 49,
-              43, 38, 33, 27, 22, 15, 11, 9, 8, 6, 6, 5,
+        function renderGrievanceTable() {
+          const tbody = document.getElementById("grievanceTableBody");
+          if (!tbody) return;
+
+          const filtered = getFilteredRows();
+          const totalPages = Math.max(
+            1,
+            Math.ceil(filtered.length / tableState.pageSize),
+          );
+          tableState.page = Math.min(tableState.page, totalPages);
+          const start = (tableState.page - 1) * tableState.pageSize;
+          const pageRows = filtered.slice(start, start + tableState.pageSize);
+
+          tbody.innerHTML = pageRows.length
+            ? pageRows
+                .map((r) => {
+                  const [typeCls, typeLabel] = TYPE_LABEL[r.type];
+                  const [statusCls, statusLabel] = STATUS_LABEL[r.status];
+                  return `<tr>
+          <td class="fixed-col">${r.sr}</td><td>${r.name}</td>
+          <td><span class="pill-badge">${r.no}</span></td>
+          <td><span class="type-badge ${typeCls}">${typeLabel}</span></td>
+          <td>${r.filedBy}</td>
+          <td><span class="status-badge ${statusCls}">${statusLabel}</span></td>
+          <td>${fmtDate(r.date)}</td>
+          <td><button class="btn btn-sm btn-view" data-bs-toggle="modal" data-bs-target="#${r.modal}"><i class="bi bi-eye-fill"></i></button></td>
+          <td><a href="${r.action}" class="btn btn-sm btn-process"><i class="bi bi-list-task me-1"></i>Process</a></td>
+        </tr>`;
+                })
+                .join("")
+            : `<tr class="empty-row"><td colspan="9"><i class="bi bi-inbox d-block mb-1" style="font-size:1.4rem;"></i>No matching records found</td></tr>`;
+
+          document.getElementById("tableSummary").textContent = filtered.length
+            ? `Showing ${start + 1} to ${Math.min(start + tableState.pageSize, filtered.length)} of ${filtered.length} entries`
+            : "No entries to show";
+
+          renderPagination(totalPages);
+          updateSortIndicators();
+        }
+
+        function renderPagination(totalPages) {
+          const pag = document.getElementById("tablePagination");
+          if (!pag) return;
+          let html = `<li class="page-item ${tableState.page === 1 ? "disabled" : ""}"><a class="page-link" href="#" data-page="${tableState.page - 1}"><i class="bi bi-chevron-left"></i></a></li>`;
+          for (let i = 1; i <= totalPages; i++) {
+            html += `<li class="page-item ${i === tableState.page ? "active" : ""}"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+          }
+          html += `<li class="page-item ${tableState.page === totalPages ? "disabled" : ""}"><a class="page-link" href="#" data-page="${tableState.page + 1}"><i class="bi bi-chevron-right"></i></a></li>`;
+          pag.innerHTML = html;
+
+          pag.querySelectorAll("[data-page]").forEach((a) => {
+            a.addEventListener("click", (e) => {
+              e.preventDefault();
+              const p = parseInt(a.dataset.page, 10);
+              if (p >= 1 && p <= totalPages) {
+                tableState.page = p;
+                renderGrievanceTable();
+              }
+            });
+          });
+        }
+
+        function updateSortIndicators() {
+          document.querySelectorAll(".th-sort").forEach((th) => {
+            const icon = th.querySelector(".bi");
+            const key = th.dataset.sort;
+            th.classList.toggle("active", tableState.sortKey === key);
+            icon.className =
+              tableState.sortKey === key
+                ? tableState.sortDir === 1
+                  ? "bi bi-sort-alpha-down"
+                  : "bi bi-sort-alpha-up"
+                : "bi bi-arrow-down-up";
+          });
+        }
+
+        function initTableToolbar() {
+          const searchEl = document.getElementById("fSearch");
+          const typeEl = document.getElementById("fType");
+          const statusEl = document.getElementById("fStatus");
+          const fromEl = document.getElementById("fFrom");
+          const toEl = document.getElementById("fTo");
+          const resetEl = document.getElementById("fReset");
+
+          const applyAndRender = () => {
+            tableState.page = 1;
+            renderGrievanceTable();
+          };
+
+          searchEl?.addEventListener("input", () => {
+            tableState.search = searchEl.value;
+            applyAndRender();
+          });
+          typeEl?.addEventListener("change", () => {
+            tableState.type = typeEl.value;
+            applyAndRender();
+          });
+          statusEl?.addEventListener("change", () => {
+            tableState.status = statusEl.value;
+            applyAndRender();
+          });
+          fromEl?.addEventListener("change", () => {
+            tableState.from = fromEl.value;
+            applyAndRender();
+          });
+          toEl?.addEventListener("change", () => {
+            tableState.to = toEl.value;
+            applyAndRender();
+          });
+
+          resetEl?.addEventListener("click", () => {
+            Object.assign(tableState, {
+              search: "",
+              type: "all",
+              status: "all",
+              from: "",
+              to: "",
+              sortKey: null,
+              sortDir: 1,
+              page: 1,
+            });
+            searchEl.value = "";
+            typeEl.value = "all";
+            statusEl.value = "all";
+            fromEl.value = "";
+            toEl.value = "";
+            renderGrievanceTable();
+          });
+
+          document.querySelectorAll(".th-sort").forEach((th) => {
+            th.addEventListener("click", () => {
+              const key = th.dataset.sort;
+              if (tableState.sortKey === key) tableState.sortDir *= -1;
+              else {
+                tableState.sortKey = key;
+                tableState.sortDir = 1;
+              }
+              renderGrievanceTable();
+            });
+          });
+        }
+
+        /* 2. SIDEBAR / NAVIGATION */
+        function initSidebar() {
+          const desktopToggle = document.getElementById("desktopToggle");
+          const mobileToggle = document.getElementById("mobileToggle");
+          const sidebar = document.getElementById("sidebar");
+          desktopToggle?.addEventListener("click", () =>
+            document.body.classList.toggle("sb-toggled"),
+          );
+          mobileToggle?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            document.body.classList.toggle("sb-mobile-open");
+          });
+          document.addEventListener("click", (e) => {
+            const insideSidebar =
+              sidebar.contains(e.target) || mobileToggle?.contains(e.target);
+            if (
+              !insideSidebar &&
+              document.body.classList.contains("sb-mobile-open")
+            )
+              document.body.classList.remove("sb-mobile-open");
+          });
+        }
+
+        window.switchPage = function (pageId, element) {
+          document
+            .querySelectorAll(".page-section")
+            .forEach((s) => s.classList.remove("active-section"));
+          document.getElementById(pageId)?.classList.add("active-section");
+          document
+            .querySelectorAll(".sidebar .nav-link")
+            .forEach((l) => l.classList.remove("active"));
+          element?.classList.add("active");
+          if (window.innerWidth < 768)
+            document.body.classList.remove("sb-mobile-open");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+
+        /* 3. LOGOUT CONFIRMATION */
+        function initLogout() {
+          const logoutBtn = document.getElementById("logoutBtn");
+          const overlay = document.getElementById("logoutOverlay");
+          logoutBtn?.addEventListener("click", (e) => {
+            e.preventDefault();
+            overlay.classList.add("show");
+          });
+          document
+            .getElementById("cancelLogout")
+            ?.addEventListener("click", () => overlay.classList.remove("show"));
+          document
+            .getElementById("confirmLogout")
+            ?.addEventListener("click", () => {
+              localStorage.clear();
+              sessionStorage.clear();
+              window.location.href = "login.html";
+            });
+          overlay?.addEventListener("click", (e) => {
+            if (e.target === overlay) overlay.classList.remove("show");
+          });
+        }
+
+        /* 4. COMPLAINT MODAL — SDO / RO assignment toggle */
+        window.showAssignSection = function (which) {
+          document.getElementById("sdoSection").style.display =
+            which === "sdo" ? "block" : "none";
+          document.getElementById("roSection").style.display =
+            which === "ro" ? "block" : "none";
+        };
+
+        /* 5. PROFILE ACCORDION */
+        function initAccordion() {
+          const items = document.querySelectorAll(".acc-item");
+          items.forEach((item) => {
+            item.querySelector(".acc-btn")?.addEventListener("click", () => {
+              items.forEach((other) => {
+                if (other !== item) other.classList.remove("active");
+              });
+              item.classList.toggle("active");
+            });
+          });
+        }
+
+        /* 6. EXCEL EXPORT (utility kept for any report table added later) */
+        window.downloadExcel = function (
+          tableId = "reportTable",
+          fileName = "Excel_Report.xlsx",
+        ) {
+          const table = document.getElementById(tableId);
+          if (!table) {
+            console.warn(`downloadExcel: #${tableId} not found`);
+            return;
+          }
+          XLSX.writeFile(
+            XLSX.utils.table_to_book(table, { sheet: "Report" }),
+            fileName,
+          );
+        };
+
+        /* 7. CHARTS — shared enterprise theme + 6 Analytics charts */
+        const PALETTE = [
+          "#1a6fc4",
+          "#0d7a55",
+          "#e8820c",
+          "#6b3fa0",
+          "#0f9b8e",
+          "#c0392b",
+          "#2f8fd6",
+          "#d4920a",
+          "#12a374",
+          "#8e5fd6",
+          "#3ba7a0",
+          "#e0645a",
+        ];
+
+        const BASE = {
+          chart: {
+            fontFamily: "'Plus Jakarta Sans', sans-serif",
+            foreColor: "#5c6b7e",
+            animations: { enabled: true, easing: "easeinout", speed: 550 },
+            dropShadow: {
+              enabled: true,
+              top: 3,
+              left: 0,
+              blur: 5,
+              color: "#0a4f8f",
+              opacity: 0.07,
+            },
+            /* Every chart gets a simple download icon → Download SVG / PNG / CSV — no zoom/pan clutter */
+            toolbar: {
+              show: true,
+              offsetX: -4,
+              offsetY: -2,
+              tools: {
+                download: true,
+                selection: false,
+                zoom: false,
+                zoomin: false,
+                zoomout: false,
+                pan: false,
+                reset: false,
+              },
+              export: {
+                csv: { headerCategory: "Category", headerValue: "Value" },
+              },
+            },
+          },
+          colors: PALETTE,
+          grid: {
+            borderColor: "#eef1f6",
+            strokeDashArray: 4,
+            padding: { left: 8, right: 8 },
+          },
+          dataLabels: {
+            style: {
+              fontSize: "11px",
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+              fontWeight: 700,
+            },
+          },
+          tooltip: {
+            theme: "light",
+            style: { fontFamily: "'Plus Jakarta Sans', sans-serif" },
+            marker: { show: true },
+          },
+          legend: {
+            fontFamily: "'Plus Jakarta Sans', sans-serif",
+            fontWeight: 600,
+            markers: { radius: 4 },
+          },
+          states: { hover: { filter: { type: "darken", value: 0.08 } } },
+        };
+
+        function renderChart(selector, options) {
+          const el = document.querySelector(selector);
+          if (!el) return;
+          new ApexCharts(el, options).render();
+        }
+
+        function initCharts() {
+          /* a. District Wise Grievance */
+          renderChart("#districtChart", {
+            ...BASE,
+            series: [
+              {
+                name: "Grievances",
+                data: [58, 52, 47, 41, 38, 34, 29, 24, 20, 15],
+              },
             ],
-          },
-        ],
-
-        chart: {
-          type: "bar",
-          height: 800,
-        },
-
-        plotOptions: {
-          bar: {
-            horizontal: true,
-            distributed: true,
-            borderRadius: 5,
-            barHeight: "65%",
-          },
-        },
-
-        colors: [
-          "#008FFB",
-          "#00E396",
-          "#FEB019",
-          "#FF4560",
-          "#775DD0",
-          "#3F51B5",
-          "#546E7A",
-          "#D4526E",
-          "#8D5B4C",
-          "#F86624",
-          "#D7263D",
-          "#1B998B",
-          "#2E294E",
-          "#F46036",
-          "#E2C044",
-          "#4CAF50",
-          "#9C27B0",
-          "#03A9F4",
-          "#FF9800",
-          "#795548",
-          "#607D8B",
-          "#E91E63",
-          "#CDDC39",
-          "#FF5722",
-          "#009688",
-          "#673AB7",
-          "#2196F3",
-        ],
-
-        dataLabels: {
-          enabled: true,
-        },
-
-        xaxis: {
-          categories: [
-            "RO Mohali",
-            "RO-3 Ludhiana",
-            "RO Patiala",
-            "RO Bathinda",
-            "RO Amritsar",
-            "RO-2 Jalandhar",
-            "RO-2 Ludhiana",
-            "RO Sangrur",
-            "RO-4 Ludhiana",
-            "RO Hoshiarpur",
-            "RO Batala",
-            "RO Ropar",
-            "RO-1 Ludhiana",
-            "RO-1 Jalandhar",
-            "RO Fatehgarh Sahib",
-            "RO Muktsar",
-            "RO Tarn Taran",
-            "ADO",
-            "RO Barnala",
-            "RO Faridkot",
-            "HQ-3",
-            "ZO-1 Patiala",
-            "SEE Jalandhar",
-            "ZO-2 Ludhiana",
-            "ZO-1 Ludhiana",
-            "HQ-2",
-            "ZO-2 Patiala",
-          ],
-
-          // ✅ Horizontal axis label
-          title: {
-            text: "Count of Assigned",
-            style: {
-              fontSize: "14px",
-              fontWeight: 600,
+            chart: {
+              ...BASE.chart,
+              id: "district-wise-grievance",
+              type: "bar",
+              height: 360,
             },
-          },
-        },
-
-        yaxis: {
-          // ✅ Vertical axis label
-          title: {
-            text: "Assigned To (Locations)",
-            style: {
-              fontSize: "14px",
-              fontWeight: 600,
-            },
-          },
-        },
-
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return val + " Assignments";
-            },
-          },
-        },
-
-        responsive: [
-          {
-            breakpoint: 768,
-            options: {
-              chart: { height: 400 },
-            },
-          },
-          {
-            breakpoint: 480,
-            options: {
-              chart: { height: 350 },
-              xaxis: {
-                labels: { style: { fontSize: "10px" } },
+            plotOptions: {
+              bar: {
+                horizontal: true,
+                distributed: true,
+                borderRadius: 5,
+                barHeight: "62%",
               },
             },
-          },
-        ],
-      };
-
-      var chart = new ApexCharts(document.querySelector("#chart"), options);
-      chart.render();
-
-      // Office wise Pendency
-      const dataValues = [
-        364, 349, 316, 218, 195, 178, 169, 167, 142, 134, 133, 124, 122, 120,
-        106, 100, 86, 79, 66, 66, 64, 58, 47, 45, 22, 8, 5,
-      ];
-
-      const maxValue = Math.max(...dataValues);
-
-      // ✅ create stacked data
-      const remainingValues = dataValues.map((val) => maxValue - val);
-
-      var options = {
-        series: [
-          {
-            name: "Pending",
-            data: dataValues,
-          },
-          {
-            name: "Remaining",
-            data: remainingValues,
-          },
-        ],
-
-        chart: {
-          type: "bar",
-          height: 500,
-          stacked: true,
-          toolbar: { show: true },
-        },
-
-        plotOptions: {
-          bar: {
-            columnWidth: "50%",
-            borderRadius: 3,
-          },
-        },
-
-        // ✅ MULTI-COLOR STACK
-        colors: [
-          "#42A5F5", // Pending (blue)
-          "#E3F2FD", // Remaining (light)
-        ],
-
-        dataLabels: {
-          enabled: false,
-        },
-
-        xaxis: {
-          categories: [
-            "HO-3",
-            "RO-4 Ludhiana",
-            "SEE Bathinda",
-            "ZO-1 Ludhiana",
-            "EE Air Lab",
-            "HQ-3",
-            "RO-2 Ludhiana",
-            "RO Ropar",
-            "RO Patiala",
-            "ADO",
-            "ZO-2 Ludhiana",
-            "RO-3 Ludhiana",
-            "RO-4 Ludhiana",
-            "RO-1 Ludhiana",
-            "RO-2 Jalandhar",
-            "CVO SEE Ludhiana",
-            "ZO-1 Patiala",
-            "RO Hoshiarpur",
-            "RO Fatehgarh Sahib",
-            "RO Tarn Taran",
-            "ZO-2 Patiala",
-            "RO Mohali",
-            "SEE Ludhiana",
-            "RO Sangrur",
-            "ZO-1 Patiala",
-            "RO Amritsar",
-            "RO Muktsar",
-          ],
-          labels: {
-            rotate: -45,
-            style: {
-              fontSize: "12px",
-            },
-          },
-        },
-
-        yaxis: {
-          title: {
-            text: "Average Pendency",
-          },
-        },
-
-        tooltip: {
-          y: {
-            formatter: (val) => val.toFixed(1),
-          },
-        },
-
-        legend: {
-          position: "top",
-        },
-
-        responsive: [
-          {
-            breakpoint: 768,
-            options: {
-              chart: { height: 400 },
-              xaxis: {
-                labels: { rotate: -30 },
+            fill: {
+              type: "gradient",
+              gradient: {
+                shade: "light",
+                type: "horizontal",
+                shadeIntensity: 0.35,
+                opacityFrom: 1,
+                opacityTo: 0.82,
               },
             },
-          },
-          {
-            breakpoint: 480,
-            options: {
-              chart: { height: 350 },
-              xaxis: {
-                labels: {
-                  rotate: -20,
-                  style: { fontSize: "10px" },
+            dataLabels: { ...BASE.dataLabels, enabled: true },
+            xaxis: {
+              categories: [
+                "Ludhiana",
+                "Amritsar",
+                "Jalandhar",
+                "Patiala",
+                "Bathinda",
+                "Mohali",
+                "Hoshiarpur",
+                "Ferozepur",
+                "Sangrur",
+                "Moga",
+              ],
+            },
+            legend: { show: false },
+            tooltip: {
+              ...BASE.tooltip,
+              y: { formatter: (v) => v + " grievances" },
+            },
+          });
+
+          /* b. Total Grievance — monthly trend (gradient area) */
+          renderChart("#totalTrendChart", {
+            ...BASE,
+            series: [
+              {
+                name: "Grievances Received",
+                data: [14, 18, 22, 19, 26, 31, 28, 24, 21, 25, 20, 16],
+              },
+            ],
+            chart: {
+              ...BASE.chart,
+              id: "total-grievance-trend",
+              type: "area",
+              height: 360,
+            },
+            colors: ["#1a6fc4"],
+            stroke: { curve: "smooth", width: 3 },
+            fill: {
+              type: "gradient",
+              gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.45,
+                opacityTo: 0.02,
+                stops: [0, 90, 100],
+              },
+            },
+            markers: {
+              size: 4,
+              colors: ["#fff"],
+              strokeColors: "#1a6fc4",
+              strokeWidth: 2,
+              hover: { size: 6 },
+            },
+            xaxis: {
+              categories: [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec",
+              ],
+            },
+            yaxis: {
+              title: {
+                text: "Grievances",
+                style: { fontSize: "12px", fontWeight: 700 },
+              },
+            },
+            tooltip: {
+              ...BASE.tooltip,
+              y: { formatter: (v) => v + " grievances" },
+            },
+          });
+
+          /* c. Heat Map — District × Month intensity */
+          const HEAT_DISTRICTS = [
+            "Ludhiana",
+            "Amritsar",
+            "Jalandhar",
+            "Patiala",
+            "Bathinda",
+            "Mohali",
+          ];
+          const HEAT_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+          const heatSeries = HEAT_DISTRICTS.map((d) => ({
+            name: d,
+            data: HEAT_MONTHS.map((m) => ({
+              x: m,
+              y: Math.floor(6 + Math.random() * 40),
+            })),
+          }));
+          renderChart("#heatmapChart", {
+            ...BASE,
+            series: heatSeries,
+            chart: {
+              ...BASE.chart,
+              id: "grievance-heatmap",
+              type: "heatmap",
+              height: 360,
+            },
+            plotOptions: {
+              heatmap: {
+                radius: 4,
+                colorScale: {
+                  ranges: [
+                    { from: 0, to: 12, name: "Low", color: "#d7e8fb" },
+                    { from: 13, to: 25, name: "Moderate", color: "#7fb4ea" },
+                    { from: 26, to: 38, name: "High", color: "#1a6fc4" },
+                    { from: 39, to: 60, name: "Critical", color: "#073763" },
+                  ],
                 },
               },
             },
-          },
-        ],
-      };
+            dataLabels: { enabled: false },
+            legend: { ...BASE.legend, position: "bottom" },
+            tooltip: {
+              ...BASE.tooltip,
+              y: { formatter: (v) => v + " grievances" },
+            },
+          });
 
-      var chart = new ApexCharts(
-        document.querySelector("#stackedChart"),
-        options,
-      );
-      chart.render();
-
-      // ✅ Grievance wise
-      var options = {
-        series: [
-          {
-            name: "No. of Grievances",
-            data: [
-              273, 226, 180, 164, 138, 134, 80, 71, 62, 53, 52, 51, 49, 48, 35,
-              21, 18, 18, 15, 13, 10, 10, 9, 8, 7, 5, 3, 3, 1, 1, 0,
+          /* 4. Grievance Categories (top 12) */
+          renderChart("#grievanceChart", {
+            ...BASE,
+            series: [
+              {
+                name: "No. of Grievances",
+                data: [273, 226, 180, 164, 138, 134, 80, 71, 62, 53, 52, 51],
+              },
             ],
-          },
-        ],
-
-        chart: {
-          type: "bar",
-          height: 1000,
-          background: "#ffffff", // ✅ better for black labels
-        },
-
-        plotOptions: {
-          bar: {
-            horizontal: true,
-            distributed: true,
-            borderRadius: 4,
-            barHeight: "60%",
-          },
-        },
-
-        // ✅ Improved multicolor palette
-        colors: [
-          "#4FC3F7",
-          "#81C784",
-          "#FFB74D",
-          "#E57373",
-          "#BA68C8",
-          "#4DB6AC",
-          "#FFF176",
-          "#F06292",
-          "#90A4AE",
-          "#AED581",
-          "#7986CB",
-          "#FFD54F",
-          "#FF8A65",
-          "#9575CD",
-          "#4DD0E1",
-        ],
-
-        dataLabels: {
-          enabled: true,
-          style: {
-            colors: ["#000"], // ✅ black for readability
-            fontSize: "12px",
-            fontWeight: 500,
-          },
-        },
-
-        xaxis: {
-          categories: [
-            "Miscellaneous",
-            "Noise",
-            "Effluent Discharge",
-            "Smoke Emissions",
-            "Unidentified",
-            "Garbage-related",
-            "Garbage Burning",
-            "Effluent Discharges & Emissions",
-            "PCB Officials",
-            "Emissions & Noise Pollution",
-            "MF related",
-            "Mining",
-            "Dairy/Poultry Farm related",
-            "Hazardous Waste",
-            "Stubble Burning",
-            "Biomedical Waste",
-            "Plastic-related",
-            "Deforestation",
-            "DS Sets",
-            "Dust-related",
-            "RMC-related",
-            "Groundwater",
-            "Effluent Discharge, Emissions & Noise",
-            "Hot mix plant",
-            "Fly ash-related",
-            "Effluent Discharge & Noise",
-            "Road Dust",
-            "CCR related",
-            "Miscellaneous",
-            "Land Degradation",
-            "Drinking water",
-          ],
-
-          // ✅ HORIZONTAL AXIS LABEL (FIXED)
-          title: {
-            text: "Count of Grievances",
-            style: {
-              color: "#000",
-              fontSize: "14px",
-              fontWeight: 600,
+            chart: {
+              ...BASE.chart,
+              id: "grievance-categories",
+              type: "bar",
+              height: 400,
             },
-          },
-
-          labels: {
-            style: {
-              colors: "#000",
-              fontSize: "12px",
-            },
-          },
-        },
-
-        yaxis: {
-          // ✅ VERTICAL AXIS LABEL (FIXED)
-          title: {
-            text: "Grievance Category",
-            style: {
-              color: "#000",
-              fontSize: "14px",
-              fontWeight: 600,
-            },
-          },
-
-          labels: {
-            style: {
-              colors: "#000",
-              fontSize: "12px",
-            },
-          },
-        },
-
-        grid: {
-          borderColor: "#e0e0e0",
-        },
-
-        tooltip: {
-          theme: "light",
-          y: {
-            formatter: (val) => val + " complaints",
-          },
-        },
-
-        legend: {
-          labels: {
-            colors: "#000",
-          },
-        },
-
-        states: {
-          hover: {
-            filter: {
-              type: "darken",
-              value: 0.15,
-            },
-          },
-        },
-
-        responsive: [
-          {
-            breakpoint: 768,
-            options: {
-              chart: { height: 600 },
-            },
-          },
-          {
-            breakpoint: 480,
-            options: {
-              chart: { height: 500 },
-              xaxis: {
-                labels: {
-                  style: { fontSize: "10px" },
-                },
+            plotOptions: {
+              bar: {
+                horizontal: true,
+                distributed: true,
+                borderRadius: 4,
+                barHeight: "65%",
               },
             },
-          },
-        ],
-      };
-
-      var chart = new ApexCharts(
-        document.querySelector("#grievanceChart"),
-        options,
-      );
-      chart.render();
-
-      // ✅ DONUT
-      // new ApexCharts(document.querySelector("#donutChart"), {
-      //     chart: { type: 'donut' },
-      //     series: [30, 22, 16, 14, 10, 8],
-      //     labels: ['Industrial', 'Air', 'Noise', 'Waste', 'Water', 'Others']
-      // }).render();
-      var options = {
-        chart: {
-          type: "donut",
-          height: 400,
-        },
-        series: [98, 17, 16, 31, 473, 887],
-        labels: [
-          "Access Required",
-          "Incomplete ATR",
-          "Invalid Link",
-          "NA",
-          "No",
-          "Yes",
-        ],
-        colors: [
-          "#36b9cc",
-          "#f6c23e",
-          "#e74a3b",
-          "#858796",
-          "#fd7e14",
-          "#1cc88a",
-        ],
-        legend: {
-          position: "bottom",
-        },
-        dataLabels: {
-          enabled: true,
-          formatter: function (val) {
-            return val.toFixed(1) + "%";
-          },
-        },
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return val + " cases";
+            fill: {
+              type: "gradient",
+              gradient: {
+                shade: "light",
+                type: "horizontal",
+                shadeIntensity: 0.35,
+                opacityFrom: 1,
+                opacityTo: 0.82,
+              },
             },
-          },
-        },
-        plotOptions: {
-          pie: {
-            donut: {
-              size: "60%",
-              labels: {
-                show: true,
-                total: {
-                  show: true,
-                  label: "Total",
-                  formatter: function () {
-                    return 1703; // Grand total
+            dataLabels: {
+              ...BASE.dataLabels,
+              enabled: true,
+              style: { ...BASE.dataLabels.style, colors: ["#1a2332"] },
+            },
+            xaxis: {
+              categories: [
+                "Miscellaneous",
+                "Noise",
+                "Effluent Discharge",
+                "Smoke Emissions",
+                "Unidentified",
+                "Garbage-related",
+                "Garbage Burning",
+                "Effluent & Emissions",
+                "PCB Officials",
+                "Emissions & Noise",
+                "MF Related",
+                "Mining",
+              ],
+            },
+            legend: { show: false },
+            tooltip: {
+              ...BASE.tooltip,
+              y: { formatter: (v) => v + " complaints" },
+            },
+          });
+
+          /* 5. Pollution Categories (donut) */
+          renderChart("#pollutionChart", {
+            ...BASE,
+            series: [1840, 1210, 820, 540, 420],
+            labels: [
+              "Water Pollution",
+              "Air Pollution",
+              "Solid Waste",
+              "Noise Pollution",
+              "Hazardous",
+            ],
+            chart: {
+              ...BASE.chart,
+              id: "pollution-categories",
+              type: "donut",
+              height: 340,
+            },
+            legend: { ...BASE.legend, position: "bottom" },
+            dataLabels: {
+              ...BASE.dataLabels,
+              enabled: true,
+              formatter: (v) => v.toFixed(1) + "%",
+            },
+            stroke: { width: 2, colors: ["#fff"] },
+            plotOptions: {
+              pie: {
+                donut: {
+                  size: "62%",
+                  labels: {
+                    show: true,
+                    total: {
+                      show: true,
+                      label: "Total",
+                      formatter: () => "4,830",
+                    },
                   },
                 },
               },
             },
-          },
-        },
-      };
+            tooltip: { ...BASE.tooltip, y: { formatter: (v) => v + " cases" } },
+          });
 
-      var chart = new ApexCharts(
-        document.querySelector("#atrDonutChart"),
-        options,
-      );
-      chart.render();
-
-      // ✅ BAR
-      new ApexCharts(document.querySelector("#barChart"), {
-        chart: { type: "bar" },
-        series: [{ data: [1420, 980, 650, 480, 320, 210, 158] }],
-        xaxis: {
-          categories: [
-            "Water",
-            "Air",
-            "Noise",
-            "Solid",
-            "Ground",
-            "Soil",
-            "Hazard",
-          ],
-        },
-      }).render();
-
-      // ✅ PIE
-      new ApexCharts(document.querySelector("#pieChart"), {
-        chart: { type: "pie" },
-        series: [68.5, 28, 3.5],
-        labels: ["Male", "Female", "Other"],
-      }).render();
-
-      // ✅ RADIAL
-      // new ApexCharts(document.querySelector("#radialChart"), {
-      //     chart: { type: 'radialBar' },
-      //     series: [75],
-      //     labels: ['Satisfaction']
-      // }).render();
-
-      var options = {
-        chart: {
-          type: "pie",
-          height: 400,
-        },
-        series: [2, 35, 16, 87, 194, 395, 10, 154],
-        labels: [
-          "Call Back",
-          "Didn't Answer",
-          "Invalid Number",
-          "NA",
-          "No",
-          "No Contact Details",
-          "Switched Off",
-          "Yes",
-        ],
-        colors: [
-          "#4e73df",
-          "#f6c23e",
-          "#e74a3b",
-          "#858796",
-          "#1cc88a",
-          "#36b9cc",
-          "#fd7e14",
-          "#20c997",
-        ],
-        legend: {
-          position: "bottom",
-        },
-        dataLabels: {
-          enabled: true,
-          formatter: function (val) {
-            return val.toFixed(1) + "%";
-          },
-        },
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return val + " responses";
+          /* 6. Source of Complaint (donut) */
+          renderChart("#sourceChart", {
+            ...BASE,
+            series: [420, 380, 210, 150, 90],
+            labels: [
+              "Office (Walk-in)",
+              "Phone / WhatsApp",
+              "Email",
+              "Social Media",
+              "Post",
+            ],
+            colors: ["#0d7a55", "#1a6fc4", "#e8820c", "#6b3fa0", "#94a3b5"],
+            chart: {
+              ...BASE.chart,
+              id: "source-of-complaint",
+              type: "donut",
+              height: 340,
             },
-          },
-        },
-      };
-
-      var chart = new ApexCharts(
-        document.querySelector("#satisfactionChart"),
-        options,
-      );
-      chart.render();
-
-      // ✅ PENDENCY
-      new ApexCharts(document.querySelector("#pendencyChart"), {
-        chart: { type: "bar" },
-        series: [{ data: [120, 90, 60, 30] }],
-        xaxis: { categories: ["<30", "30-60", "60-90", "90+"] },
-      }).render();
-
-      // ✅ POLLUTION TAB
-      new ApexCharts(document.querySelector("#pollutionChart"), {
-        chart: { type: "donut" },
-        series: [40, 25, 20, 15],
-        labels: ["Air", "Water", "Noise", "Soil"],
-      }).render();
-
-      /******download report******/
-
-      function downloadExcel() {
-        let table = document.getElementById("reportTable");
-
-        // Convert table to workbook
-        let workbook = XLSX.utils.table_to_book(table, { sheet: "Report" });
-
-        // Download file
-        XLSX.writeFile(workbook, "Excel_Report.xlsx");
-      }
-    </script>
-
-    <script>
-      // ✅ FIX: Define config (missing in your code)
-      let config = {
-        query: "",
-      };
-
-      function submitQuery() {
-        const q = document.getElementById("queryText").value.trim();
-
-        if (!q) {
-          alert("Enter query");
-          return;
+            legend: { ...BASE.legend, position: "bottom" },
+            dataLabels: {
+              ...BASE.dataLabels,
+              enabled: true,
+              formatter: (v) => v.toFixed(1) + "%",
+            },
+            stroke: { width: 2, colors: ["#fff"] },
+            plotOptions: {
+              pie: {
+                donut: {
+                  size: "62%",
+                  labels: {
+                    show: true,
+                    total: {
+                      show: true,
+                      label: "Total",
+                      formatter: () => "1,250",
+                    },
+                  },
+                },
+              },
+            },
+            tooltip: {
+              ...BASE.tooltip,
+              y: { formatter: (v) => v + " complaints" },
+            },
+          });
         }
 
-        // ✅ Confirmation popup
-        const confirmSubmit = confirm(
-          "Are you sure you want to submit this query?",
-        );
-
-        if (!confirmSubmit) return;
-
-        config.query = q;
-
-        alert("✅ Query Raised (SMS Sent)");
-
-        // ✅ Safely hide modal
-        const modalElement = document.getElementById("raiseQueryModal");
-        const modalInstance =
-          bootstrap.Modal.getInstance(modalElement) ||
-          new bootstrap.Modal(modalElement);
-        modalInstance.hide();
-
-        // ✅ Show next modal (make sure otpModal exists in HTML)
-        new bootstrap.Modal(document.getElementById("otpModal")).show();
-      }
-    </script>
-
-    <script>
-      function showSDO() {
-        document.getElementById("sdoSection").style.display = "block";
-        document.getElementById("roSection").style.display = "none";
-      }
-
-      function showRO() {
-        document.getElementById("sdoSection").style.display = "none";
-        document.getElementById("roSection").style.display = "block";
-      }
+        /* INIT */
+        document.addEventListener("DOMContentLoaded", () => {
+          initTableToolbar();
+          renderGrievanceTable();
+          initSidebar();
+          initLogout();
+          initAccordion();
+          initCharts();
+        });
+      })();
     </script>
   </body>
 </html>
