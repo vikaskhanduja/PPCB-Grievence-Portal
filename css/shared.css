@@ -53,6 +53,7 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+
 body {
   font-family: 'Montserrat', sans-serif;
   color: var(--text);
@@ -237,7 +238,7 @@ body {
 .ki-success { background: linear-gradient(135deg,#d4f5e2,#a8e8c2); color: var(--success); }
 .ki-danger  { background: linear-gradient(135deg,#fde8e8,#f8c0c0); color: var(--danger); }
 .ki-warning { background: linear-gradient(135deg,#fdf3d4,#f8e0a0); color: var(--warning); }
-.kpi-num   { font-size: 1.9rem; font-weight: 800; color: var(--text); font-family: 'Instrument Serif',serif; line-height: 1; }
+.kpi-num   { font-size: 1.9rem; font-weight: 800; color: var(--text); font-family: 'Montserrat', sans-serif; line-height: 1; }
 .kpi-label { font-size: .78rem; color: var(--text-muted); margin-top: 5px; font-weight: 500; }
 .kpi-sub   { font-size: .7rem; color: var(--text-light); margin-top: 3px; }
 .kpi-change { font-size: .7rem; font-weight: 600; padding: 2px 7px; border-radius: 100px; }
@@ -285,7 +286,7 @@ body {
 .pc-medium { background: #fdf3d4; color: var(--warning); }
 .pc-low    { background: #d4f5e2; color: var(--success); }
 
-.cid { font-weight: 700; color: var(--primary); font-family: 'Instrument Serif',serif; font-size: .88rem; }
+.cid { font-weight: 700; color: var(--primary); font-family: 'Montserrat', sans-serif; font-size: .88rem; }
 
 /* ── BUTTONS ── */
 .btn-p {
