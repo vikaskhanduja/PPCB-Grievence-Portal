@@ -993,86 +993,6 @@
         background-color: #1a6fc4 !important;
       }
 
-      /******* Accessibility*******/
-
-      .accessibility-toolbar {
-        position: fixed;
-        top: 32px;
-        right: 0;
-        width: 531px;
-        background: #dfdfdf;
-        color: #fff;
-        z-index: 9999;
-        box-shadow: 0 2px 12px #39ef7440;
-        padding: 0;
-        border-radius: 15px 0px 0px 15px;
-        border: 5px solid #ffffff;
-      }
-
-      .accessibility-toolbar-inner {
-        display: block;
-        align-items: center;
-        justify-content: center;
-
-        max-width: 1200px;
-        margin: 0 auto;
-        position: relative;
-      }
-
-      .accessibility-title {
-        font-weight: 600;
-        font-size: 1.08em;
-        margin-right: 24px;
-        background: #0c577c;
-        width: 100%;
-        display: block;
-        padding: 10px;
-        border-radius: 10px 0px 0px 0px;
-      }
-
-      .accessibility-controls {
-        width: 100%;
-        padding: 12px 20px;
-      }
-
-      .accessibility-controls .access-btn {
-        background: #ffffff;
-        color: #222;
-        border: none;
-        border-radius: 6px;
-        margin: 8px 6px;
-        padding: 23px 5px;
-        font-size: 1.08em;
-        cursor: pointer;
-        transition:
-          background 0.2s,
-          color 0.2s;
-        font-family: "Noto Sans", sans-serif;
-        width: 145px;
-      }
-
-      .accessibility-controls span {
-        font-size: 14px;
-        display: block;
-        text-align: center;
-        font-family: "Noto Sans", sans-serif;
-      }
-
-      .accessibility-controls .access-btn:hover {
-        background: #dbffe9;
-      }
-
-      .accessibility-close {
-        position: absolute;
-        right: 12px;
-        top: 8px;
-        background: transparent;
-        color: #fff;
-        border: none;
-        font-size: 1.5em;
-        cursor: pointer;
-      }
-
       /********************/
 
       .eco-panel {
@@ -1330,6 +1250,367 @@
           opacity: 0.3;
         }
       }
+
+      /* =====================================================
+       ACCESSIBILITY TRIGGER
+    ===================================================== */
+
+      .accessibility-trigger {
+        border: 0;
+        background: transparent;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .accessibility-trigger i {
+        font-size: 14px;
+      }
+
+      .accessibility-trigger:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .accessibility-trigger:focus-visible {
+        outline: 3px solid #ffcc00;
+        outline-offset: 3px;
+      }
+
+      /* =====================================================
+       DEMO CONTENT
+    ===================================================== */
+
+      .demo-container {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 0 20px;
+      }
+
+      .demo-card {
+        background: #fff;
+        border-radius: 14px;
+        padding: 35px;
+
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+      }
+
+      .demo-card h1 {
+        color: #073763;
+        margin-bottom: 20px;
+      }
+
+      .demo-card a {
+        color: #0b5ed7;
+        font-weight: 500;
+      }
+
+      /* =====================================================
+       ACCESSIBILITY TOOLBAR
+    ===================================================== */
+
+      .accessibility-toolbar {
+        position: fixed;
+        top: 40px;
+        right: 20px;
+        width: 650px;
+        max-width: calc(100% - 30px);
+        background: #fff;
+        border: 1px solid #d9dee5;
+        border-radius: 14px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+        overflow: hidden;
+        z-index: 999999;
+      }
+
+      /* =====================================================
+       TOOLBAR HEADER
+    ===================================================== */
+
+      .accessibility-header {
+        background: linear-gradient(
+          135deg,
+          #073763 0%,
+          #036b6b 60%,
+          #1a6fc4 100%
+        );
+
+        color: #fff;
+
+        padding: 15px 18px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .accessibility-title {
+        font-size: 18px;
+        font-weight: 600;
+
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .accessibility-title i {
+        font-size: 23px;
+      }
+
+      /* =====================================================
+       CLOSE BUTTON
+    ===================================================== */
+
+      .accessibility-close {
+        border: 0;
+        background: transparent;
+
+        color: #fff;
+
+        font-size: 32px;
+        line-height: 1;
+        cursor: pointer;
+        width: 38px;
+        height: 38px;
+        border-radius: 5px;
+      }
+
+      .accessibility-close:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .accessibility-close:focus-visible {
+        outline: 3px solid #ffcc00;
+        outline-offset: 2px;
+      }
+
+      /* =====================================================
+       CONTROLS
+    ===================================================== */
+
+      .accessibility-controls {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        padding: 18px;
+      }
+
+      /* =====================================================
+       ACCESSIBILITY BUTTON
+    ===================================================== */
+
+      .access-btn {
+        min-height: 105px;
+        border: 1px solid #d7dde5;
+        background: #fff;
+        color: #073763;
+        border-radius: 10px;
+        padding: 10px 7px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        text-align: center;
+        font-size: 13px;
+        transition:
+          background 0.2s ease,
+          border 0.2s ease,
+          color 0.2s ease;
+      }
+
+      .access-btn:hover {
+        background: #eef6fb;
+        border-color: #1a6fc4;
+      }
+
+      .access-btn:focus-visible {
+        outline: 3px solid #ffcc00;
+        outline-offset: 2px;
+      }
+
+      .access-btn strong {
+        font-size: 30px;
+        line-height: 1;
+      }
+
+      .access-btn img {
+        width: 30px;
+        height: 30px;
+
+        object-fit: contain;
+      }
+
+      /* =====================================================
+       ACTIVE BUTTON
+    ===================================================== */
+
+      .access-btn.active {
+        background: #1a6fc4;
+        border-color: #073763;
+        color: #fff;
+      }
+
+      /* =====================================================
+       RESET BUTTON
+    ===================================================== */
+
+      .reset-accessibility {
+        background: #f5f6f8;
+      }
+
+      /* =====================================================
+       HIGH CONTRAST
+    ===================================================== */
+
+      body.high-contrast {
+        background: #000 !important;
+        color: #fff !important;
+      }
+
+      body.high-contrast .demo-card {
+        background: #000 !important;
+        color: #fff !important;
+
+        border: 2px solid #fff;
+      }
+
+      body.high-contrast .demo-card h1 {
+        color: #ffff00 !important;
+      }
+
+      body.high-contrast .accessibility-toolbar {
+        background: #000 !important;
+        color: #fff !important;
+
+        border: 2px solid #fff;
+      }
+
+      body.high-contrast .accessibility-header {
+        background: #000 !important;
+
+        border-bottom: 2px solid #fff;
+      }
+
+      body.high-contrast .access-btn {
+        background: #000 !important;
+        color: #fff !important;
+
+        border: 2px solid #fff !important;
+      }
+
+      body.high-contrast a {
+        color: #00ffff !important;
+      }
+
+      /* =====================================================
+       GRAYSCALE
+    ===================================================== */
+
+      body.grayscale {
+        filter: grayscale(100%);
+      }
+
+      /* =====================================================
+       TEXT SPACING
+    ===================================================== */
+
+      body.text-spacing * {
+        letter-spacing: 0.12em !important;
+        word-spacing: 0.16em !important;
+      }
+
+      /* =====================================================
+       LINE HEIGHT
+    ===================================================== */
+
+      body.line-height * {
+        line-height: 2 !important;
+      }
+
+      /* =====================================================
+       HIGHLIGHT LINKS
+    ===================================================== */
+
+      body.highlight-links a {
+        background: #ffff00 !important;
+        color: #000 !important;
+
+        text-decoration: underline !important;
+
+        font-weight: 700 !important;
+
+        padding: 2px 5px;
+
+        border-radius: 2px;
+      }
+
+      /* =====================================================
+       DYSLEXIA FRIENDLY
+    ===================================================== */
+
+      body.dyslexia-friendly,
+      body.dyslexia-friendly * {
+        font-family: Arial, Helvetica, sans-serif !important;
+
+        letter-spacing: 0.05em !important;
+        word-spacing: 0.1em !important;
+      }
+
+      /* =====================================================
+       LARGE CURSOR
+    ===================================================== */
+
+      body.large-cursor,
+      body.large-cursor * {
+        cursor:
+          url("images/cursor.svg") 16 16,
+          auto !important;
+      }
+
+      /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+      @media (max-width: 900px) {
+        .accessibility-controls {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (max-width: 650px) {
+        .accessibility-toolbar {
+          top: 60px;
+          right: 10px;
+
+          width: calc(100% - 20px);
+        }
+
+        .accessibility-controls {
+          grid-template-columns: repeat(2, 1fr);
+
+          padding: 12px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .accessibility-controls {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .access-btn {
+          min-height: 90px;
+        }
+
+        .accessibility-trigger span {
+          display: none;
+        }
+      }
     </style>
   </head>
 
@@ -1346,7 +1627,7 @@
         >
         <span class="d-flex"
           >Government of Punjab&nbsp;|&nbsp;
-          <li style="list-style-type: none; text-decoration: none; color: #fff">
+          <!-- <li style="list-style-type: none; text-decoration: none; color: #fff">
             <a
               href="javascript:void(0)"
               id="accessibilityBtn"
@@ -1355,6 +1636,20 @@
               <span><i class="bi bi-universal-access"></i></span> Accessibility
               Option
             </a>
+          </li> -->
+          <li style="list-style: none">
+            <button
+              type="button"
+              id="accessibilityBtn"
+              class="accessibility-trigger"
+              aria-label="Open Accessibility Options"
+              aria-expanded="false"
+              aria-controls="accessibilityToolbar"
+            >
+              <i class="bi bi-universal-access" aria-hidden="true"></i>
+
+              <span>Accessibility</span>
+            </button>
           </li>
         </span>
       </div>
@@ -2299,114 +2594,251 @@
       </div>
     </footer>
 
-    <!-- Accessibility Toolbar -->
+    <!-- =====================================================
+       ACCESSIBILITY TOOLBAR
+  ===================================================== -->
+
     <div
       id="accessibilityToolbar"
       class="accessibility-toolbar"
       style="display: none"
+      role="region"
+      aria-label="Accessibility Options"
     >
-      <div class="accessibility-toolbar-inner">
-        <span class="accessibility-title">Accessibility Options</span>
+      <!-- Header -->
+
+      <div class="accessibility-header">
+        <div class="accessibility-title">
+          <i class="bi bi-universal-access" aria-hidden="true"></i>
+
+          <span> Accessibility Options </span>
+        </div>
+
         <button
+          type="button"
           class="accessibility-close"
           id="accessibilityCloseBtn"
           title="Close"
+          aria-label="Close Accessibility Options"
         >
           &times;
         </button>
-        <div class="accessibility-controls">
-          <button
-            class="access-btn"
-            id="increaseFont"
-            title="Increase Font Size"
-            style="font-size: 30px"
-          >
-            A+<span>Bigger Text</span>
-          </button>
-          <button
-            class="access-btn"
-            id="decreaseFont"
-            title="Decrease Font Size"
-            style="font-size: 30px"
-          >
-            A- <span>Smaller text</span>
-          </button>
-          <button
-            class="access-btn"
-            id="resetFont"
-            title="Reset Font Size"
-            style="font-size: 30px"
-          >
-            <img src="images/text-spacing.svg" /><span>Text Spacing </span>
-          </button>
+      </div>
 
-          <button
-            class="access-btn"
-            id=""
-            title="Reset Font Size"
-            style="font-size: 30px"
-          >
-            <img src="images/line-height.svg" /><span>Line Height</span>
-          </button>
-          <button
-            class="access-btn"
-            id=""
-            title="Reset Font Size"
-            style="font-size: 30px"
-          >
-            <img src="images/link-icon.svg" /><span>Highlight Links</span>
-          </button>
-          <button
-            class="access-btn"
-            id=""
-            title="Reset Font Size"
-            style="font-size: 30px"
-          >
-            <img style="width: 30px" src="images/df-icon.svg" /><span
-              >Dyslexia Friendly</span
-            >
-          </button>
-          <button
-            class="access-btn"
-            id=""
-            title="Reset Font Size"
-            style="font-size: 30px"
-          >
-            <img style="width: 30px" src="images/cursor.svg" /><span
-              >Cursor</span
-            >
-          </button>
+      <!-- Controls -->
 
-          <button
-            class="access-btn"
-            id="toggleHighContrast"
-            title="Toggle High Contrast"
-          >
-            <span style="font-weight: bold; font-size: 30px">&#9681;</span>
-            <span>High Contrast </span>
-          </button>
-          <button
-            class="access-btn"
-            id="toggleGrayscale"
-            title="Toggle Grayscale"
-          >
-            <span style="font-weight: bold; font-size: 30px">&#9724;</span
-            ><span>Grayscale </span>
-          </button>
+      <div class="accessibility-controls">
+        <!-- =================================================
+           BIGGER TEXT
+      ================================================= -->
 
-          <button
-            class="access-btn"
-            id="toggleGrayscale"
-            title="Toggle Grayscale"
+        <button
+          type="button"
+          class="access-btn"
+          id="increaseFont"
+          title="Increase Font Size"
+          aria-label="Increase Font Size"
+          aria-pressed="false"
+        >
+          <strong>A+</strong>
+
+          <span> Bigger Text </span>
+        </button>
+
+        <!-- =================================================
+           SMALLER TEXT
+      ================================================= -->
+
+        <button
+          type="button"
+          class="access-btn"
+          id="decreaseFont"
+          title="Decrease Font Size"
+          aria-label="Decrease Font Size"
+          aria-pressed="false"
+        >
+          <strong>A-</strong>
+
+          <span> Smaller Text </span>
+        </button>
+
+        <!-- =================================================
+           TEXT SPACING
+      ================================================= -->
+
+        <button
+          type="button"
+          class="access-btn"
+          id="toggleTextSpacing"
+          title="Toggle Text Spacing"
+          aria-label="Toggle Text Spacing"
+          aria-pressed="false"
+        >
+          <img src="images/text-spacing.svg" alt="" aria-hidden="true" />
+
+          <span> Text Spacing </span>
+        </button>
+
+        <!-- =================================================
+           LINE HEIGHT
+      ================================================= -->
+
+        <button
+          type="button"
+          class="access-btn"
+          id="toggleLineHeight"
+          title="Toggle Line Height"
+          aria-label="Toggle Line Height"
+          aria-pressed="false"
+        >
+          <img src="images/line-height.svg" alt="" aria-hidden="true" />
+
+          <span> Line Height </span>
+        </button>
+
+        <!-- =================================================
+           HIGHLIGHT LINKS
+      ================================================= -->
+
+        <button
+          type="button"
+          class="access-btn"
+          id="toggleHighlightLinks"
+          title="Highlight Links"
+          aria-label="Highlight Links"
+          aria-pressed="false"
+        >
+          <img src="images/link-icon.svg" alt="" aria-hidden="true" />
+
+          <span> Highlight Links </span>
+        </button>
+
+        <!-- =================================================
+           DYSLEXIA FRIENDLY
+      ================================================= -->
+
+        <button
+          type="button"
+          class="access-btn"
+          id="toggleDyslexia"
+          title="Dyslexia Friendly"
+          aria-label="Dyslexia Friendly"
+          aria-pressed="false"
+        >
+          <img
+            src="images/df-icon.svg"
+            alt=""
+            aria-hidden="true"
+            style="width: 30px"
+          />
+
+          <span> Dyslexia Friendly </span>
+        </button>
+
+        <!-- =================================================
+           CURSOR
+      ================================================= -->
+
+        <button
+          type="button"
+          class="access-btn"
+          id="toggleCursor"
+          title="Large Cursor"
+          aria-label="Large Cursor"
+          aria-pressed="false"
+        >
+          <img
+            src="images/cursor.svg"
+            alt=""
+            aria-hidden="true"
+            style="width: 30px"
+          />
+
+          <span> Cursor </span>
+        </button>
+
+        <!-- =================================================
+           HIGH CONTRAST
+      ================================================= -->
+
+        <button
+          type="button"
+          class="access-btn"
+          id="toggleHighContrast"
+          title="Toggle High Contrast"
+          aria-label="Toggle High Contrast"
+          aria-pressed="false"
+        >
+          <span
+            style="font-size: 30px; font-weight: bold; line-height: 1"
+            aria-hidden="true"
           >
-            <span style="font-weight: bold; font-size: 30px"
-              ><img src="images/speech.svg" /></span
-            ><span>Text to Speech </span>
-          </button>
-        </div>
+            ◐
+          </span>
+
+          <span> High Contrast </span>
+        </button>
+
+        <!-- =================================================
+           GRAYSCALE
+      ================================================= -->
+
+        <button
+          type="button"
+          class="access-btn"
+          id="toggleGrayscale"
+          title="Toggle Grayscale"
+          aria-label="Toggle Grayscale"
+          aria-pressed="false"
+        >
+          <span
+            style="font-size: 30px; font-weight: bold; line-height: 1"
+            aria-hidden="true"
+          >
+            ◼
+          </span>
+
+          <span> Grayscale </span>
+        </button>
+
+        <!-- =================================================
+           TEXT TO SPEECH
+      ================================================= -->
+
+        <button
+          type="button"
+          class="access-btn"
+          id="toggleTextSpeech"
+          title="Read Page Aloud"
+          aria-label="Read Page Aloud"
+          aria-pressed="false"
+        >
+          <img src="images/speech.svg" alt="" aria-hidden="true" />
+
+          <span> Text to Speech </span>
+        </button>
+
+        <!-- =================================================
+           RESET
+      ================================================= -->
+
+        <button
+          type="button"
+          class="access-btn reset-accessibility"
+          id="resetAccessibility"
+          title="Reset Accessibility Settings"
+          aria-label="Reset Accessibility Settings"
+        >
+          <i
+            class="bi bi-arrow-counterclockwise"
+            aria-hidden="true"
+            style="font-size: 30px"
+          ></i>
+
+          <span> Reset </span>
+        </button>
       </div>
     </div>
-    <!-- End Accessibility Toolbar -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -2517,91 +2949,382 @@
           d.style.transform = "";
         });
       });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        /* =================================================
+           ELEMENTS
+        ================================================= */
 
-      //accesibity
-      // Accessibility Toolbar Logic
-      document
-        .getElementById("accessibilityBtn")
-        .addEventListener("click", function () {
-          document.getElementById("accessibilityToolbar").style.display =
-            "block";
-        });
-      document
-        .getElementById("accessibilityCloseBtn")
-        .addEventListener("click", function () {
-          document.getElementById("accessibilityToolbar").style.display =
-            "none";
+        const body = document.body;
+
+        const html = document.documentElement;
+
+        const accessibilityBtn = document.getElementById("accessibilityBtn");
+
+        const accessibilityToolbar = document.getElementById(
+          "accessibilityToolbar",
+        );
+
+        const accessibilityCloseBtn = document.getElementById(
+          "accessibilityCloseBtn",
+        );
+
+        /* =================================================
+           OPEN TOOLBAR
+        ================================================= */
+
+        accessibilityBtn.addEventListener("click", function () {
+          const isOpen = accessibilityToolbar.style.display === "block";
+
+          if (isOpen) {
+            closeToolbar();
+          } else {
+            openToolbar();
+          }
         });
 
-      // Font size logic
-      var html = document.documentElement;
-      var defaultFontSize = 16;
-      var currentFontSize = defaultFontSize;
-      function setFontSize(size) {
-        html.style.fontSize = size + "px";
-      }
-      document.getElementById("increaseFont").onclick = function () {
-        if (currentFontSize < 22) {
-          currentFontSize += 2;
-          setFontSize(currentFontSize);
+        function openToolbar() {
+          accessibilityToolbar.style.display = "block";
+
+          accessibilityBtn.setAttribute("aria-expanded", "true");
+
+          accessibilityCloseBtn.focus();
         }
-      };
-      document.getElementById("decreaseFont").onclick = function () {
-        if (currentFontSize > 12) {
-          currentFontSize -= 2;
-          setFontSize(currentFontSize);
+
+        /* =================================================
+           CLOSE TOOLBAR
+        ================================================= */
+
+        accessibilityCloseBtn.addEventListener("click", closeToolbar);
+
+        function closeToolbar() {
+          accessibilityToolbar.style.display = "none";
+
+          accessibilityBtn.setAttribute("aria-expanded", "false");
+
+          accessibilityBtn.focus();
         }
-      };
-      document.getElementById("resetFont").onclick = function () {
-        currentFontSize = defaultFontSize;
+
+        /* =================================================
+           ESC KEY
+        ================================================= */
+
+        document.addEventListener("keydown", function (event) {
+          if (
+            event.key === "Escape" &&
+            accessibilityToolbar.style.display === "block"
+          ) {
+            closeToolbar();
+          }
+        });
+
+        /* =================================================
+           FONT SIZE
+        ================================================= */
+
+        const defaultFontSize = 16;
+
+        let currentFontSize =
+          parseInt(localStorage.getItem("accessibilityFontSize")) ||
+          defaultFontSize;
+
+        function setFontSize(size) {
+          currentFontSize = size;
+
+          html.style.fontSize = size + "px";
+
+          localStorage.setItem("accessibilityFontSize", size);
+        }
+
         setFontSize(currentFontSize);
-      };
 
-      // High contrast logic
-      document.getElementById("toggleHighContrast").onclick = function () {
-        document.body.classList.toggle("high-contrast");
-      };
-
-      // Grayscale logic
-      document.getElementById("toggleGrayscale").onclick = function () {
-        document.body.classList.toggle("grayscale");
-      };
-
-      document
-        .querySelectorAll(".accessibility-controls .access-btn")
-        .forEach(function (btn) {
-          btn.addEventListener("click", function (e) {
-            // If already active, remove active and feature
-            if (btn.classList.contains("active")) {
-              btn.classList.remove("active");
-              // Remove feature for each button
-              if (
-                btn.id === "increaseFont" ||
-                btn.id === "decreaseFont" ||
-                btn.id === "resetFont"
-              ) {
-                // Reset font size
-                currentFontSize = defaultFontSize;
-                setFontSize(currentFontSize);
-              }
-              if (btn.id === "toggleHighContrast") {
-                document.body.classList.remove("high-contrast");
-              }
-              if (btn.id === "toggleGrayscale") {
-                document.body.classList.remove("grayscale");
-              }
-              return; // Stop further execution
+        document
+          .getElementById("increaseFont")
+          .addEventListener("click", function () {
+            if (currentFontSize < 24) {
+              setFontSize(currentFontSize + 2);
             }
-            // Otherwise, activate and apply feature
-            document
-              .querySelectorAll(".accessibility-controls .access-btn")
-              .forEach(function (b) {
-                b.classList.remove("active");
-              });
-            btn.classList.add("active");
-            // Features already handled by other click handlers
           });
+
+        document
+          .getElementById("decreaseFont")
+          .addEventListener("click", function () {
+            if (currentFontSize > 12) {
+              setFontSize(currentFontSize - 2);
+            }
+          });
+
+        /* =================================================
+           HELPER
+        ================================================= */
+
+        function toggleAccessibilityClass(buttonId, className) {
+          const button = document.getElementById(buttonId);
+
+          button.addEventListener("click", function () {
+            body.classList.toggle(className);
+
+            const active = body.classList.contains(className);
+
+            button.classList.toggle("active", active);
+
+            button.setAttribute("aria-pressed", active);
+
+            localStorage.setItem("accessibility_" + className, active);
+          });
+        }
+
+        /* =================================================
+           TEXT SPACING
+        ================================================= */
+
+        toggleAccessibilityClass("toggleTextSpacing", "text-spacing");
+
+        /* =================================================
+           LINE HEIGHT
+        ================================================= */
+
+        toggleAccessibilityClass("toggleLineHeight", "line-height");
+
+        /* =================================================
+           HIGHLIGHT LINKS
+        ================================================= */
+
+        toggleAccessibilityClass("toggleHighlightLinks", "highlight-links");
+
+        /* =================================================
+           DYSLEXIA FRIENDLY
+        ================================================= */
+
+        toggleAccessibilityClass("toggleDyslexia", "dyslexia-friendly");
+
+        /* =================================================
+           LARGE CURSOR
+        ================================================= */
+
+        toggleAccessibilityClass("toggleCursor", "large-cursor");
+
+        /* =================================================
+           HIGH CONTRAST
+        ================================================= */
+
+        toggleAccessibilityClass("toggleHighContrast", "high-contrast");
+
+        /* =================================================
+           GRAYSCALE
+        ================================================= */
+
+        toggleAccessibilityClass("toggleGrayscale", "grayscale");
+
+        /* =================================================
+           TEXT TO SPEECH
+        ================================================= */
+
+        const textSpeechBtn = document.getElementById("toggleTextSpeech");
+
+        let isSpeaking = false;
+
+        textSpeechBtn.addEventListener("click", function () {
+          /* ---------------------------------------------
+               STOP SPEECH
+            --------------------------------------------- */
+
+          if (window.speechSynthesis.speaking) {
+            window.speechSynthesis.cancel();
+
+            isSpeaking = false;
+
+            textSpeechBtn.classList.remove("active");
+
+            textSpeechBtn.setAttribute("aria-pressed", "false");
+
+            textSpeechBtn.querySelector("span").textContent = "Text to Speech";
+
+            return;
+          }
+
+          /* ---------------------------------------------
+               PAGE TEXT
+            --------------------------------------------- */
+
+          const text = document.body.innerText;
+
+          if (!text || !text.trim()) {
+            return;
+          }
+
+          /* ---------------------------------------------
+               SPEECH
+            --------------------------------------------- */
+
+          const speech = new SpeechSynthesisUtterance(text);
+
+          speech.rate = 0.9;
+
+          speech.pitch = 1;
+
+          speech.volume = 1;
+
+          speech.onstart = function () {
+            isSpeaking = true;
+
+            textSpeechBtn.classList.add("active");
+
+            textSpeechBtn.setAttribute("aria-pressed", "true");
+
+            textSpeechBtn.querySelector("span").textContent = "Stop Reading";
+          };
+
+          speech.onend = function () {
+            isSpeaking = false;
+
+            textSpeechBtn.classList.remove("active");
+
+            textSpeechBtn.setAttribute("aria-pressed", "false");
+
+            textSpeechBtn.querySelector("span").textContent = "Text to Speech";
+          };
+
+          speech.onerror = function () {
+            isSpeaking = false;
+
+            textSpeechBtn.classList.remove("active");
+
+            textSpeechBtn.setAttribute("aria-pressed", "false");
+
+            textSpeechBtn.querySelector("span").textContent = "Text to Speech";
+          };
+
+          window.speechSynthesis.speak(speech);
         });
+
+        /* =================================================
+           LOAD SAVED ACCESSIBILITY SETTINGS
+        ================================================= */
+
+        const features = [
+          "text-spacing",
+          "line-height",
+          "highlight-links",
+          "dyslexia-friendly",
+          "large-cursor",
+          "high-contrast",
+          "grayscale",
+        ];
+
+        features.forEach(function (feature) {
+          const saved = localStorage.getItem("accessibility_" + feature);
+
+          if (saved === "true") {
+            body.classList.add(feature);
+
+            const button = document.querySelector(
+              '[class~="access-btn"]' +
+                '[id*="' +
+                feature.replace(/-([a-z])/g, function (match, letter) {
+                  return letter.toUpperCase();
+                }) +
+                '"]',
+            );
+
+            /*
+             * Button states are also
+             * restored below individually.
+             */
+          }
+        });
+
+        /* Restore button states */
+
+        const buttonFeatureMap = {
+          toggleTextSpacing: "text-spacing",
+
+          toggleLineHeight: "line-height",
+
+          toggleHighlightLinks: "highlight-links",
+
+          toggleDyslexia: "dyslexia-friendly",
+
+          toggleCursor: "large-cursor",
+
+          toggleHighContrast: "high-contrast",
+
+          toggleGrayscale: "grayscale",
+        };
+
+        Object.keys(buttonFeatureMap).forEach(function (buttonId) {
+          const feature = buttonFeatureMap[buttonId];
+
+          const saved = localStorage.getItem("accessibility_" + feature);
+
+          if (saved === "true") {
+            const button = document.getElementById(buttonId);
+
+            if (button) {
+              button.classList.add("active");
+
+              button.setAttribute("aria-pressed", "true");
+            }
+          }
+        });
+
+        /* =================================================
+           RESET
+        ================================================= */
+
+        const resetBtn = document.getElementById("resetAccessibility");
+
+        resetBtn.addEventListener("click", function () {
+          /* ---------------------------------------------
+               Reset Font
+            --------------------------------------------- */
+
+          currentFontSize = defaultFontSize;
+
+          setFontSize(defaultFontSize);
+
+          /* ---------------------------------------------
+               Remove Classes
+            --------------------------------------------- */
+
+          features.forEach(function (feature) {
+            body.classList.remove(feature);
+
+            localStorage.removeItem("accessibility_" + feature);
+          });
+
+          /* ---------------------------------------------
+               Reset Buttons
+            --------------------------------------------- */
+
+          document
+            .querySelectorAll(".accessibility-controls .access-btn")
+            .forEach(function (button) {
+              button.classList.remove("active");
+
+              button.setAttribute("aria-pressed", "false");
+            });
+
+          /* ---------------------------------------------
+               Stop Text To Speech
+            --------------------------------------------- */
+
+          if (window.speechSynthesis) {
+            window.speechSynthesis.cancel();
+          }
+
+          isSpeaking = false;
+
+          textSpeechBtn.querySelector("span").textContent = "Text to Speech";
+
+          /* ---------------------------------------------
+               Optional confirmation
+            --------------------------------------------- */
+
+          resetBtn.blur();
+        });
+      });
     </script>
     <!-- <script src="https://translation-plugin.bhashini.co.in/v2/website_translation_utility.js"
     translation-language-list="en,hi,pa" data-pos-x="100" data-pos-y="100"></script> -->

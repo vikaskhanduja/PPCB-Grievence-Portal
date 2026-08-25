@@ -1473,6 +1473,83 @@
         align-items: center;
         gap: 6px;
       }
+
+      /******************/
+
+      .meeting-option {
+        display: block;
+        cursor: pointer;
+      }
+
+      .meeting-option input {
+        display: none;
+      }
+
+      .meeting-card {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 16px;
+        border: 1px solid #dee2e6;
+        border-radius: 12px;
+        background: #fff;
+        transition: all 0.2s ease;
+      }
+
+      .meeting-card:hover {
+        border-color: #1a6fc4;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      .meeting-option input:checked + .meeting-card {
+        border: 2px solid #1a6fc4;
+        background: #f1f7ff;
+      }
+
+      .meeting-card strong {
+        display: block;
+        font-size: 15px;
+        color: #073763;
+      }
+
+      .meeting-card small {
+        display: block;
+        margin-top: 3px;
+        color: #6c757d;
+      }
+
+      .meeting-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+      }
+
+      .virtual-icon {
+        background: #e8f2ff;
+        color: #1a6fc4;
+      }
+
+      .person-icon {
+        background: #e8f8f5;
+        color: #036b6b;
+      }
+
+      .check-icon {
+        position: absolute;
+        right: 12px;
+        top: 12px;
+        color: #1a6fc4;
+        display: none;
+      }
+
+      .meeting-option input:checked + .meeting-card .check-icon {
+        display: block;
+      }
     </style>
   </head>
 
@@ -1497,6 +1574,16 @@
 
         <div class="d-flex align-items-center gap-2 flex-wrap">
           <div class="query-module">
+            <button
+              type="button"
+              class="query-button"
+              data-bs-toggle="modal"
+              data-bs-target="#noticeAppearanceModal"
+            >
+              <i class="bi bi-calendar2-check me-2"></i>
+              Notice for Appearance
+            </button>
+
             <button
               class="query-button"
               data-bs-toggle="modal"
@@ -3351,27 +3438,40 @@
 
             <!-- Evidence Required -->
             <div class="mb-3">
-              <label class="fl">What should the complainant provide?</label>
+              <label class="form-label fw-semibold">
+                Supporting Document Upload
+                <span class="text-muted fw-normal small">
+                  (PDF, Image, Audio or Video)
+                </span>
+              </label>
 
-              <div class="evidence-row">
-                <label class="evidence-item">
-                  <input type="checkbox" />
-                  <i class="bi bi-file-earmark-pdf-fill"></i>
-                  <span>Supporting Document</span>
-                </label>
+              <div
+                class="d-flex align-items-center gap-3 border border-2 border-dashed rounded-3 p-3 bg-light"
+                role="button"
+                onclick="document.getElementById('qrFile').click()"
+              >
+                <i class="bi bi-cloud-arrow-up-fill text-success fs-3"></i>
 
-                <label class="evidence-item">
-                  <input type="checkbox" />
-                  <i class="bi bi-image-fill"></i>
-                  <span>Photograph</span>
-                </label>
+                <div>
+                  <div class="fw-semibold small">Upload Supporting Files</div>
+                  <div class="text-muted small">Click here to browse files</div>
+                </div>
 
-                <label class="evidence-item">
-                  <input type="checkbox" />
-                  <i class="bi bi-camera-video-fill"></i>
-                  <span>Video</span>
-                </label>
+                <button type="button" class="btn btn-success btn-sm ms-auto">
+                  <i class="bi bi-upload me-1"></i> Browse
+                </button>
               </div>
+
+              <input
+                type="file"
+                id="qrFile"
+                class="d-none"
+                accept=".pdf,image/*,audio/*,video/*"
+                multiple
+                onchange="showFiles(this, 'qrFileList')"
+              />
+
+              <div id="qrFileList" class="mt-2"></div>
             </div>
           </div>
 
@@ -3479,6 +3579,315 @@
           <div class="modal-footer justify-content-end">
             <button class="bo" data-bs-dismiss="modal">Cancel</button>
             <button class="bp" onclick="submitQuery()">Yes, Raise Query</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-------------modal box-Motice----->
+    <!------ Notice for Appearance Modal -------->
+
+    <div
+      class="modal fade"
+      id="noticeAppearanceModal"
+      tabindex="-1"
+      aria-labelledby="noticeAppearanceModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+          <!-- Modal Header -->
+          <div
+            class="modal-header text-white"
+            style="
+              background: linear-gradient(
+                135deg,
+                #073763 0%,
+                #036b6b 60%,
+                #1a6fc4 100%
+              );
+            "
+          >
+            <div>
+              <h5 class="modal-title mb-1" id="noticeAppearanceModalLabel">
+                <i class="bi bi-calendar2-check me-2"></i>
+                Notice for Appearance
+              </h5>
+
+              <small class="opacity-75">
+                Schedule an appearance for the grievance
+              </small>
+            </div>
+
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="modal-body p-4">
+            <!-- Notice / Message -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold">
+                Notice / Message
+                <span class="text-danger">*</span>
+              </label>
+
+              <textarea
+                class="form-control"
+                rows="4"
+                placeholder="Enter notice details or instructions for appearance..."
+                required
+              ></textarea>
+            </div>
+
+            <!-- Meeting Type -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold">
+                Meeting Type
+                <span class="text-danger">*</span>
+              </label>
+
+              <div class="row g-3">
+                <!-- Virtual Meeting -->
+                <div class="col-md-6">
+                  <label class="meeting-option">
+                    <input
+                      type="radio"
+                      name="meetingType"
+                      value="virtual"
+                      checked
+                      onchange="toggleMeetingType()"
+                    />
+
+                    <div class="meeting-card">
+                      <div class="meeting-icon virtual-icon">
+                        <i class="bi bi-camera-video"></i>
+                      </div>
+
+                      <div>
+                        <strong>Virtual Meeting</strong>
+                        <small>Appear through an online meeting</small>
+                      </div>
+
+                      <i class="bi bi-check-circle-fill check-icon"></i>
+                    </div>
+                  </label>
+                </div>
+
+                <!-- In Person Meeting -->
+                <div class="col-md-6">
+                  <label class="meeting-option">
+                    <input
+                      type="radio"
+                      name="meetingType"
+                      value="inperson"
+                      onchange="toggleMeetingType()"
+                    />
+
+                    <div class="meeting-card">
+                      <div class="meeting-icon person-icon">
+                        <i class="bi bi-person-check"></i>
+                      </div>
+
+                      <div>
+                        <strong>In-Person Meeting</strong>
+                        <small>Appear physically at the office</small>
+                      </div>
+
+                      <i class="bi bi-check-circle-fill check-icon"></i>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Date & Time -->
+            <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">
+                  Appearance Date
+                  <span class="text-danger">*</span>
+                </label>
+
+                <input type="date" class="form-control" required />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">
+                  Appearance Time
+                  <span class="text-danger">*</span>
+                </label>
+
+                <input type="time" class="form-control" required />
+              </div>
+            </div>
+
+            <!-- Virtual Meeting Details -->
+            <div id="virtualMeetingSection">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">
+                  Meeting Link
+                  <span class="text-danger">*</span>
+                </label>
+
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="bi bi-link-45deg"></i>
+                  </span>
+
+                  <input
+                    type="url"
+                    class="form-control"
+                    placeholder="https://meet.google.com/..."
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- In-Person Meeting Details -->
+            <div id="inPersonMeetingSection" style="display: none">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">
+                  Venue / Address
+                  <span class="text-danger">*</span>
+                </label>
+
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="bi bi-geo-alt"></i>
+                  </span>
+
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter meeting venue / office address"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="modal-footer border-0 px-4 pb-4">
+            <button
+              type="button"
+              class="btn btn-light px-4"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#confirmNoticeModal"
+              class="btn btn-primary px-4"
+            >
+              <i class="bi bi-send me-2"></i>
+
+              Send Notice
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Send Notice Confirmation Modal -->
+    <div
+      class="modal fade"
+      id="confirmNoticeModal"
+      tabindex="-1"
+      aria-labelledby="confirmNoticeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 shadow">
+          <!-- Header -->
+          <div class="modal-header px-4 py-3">
+            <h5
+              class="modal-title d-flex align-items-center"
+              id="confirmNoticeModalLabel"
+            >
+              <span
+                class="d-flex align-items-center justify-content-center rounded-circle me-3"
+                style="
+                  width: 28px;
+                  height: 28px;
+                  background: #ffbd17;
+                  color: #fff;
+                  font-size: 16px;
+                "
+              >
+                ?
+              </span>
+
+              Confirm Notice
+            </h5>
+
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <!-- Body -->
+          <div class="modal-body text-center px-4 py-4">
+            <!-- Icon -->
+            <div
+              class="d-flex align-items-center justify-content-center mx-auto mb-4"
+              style="
+                width: 70px;
+                height: 70px;
+                background: #fff3cd;
+                border-radius: 16px;
+                color: #ffbd17;
+                font-size: 38px;
+              "
+            >
+              <i class="bi bi-chat-square-dots-fill"></i>
+            </div>
+
+            <!-- Question -->
+            <h4 class="fw-semibold mb-2">Send this Notice?</h4>
+
+            <p
+              class="text-muted mb-0"
+              style="font-size: 16px; line-height: 1.6"
+            >
+              Are you sure you want to send this notice? The complainant will
+              receive an
+              <strong>SMS/Email notification.</strong>
+            </p>
+          </div>
+
+          <!-- Footer -->
+          <div
+            class="modal-footer justify-content-center gap-2 border-top px-4 py-3"
+          >
+            <button
+              type="button"
+              class="btn btn-light border px-4 py-2"
+              data-bs-dismiss="modal"
+              style="min-width: 105px"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              class="btn text-white px-4 py-2 fw-semibold"
+              id="confirmSendNoticeBtn"
+              style="min-width: 165px; background: #073763; border-radius: 8px"
+            >
+              <i class="bi bi-send me-2"></i>
+              Yes, Send Notice
+            </button>
           </div>
         </div>
       </div>
@@ -3879,6 +4288,22 @@
         // Example
         // window.location.href = "dashboard.html";
       }
+    </script>
+    <script>
+      document
+        .getElementById("confirmSendNoticeBtn")
+        .addEventListener("click", function () {
+          // Disable button to prevent double submission
+          this.disabled = true;
+          this.innerHTML =
+            '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+
+          // Here you can add your API call
+          setTimeout(function () {
+            // Redirect to Dashboard after successful submission
+            window.location.href = "dashboard.html";
+          }, 1200);
+        });
     </script>
   </body>
 </html>

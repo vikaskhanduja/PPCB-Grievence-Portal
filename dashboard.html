@@ -1619,7 +1619,23 @@
             <div class="card">
               <div class="chart-card">
                 <div class="card-header">
-                  Punjab Map – District-Wise Grievances
+                  District Wise Grievance
+                  <small
+                    ><div class="tb-field" style="width: 250px">
+                      <label
+                        for="fType"
+                        style="display: flex; justify-content: end"
+                        >Industrial Type</label
+                      >
+                      <select class="form-select" id="fType">
+                        <option value="all">All Industries</option>
+                        <option value="red">Red Category</option>
+                        <option value="orange">Orange Category</option>
+                        <option value="green">Green Category</option>
+                        <option value="white">White Category</option>
+                      </select>
+                    </div></small
+                  >
                 </div>
               </div>
               <div class="map-wrapper">
@@ -2001,30 +2017,6 @@
                 <span id="grievanceValue"></span>
                 <span style="opacity: 0.75; font-size: 0.85em">grievances</span>
               </div>
-
-              <!-- Legend -->
-              <!-- <div class="legend-note">
-        <span class="legend-item"
-          ><span class="swatch" style="background: #f4c0c7"></span> 0–180</span
-        >
-        <span class="legend-item"
-          ><span class="swatch" style="background: #8cd5f7"></span>
-          180–360</span
-        >
-        <span class="legend-item"
-          ><span class="swatch" style="background: #7bea05"></span>
-          360–540</span
-        >
-        <span class="legend-item"
-          ><span class="swatch" style="background: #f6b9fd"></span>
-          540–720</span
-        >
-        <span class="legend-item"
-          ><span class="swatch" style="background: #f5fc98"></span>
-          720–900</span
-        >
-      </div>
-      <div class="credit">Hover over any district to see total grievances</div> -->
             </div>
           </div>
         </div>
@@ -2225,6 +2217,7 @@
                 >
                   Assign to SDO
                 </button>
+
                 <button
                   type="button"
                   class="btn btn-success flex-fill"
@@ -2256,6 +2249,46 @@
                 </select>
               </div>
             </div>
+
+            <div class="section-block">
+              <h5 class="section-title mb-1">
+                <i class="bi bi-info-circle-fill me-2"></i>Mark as Duplicate
+              </h5>
+              <hr class="my-2" />
+
+              <div class="card mt-3">
+                <div class="card-body">
+                  <div class="row g-3 align-items-end">
+                    <div class="col-md-8">
+                      <label
+                        for="duplicateGrievanceId"
+                        class="form-label fw-semibold"
+                      >
+                        Duplicate of Grievance ID
+                      </label>
+
+                      <input
+                        type="text"
+                        id="duplicateGrievanceId"
+                        class="form-control"
+                        placeholder="Enter Grievance ID"
+                      />
+                    </div>
+
+                    <div class="col-md-4">
+                      <button
+                        type="button"
+                        class="btn btn-warning w-100 fw-semibold"
+                      >
+                        <i class="fas fa-copy me-2"></i>
+                        Mark as Duplicate
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="section-block">
               <h5 class="section-title mb-1">
                 <i class="bi bi-info-circle-fill me-2"></i>Complaint Information
@@ -2292,6 +2325,7 @@
                 </div>
               </div>
             </div>
+
             <div class="section-block">
               <h5 class="section-title mb-1">
                 <i class="bi bi-exclamation-circle-fill me-2"></i>Complainant
